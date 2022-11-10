@@ -1,7 +1,8 @@
-# project_movieyo
+# TeamProject_Movieyo
+
 
 ## 팀명
-무비요(movieyo)
+무비요(Movieyo)
 ## 팀원
 * 팀장 - 조현석
 * 팀원 - 고민재 오건황 이영빈
