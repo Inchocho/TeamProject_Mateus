@@ -6,3 +6,7 @@
 /.settings/
 /build/
 *.class
+*.MF
+*.properties
+MANIFEST
+/MANIFEST/
