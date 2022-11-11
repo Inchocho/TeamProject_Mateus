@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- 2022/11/11 typeAlias 우리가 만들 dto로 변경(패키지 구조) -->
+	<typeAliases>
+		<typeAlias type="com.edu.member.model.MemberDto"
+			alias="memberDto" />
+	</typeAliases>
+
+</configuration>
