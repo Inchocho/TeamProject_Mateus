@@ -10,3 +10,4 @@
 *.properties
 MANIFEST
 /MANIFEST/
+local.properties
