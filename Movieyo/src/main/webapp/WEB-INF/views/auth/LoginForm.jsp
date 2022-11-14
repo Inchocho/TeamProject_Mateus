@@ -27,7 +27,9 @@ a{
 	
 		<a href="">비밀번호를 잊으셨나요?</a>
 		
-		<button type="button" onclick="location.href ='./add.do'">새 계정 만들기</button>
+		<br>
+		
+		<button type="button" onclick="location.href ='../user/add.do'">새 계정 만들기</button>
 		
 </body>
 

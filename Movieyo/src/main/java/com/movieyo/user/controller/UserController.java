@@ -1,5 +1,9 @@
 package com.movieyo.user.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -9,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.movieyo.user.dto.UserDto;
 import com.movieyo.user.service.UserService;
@@ -39,12 +42,17 @@ public class UserController {
 				", " + password);
 		
 		UserDto userDto = userService.userExist(email, password);
+		System.out.println(userDto.getNo() + "이프전");
+		
+		
+		System.out.println(userDto.getName());
+		
 		
 		String viewUrl = "";
 		if(userDto != null) {
-			session.setAttribute("user", userDto);
+			session.setAttribute("userDto", userDto);
 			
-			viewUrl =  "redirect:/user/list.do";
+			viewUrl =  "redirect:../user/one.do?no=" +  userDto.getNo();
 		}else {
 			viewUrl = "/auth/LoginFail";
 		}
@@ -52,7 +60,7 @@ public class UserController {
 		return viewUrl;
 	}
 	
-	@RequestMapping(value = "/user/add.do", method = RequestMethod.GET)
+	@RequestMapping(value = "user/add.do", method = RequestMethod.GET)
 	public String userAdd(Model model) {
 		logger.debug("Welcome UserController userAdd! ");
 		
@@ -75,6 +83,103 @@ public class UserController {
 		}
 		
 		
-		return "redirect:/member/list.do";
+		return "redirect:../auth/login.do";
 	}
+	
+	@RequestMapping(value="/user/one.do", method = {RequestMethod.GET, RequestMethod.POST})
+	public String userOne(int no, Model model) {
+		logger.debug("Welcome UserController userOne!"
+				+ " no" , no);
+		
+		Map<String, Object> map = userService.userSelectOne(no);
+		UserDto userDto = (UserDto)map.get("userDto");
+		
+		
+		model.addAttribute("userDto", userDto);
+		
+		return "user/UserOneView";
+	}
+	
+	@RequestMapping(value="/user/update.do")
+	public String userUpdate(int no, Model model) {
+		logger.debug("Welcome memberUpdate enter {}", no);
+		
+		Map<String, Object> map = userService.userSelectOne(no);
+		
+		UserDto userDto = (UserDto) map.get("userDto");
+		
+		model.addAttribute("userDto", userDto);
+		
+		return "user/UserUpdateForm";
+	}
+	
+	//수정시 바로바로 적용되게 바꾸기(세션?)
+		@RequestMapping(value = "/user/updateCtr.do", method = RequestMethod.POST)
+		   public String userUpdateCtr(HttpSession session, UserDto userDto, Model model)  {
+		                     // email.password 네임값을 가져옴(@RequestMapping의 힘)
+		      logger.info("Welcome userController userUpdateCtr!" + userDto);
+		      
+		      try {
+		    	  userService.userUpdateOne(userDto);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		      
+		         UserDto sessionUserDto =
+		               (UserDto)session.getAttribute("userDto");
+		         
+		         if (sessionUserDto != null) {
+		            if (sessionUserDto.getNo() == userDto.getNo()) {
+		            
+		            	UserDto newUserDto = new UserDto();
+		               
+		            	newUserDto.setNo(userDto.getNo());
+		            	newUserDto.setEmail(userDto.getEmail());
+		            	newUserDto.setNickname(userDto.getNickname());
+		               
+		               session.removeAttribute("userDto");
+		               
+		               session.setAttribute("userDto", newUserDto);
+		            }
+		         }
+		      
+		      return "user/UserOneView";
+		   }
+		
+		@RequestMapping(value = "/user/passwordUpdate.do", method = RequestMethod.GET)
+		public String userPasswordUpdate(Model model, UserDto userDto) {
+			logger.debug("Welcome UserController userPasswordUpdate! ");
+			
+			model.addAttribute("userDto", userDto);
+			
+			return "user/UserPasswordUpdate";
+		}
+		
+		@RequestMapping(value="/user/passwordUpdateCtr.do")
+		public String userPasswordUpdate(HttpSession session, UserDto userDto, Model model) {
+			logger.debug("Welcome userPasswordUpdate enter {}", userDto);
+			
+			 try {
+		    	  userService.passwordUpdate(userDto);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		      
+		         UserDto sessionUserDto =
+		               (UserDto)session.getAttribute("userDto");
+		         
+		         if (sessionUserDto != null) {
+		            if (sessionUserDto.getNo() == userDto.getNo()) {
+		            
+		            	UserDto newUserDto = new UserDto();
+		               
+		            	newUserDto.setPassword(userDto.getPassword());
+		               session.removeAttribute("userDto");
+		               
+		               session.setAttribute("userDto", newUserDto);
+		            }
+		         }
+			
+			return "user/UserOneView";
+		}
 }

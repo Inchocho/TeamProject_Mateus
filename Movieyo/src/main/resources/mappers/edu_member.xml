@@ -4,28 +4,56 @@
 <mapper namespace="com.movieyo.user">
 
 
-	<resultMap type="userDto" id="memberResultMap">
+	<resultMap type="userDto" id="userResultMap">
 		<id column="NO" property="no"/>
 		<result column="EMAIL" property="email"/>
 		<result column="PASSWORD" property="password"/>
 		<result column="NAME" property="name"/>
-		<result column="BIRTH_DATE" property="birthDate"
+		<result column="BIRTH_DATE" property="birthdate"
 			javaType="java.util.Date"/>
 		<result column="CRE_DATE" property="createDate"
 			javaType="java.util.Date"/>
-		<result column="NICK_NAME" property="nickName"/>
+		<result column="NICK_NAME" property="nickname"/>
 		<result column="GENDER" property="gender"/>
-		<result column="GENRE" property="genre"/>
 	</resultMap>
-
 
 	<select id="userExist" parameterType="map" 
 		resultMap="userResultMap">
-		SELECT MNO, MNAME, EMAIL
+		SELECT NO, NAME, CRE_DATE, BIRTH_DATE, NICK_NAME, GENDER
 		FROM M_USER
-		WHERE EMAIL = #{email} AND PWD = #{password}
+		WHERE EMAIL = #{email} AND PASSWORD = #{password}
 	</select>
 	
+	<insert id="userInsertOne" parameterType="com.movieyo.user.dto.UserDto"
+		useGeneratedKeys="true" keyProperty="no">
+		
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			select M_USER_NO_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO M_USER
+		VALUE(NO, EMAIL, PASSWORD, NAME, BIRTH_DATE ,CRE_DATE, NICK_NAME, GENDER)
+		VALUES(#{no}, #{email}, #{password}, #{name}, #{birthdate}, SYSDATE,
+			#{nickname},#{gender})
+	</insert>
+	
+	<select id="userSelectOne" parameterType="int"
+		resultMap="userResultMap">
+		SELECT NO, NAME, CRE_DATE, BIRTH_DATE, NICK_NAME, GENDER
+		FROM M_USER
+		WHERE NO = #{no}
+	</select>
+	
+	<update id="userUpdateOne" parameterType="userDto">
+		UPDATE M_USER
+		SET NICK_NAME = #{nickname}
+		WHERE NO = #{no}
+	</update>
+	
+	<update id="passwordUpdate" parameterType="userDto">
+		UPDATE M_USER
+		SET PASSWORD = #{password}
+		WHERE NO = #{no}
+	</update>
 
 
 </mapper>

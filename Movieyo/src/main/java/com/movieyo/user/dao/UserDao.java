@@ -7,5 +7,11 @@ public interface UserDao {
 	public UserDto userExist(String email, String password);
 
 	public int userInsertOne(UserDto userDto);
+
+	public UserDto userSelectOne(int no);
+
+	public int userUpdateOne(UserDto userDto);
+
+	public int passwordUpdate(UserDto userDto);
 	
 }

@@ -2,34 +2,35 @@ package com.movieyo.user.dto;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class UserDto {
 
     private int no; 
     private String email;
     private String password;
     private String name;
-    private Date birthDate;
-    private Date createDate;
-    private String nickName;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date birthdate = null;
+    private Date createDate = null;
+    private String nickname;
     private String gender;
-    private String genre;
 	
     public UserDto() {
 		super();
 	}
 
-	public UserDto(int no, String email, String password, String name, Date birthDate, Date createDate, String nickName,
-			String gender, String genre) {
+	public UserDto(int no, String email, String password, String name, Date birthdate, Date createDate, String nickname,
+			String gender) {
 		super();
 		this.no = no;
 		this.email = email;
 		this.password = password;
 		this.name = name;
-		this.birthDate = birthDate;
+		this.birthdate = birthdate;
 		this.createDate = createDate;
-		this.nickName = nickName;
+		this.nickname = nickname;
 		this.gender = gender;
-		this.genre = genre;
 	}
 
 	public int getNo() {
@@ -64,12 +65,12 @@ public class UserDto {
 		this.name = name;
 	}
 
-	public Date getBirthDate() {
-		return birthDate;
+	public Date getBirthdate() {
+		return birthdate;
 	}
 
-	public void setBirthDate(Date birthDate) {
-		this.birthDate = birthDate;
+	public void setBirthdate(Date birthdate) {
+		this.birthdate = birthdate;
 	}
 
 	public Date getCreateDate() {
@@ -80,12 +81,12 @@ public class UserDto {
 		this.createDate = createDate;
 	}
 
-	public String getNickName() {
-		return nickName;
+	public String getNickname() {
+		return nickname;
 	}
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 
 	public String getGender() {
@@ -96,20 +97,19 @@ public class UserDto {
 		this.gender = gender;
 	}
 
-	public String getGenre() {
-		return genre;
-	}
-
-	public void setGenre(String genre) {
-		this.genre = genre;
-	}
-
 	@Override
 	public String toString() {
-		return "UserDto [no=" + no + ", email=" + email + ", password=" + password + ", name=" + name + ", birthDate="
-				+ birthDate + ", createDate=" + createDate + ", nickName=" + nickName + ", gender=" + gender
-				+ ", genre=" + genre + "]";
+		return "UserDto [no=" + no + ", email=" + email + ", password=" + password + ", name=" + name + ", birthdate="
+				+ birthdate + ", createDate=" + createDate + ", nickname=" + nickname + ", gender=" + gender + "]";
 	}
-    
+
+	
+
+	
+
+	
+
+	
+
     
 }
