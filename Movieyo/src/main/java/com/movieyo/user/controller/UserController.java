@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -102,7 +103,7 @@ public class UserController {
 	
 	@RequestMapping(value="/user/update.do")
 	public String userUpdate(int no, Model model) {
-		logger.debug("Welcome memberUpdate enter {}", no);
+		logger.debug("Welcome userUpdate enter {}", no);
 		
 		Map<String, Object> map = userService.userSelectOne(no);
 		
@@ -148,8 +149,13 @@ public class UserController {
 		
 		@RequestMapping(value = "/user/passwordUpdate.do", method = RequestMethod.GET)
 		public String userPasswordUpdate(Model model, UserDto userDto) {
-			logger.debug("Welcome UserController userPasswordUpdate! ");
-			
+			logger.debug("Welcome UserController userPasswordUpdate {}", userDto);
+//			int no = userDto.getNo();
+//			
+//			Map<String, Object> map = userService.userSelectOne(no);
+//			UserDto userDto2 = (UserDto)map.get("userDto");
+//			
+//			
 			model.addAttribute("userDto", userDto);
 			
 			return "user/UserPasswordUpdate";
@@ -158,6 +164,10 @@ public class UserController {
 		@RequestMapping(value="/user/passwordUpdateCtr.do")
 		public String userPasswordUpdate(HttpSession session, UserDto userDto, Model model) {
 			logger.debug("Welcome userPasswordUpdate enter {}", userDto);
+			int no = userDto.getNo();
+			
+			Map<String, Object> map = userService.userSelectOne(no);
+			UserDto userDto2 = (UserDto)map.get("userDto");
 			
 			 try {
 		    	  userService.passwordUpdate(userDto);
@@ -179,7 +189,28 @@ public class UserController {
 		               session.setAttribute("userDto", newUserDto);
 		            }
 		         }
+		         
+		         model.addAttribute("userDto", userDto2);
 			
 			return "user/UserOneView";
+		}
+		
+		@RequestMapping(value="/user/deleteCtr.do", method = RequestMethod.GET)
+		public String userDelete(int no, HttpSession session, Model model) {
+			logger.info("Welcome userController userDeleteCtr! " + no);
+			
+			userService.userDeleteOne(no);
+			
+			session.invalidate();
+			
+			return "redirect:/auth/login.do";
+		}
+		
+		@GetMapping("/authorPop")
+		public String authorPopGET() throws Exception{
+			
+			logger.info("authorPopGET.......");
+			return "authorPop";
+		
 		}
 }

@@ -13,5 +13,7 @@ public interface UserDao {
 	public int userUpdateOne(UserDto userDto);
 
 	public int passwordUpdate(UserDto userDto);
+
+	public void userDeleteOne(int no);
 	
 }

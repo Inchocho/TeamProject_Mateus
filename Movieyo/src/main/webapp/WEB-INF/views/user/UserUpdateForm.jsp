@@ -13,50 +13,10 @@
 
 <script type="text/javascript">
 	
-	$(document).ready(function(){
-		$('input:checkbox[value="${userDto.gender}"]').is(":checked") == true
-	});
-	
-	function deleteFileFnc(obj){
-// 		위 -> 아래 
-// 		아래 -> 위
-		obj.parent().remove();
-	}
-	
-	function addFileFnc() {
-		var obj = $('#fileContent');
-		
-		var htmlStr = "";
-		
-		htmlStr += '<div>';
-		htmlStr += '<input type="hidden" id="fileIdx" name="fileIdx"';
-		htmlStr += ' value="">';
-		htmlStr += '<input type="file" id="file0" name="file0">';
-		htmlStr += '<a href="#this" id="delete0">삭제</a><br>';
-		htmlStr += '</div>';
-		
-		obj.html(htmlStr);
-		
-		$('a[id^="delete"]').on('click', function(e) {
-			e.preventDefault();
-			deleteFileFnc($(this));
-		});		
-		
-	}
-	
 	function pageMoveBeforeFnc(no){
 		location.href = 'one.do?no=' + no;
 	}
 	
-	function pageMoveListFnc() {
-		
-		location.href = './list.do';
-	}
-	
-	function pageMoveDeleteFnc(no){
-		var url = "./deleteCtr.do?no=" + no;
-		location.href = url;
-	}
 </script>
 
 </head>
@@ -79,8 +39,17 @@
 			pattern="yyyy-MM-dd"/><br>
 			
 		닉네임: <input type="text" name="nickname" value="${userDto.nickname}"><br>		
-		성별:<input type="checkbox" name="gender" value="남" onclick="checkOnlyOne(this)">남
-      		<input type="checkbox" name="gender" value="여" onclick="checkOnlyOne(this)">여 <br>
+		성별:
+		<c:if test="${userDto.gender =='남'}">
+			<input type="checkbox" name="gender" value="남" onclick="return false;" checked="checked">남
+			<input type="checkbox" name="gender" value="여" onclick="return false;">여 <br>
+		</c:if>
+		
+		<c:if test="${userDto.gender == '여'}">
+			<input type="checkbox" name="gender" value="남" onclick="return false;">남
+			<input type="checkbox" name="gender" value="여" onclick="return false;" checked="checked">여 <br>
+		</c:if>
+      	
 		
 		<input type='submit' value='저장하기'>
 	

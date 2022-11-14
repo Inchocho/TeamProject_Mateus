@@ -17,6 +17,8 @@ public interface UserService {
 	public void userUpdateOne(UserDto userDto);
 
 	public void passwordUpdate(UserDto userDto);
+
+	public void userDeleteOne(int no);
 		
 	
 		

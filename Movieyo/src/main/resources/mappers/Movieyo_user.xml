@@ -3,8 +3,9 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.movieyo.user">
 
+
 	<resultMap type="userDto" id="userResultMap">
-		<id column="NO" property="no"/>		
+		<id column="NO" property="no"/>
 		<result column="EMAIL" property="email"/>
 		<result column="PASSWORD" property="password"/>
 		<result column="NAME" property="name"/>
@@ -53,6 +54,12 @@
 		SET PASSWORD = #{password}
 		WHERE NO = #{no}
 	</update>
+	
+	<delete id="userDeleteOne" parameterType="int">
+		DELETE FROM M_USER
+		WHERE NO = #{NO}
+	</delete>
+
 
 
 </mapper>

@@ -7,6 +7,13 @@
 
 <title>로그인</title>
 
+<script type="text/javascript">
+function findPw() {
+	location.href = '../userFindpw.do';
+}
+
+</script>
+
 <style type="text/css">
 a{
 	color: red;
@@ -25,7 +32,7 @@ a{
 		
 	</form>
 	
-		<a href="">비밀번호를 잊으셨나요?</a>
+		<a href="findPw();">비밀번호를 잊으셨나요?</a>
 		
 		<br>
 		

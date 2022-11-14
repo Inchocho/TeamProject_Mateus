@@ -52,4 +52,10 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		userDao.passwordUpdate(userDto);
 	}
+
+	@Override
+	public void userDeleteOne(int no) {
+		// TODO Auto-generated method stub
+		userDao.userDeleteOne(no);
+	}
 }
