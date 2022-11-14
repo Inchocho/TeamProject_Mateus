@@ -3,11 +3,11 @@
 CREATE TABLE MVY_MOVIE(
     MOVIE_NO NUMBER PRIMARY KEY,    --기본키
     MOVIE_TITLE VARCHAR2(40) NOT NULL,
-    MOVIE_PRDTYEAR NUMBER NOT NULL,    --제작년도 (YYYY) -- NUMBER로 숫자 4자리 ( )년 또는 DATE로 받을예정 일단 NUMBER
+    MOVIE_PRDTYEAR VARCHAR2(40) NOT NULL,    --제작년도 
     MOVIE_NATION VARCHAR2(40) NOT NULL,      --제작국가
     MOVIE_DIRECTOR VARCHAR2(40) NOT NULL,    --감독
     --MOVIE_GENRE VARCHAR2(40),       --장르
-    MOVIE_RUNTIME NUMBER NOT NULL,     --상영시간  (120분 분단위임) -- 입력시 입력칸 [ ](분) 숫자만 넣으면 되게 할예정
+    MOVIE_RUNTIME VARCHAR2(40) NOT NULL,     --상영시간  (120분 분단위임) -- 입력시 입력칸 [ ](분) 숫자만 넣으면 되게 할예정
     MOVIE_GRADE VARCHAR2(40) NOT NULL,       --상영등급  
     MOVIE_PRICE NUMBER NOT NULL,       --가격
     MOVIE_RATE NUMBER DEFAULT 0        --점수(추천) 디폴트값 0 
@@ -195,8 +195,8 @@ INSERT INTO GENRE VALUES(6,'음악');
 
 DESC MVY_MOVIE;
 -- MVY_MOVIE 데이터 삽입 (영화번호 - PK, 영화제목, 제작년도,제작국가,감독,상영시간,영화등급,가격,영화점수(추천))
-INSERT INTO MVY_MOVIE VALUES(1,'코믹영화1호의역습',1992,'대한민국','김호동',120,'12세이용가',7000,0);
-INSERT INTO MVY_MOVIE VALUES(2,'코믹영화2호의등장',1995,'대한민국','김호동',123,'12세이용가',12000,0);
+INSERT INTO MVY_MOVIE VALUES(1,'코믹영화1호의역습','1992','대한민국','김호동','120','12세이용가',7000,0);
+INSERT INTO MVY_MOVIE VALUES(2,'코믹영화2호의등장','1995','대한민국','김호동','123','12세이용가',12000,0);
 
 -- MVY_MOVIE_PHOTO 데이터 삽입 (사진번호 - PK,영화번호 - FK)
 INSERT INTO MVY_MOVIE_PHOTO VALUES(1,1,'사진1');
