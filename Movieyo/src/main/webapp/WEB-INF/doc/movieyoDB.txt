@@ -58,7 +58,7 @@ CREATE TABLE MVY_USER(
     USER_PASSWORD VARCHAR2(40) NOT NULL,     -- 비밀번호
     USER_NAME VARCHAR2(40) NOT NULL,         -- 이름
     USER_BIRTH DATE NOT NULL,                -- 생일
-    USER_CREATE_DATE DATE NOT NULL,			 -- 유저 생성일
+    USER_CREDATE DATE NOT NULL,				 -- 유저 생성일
     USER_NICKNAME VARCHAR2(40) NOT NULL,     -- 닉네임
     USER_GENDER VARCHAR2(10) NOT NULL        -- 성별
     --USER_GENRE VARCHAR2(40)
@@ -214,8 +214,8 @@ INSERT INTO MVY_MOVIE_PHOTO VALUES(2,2,'사진2');
 INSERT INTO GENRE_MOVIE VALUES(1,1,1);  -- 장르무비 기본키1, 영화번호1, 장르번호1
 INSERT INTO GENRE_MOVIE VALUES(2,2,2);  -- 장르무비 기본키1, 영화번호1, 장르번호1
 
--- MVY_USER 데이터 삽입 (유저번호 - PK, 이메일, 비밀번호, 이름, 생년월일, 닉네임, 성별)
-INSERT INTO MVY_USER VALUES(1,'herais100@naver.com','1234','이현석','1995-12-11','이현짱석','남자');
+-- MVY_USER 데이터 삽입 (유저번호 - PK, 이메일, 비밀번호, 이름, 생년월일, 생성일, 닉네임, 성별)
+INSERT INTO MVY_USER VALUES(1,'herais100@naver.com','1234','이현석','1995-12-11', SYSDATE, '이현짱석','남자');
 
 -- GENRE_USER 데이터 삽입 (장르유저번호 - PK, 영화번호 - FK, 장르번호 - FK)
 INSERT INTO GENRE_USER VALUES(1,1,5);
