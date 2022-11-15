@@ -23,7 +23,7 @@
 	
 <body>
 
-<%-- 	<jsp:include page="../Header.jsp" /> --%>
+	<jsp:include page="../Header.jsp" />
 	
 	<h1>회원정보 수정</h1>
 	<form action='./updateCtr.do' method='post' 

@@ -10,11 +10,13 @@
 
 
 <script type="text/javascript">
+	var window = window.open(url, windowName, [windowFeatures]);
+	
 	function pwUpdate() {
 		location.href="./passwordUpdate.do?no=" + ${userDto.no};
 	}
 	function popUp() {
-		let popUrl = "/user/windowBasic1PopUp";
+		let popUrl = "/user/authorPop";
 		let popOption = "width = 650px, height=550px, top=300px, left=300px, scrollbars=yes";
 		
 		window.open(popUrl, "작가 찾기",popOption);
@@ -26,7 +28,7 @@
 	
 <body>
 
-<%-- 	<jsp:include page="../Header.jsp" /> --%>
+	<jsp:include page="../Header.jsp" />
 	
 <!-- 	<img alt="이미지 경로 테스트 실패"  -->
 <%-- 		src="<c:url value='/resources/img/jquery_error.jpg'/>"> --%>

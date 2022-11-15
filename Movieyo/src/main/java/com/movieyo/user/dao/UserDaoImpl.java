@@ -56,4 +56,17 @@ public class UserDaoImpl implements UserDao{
 		// TODO Auto-generated method stub
 		sqlSession.delete("com.movieyo.user.userDeleteOne", no);
 	}
+	
+	@Override
+	public int updatePw(UserDto userDto) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.update("com.movieyo.user.updatePw", userDto);
+	}
+
+	@Override
+	public UserDto readMember(String email) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("com.movieyo.user.readMember", email);
+	}
+	
 }

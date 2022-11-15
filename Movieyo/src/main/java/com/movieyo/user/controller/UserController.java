@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -206,11 +208,20 @@ public class UserController {
 			return "redirect:/auth/login.do";
 		}
 		
-		@GetMapping("/authorPop")
-		public String authorPopGET() throws Exception{
+		@GetMapping("/user/authorPop")
+		public void authorPopGET() throws Exception{
 			
 			logger.info("authorPopGET.......");
-			return "authorPop";
 		
+		}
+		
+		@RequestMapping(value = "/UserFindpw.do", method = RequestMethod.GET)
+		public void UserFindpwGET() throws Exception{
+		
+		}
+
+		@RequestMapping(value = "/UserFindpw.do", method = RequestMethod.POST)
+		public void UserFindpwPOST(@ModelAttribute UserDto userDto, HttpServletResponse response) throws Exception{
+			userService.userFindPw(response, userDto);
 		}
 }

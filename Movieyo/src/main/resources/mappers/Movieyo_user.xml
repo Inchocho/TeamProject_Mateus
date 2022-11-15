@@ -60,6 +60,16 @@
 		WHERE NO = #{NO}
 	</delete>
 
+	<update id="updatePw" parameterType="userDto">
+		update M_USER set password = #{password} where email = #{email}
+	</update>
+
+	<select id="readMember" parameterType="string"
+		resultMap="userResultMap">
+		SELECT NO, NAME, EMAIL, CRE_DATE
+		FROM M_USER
+		WHERE EMAIL = #{email}
+	</select>
 
 
 </mapper>

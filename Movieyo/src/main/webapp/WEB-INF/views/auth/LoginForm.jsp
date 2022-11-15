@@ -9,7 +9,7 @@
 
 <script type="text/javascript">
 function findPw() {
-	location.href = '../userFindpw.do';
+	location.href = '../UserFindpw.do';
 }
 
 </script>
@@ -31,9 +31,7 @@ a{
 				<input type="submit" value="로그인">
 		
 	</form>
-	
-		<a href="findPw();">비밀번호를 잊으셨나요?</a>
-		
+		<a href="../UserFindpw.do">비밀번호를 잊으셨나요?</a>
 		<br>
 		
 		<button type="button" onclick="location.href ='../user/add.do'">새 계정 만들기</button>

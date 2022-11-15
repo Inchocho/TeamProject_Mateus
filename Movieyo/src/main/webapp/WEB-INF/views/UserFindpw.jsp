@@ -14,10 +14,10 @@
 	$(function(){
 		$("#findBtn").click(function(){
 			$.ajax({
-				url : "./findpw.do",
+				url : "./UserFindpw.do",
 				type : "POST",
 				data : {
-					id : $("#id").val(),
+// 					id : $("#id").val(),
 					email : $("#email").val()
 				},
 				success : function(result) {
@@ -52,13 +52,14 @@
 	<div class="w3-content w3-container w3-margin-top">
 		<div class="w3-container w3-card-4 w3-auto" style="width: 382px;height: 456.3px;">
 			<div class="w3-center w3-large w3-margin-top">
-				<h3>비밀번호 찾기</h3>
+				<h2>비밀번호 재설정</h2> <br>
+				<hr style="border: 1px solid silver;">
+				<h3>비밀번호를 잊으셨나요?</h3>
+				가입했던 이메일을 적어주세요.<br>
+				입력하신 이메일 주소로 비밀번호 변경 메일을 보낼게요
 			</div>
 			<div>
-<!-- 				<p> -->
-<!-- 					<label>아이디</label> -->
-<!-- 					<input class="w3-input" type="text" id="id" name="id" placeholder="회원가입한 아이디를 입력하세요" required> -->
-<!-- 				</p> -->
+
 				<p>
 					<label>이메일</label>
 					<input class="w3-input" type="text" id="email" name="email" placeholder="회원가입한 이메일주소를 입력하세요" required>
