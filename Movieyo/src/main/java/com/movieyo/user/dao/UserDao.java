@@ -8,13 +8,13 @@ public interface UserDao {
 
 	public int userInsertOne(UserDto userDto);
 
-	public UserDto userSelectOne(int no);
+	public UserDto userSelectOne(int userNo);
 
 	public int userUpdateOne(UserDto userDto);
 
 	public int passwordUpdate(UserDto userDto);
 
-	public void userDeleteOne(int no);
+	public void userDeleteOne(int userNo);
 
 	//비밀번호변경
 	public int updatePw(UserDto userDto)throws Exception;

@@ -13,8 +13,8 @@
 
 <script type="text/javascript">
 	
-	function pageMoveBeforeFnc(no){
-		location.href = 'one.do?no=' + no;
+	function pageMoveBeforeFnc(userNo){
+		location.href = 'one.do?userNo=' + userNo;
 	}
 	
 </script>
@@ -28,14 +28,14 @@
 	<h1>회원정보 수정</h1>
 	<form action='./updateCtr.do' method='post' 
 		enctype="multipart/form-data">
-		<input type="hidden" name='no' value='${userDto.no}'>
-		이름: <input type='text' name='name' id='memberName'
-			value='${userDto.name}'><br>
+		<input type="hidden" name='userNo' value='${userDto.userNo}'>
+		이름: <input type='text' name='userName' id='memberName'
+			value='${userDto.userName}'><br>
 		
-		가입일: <fmt:formatDate value="${requestScope.userDto.createDate}" 
+		가입일: <fmt:formatDate value="${requestScope.userDto.userCreateDate}" 
 			pattern="yyyy-MM-dd hh:mm"/><br>
 		
-		생년월일: <fmt:formatDate value="${requestScope.userDto.birthdate}" 
+		생년월일: <fmt:formatDate value="${requestScope.userDto.userBirth}" 
 			pattern="yyyy-MM-dd"/><br>
 			
 		닉네임: <input type="text" name="nickname" value="${userDto.nickname}"><br>		
@@ -54,7 +54,7 @@
 		<input type='submit' value='저장하기'>
 	
 		<input type='button' value='돌아가기' 
-			onclick='pageMoveBeforeFnc(${userDto.no});'>	
+			onclick='pageMoveBeforeFnc(${userDto.userNo});'>	
 		
 	</form>
 	

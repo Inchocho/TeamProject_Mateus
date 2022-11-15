@@ -3,72 +3,72 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.movieyo.user">
 
-
 	<resultMap type="userDto" id="userResultMap">
-		<id column="NO" property="no"/>
-		<result column="EMAIL" property="email"/>
-		<result column="PASSWORD" property="password"/>
-		<result column="NAME" property="name"/>
-		<result column="BIRTH_DATE" property="birthdate"
+		<id column="USER_NO" property="userNo"/>
+		<result column="USER_EMAIL" property="email"/>
+		<result column="USER_PASSWORD" property="password"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="USER_BIRTH" property="userBirth"
 			javaType="java.util.Date"/>
-		<result column="CRE_DATE" property="createDate"
+		<result column="USER_CREDATE" property="userCreateDate"
 			javaType="java.util.Date"/>
-		<result column="NICK_NAME" property="nickname"/>
-		<result column="GENDER" property="gender"/>
+		<result column="USER_NICKNAME" property="nickname"/>
+		<result column="USER_GENDER" property="gender"/>
 	</resultMap>
 
 	<select id="userExist" parameterType="map" 
 		resultMap="userResultMap">
-		SELECT NO, NAME, CRE_DATE, BIRTH_DATE, NICK_NAME, GENDER
-		FROM M_USER
-		WHERE EMAIL = #{email} AND PASSWORD = #{password}
+		SELECT USER_NO, USER_NAME, USER_CREDATE, USER_BIRTH, USER_NICKNAME, USER_GENDER
+		FROM MVY_USER
+		WHERE USER_EMAIL = #{email} AND USER_PASSWORD = #{password}		
 	</select>
 	
 	<insert id="userInsertOne" parameterType="com.movieyo.user.dto.UserDto"
-		useGeneratedKeys="true" keyProperty="no">
+		useGeneratedKeys="true" keyProperty="userNo">
 		
-		<selectKey keyProperty="no" resultType="int" order="BEFORE">
-			select M_USER_NO_SEQ.NEXTVAL FROM DUAL
+		<selectKey keyProperty="userNo" resultType="int" order="BEFORE">
+			select MVY_USER_NO_SEQ.NEXTVAL FROM DUAL
 		</selectKey>
-		INSERT INTO M_USER
-		VALUE(NO, EMAIL, PASSWORD, NAME, BIRTH_DATE ,CRE_DATE, NICK_NAME, GENDER)
-		VALUES(#{no}, #{email}, #{password}, #{name}, #{birthdate}, SYSDATE,
-			#{nickname},#{gender})
+		INSERT INTO MVY_USER
+		VALUE(USER_NO, USER_EMAIL, USER_PASSWORD, USER_NAME, USER_BIRTH
+		, USER_CREDATE, USER_NICKNAME, USER_GENDER)
+		VALUES(#{userNo}, #{email}, #{password}, #{userName}
+		, #{userBirth}, SYSDATE, #{nickname}, #{gender})
 	</insert>
 	
 	<select id="userSelectOne" parameterType="int"
 		resultMap="userResultMap">
-		SELECT NO, NAME, CRE_DATE, BIRTH_DATE, NICK_NAME, GENDER
-		FROM M_USER
-		WHERE NO = #{no}
+		SELECT USER_NO, USER_NAME, USER_CREDATE, USER_BIRTH, USER_NICKNAME, USER_GENDER
+		FROM MVY_USER
+		WHERE USER_NO = #{userNo}		
 	</select>
 	
 	<update id="userUpdateOne" parameterType="userDto">
-		UPDATE M_USER
-		SET NICK_NAME = #{nickname}
-		WHERE NO = #{no}
+		UPDATE MVY_USER
+		SET USER_NICKNAME = #{nickname}
+		WHERE USER_NO = #{userNo}		
 	</update>
 	
 	<update id="passwordUpdate" parameterType="userDto">
-		UPDATE M_USER
-		SET PASSWORD = #{password}
-		WHERE NO = #{no}
+		UPDATE MVY_USER
+		SET USER_PASSWORD = #{password}
+		WHERE USER_NO = #{userNo}
 	</update>
 	
 	<delete id="userDeleteOne" parameterType="int">
-		DELETE FROM M_USER
-		WHERE NO = #{NO}
+		DELETE FROM MVY_USER
+		WHERE USER_NO = #{userNo}
 	</delete>
 
 	<update id="updatePw" parameterType="userDto">
-		update M_USER set password = #{password} where email = #{email}
+		UPDATE MVY_USER SET USER_PASSWORD = #{password} WHERE USER_EMAIL = #{email}		
 	</update>
 
 	<select id="readMember" parameterType="string"
 		resultMap="userResultMap">
-		SELECT NO, NAME, EMAIL, CRE_DATE
-		FROM M_USER
-		WHERE EMAIL = #{email}
+		SELECT USER_NO, USER_NAME, USER_EMAIL, USER_CREDATE
+		FROM MVY_USER
+		WHERE USER_EMAIL = #{email}		
 	</select>
 
 

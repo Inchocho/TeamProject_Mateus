@@ -34,9 +34,9 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public UserDto userSelectOne(int no) {
+	public UserDto userSelectOne(int userNo) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("com.movieyo.user.userSelectOne", no);
+		return sqlSession.selectOne("com.movieyo.user.userSelectOne", userNo);
 	}
 
 	@Override
@@ -52,9 +52,9 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public void userDeleteOne(int no) {
+	public void userDeleteOne(int userNo) {
 		// TODO Auto-generated method stub
-		sqlSession.delete("com.movieyo.user.userDeleteOne", no);
+		sqlSession.delete("com.movieyo.user.userDeleteOne", userNo);
 	}
 	
 	@Override
