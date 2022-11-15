@@ -13,7 +13,7 @@
 	var window = window.open(url, windowName, [windowFeatures]);
 	
 	function pwUpdate() {
-		location.href="./passwordUpdate.do?no=" + ${userDto.no};
+		location.href="./passwordUpdate.do?userNo=" + ${userDto.userNo};
 	}
 	function popUp() {
 		let popUrl = "/user/authorPop";
@@ -37,15 +37,15 @@
 	
 	<h1>내정보</h1>
 	<form action='./update.do' method='get'>
-		<input type="hidden" name='no' value='${userDto.no}'>
+		<input type="hidden" name='userNo' value='${userDto.userNo}'>
 <%-- 		<input type="text" name="gender" value="${userDto.gender}"> --%>
 <!-- 		번호: <input type="text" name='no' -->
 <%-- 			value='${userDto.no}' readonly="readonly"><br> --%>
-		이름: <input type='text' name='name' id='memberName'
-			value='${userDto.name}' readonly="readonly"><br>
-		가입일: <fmt:formatDate value="${userDto.createDate}" 
+		이름: <input type='text' name='userName' id='memberName'
+			value='${userDto.userName}' readonly="readonly"><br>
+		가입일: <fmt:formatDate value="${userDto.userCreateDate}" 
 			pattern="yyyy년 MM월 dd일 "/><br>
-		생년월일: <fmt:formatDate value="${userDto.birthdate}" 
+		생년월일: <fmt:formatDate value="${userDto.userBirth}" 
 			pattern="yyyy년 MM월 dd일 "/><br>
 		닉네임:<input type="text" name="nickname" value="${userDto.nickname}"
 		readonly="readonly"><br>

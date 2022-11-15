@@ -14,13 +14,13 @@ public interface UserService {
 
 	public void userInsertOne(UserDto userDto)throws Exception;
 
-	public Map<String, Object> userSelectOne(int no);
+	public Map<String, Object> userSelectOne(int userNo);
 
 	public void userUpdateOne(UserDto userDto);
 
 	public void passwordUpdate(UserDto userDto);
 
-	public void userDeleteOne(int no);
+	public void userDeleteOne(int userNo);
 
 	//비밀번호찾기
 	public void userFindPw(HttpServletResponse response, UserDto userDto)throws Exception;

@@ -33,12 +33,12 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public Map<String, Object> userSelectOne(int no) {
+	public Map<String, Object> userSelectOne(int userNo) {
 		// TODO Auto-generated method stub
 		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
-		UserDto userDto = userDao.userSelectOne(no);
+		UserDto userDto = userDao.userSelectOne(userNo);
 		resultMap.put("userDto", userDto);
 		
 		
@@ -58,9 +58,9 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void userDeleteOne(int no) {
+	public void userDeleteOne(int userNo) {
 		// TODO Auto-generated method stub
-		userDao.userDeleteOne(no);
+		userDao.userDeleteOne(userNo);
 	}
 
 	
@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService{
 				// 비밀번호 변경
 				userDao.updatePw(userDto);
 				// 비밀번호 변경 메일 발송
-				userDto.setName(ck.getName());
+				userDto.setUserName(ck.getUserName());
 				sendEmail(userDto, "findpw");
 
 				out.print("이메일로 임시 비밀번호를 발송하였습니다.");
@@ -107,12 +107,12 @@ public class UserServiceImpl implements UserService{
 					// Mail Server 설정
 					String charSet = "utf-8";
 					String hostSMTP = "smtp.naver.com"; //네이버 이용시 smtp.naver.com
-					String hostSMTPid = "네이버아이디";
-					String hostSMTPpwd = "비밀번호";
+					String hostSMTPid = "herais100";
+					String hostSMTPpwd = "glfkzps2";
 
 					// 보내는 사람 EMail, 제목, 내용
-					String fromEmail = "아이디@네이버.com";
-					String fromName = "이름";
+					String fromEmail = "herais100@naver.com";
+					String fromName = "이영빈";
 					String subject = "";
 					String msg = "";
 
@@ -120,7 +120,7 @@ public class UserServiceImpl implements UserService{
 						subject = "무비요 임시 비밀번호 입니다.";
 						msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
 						msg += "<h3 style='color: blue;'>";
-						msg += userDto.getName() + "님의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";
+						msg += userDto.getUserName() + "님의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";
 						msg += "<p>임시 비밀번호 : ";
 						msg += userDto.getPassword() + "</p></div>";
 					}

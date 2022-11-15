@@ -45,17 +45,17 @@ public class UserController {
 				", " + password);
 		
 		UserDto userDto = userService.userExist(email, password);
-		System.out.println(userDto.getNo() + "이프전");
+		System.out.println(userDto.getUserNo() + "이프전");
 		
 		
-		System.out.println(userDto.getName());
+		System.out.println(userDto.getUserName());
 		
 		
 		String viewUrl = "";
 		if(userDto != null) {
 			session.setAttribute("userDto", userDto);
 			
-			viewUrl =  "redirect:../user/one.do?no=" +  userDto.getNo();
+			viewUrl =  "redirect:../user/one.do?userNo=" +  userDto.getUserNo();
 		}else {
 			viewUrl = "/auth/LoginFail";
 		}
@@ -90,11 +90,11 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/user/one.do", method = {RequestMethod.GET, RequestMethod.POST})
-	public String userOne(int no, Model model) {
+	public String userOne(int userNo, Model model) {
 		logger.debug("Welcome UserController userOne!"
-				+ " no" , no);
+				+ " userNo" , userNo);
 		
-		Map<String, Object> map = userService.userSelectOne(no);
+		Map<String, Object> map = userService.userSelectOne(userNo);
 		UserDto userDto = (UserDto)map.get("userDto");
 		
 		
@@ -104,10 +104,10 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/user/update.do")
-	public String userUpdate(int no, Model model) {
-		logger.debug("Welcome userUpdate enter {}", no);
+	public String userUpdate(int userNo, Model model) {
+		logger.debug("Welcome userUpdate enter {}", userNo);
 		
-		Map<String, Object> map = userService.userSelectOne(no);
+		Map<String, Object> map = userService.userSelectOne(userNo);
 		
 		UserDto userDto = (UserDto) map.get("userDto");
 		
@@ -132,11 +132,11 @@ public class UserController {
 		               (UserDto)session.getAttribute("userDto");
 		         
 		         if (sessionUserDto != null) {
-		            if (sessionUserDto.getNo() == userDto.getNo()) {
+		            if (sessionUserDto.getUserNo() == userDto.getUserNo()) {
 		            
 		            	UserDto newUserDto = new UserDto();
 		               
-		            	newUserDto.setNo(userDto.getNo());
+		            	newUserDto.setUserNo(userDto.getUserNo());
 		            	newUserDto.setEmail(userDto.getEmail());
 		            	newUserDto.setNickname(userDto.getNickname());
 		               
@@ -166,9 +166,9 @@ public class UserController {
 		@RequestMapping(value="/user/passwordUpdateCtr.do")
 		public String userPasswordUpdate(HttpSession session, UserDto userDto, Model model) {
 			logger.debug("Welcome userPasswordUpdate enter {}", userDto);
-			int no = userDto.getNo();
+			int userNo = userDto.getUserNo();
 			
-			Map<String, Object> map = userService.userSelectOne(no);
+			Map<String, Object> map = userService.userSelectOne(userNo);
 			UserDto userDto2 = (UserDto)map.get("userDto");
 			
 			 try {
@@ -181,7 +181,7 @@ public class UserController {
 		               (UserDto)session.getAttribute("userDto");
 		         
 		         if (sessionUserDto != null) {
-		            if (sessionUserDto.getNo() == userDto.getNo()) {
+		            if (sessionUserDto.getUserNo() == userDto.getUserNo()) {
 		            
 		            	UserDto newUserDto = new UserDto();
 		               
@@ -198,10 +198,10 @@ public class UserController {
 		}
 		
 		@RequestMapping(value="/user/deleteCtr.do", method = RequestMethod.GET)
-		public String userDelete(int no, HttpSession session, Model model) {
-			logger.info("Welcome userController userDeleteCtr! " + no);
+		public String userDelete(int userNo, HttpSession session, Model model) {
+			logger.info("Welcome userController userDeleteCtr! " + userNo);
 			
-			userService.userDeleteOne(no);
+			userService.userDeleteOne(userNo);
 			
 			session.invalidate();
 			

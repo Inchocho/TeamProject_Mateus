@@ -46,10 +46,10 @@
       <input type="password" id="passwordC"><br>
       
       이름<br>
-      <input type='text' name='name' id='name'><br>
+      <input type='text' name='userName' id='name'><br>
       
       생년월일<br>
-      <input type="date" name="birthdate"/> <br>   
+      <input type="date" name="userBirth"/> <br>   
 
       닉네임<br>
       <input type="text" name="nickname"><br>

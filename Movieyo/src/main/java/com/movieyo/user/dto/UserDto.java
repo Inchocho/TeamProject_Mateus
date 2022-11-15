@@ -6,79 +6,79 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class UserDto {
 
-    private int no; 
-    private String email;
-    private String password;
-    private String name;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date birthdate = null;
-    private Date createDate = null;
-    private String nickname;
-    private String gender;
+	private int userNo;
+	private String Email;
+	private String Password;
+	private String userName;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date userBirth;
+	private Date userCreateDate;
+	private String nickname;
+	private String gender;
 	
-    public UserDto() {
+	public UserDto(int userNo, String email, String password, String userName, Date userBirth, Date userCreateDate,
+			String nickname, String gender) {
 		super();
-	}
-
-	public UserDto(int no, String email, String password, String name, Date birthdate, Date createDate, String nickname,
-			String gender) {
-		super();
-		this.no = no;
-		this.email = email;
-		this.password = password;
-		this.name = name;
-		this.birthdate = birthdate;
-		this.createDate = createDate;
+		this.userNo = userNo;
+		Email = email;
+		Password = password;
+		this.userName = userName;
+		this.userBirth = userBirth;
+		this.userCreateDate = userCreateDate;
 		this.nickname = nickname;
 		this.gender = gender;
 	}
 
-	public int getNo() {
-		return no;
+	public UserDto() {
+		super();
 	}
 
-	public void setNo(int no) {
-		this.no = no;
+	public int getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
 	}
 
 	public String getEmail() {
-		return email;
+		return Email;
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		Email = email;
 	}
 
 	public String getPassword() {
-		return password;
+		return Password;
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		Password = password;
 	}
 
-	public String getName() {
-		return name;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public Date getBirthdate() {
-		return birthdate;
+	public Date getUserBirth() {
+		return userBirth;
 	}
 
-	public void setBirthdate(Date birthdate) {
-		this.birthdate = birthdate;
+	public void setUserBirth(Date userBirth) {
+		this.userBirth = userBirth;
 	}
 
-	public Date getCreateDate() {
-		return createDate;
+	public Date getUserCreateDate() {
+		return userCreateDate;
 	}
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setUserCreateDate(Date userCreateDate) {
+		this.userCreateDate = userCreateDate;
 	}
 
 	public String getNickname() {
@@ -99,17 +99,9 @@ public class UserDto {
 
 	@Override
 	public String toString() {
-		return "UserDto [no=" + no + ", email=" + email + ", password=" + password + ", name=" + name + ", birthdate="
-				+ birthdate + ", createDate=" + createDate + ", nickname=" + nickname + ", gender=" + gender + "]";
+		return "UserDto [userNo=" + userNo + ", Email=" + Email + ", Password=" + Password + ", userName=" + userName
+				+ ", userBirth=" + userBirth + ", userCreateDate=" + userCreateDate + ", nickname=" + nickname
+				+ ", gender=" + gender + "]";
 	}
-
 	
-
-	
-
-	
-
-	
-
-    
 }
