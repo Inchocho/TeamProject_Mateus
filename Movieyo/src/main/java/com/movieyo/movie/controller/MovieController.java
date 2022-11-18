@@ -1,5 +1,7 @@
 package com.movieyo.movie.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.movieyo.movie.dto.MovieDto;
+import com.movieyo.movie.service.MovieService;
 import com.movieyo.user.dto.UserDto;
 import com.movieyo.user.service.UserService;
 
@@ -19,7 +22,17 @@ public class MovieController {
 	= LoggerFactory.getLogger(MovieController.class);
 	
 	@Autowired
-	private UserService movieService;	
+	private MovieService movieService;	
+	
+	//apiTest 영화목록 들어가기
+	@RequestMapping(value="/movie/movie.do", method = RequestMethod.GET)
+	public String login(HttpSession session, Model model) {
+	
+		//logger.info, logger.trace, logger.debug, ~~~ 아래는 info사용한 예시
+		logger.info("Welcome MovieAddForm Access!");
+		
+		return "movie/apiTest";
+	}	
 	
 	@RequestMapping(value = "/movie/addMovie.do", method = RequestMethod.GET)
 	public String userAdd(Model model) {
