@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.movieyo.movie">
+
+	<resultMap type="MovieDto" id="movieResultMap">
+		<id column="MOVIE_NO" property="movieNo"/>
+		<result column="MOVIE_TITLE" property="movieTitle"/>
+		<result column="MOVIE_PRDTYEAR" property="prdtYear"/>
+		<result column="MOVIE_NATION" property="nation"/>
+		<result column="MOVIE_DIRECTOR" property="director"/>
+		<result column="MOVIE_RUNTIME" property="runtime"/>
+		<result column="MOVIE_GRADE" property="grade"/>
+		<result column="MOVIE_PRICE" property="price"/>
+		<result column="MOVIE_RATE" property="rate"/>	
+	</resultMap>
+
+	<!-- 회원 추가 -->
+	<insert id="movieInsertOne" parameterType="com.movieyo.movie.dto.MovieDto"
+	useGeneratedKeys="true" keyProperty="movieNo">
+		
+		<selectKey keyProperty="movieNo" resultType="int" order="BEFORE">
+			select MVY_MOVIE_NO_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO MVY_MOVIE
+		VALUE(MOVIE_NO, MOVIE_TITLE, MOVIE_PRDTYEAR, MOVIE_NATION, MOVIE_DIRECTOR, MOVIE_RUNTIME
+			,MOVIE_GRADE, MOVIE_PRICE, MOVIE_PRICE)
+		VALUES(#{movieTitle}, #{prdtYear}, #{nation}, #{director}
+			, #{runtime}, #{grade}, #{price}, #{rate})
+	</insert>
+	
+	<!-- 파일 추가  insertFile 영화추가에 파일(사진) 추가기능 -->
+	<insert id="insertFile" parameterType="movieDto">
+		INSERT INTO MVY_MOVIE_PHOTO
+		(IDX, PARENT_SEQ, ORIGINAL_FILE_NAME,
+		STORED_FILE_NAME, FILE_SIZE, CRE_DATE)
+		VALUES
+		(MVY_MOVIE_PHOTO_SEQ.NEXTVAL, #{parentSeq}, #{original_file_name},
+		 #{stored_file_name}, #{file_size}, SYSDATE)
+	</insert>	
+	
+</mapper>

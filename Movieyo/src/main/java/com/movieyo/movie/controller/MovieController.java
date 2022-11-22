@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.movieyo.movie.dto.MovieDto;
 import com.movieyo.movie.service.MovieService;
@@ -36,18 +37,20 @@ public class MovieController {
 	
 	@RequestMapping(value = "/movie/addMovie.do", method = RequestMethod.GET)
 	public String userAdd(Model model) {
+		
 		logger.debug("Welcome MovieController addMovie! ");
 		
 		return "movie/MovieForm";
 	}	
 	
 	@RequestMapping(value = "/movie/addCtr.do", method = RequestMethod.POST)
-	public String userAdd(MovieDto movieDto, Model model) {
+	public String userAdd(MovieDto movieDto, 
+			MultipartHttpServletRequest mulRequest, Model model) {
 		logger.trace("Welcome UserController userAdd 신규등록 처리! " 
 			+ movieDto);
 		
 		try {
-//			movieService.movieInsertOne(movieDto);
+			movieService.movieInsertOne(movieDto, mulRequest);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println("오랜만에 예외 처리 한다");
@@ -57,4 +60,6 @@ public class MovieController {
 				
 		return "redirect:/movie/list.do";
 	}	
+	
+	
 }
