@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<div style="background-color: #f0fff0; height: 20px; padding: 5px;
-	margin-top: 10px;">
-SPMS &copy; 2022
+<div>
+<img alt="이미지가 없습니다" src="/Movieyo/img/foot.png" style="width: -webkit-fill-available;">
 </div>
 
 

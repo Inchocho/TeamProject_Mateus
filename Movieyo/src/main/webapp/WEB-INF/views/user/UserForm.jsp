@@ -76,7 +76,7 @@
       <input type='submit' value='가입하기'>
    </form>  
 	
-<%-- 	<jsp:include page="../Tail.jsp"/> --%>
+	<jsp:include page="../Tail.jsp"/>
 	
 </body>
 
