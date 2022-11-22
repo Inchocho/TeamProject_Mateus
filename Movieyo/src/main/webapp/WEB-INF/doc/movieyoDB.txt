@@ -1,243 +1,243 @@
---- 여기에 테이블이랑 예제 데이터, 셀렉문이 있습니다
+--- ���⿡ ���̺��̶� ���� ������, �������� �ֽ��ϴ�
 
 -- SELECT * FROM ALL_TABLES WHERE TABLE_NAME LIKE '%MVY%';
 
 -- SELECT 'DROP TABLE '||TABLE_NAME||';'from user_tables WHERE TABLE_NAME LIKE '%MVY%';
 
--- 무비요 ER 테이블 
--- 영화
+-- ����� ER ���̺� 
+-- ��ȭ
 CREATE TABLE MVY_MOVIE(
-    MOVIE_NO NUMBER PRIMARY KEY,    --기본키
+    MOVIE_NO NUMBER PRIMARY KEY,    --�⺻Ű
     MOVIE_TITLE VARCHAR2(40) NOT NULL,
-    MOVIE_PRDTYEAR VARCHAR2(40) NOT NULL,    --제작년도 (YYYY) -- NUMBER로 숫자 4자리 ( )년 또는 DATE로 받을예정 일단 NUMBER
-    MOVIE_NATION VARCHAR2(40) NOT NULL,      --제작국가
-    MOVIE_DIRECTOR VARCHAR2(40) NOT NULL,    --감독
-    --MOVIE_GENRE VARCHAR2(40),       --장르
-    MOVIE_RUNTIME VARCHAR2(40) NOT NULL,     --상영시간  (120분 분단위임) -- 입력시 입력칸 [ ](분) 숫자만 넣으면 되게 할예정
-    MOVIE_GRADE VARCHAR2(40) NOT NULL,       --상영등급  
-    MOVIE_PRICE NUMBER NOT NULL,       --가격
-    MOVIE_RATE NUMBER DEFAULT 0        --점수(추천) 디폴트값 0 
+    MOVIE_PRDTYEAR VARCHAR2(40) NOT NULL,    --���۳⵵ (YYYY) -- NUMBER�� ���� 4�ڸ� ( )�� �Ǵ� DATE�� �������� �ϴ� NUMBER
+    MOVIE_NATION VARCHAR2(40) NOT NULL,      --���۱���
+    MOVIE_DIRECTOR VARCHAR2(40) NOT NULL,    --����
+    --MOVIE_GENRE VARCHAR2(40),       --�帣
+    MOVIE_RUNTIME VARCHAR2(40) NOT NULL,     --�󿵽ð�  (120�� �д�����) -- �Է½� �Է�ĭ [ ](��) ���ڸ� ������ �ǰ� �ҿ���
+    MOVIE_GRADE VARCHAR2(40) NOT NULL,       --�󿵵��  
+    MOVIE_PRICE NUMBER NOT NULL,       --����
+    MOVIE_RATE NUMBER DEFAULT 0        --����(��õ) ����Ʈ�� 0 
 );
 
--- 영화 사진
+-- ��ȭ ����
 CREATE TABLE MVY_MOVIE_PHOTO(
-    PHOTO_NO NUMBER PRIMARY KEY,    -- 기본키
-    MOVIE_NO NUMBER NOT NULL,                -- 외래키(MVY_MOVIE테이블의 MOVIE_NO)
+    PHOTO_NO NUMBER PRIMARY KEY,    -- �⺻Ű
+    MOVIE_NO NUMBER NOT NULL,                -- �ܷ�Ű(MVY_MOVIE���̺��� MOVIE_NO)
     PHOTO_NAME VARCHAR2(4000) NOT NULL
 );
 
--- 장바구니
+-- ��ٱ���
 CREATE TABLE MVY_CART(
-    CART_NO NUMBER PRIMARY KEY, -- 기본키
-    USER_NO NUMBER NOT NULL,             -- 유저번호 외래키1 (유저) MVY_USER테이블의 USER_NO
-    MOVIE_NO NUMBER NOT NULL             -- 영화번호 외래키2 (상품) MVY_MOVIE테이블의 MOVIE_NO
+    CART_NO NUMBER PRIMARY KEY, -- �⺻Ű
+    USER_NO NUMBER NOT NULL,             -- ������ȣ �ܷ�Ű1 (����) MVY_USER���̺��� USER_NO
+    MOVIE_NO NUMBER NOT NULL             -- ��ȭ��ȣ �ܷ�Ű2 (��ǰ) MVY_MOVIE���̺��� MOVIE_NO
 );
 
--- 구매내역
+-- ���ų���
 CREATE TABLE MVY_BUY(
-    BUY_NO NUMBER PRIMARY KEY,    --기본키
-    MOVIE_NO NUMBER NOT NULL,    --상품 외래키1		MVY_MOVIE 테이블의 MOVIE_NO
-    USER_NO NUMBER NOT NULL,     --구매한유저 외래키2  MVY_USER 테이블의 USER_NO
-    BUY_DATE DATE NOT NULL,      --구매일
-    BUY_STATUS VARCHAR2(40) NOT NULL --구매상태(보유중)
+    BUY_NO NUMBER PRIMARY KEY,    --�⺻Ű
+    MOVIE_NO NUMBER NOT NULL,    --��ǰ �ܷ�Ű1		MVY_MOVIE ���̺��� MOVIE_NO
+    USER_NO NUMBER NOT NULL,     --���������� �ܷ�Ű2  MVY_USER ���̺��� USER_NO
+    BUY_DATE DATE NOT NULL,      --������
+    BUY_STATUS VARCHAR2(40) NOT NULL --���Ż���(������)
 );
 
--- 환불내역
+-- ȯ�ҳ���
 CREATE TABLE MVY_REFUND(
-    REFUND_NO NUMBER PRIMARY KEY,   -- 기본키
-    BUY_NO NUMBER NOT NULL,                	-- 외래키	MVY_BUY 테이블의 BUY_NO
-    REFUND_DATE DATE NOT NULL,				-- 환불(요청)일
-    REFUND_STATUS VARCHAR2(40) NOT NULL		-- 환불상태
+    REFUND_NO NUMBER PRIMARY KEY,   -- �⺻Ű
+    BUY_NO NUMBER NOT NULL,                	-- �ܷ�Ű	MVY_BUY ���̺��� BUY_NO
+    REFUND_DATE DATE NOT NULL,				-- ȯ��(��û)��
+    REFUND_STATUS VARCHAR2(40) NOT NULL		-- ȯ�һ���
 );
 
 	
--- 유저
+-- ����
 CREATE TABLE MVY_USER(
-    USER_NO NUMBER PRIMARY KEY,     -- 기본키
-    USER_EMAIL VARCHAR2(40) NOT NULL,        -- 이메일
-    USER_PASSWORD VARCHAR2(40) NOT NULL,     -- 비밀번호
-    USER_NAME VARCHAR2(40) NOT NULL,         -- 이름
-    USER_BIRTH DATE NOT NULL,                -- 생일
-    USER_CREDATE DATE NOT NULL,				 -- 유저 생성일
-    USER_NICKNAME VARCHAR2(40) NOT NULL,     -- 닉네임
-    USER_GENDER VARCHAR2(10) NOT NULL        -- 성별
+    USER_NO NUMBER PRIMARY KEY,     -- �⺻Ű
+    USER_EMAIL VARCHAR2(40) NOT NULL,        -- �̸���
+    USER_PASSWORD VARCHAR2(40) NOT NULL,     -- ��й�ȣ
+    USER_NAME VARCHAR2(40) NOT NULL,         -- �̸�
+    USER_BIRTH DATE NOT NULL,                -- ����
+    USER_CREDATE DATE NOT NULL,				 -- ���� ������
+    USER_NICKNAME VARCHAR2(40) NOT NULL,     -- �г���
+    USER_GENDER VARCHAR2(10) NOT NULL        -- ����
     --USER_GENRE VARCHAR2(40)
 );	
 
--- 장르테이블
+-- �帣���̺�
 CREATE TABLE GENRE(
-    GENRE_NO NUMBER PRIMARY KEY,    -- 기본키
-    GENRE_NAME VARCHAR2(40) NOT NULL         -- 장르명
+    GENRE_NO NUMBER PRIMARY KEY,    -- �⺻Ű
+    GENRE_NAME VARCHAR2(40) NOT NULL         -- �帣��
 );
 
--- 장르테이블-영화
+-- �帣���̺�-��ȭ
 CREATE TABLE GENRE_MOVIE(
-    GENRE_MOVIE_NO NUMBER PRIMARY KEY,  -- 장르영화 번호 기본키
-    MOVIE_NO NUMBER NOT NULL,                    -- 영화번호 외래키	MVY_MOVIE테이블의 MOVIE_NO
-    GENRE_NO NUMBER NOT NULL                     -- 장르번호 외래키	GENRE 테이블의 GENRE_NO
+    GENRE_MOVIE_NO NUMBER PRIMARY KEY,  -- �帣��ȭ ��ȣ �⺻Ű
+    MOVIE_NO NUMBER NOT NULL,                    -- ��ȭ��ȣ �ܷ�Ű	MVY_MOVIE���̺��� MOVIE_NO
+    GENRE_NO NUMBER NOT NULL                     -- �帣��ȣ �ܷ�Ű	GENRE ���̺��� GENRE_NO
 );
 
--- 장르테이블-유저
+-- �帣���̺�-����
 CREATE TABLE GENRE_USER(
-    GENRE_USER_NO NUMBER PRIMARY KEY,   -- 장르유저 번호 기본키
-    USER_NO NUMBER NOT NULL,                     -- 유저번호 외래키	MVY_USER 테이블의 USER_NO
-    GENRE_NO NUMBER NOT NULL                     -- 장르번호 외래키	GENRE 테이블의 GENRE_NO
+    GENRE_USER_NO NUMBER PRIMARY KEY,   -- �帣���� ��ȣ �⺻Ű
+    USER_NO NUMBER NOT NULL,                     -- ������ȣ �ܷ�Ű	MVY_USER ���̺��� USER_NO
+    GENRE_NO NUMBER NOT NULL                     -- �帣��ȣ �ܷ�Ű	GENRE ���̺��� GENRE_NO
 );
 
--- 게시판
+-- �Խ���
 CREATE TABLE MVY_BOARD(
-    BOARD_NO NUMBER PRIMARY KEY,    -- 기본키
-    USER_NO NUMBER NOT NULL,                 -- 외래키	MVY_USER 테이블의 USER_NO
-    BOARD_HEAD VARCHAR2(40) NOT NULL,        -- 말머리
-    BOARD_TITLE VARCHAR2(40) NOT NULL,       -- 제목
-    BOARD_CONTENT VARCHAR2(4000) NOT NULL,   -- 내용
-    BOARD_CREDATE DATE NOT NULL,             -- 작성일
-    BOARD_MODDATE DATE NOT NULL,             -- 수정일
-    BOARD_COUNT NUMBER DEFAULT 0             -- 조회수(디폴트 0)
+    BOARD_NO NUMBER PRIMARY KEY,    -- �⺻Ű
+    USER_NO NUMBER NOT NULL,                 -- �ܷ�Ű	MVY_USER ���̺��� USER_NO
+    BOARD_HEAD VARCHAR2(40) NOT NULL,        -- ���Ӹ�
+    BOARD_TITLE VARCHAR2(40) NOT NULL,       -- ����
+    BOARD_CONTENT VARCHAR2(4000) NOT NULL,   -- ����
+    BOARD_CREDATE DATE NOT NULL,             -- �ۼ���
+    BOARD_MODDATE DATE NOT NULL,             -- ������
+    BOARD_COUNT NUMBER DEFAULT 0             -- ��ȸ��(����Ʈ 0)
 );
 
--- 유저 캐쉬충전
+-- ���� ĳ������
 CREATE TABLE MVY_USER_CHARGE(
-    CHARGE_NO NUMBER PRIMARY KEY,   -- 기본키
-    USER_NO NUMBER NOT NULL,                 -- 외래키 유저	MVY_USER 테이블의 USER_NO
-    CHARGE_DATE DATE NOT NULL,               -- 충전일
-    USER_CASH NUMBER NOT NULL                -- 유저캐쉬
+    CHARGE_NO NUMBER PRIMARY KEY,   -- �⺻Ű
+    USER_NO NUMBER NOT NULL,                 -- �ܷ�Ű ����	MVY_USER ���̺��� USER_NO
+    CHARGE_DATE DATE NOT NULL,               -- ������
+    USER_CASH NUMBER NOT NULL                -- ����ĳ��
 );
 
--- 테이블 제약조건(외래키) 추가
+-- ���̺� ��������(�ܷ�Ű) �߰�
 
--- 영화사진 테이블의 영화번호 외래키 조건 추가
+-- ��ȭ���� ���̺��� ��ȭ��ȣ �ܷ�Ű ���� �߰�
 ALTER TABLE MVY_MOVIE_PHOTO ADD CONSTRAINT MVY_MOVIE_PHOTO_MOVIE_NO_FK FOREIGN KEY(MOVIE_NO) REFERENCES MVY_MOVIE(MOVIE_NO); 
 
--- 장바구니 테이블의 유저번호, 영화번호 외래키 조건 추가
+-- ��ٱ��� ���̺��� ������ȣ, ��ȭ��ȣ �ܷ�Ű ���� �߰�
 ALTER TABLE MVY_CART ADD CONSTRAINT MVY_CART_USER_NO_FK FOREIGN KEY(USER_NO) REFERENCES MVY_USER(USER_NO); 
 ALTER TABLE MVY_CART ADD CONSTRAINT MVY_CART_MOVIE_NO_FK FOREIGN KEY(MOVIE_NO) REFERENCES MVY_MOVIE(MOVIE_NO); 
 
--- 장바구니 테이블의 유저번호, 영화번호 외래키 조건 추가
+-- ��ٱ��� ���̺��� ������ȣ, ��ȭ��ȣ �ܷ�Ű ���� �߰�
 ALTER TABLE MVY_BUY ADD CONSTRAINT MVY_BUY_USER_NO_FK FOREIGN KEY(USER_NO) REFERENCES MVY_USER(USER_NO); 
 ALTER TABLE MVY_BUY ADD CONSTRAINT MVY_BUY_MOVIE_NO_FK FOREIGN KEY(MOVIE_NO) REFERENCES MVY_MOVIE(MOVIE_NO); 
 
--- 장바구니 테이블의 유저번호, 영화번호 외래키 조건 추가
+-- ��ٱ��� ���̺��� ������ȣ, ��ȭ��ȣ �ܷ�Ű ���� �߰�
 ALTER TABLE MVY_REFUND ADD CONSTRAINT MVY_REFUND_BUY_NO_FK FOREIGN KEY(BUY_NO) REFERENCES MVY_BUY(BUY_NO); 
 
--- 장르무비 테이블의 영화번호, 장르번호 외래키 조건 추가
+-- �帣���� ���̺��� ��ȭ��ȣ, �帣��ȣ �ܷ�Ű ���� �߰�
 ALTER TABLE GENRE_MOVIE ADD CONSTRAINT GENRE_MOVIE_MOVIE_NO_FK FOREIGN KEY(MOVIE_NO) REFERENCES MVY_MOVIE(MOVIE_NO); 
 ALTER TABLE GENRE_MOVIE ADD CONSTRAINT GENRE_MOVIE_GENRE_NO_FK FOREIGN KEY(GENRE_NO) REFERENCES GENRE(GENRE_NO); 
 
--- 장르유저 테이블의 유저번호, 장르번호 외래키 조건 추가
+-- �帣���� ���̺��� ������ȣ, �帣��ȣ �ܷ�Ű ���� �߰�
 ALTER TABLE GENRE_USER ADD CONSTRAINT GENRE_USER_USER_NO_FK FOREIGN KEY(USER_NO) REFERENCES MVY_USER(USER_NO); 
 ALTER TABLE GENRE_USER ADD CONSTRAINT GENRE_USER_GENRE_NO_FK FOREIGN KEY(GENRE_NO) REFERENCES GENRE(GENRE_NO); 
 
--- 게시판 테이블의 유저번호 외래키 조건 추가
+-- �Խ��� ���̺��� ������ȣ �ܷ�Ű ���� �߰�
 ALTER TABLE MVY_BOARD ADD CONSTRAINT MVY_BOARD_USER_NO_FK FOREIGN KEY(USER_NO) REFERENCES MVY_USER(USER_NO); 
 
--- 유저캐쉬충전 테이블의 유저번호 외래키 조건 추가
+-- ����ĳ������ ���̺��� ������ȣ �ܷ�Ű ���� �߰�
 ALTER TABLE MVY_USER_CHARGE ADD CONSTRAINT MVY_USER_CHARGE_USER_NO_FK FOREIGN KEY(USER_NO) REFERENCES MVY_USER(USER_NO); 
 
---시퀀스----
+--������----
 
--- 영화테이블 시퀀스
-CREATE SEQUENCE MVY_MOVIE_NO_SEQ    -- 영화번호(기본키) 시퀀스
+-- ��ȭ���̺� ������
+CREATE SEQUENCE MVY_MOVIE_NO_SEQ    -- ��ȭ��ȣ(�⺻Ű) ������
     START WITH 1
     INCREMENT BY 1;
 
--- 영화사진테이블 시퀀스
-CREATE SEQUENCE MVY_MOVIE_PHOTO_SEQ -- 영화사진번호(기본키) 시퀀스
+-- ��ȭ�������̺� ������
+CREATE SEQUENCE MVY_MOVIE_PHOTO_SEQ -- ��ȭ������ȣ(�⺻Ű) ������
     START WITH 1
     INCREMENT BY 1;
     
--- 장바구니테이블 시퀀스
-CREATE SEQUENCE MVY_CART_NO_SEQ -- 카트번호(기본키) 시퀀스
+-- ��ٱ������̺� ������
+CREATE SEQUENCE MVY_CART_NO_SEQ -- īƮ��ȣ(�⺻Ű) ������
     START WITH 1
     INCREMENT BY 1;
     
--- 구매내역테이블 시퀀스
-CREATE SEQUENCE MVY_BUY_NO_SEQ  -- 구매내역번호(기본키) 시퀀스
+-- ���ų������̺� ������
+CREATE SEQUENCE MVY_BUY_NO_SEQ  -- ���ų�����ȣ(�⺻Ű) ������
     START WITH 1
     INCREMENT BY 1;
 
--- 환불내역테이블 시퀀스
-CREATE SEQUENCE MVY_REFUND_NO_SEQ -- 환불내역번호(기본키) 시퀀스
+-- ȯ�ҳ������̺� ������
+CREATE SEQUENCE MVY_REFUND_NO_SEQ -- ȯ�ҳ�����ȣ(�⺻Ű) ������
     START WITH 1
     INCREMENT BY 1;
 
--- 유저테이블 시퀀스
-CREATE SEQUENCE MVY_USER_NO_SEQ -- 유저번호(기본키) 시퀀스
+-- �������̺� ������
+CREATE SEQUENCE MVY_USER_NO_SEQ -- ������ȣ(�⺻Ű) ������
     START WITH 1
     INCREMENT BY 1;
     
--- 장르테이블 시퀀스
-CREATE SEQUENCE GENRE_NO_SEQ -- 장르번호(기본키) 시퀀스 --> 근데 이건 고정값으로 먼저 입력하고 쓸 예정
+-- �帣���̺� ������
+CREATE SEQUENCE GENRE_NO_SEQ -- �帣��ȣ(�⺻Ű) ������ --> �ٵ� �̰� ���������� ���� �Է��ϰ� �� ����
     START WITH 1
     INCREMENT BY 1;
 
--- 장르영화 테이블 시퀀스    
-CREATE SEQUENCE GENRE_MOVIE_NO_SEQ -- 장르영화번호 (기본키) 시퀀스
+-- �帣��ȭ ���̺� ������    
+CREATE SEQUENCE GENRE_MOVIE_NO_SEQ -- �帣��ȭ��ȣ (�⺻Ű) ������
     START WITH 1
     INCREMENT BY 1;
     
--- 장르유저 테이블 시퀀스
-CREATE SEQUENCE GENRE_USER_NO_SEQ -- 장르유저번호 (기본키) 시퀀스
+-- �帣���� ���̺� ������
+CREATE SEQUENCE GENRE_USER_NO_SEQ -- �帣������ȣ (�⺻Ű) ������
     START WITH 1
     INCREMENT BY 1;
 
--- 게시판 테이블 시퀀스
-CREATE SEQUENCE MVY_BOARD_NO_SEQ -- 게시판번호 (기본키) 시퀀스
+-- �Խ��� ���̺� ������
+CREATE SEQUENCE MVY_BOARD_NO_SEQ -- �Խ��ǹ�ȣ (�⺻Ű) ������
     START WITH 1
     INCREMENT BY 1;
 
--- 유저충전테이블 시퀀스
-CREATE SEQUENCE MVY_USER_CHARGE_NO_SEQ -- 유저충전번호(기본키) 시퀀스
+-- �����������̺� ������
+CREATE SEQUENCE MVY_USER_CHARGE_NO_SEQ -- ����������ȣ(�⺻Ű) ������
     START WITH 1
     INCREMENT BY 1;
 
------------ 데이터 추가 예제
+----------- ������ �߰� ����
 DESC GENRE;
--- GENRE 데이터 삽입 (장르번호 - PK, 장르이름)
-INSERT INTO GENRE VALUES(1,'코미디');
-INSERT INTO GENRE VALUES(2,'액션');
-INSERT INTO GENRE VALUES(3,'호러');
-INSERT INTO GENRE VALUES(4,'멜로');
-INSERT INTO GENRE VALUES(5,'로맨스');
-INSERT INTO GENRE VALUES(6,'음악');
+-- GENRE ������ ���� (�帣��ȣ - PK, �帣�̸�)
+INSERT INTO GENRE VALUES(1,'�ڹ̵�');
+INSERT INTO GENRE VALUES(2,'�׼�');
+INSERT INTO GENRE VALUES(3,'ȣ��');
+INSERT INTO GENRE VALUES(4,'���');
+INSERT INTO GENRE VALUES(5,'�θǽ�');
+INSERT INTO GENRE VALUES(6,'����');
 
 DESC MVY_MOVIE;
--- MVY_MOVIE 데이터 삽입 (영화번호 - PK, 영화제목, 제작년도,제작국가,감독,상영시간,영화등급,가격,영화점수(추천))
-INSERT INTO MVY_MOVIE VALUES(1,'코믹영화1호의역습','1992','대한민국','김호동','120','12세이용가',7000,0);
-INSERT INTO MVY_MOVIE VALUES(2,'코믹영화2호의등장','1995','대한민국','김호동','123','12세이용가',12000,0);
+-- MVY_MOVIE ������ ���� (��ȭ��ȣ - PK, ��ȭ����, ���۳⵵,���۱���,����,�󿵽ð�,��ȭ���,����,��ȭ����(��õ))
+INSERT INTO MVY_MOVIE VALUES(1,'�ڹͿ�ȭ1ȣ�ǿ���','1992','���ѹα�','��ȣ��','120','12���̿밡',7000,0);
+INSERT INTO MVY_MOVIE VALUES(2,'�ڹͿ�ȭ2ȣ�ǵ���','1995','���ѹα�','��ȣ��','123','12���̿밡',12000,0);
 
--- MVY_MOVIE_PHOTO 데이터 삽입 (사진번호 - PK,영화번호 - FK)
-INSERT INTO MVY_MOVIE_PHOTO VALUES(1,1,'사진1');
-INSERT INTO MVY_MOVIE_PHOTO VALUES(2,2,'사진2');
+-- MVY_MOVIE_PHOTO ������ ���� (������ȣ - PK,��ȭ��ȣ - FK)
+INSERT INTO MVY_MOVIE_PHOTO VALUES(1,1,'����1');
+INSERT INTO MVY_MOVIE_PHOTO VALUES(2,2,'����2');
 
--- GENRE_MOVIE 데이터 삽입 (장르무비번호 - PK, 영화번호 - FK, 장르번호 - FK)
-INSERT INTO GENRE_MOVIE VALUES(1,1,1);  -- 장르무비 기본키1, 영화번호1, 장르번호1
-INSERT INTO GENRE_MOVIE VALUES(2,2,2);  -- 장르무비 기본키1, 영화번호1, 장르번호1
+-- GENRE_MOVIE ������ ���� (�帣�����ȣ - PK, ��ȭ��ȣ - FK, �帣��ȣ - FK)
+INSERT INTO GENRE_MOVIE VALUES(1,1,1);  -- �帣���� �⺻Ű1, ��ȭ��ȣ1, �帣��ȣ1
+INSERT INTO GENRE_MOVIE VALUES(2,2,2);  -- �帣���� �⺻Ű1, ��ȭ��ȣ1, �帣��ȣ1
 
--- MVY_USER 데이터 삽입 (유저번호 - PK, 이메일, 비밀번호, 이름, 생년월일, 생성일, 닉네임, 성별)
-INSERT INTO MVY_USER VALUES(1,'herais100@naver.com','1234','이현석','1995-12-11', SYSDATE, '이현짱석','남자');
+-- MVY_USER ������ ���� (������ȣ - PK, �̸���, ��й�ȣ, �̸�, �������, ������, �г���, ����)
+INSERT INTO MVY_USER VALUES(1,'herais100@naver.com','1234','������','1995-12-11', SYSDATE, '����¯��','����');
 
--- GENRE_USER 데이터 삽입 (장르유저번호 - PK, 영화번호 - FK, 장르번호 - FK)
+-- GENRE_USER ������ ���� (�帣������ȣ - PK, ��ȭ��ȣ - FK, �帣��ȣ - FK)
 INSERT INTO GENRE_USER VALUES(1,1,5);
 
--- MVY_USER_CHARGE 데이터 삽입 (충전번호 - PK, 유저번호 - FK, 충전일, 현재보유캐쉬)
+-- MVY_USER_CHARGE ������ ���� (������ȣ - PK, ������ȣ - FK, ������, ���纸��ĳ��)
 INSERT INTO MVY_USER_CHARGE VALUES(1,1,SYSDATE,50000);
 
--- MVY_CART 데이터 삽입 (카트번호 - PK, 유저번호 - FK, 영화번호 - FK)
+-- MVY_CART ������ ���� (īƮ��ȣ - PK, ������ȣ - FK, ��ȭ��ȣ - FK)
 INSERT INTO MVY_CART VALUES(1,1,1);
 
--- MVY_BOARD 데이터 삽입 (게시판번호 - PK, 유저번호 - FK, 말머리, 제목, 내용, 생성일, 수정일, 조회수)
-INSERT INTO MVY_BOARD VALUES(1,1,'자유','1번마입니다','안녕하세요안녕하세요내용내용네용',SYSDATE,SYSDATE,0);
+-- MVY_BOARD ������ ���� (�Խ��ǹ�ȣ - PK, ������ȣ - FK, ���Ӹ�, ����, ����, ������, ������, ��ȸ��)
+INSERT INTO MVY_BOARD VALUES(1,1,'����','1�����Դϴ�','�ȳ��ϼ���ȳ��ϼ��䳻�볻��׿�',SYSDATE,SYSDATE,0);
 
--- MVY_BUY 데이터 삽입 (구매번호 - PK, 영화번호 - FK, 유저번호 - FK, 구매일, 구매상태)
-INSERT INTO MVY_BUY VALUES(1,1,1,SYSDATE,'보유중');
-INSERT INTO MVY_BUY VALUES(2,2,1,SYSDATE,'보유중');
+-- MVY_BUY ������ ���� (���Ź�ȣ - PK, ��ȭ��ȣ - FK, ������ȣ - FK, ������, ���Ż���)
+INSERT INTO MVY_BUY VALUES(1,1,1,SYSDATE,'������');
+INSERT INTO MVY_BUY VALUES(2,2,1,SYSDATE,'������');
 
--- MVY_REFUND 데이터 삽입 (환불번호 - PK, 구매번호 - FK, 환불일, 환불상태)
-INSERT INTO MVY_REFUND VALUES(1,2,SYSDATE,'처리중');
+-- MVY_REFUND ������ ���� (ȯ�ҹ�ȣ - PK, ���Ź�ȣ - FK, ȯ����, ȯ�һ���)
+INSERT INTO MVY_REFUND VALUES(1,2,SYSDATE,'ó����');
 
--- 영화등록시 영화테이블에는 영화정보
--- 장르영화 테이블에는 영화번호, 장르번호가 들어가서 장르테이블에 있는 장르값이 들어감
+-- ��ȭ��Ͻ� ��ȭ���̺����� ��ȭ����
+-- �帣��ȭ ���̺����� ��ȭ��ȣ, �帣��ȣ�� ���� �帣���̺��� �ִ� �帣���� ��
 SELECT A.*, B.GENRE_NAME, D.PHOTO_NAME 
 FROM MVY_MOVIE A, 
      GENRE B, 
@@ -248,8 +248,8 @@ AND C.GENRE_NO = B.GENRE_NO
 AND A.MOVIE_NO = D.MOVIE_NO
 AND A.MOVIE_NO = 1;
 
--- 유저등록시 유저테이블에는 유저정보
--- 장르유저 테이블에는 유저번호, 장르번호가 들어가서 장르테이블에 있는 장르값이 들어감
+-- ������Ͻ� �������̺����� ��������
+-- �帣���� ���̺����� ������ȣ, �帣��ȣ�� ���� �帣���̺��� �ִ� �帣���� ��
 SELECT A.*, B.GENRE_NAME
 FROM MVY_USER A,   
      GENRE B, 
@@ -258,14 +258,14 @@ WHERE A.USER_NO = C.USER_NO
 AND C.GENRE_NO = B.GENRE_NO
 AND A.USER_NO = 1;
 
--- 유저충전 테이블에는 유저번호를 통해 유저의 잔여캐쉬를 보여줌
+-- �������� ���̺����� ������ȣ�� ���� ������ �ܿ�ĳ���� ������
 SELECT A.USER_NICKNAME, B.USER_CASH 
 FROM MVY_USER A,
      MVY_USER_CHARGE B
 WHERE A.USER_NO = B.USER_NO
 AND A.USER_NO = 1;
 
--- 구매내역 테이블에는 유저번호를 통해 유저가 구매한 구매내역을 보여줌 
+-- ���ų��� ���̺����� ������ȣ�� ���� ������ ������ ���ų����� ������ 
 SELECT A.USER_NICKNAME, B.BUY_DATE, C.MOVIE_TITLE, C.MOVIE_PRICE, B.BUY_STATUS
 FROM MVY_USER A,
      MVY_BUY B,
@@ -274,7 +274,7 @@ WHERE A.USER_NO = B.USER_NO
 AND B.MOVIE_NO = C.MOVIE_NO
 AND A.USER_NO = 1;
 
--- 유저의 환불내역을 확인 
+-- ������ ȯ�ҳ����� Ȯ�� 
 SELECT B.MOVIE_TITLE, B.MOVIE_PRICE, C.BUY_DATE, A.REFUND_DATE, A.REFUND_STATUS
 FROM MVY_REFUND A, MVY_MOVIE B, MVY_BUY C, MVY_USER D
 WHERE A.BUY_NO = C.BUY_NO
@@ -282,18 +282,8 @@ AND C.USER_NO = D.USER_NO
 AND C.MOVIE_NO = B.MOVIE_NO
 AND D.USER_NO = 1;
 
--- 유저의 게시글을 확인
+-- ������ �Խñ��� Ȯ��
 SELECT A.USER_NICKNAME, B.BOARD_HEAD, B.BOARD_TITLE, B.BOARD_CONTENT, B.BOARD_CREDATE, B.BOARD_COUNT
 FROM MVY_USER A, MVY_BOARD B
 WHERE A.USER_NO = B.USER_NO
 AND A.USER_NO = 1;
-
-
-
-
-
-
-
-
-
-
