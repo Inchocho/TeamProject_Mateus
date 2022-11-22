@@ -36,6 +36,7 @@ public class MovieController {
 	
 	@RequestMapping(value = "/movie/addMovie.do", method = RequestMethod.GET)
 	public String userAdd(Model model) {
+		
 		logger.debug("Welcome MovieController addMovie! ");
 		
 		return "movie/MovieForm";
