@@ -29,12 +29,7 @@
 <body>
 
 	<jsp:include page="../Header.jsp" />
-	
-<!-- 	<img alt="이미지 경로 테스트 실패"  -->
-<%-- 		src="<c:url value='/resources/img/jquery_error.jpg'/>"> --%>
-<!-- 	<img alt="이미지 경로 테스트 실패"  -->
-<!-- 		src='/springHome/resources/img/jquery_error.jpg'> -->
-	
+	<jsp:include page="../UserMyPageSideMenu.jsp"></jsp:include>
 	<h1>내정보</h1>
 	<form action='./update.do' method='get'>
 		<input type="hidden" name='userNo' value='${userDto.userNo}'>
@@ -59,6 +54,6 @@
 <%-- 		 <a href='./deleteCtr.do?no=${userDto.no}'>회원탈퇴</a><br> --%>
 					
 	</form>
-	
+	<jsp:include page="../Tail.jsp" />
 </body>
 </html>

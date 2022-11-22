@@ -8,6 +8,10 @@
 	<typeAliases>
 		<typeAlias type="com.movieyo.user.dto.UserDto"
 			alias="userDto" />
-	</typeAliases>
 
+		<!-- 2022/11/22 movieDto 추가 -->			
+		<typeAlias type="com.movieyo.movie.dto.MovieDto"
+			alias="movieDto" />			
+	</typeAliases>
+	
 </configuration>
