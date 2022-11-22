@@ -36,17 +36,17 @@ public class MovieController {
 	}	
 	
 	@RequestMapping(value = "/movie/addMovie.do", method = RequestMethod.GET)
-	public String userAdd(Model model) {
+	public String movieAdd(Model model) {
 		
-		logger.debug("Welcome MovieController addMovie! ");
+		logger.debug("Welcome MovieController 영화등록폼! ");
 		
-		return "movie/MovieForm";
+		return "movie/MovieAddForm";
 	}	
 	
 	@RequestMapping(value = "/movie/addCtr.do", method = RequestMethod.POST)
-	public String userAdd(MovieDto movieDto, 
-			MultipartHttpServletRequest mulRequest, Model model) {
-		logger.trace("Welcome UserController userAdd 신규등록 처리! " 
+	public String movieAdd(MovieDto movieDto, Model model,
+			MultipartHttpServletRequest mulRequest) {
+		logger.trace("Welcome MoiveController movieAdd 신규등록 처리! " 
 			+ movieDto);
 		
 		try {
@@ -58,8 +58,6 @@ public class MovieController {
 			e.printStackTrace();
 		}
 				
-		return "redirect:/movie/list.do";
+		return "redirect:/movie/addMovie.do";
 	}	
-	
-	
 }

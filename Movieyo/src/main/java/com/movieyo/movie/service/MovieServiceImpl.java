@@ -20,19 +20,18 @@ import com.movieyo.util.FileUtils;
 @Service
 public class MovieServiceImpl implements MovieService{
 	
-	private static final Logger log 
-	= LoggerFactory.getLogger(MovieServiceImpl.class);	
-	
+	private static final Logger log
+		= LoggerFactory.getLogger(MovieServiceImpl.class);
+
 	@Autowired
 	public MovieDao movieDao;
 	
 	@Resource(name="fileUtils")
 	private FileUtils fileUtils;
-
+	
 	@Override
 	public void movieInsertOne(MovieDto movieDto, MultipartHttpServletRequest mulRequest) throws Exception {
 		// TODO Auto-generated method stub
-		
 		movieDao.movieInsertOne(movieDto, mulRequest);
 		
 		Iterator<String> iterator = mulRequest.getFileNames();
@@ -59,14 +58,13 @@ public class MovieServiceImpl implements MovieService{
 		int parentSeq = movieDto.getMovieNo();
 			
 		List<Map<String, Object>> list
-			= fileUtils.parseInsertFileInfo(parentSeq
-				, mulRequest);
+		= fileUtils.parseInsertFileInfo(parentSeq
+			, mulRequest);
 		
 		//다수의 동시 업로드를 처리하기 위해 list를 사용함 - 기존 단건 업로드시 Map형식으로 작성하면 끝
 		for (int i = 0; i < list.size(); i++) {
 			movieDao.insertFile(list.get(i));
 		}		
-		
 	}
 
 }

@@ -8,8 +8,8 @@ import com.movieyo.movie.dto.MovieDto;
 
 public interface MovieDao {
 
-	public void insertFile(Map<String, Object> map);
-
 	public int movieInsertOne(MovieDto movieDto, MultipartHttpServletRequest mulRequest);
+
+	public void insertFile(Map<String, Object> map);
 
 }
