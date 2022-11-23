@@ -11,7 +11,12 @@
 
 		<!-- 2022/11/22 movieDto 추가 -->			
 		<typeAlias type="com.movieyo.movie.dto.MovieDto"
-			alias="movieDto" />			
+			alias="movieDto" />	
+		
+		<!-- 2022/11/22 BoardDto 추가 -->	
+		<typeAlias type="com.movieyo.board.dto.BoardDto"
+			alias="BoardDto" />	
 	</typeAliases>
+	
 	
 </configuration>
