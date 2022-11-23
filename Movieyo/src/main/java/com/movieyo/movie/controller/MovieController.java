@@ -35,29 +35,29 @@ public class MovieController {
 		return "movie/apiTest";
 	}	
 	
-	@RequestMapping(value = "/movie/addMovie.do", method = RequestMethod.GET)
-	public String movieAdd(Model model) {
-		
-		logger.debug("Welcome MovieController 영화등록폼! ");
-		
-		return "movie/MovieAddForm";
-	}	
-	
-	@RequestMapping(value = "/movie/addCtr.do", method = RequestMethod.POST)
-	public String movieAdd(MovieDto movieDto, Model model,
-			MultipartHttpServletRequest mulRequest) {
-		logger.trace("Welcome MoiveController movieAdd 신규등록 처리! " 
-			+ movieDto);
-		
-		try {
-			movieService.movieInsertOne(movieDto, mulRequest);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			System.out.println("오랜만에 예외 처리 한다");
-			System.out.println("파일 문제 예외일 가능성 높음");
-			e.printStackTrace();
-		}
-				
-		return "redirect:/movie/addMovie.do";
-	}	
+//	@RequestMapping(value = "/movie/addMovie.do", method = RequestMethod.GET)
+//	public String movieAdd(Model model) {
+//		
+//		logger.debug("Welcome MovieController 영화등록폼! ");
+//		
+//		return "movie/MovieAddForm";
+//	}	
+//	
+//	@RequestMapping(value = "/movie/addCtr.do", method = RequestMethod.POST)
+//	public String movieAdd(MovieDto movieDto, Model model,
+//			MultipartHttpServletRequest mulRequest) {
+//		logger.trace("Welcome MoiveController movieAdd 신규등록 처리! " 
+//			+ movieDto);
+//		
+//		try {
+//			movieService.movieInsertOne(movieDto, mulRequest);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			System.out.println("오랜만에 예외 처리 한다");
+//			System.out.println("파일 문제 예외일 가능성 높음");
+//			e.printStackTrace();
+//		}
+//				
+//		return "redirect:/movie/addMovie.do";
+//	}	
 }
