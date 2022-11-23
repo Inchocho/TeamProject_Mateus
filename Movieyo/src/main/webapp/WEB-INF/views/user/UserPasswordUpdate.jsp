@@ -22,6 +22,8 @@
 </head>
 <body>
 	
+	<jsp:include page="../Header.jsp"/>
+	
 	<div id="div">
 		<h1>비밀번호 변경</h1><br>
 		<form action="./passwordUpdateCtr.do" method="post">

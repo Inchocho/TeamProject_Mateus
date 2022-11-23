@@ -35,6 +35,20 @@ body {
 	margin: 0 auto 0 auto;
 }
 </style>
+
+<script type="text/javascript">
+	function movieAdd() {
+		location.href = '../movie/addMovie.do'
+	}
+
+	function movieList() {
+		location.href = '../movie/list.do'
+	}
+	
+	function myInfo() {
+		location.href = '../user/one.do?userNo=' + ${userDto.userNo};
+	}
+</script>
 </head>
 <div class="headerDiv">
 		<ul class="ulFlexBox">
@@ -52,7 +66,7 @@ body {
 			<input type="button" value="검색"><input type="search" value="" placeholder="영화를 검색해보세요">
 			</li>
 			<li style="color: white; padding-right: 20px;">${userDto.nickname} 님　
-				<input type="button" value="내정보">
+				<input type="button" value="내정보" onclick="myInfo();">
 				<input type="button" value="로그아웃">
 			</li>
 		</ul>
@@ -65,10 +79,10 @@ body {
 		<div class="headerDiv">
 			<ul class="ulFlexBox" id="adminHeaderUl">
 				<li>
-					<input type="button" value="영화등록">
+					<input type="button" value="영화등록" onclick="movieAdd();">
 				</li>
 				<li>
-					<input type="button" value="영화관리">
+					<input type="button" value="영화관리" onclick="movieList();">
 				</li>
 				<li>
 					<input type="button" value="회원관리">

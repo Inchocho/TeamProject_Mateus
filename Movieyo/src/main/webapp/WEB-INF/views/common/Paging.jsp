@@ -86,18 +86,18 @@ nav > ul > li > a:hover {
 
 <nav>
 		<ul>
-		<c:if test="${pagingMap.memberPaging.prevBlock ne 1}">
+		<c:if test="${pagingMap.moviePaging.prevBlock ne 1}">
 			<li>
 				<a href="#" 
-					onclick="goPageFnc(${pagingMap.memberPaging.prevBlock});">
+					onclick="goPageFnc(${pagingMap.moviePaging.prevBlock});">
 					<span>«</span>
 				</a>
 			</li>
 		</c:if>
 		
 		<c:forEach var="num" 
-			begin="${pagingMap.memberPaging.blockBegin}" 
-			end="${pagingMap.memberPaging.blockEnd}">
+			begin="${pagingMap.moviePaging.blockBegin}" 
+			end="${pagingMap.moviePaging.blockEnd}">
 			<li id='pageButton${num}'>
 				<a href="#" onclick="goPageFnc(${num});">
 					<c:out value="${num}"/>
@@ -105,11 +105,11 @@ nav > ul > li > a:hover {
 			</li>
 		</c:forEach>
 		
-		<c:if test="${pagingMap.memberPaging.curBlock 
-			< pagingMap.memberPaging.totBlock}">
+		<c:if test="${pagingMap.moviePaging.curBlock 
+			< pagingMap.moviePaging.totBlock}">
 			<li>
 				<a href="#" 
-					onclick="goPageFnc(${pagingMap.memberPaging.nextBlock});">
+					onclick="goPageFnc(${pagingMap.moviePaging.nextBlock});">
 					<span>»</span>
 				</a>
 			</li>			

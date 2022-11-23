@@ -10,10 +10,16 @@ public class MovieDto {
     private String runtime;		// 상영시간
     private String grade;		// 영화등급
     private int price;		// 영화가격
+    private String creDate; // 영화 등록일
+    private String modDate; // 영화 수정일
     private int rate;		// 영화점수(추천시스템을 위함)
     
+    public MovieDto() {
+		super();
+	}
+
 	public MovieDto(int movieNo, String movieTitle, String prdtYear, String nation, String director, String runtime,
-			String grade, int price, int rate) {
+			String grade, int price, String creDate, String modDate, int rate) {
 		super();
 		this.movieNo = movieNo;
 		this.movieTitle = movieTitle;
@@ -23,64 +29,95 @@ public class MovieDto {
 		this.runtime = runtime;
 		this.grade = grade;
 		this.price = price;
+		this.creDate = creDate;
+		this.modDate = modDate;
 		this.rate = rate;
-	}
-	
-	public MovieDto() {
-		super();
 	}
 
 	public int getMovieNo() {
 		return movieNo;
 	}
+
 	public void setMovieNo(int movieNo) {
 		this.movieNo = movieNo;
 	}
+
 	public String getMovieTitle() {
 		return movieTitle;
 	}
+
 	public void setMovieTitle(String movieTitle) {
 		this.movieTitle = movieTitle;
 	}
+
 	public String getPrdtYear() {
 		return prdtYear;
 	}
+
 	public void setPrdtYear(String prdtYear) {
 		this.prdtYear = prdtYear;
 	}
+
 	public String getNation() {
 		return nation;
 	}
+
 	public void setNation(String nation) {
 		this.nation = nation;
 	}
+
 	public String getDirector() {
 		return director;
 	}
+
 	public void setDirector(String director) {
 		this.director = director;
 	}
+
 	public String getRuntime() {
 		return runtime;
 	}
+
 	public void setRuntime(String runtime) {
 		this.runtime = runtime;
 	}
+
 	public String getGrade() {
 		return grade;
 	}
+
 	public void setGrade(String grade) {
 		this.grade = grade;
 	}
+
 	public int getPrice() {
 		return price;
 	}
+
 	public void setPrice(int price) {
 		this.price = price;
 	}
+
+	public String getCreDate() {
+		return creDate;
+	}
+
+	public void setCreDate(String creDate) {
+		this.creDate = creDate;
+	}
+
+	public String getModDate() {
+		return modDate;
+	}
+
+	public void setModDate(String modDate) {
+		this.modDate = modDate;
+	}
+
 	public int getRate() {
 		return rate;
 	}
+
 	public void setRate(int rate) {
 		this.rate = rate;
 	}
@@ -89,7 +126,8 @@ public class MovieDto {
 	public String toString() {
 		return "MovieDto [movieNo=" + movieNo + ", movieTitle=" + movieTitle + ", prdtYear=" + prdtYear + ", nation="
 				+ nation + ", director=" + director + ", runtime=" + runtime + ", grade=" + grade + ", price=" + price
-				+ ", rate=" + rate + "]";
+				+ ", creDate=" + creDate + ", modDate=" + modDate + ", rate=" + rate + "]";
 	}
+    
     
 }

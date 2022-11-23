@@ -1,5 +1,7 @@
 package com.movieyo.movie.dao;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -30,4 +32,40 @@ public class MovieDaoImpl implements MovieDao{
 		sqlSession.insert(namespace + "insertFile", map);
 	}
 
+	@Override
+	public int movieSelectTotalCount(String searchOption, String keyword) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+		
+		return sqlSession.selectOne(namespace + "movieSelectTotalCount", map);
+	}
+
+	@Override
+	public List<MovieDto> movieSelectList(String searchOption, String keyword, int start, int end) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("keyword", keyword);
+		map.put("start", start);
+		map.put("end", end);
+		map.put("searchOption", searchOption);
+		
+		return sqlSession.selectList(namespace + "movieSelectList", map);
+	}
+
+	@Override
+	public MovieDto movieSelectOne(int no) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace + "movieSelectOne", no);
+	}
+
+	@Override
+	public List<Map<String, Object>> fileselectList(int no) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(namespace + "fileselectList", no);
+	}
+	
 }

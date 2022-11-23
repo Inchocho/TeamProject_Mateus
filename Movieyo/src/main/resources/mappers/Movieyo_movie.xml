@@ -12,8 +12,22 @@
 		<result column="MOVIE_RUNTIME" property="runtime"/>
 		<result column="MOVIE_GRADE" property="grade"/>
 		<result column="MOVIE_PRICE" property="price"/>
+		<result column="MOVIE_CREDATE" property="creDate"/>
+		<result column="MOVIE_MODDATE" property="modDate"/>
 		<result column="MOVIE_RATE" property="rate"/>
 	</resultMap>
+
+	<sql id="search">
+		<choose>
+			<when test="searchOption == 'all'">
+				WHERE MOVIE_DIRECTOR LIKE '%'||#{keyword}||'%'
+				OR MOVIE_TITLE LIKE '%'||#{keyword}||'%'
+			</when>
+			<otherwise>
+				WHERE ${searchOption} LIKE '%'||#{keyword}||'%'
+			</otherwise>
+		</choose>
+	</sql>
 
 	<!-- 영화 추가 -->
 	<insert id="movieInsertOne" parameterType="com.movieyo.movie.dto.MovieDto"
@@ -22,11 +36,11 @@
 		<selectKey keyProperty="movieNo" resultType="int" order="BEFORE">
 			select MVY_MOVIE_NO_SEQ.NEXTVAL FROM DUAL
 		</selectKey>
-		INSERT INTO MVY_MOVIE
-		VALUE(MOVIE_NO, MOVIE_TITLE, MOVIE_PRDTYEAR, MOVIE_NATION, MOVIE_DIRECTOR,
-			MOVIE_RUNTIME, MOVIE_GRADE, MOVIE_PRICE, MOVIE_RATE)
-		VALUES(#{movieNo}, #{movieTitle}, #{prdtYear}, #{nation}, #{director}, #{runtime}
-		, #{grade}, #{price}, #{rate})
+			INSERT INTO MVY_MOVIE
+			VALUE(MOVIE_NO, MOVIE_TITLE, MOVIE_PRDTYEAR, MOVIE_NATION, MOVIE_DIRECTOR,
+				MOVIE_RUNTIME, MOVIE_GRADE, MOVIE_PRICE, MOVIE_CREDATE, MOVIE_MODDATE, MOVIE_RATE)
+			VALUES(#{movieNo}, #{movieTitle}, #{prdtYear}, #{nation}, #{director}, #{runtime}
+			, #{grade}, #{price}, '1', '1', #{rate})
 	</insert>
 	
 	<!-- 영화포토에 사진 추가(파일업로드) -->
@@ -35,8 +49,47 @@
 		(IDX, PARENT_SEQ, ORIGINAL_FILE_NAME,
 		STORED_FILE_NAME, FILE_SIZE, CRE_DATE)
 		VALUES
-		(TB_FILE_IDX_SEQ.NEXTVAL, #{parentSeq}, #{original_file_name},
+		(MVY_MOVIE_PHOTO_SEQ.NEXTVAL, #{parentSeq}, #{original_file_name},
 		 #{stored_file_name}, #{file_size}, SYSDATE)
-	</insert>		
+	</insert>
+	
+<!-- 	영화리스트 -->
+	<select id="movieSelectList" resultMap="movieResultMap">
+		SELECT MV.MOVIE_NO, MV.MOVIE_TITLE, MV.MOVIE_DIRECTOR, MV.MOVIE_CREDATE
+		   FROM (
+		        SELECT ROWNUM RNUM, M.MOVIE_NO, M.MOVIE_TITLE
+		      , M.MOVIE_DIRECTOR, M.MOVIE_CREDATE
+		        FROM (
+	                SELECT MOVIE_NO, MOVIE_TITLE, MOVIE_DIRECTOR, MOVIE_CREDATE
+	         	   	   FROM MVY_MOVIE
+	         	   	   <include refid="search"></include>
+			           ORDER BY MOVIE_NO ASC) M
+      				) MV
+		WHERE MV.RNUM BETWEEN #{start} AND #{end}
+	</select>		
+	
+<!-- 	영화수 -->
+	<select id="movieSelectTotalCount" resultType="java.lang.Integer" parameterType="map">
+		SELECT COUNT(*)
+		FROM MVY_MOVIE
+		<include refid="search"></include>
+	</select>
+	
+	<select id="movieSelectOne" parameterType="int"
+		resultMap="movieResultMap">
+		SELECT MOVIE_TITLE, MOVIE_PRDTYEAR, MOVIE_NATION
+		, MOVIE_DIRECTOR, MOVIE_RUNTIME, MOVIE_GRADE, MOVIE_PRICE, MOVIE_CREDATE
+		FROM MVY_MOVIE
+		WHERE MOVIE_NO = #{movieNo}
+	</select>	
+	
+	<select id="fileselectList" parameterType="int" resultType="map">
+		SELECT IDX, ORIGINAL_FILE_NAME, STORED_FILE_NAME,
+		ROUND(FILE_SIZE/1024, 1) AS FILE_SIZE
+		FROM MVY_MOVIE_PHOTO
+		WHERE PARENT_SEQ = #{movieNo}
+	</select>
+	
+	
 	
 </mapper>

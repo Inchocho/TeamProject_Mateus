@@ -12,8 +12,10 @@
 
 </script>
 </head>
-<body>	
-	<form action="addCtr.do" method="post" id='submitForm'
+<body>
+	<jsp:include page="../Header.jsp"/>
+	
+	<form action="./addCtr.do" method="post" id='submitForm'
 		enctype="multipart/form-data">
 		영화제목:	<input type="text" name='movieTitle' id='movieTitle'><br>
 		제작년도: <input type="text" name='prdtYear' id='prdtYear'><br>
@@ -22,7 +24,7 @@
 		장르: <input type='text' name='genre' id='genre'><br>
 		상영시간: <input type='text' name='runtime' id='runtime'><br>
 		상영등급: <input type='text' name='grade' id='grade'><br>
-		가격: <input type='text' name='price' id='price'><br>
+		가격: <input type="number" step="1000" name='price' id='price'><br>
 		파일: <input type='file' name='file'>
 		<input type='submit' value='추가' id='submitBtn'>				
 	</form>

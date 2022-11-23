@@ -1,5 +1,6 @@
 package com.movieyo.movie.service;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -67,4 +68,31 @@ public class MovieServiceImpl implements MovieService{
 		}		
 	}
 
+	@Override
+	public int movieSelectTotalCount(String searchOption, String keyword) {
+		// TODO Auto-generated method stub
+		return movieDao.movieSelectTotalCount(searchOption, keyword);
+	}
+
+	@Override
+	public List<MovieDto> movieSelectList(String searchOption, String keyword, int start, int end) {
+		// TODO Auto-generated method stub
+		return movieDao.movieSelectList(searchOption, keyword, start, end);
+	}
+
+	@Override
+	public Map<String, Object> movieSelectOne(int no) {
+		// TODO Auto-generated method stub
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		MovieDto movieDto = movieDao.movieSelectOne(no);
+		
+		resultMap.put("movieDto", movieDto);
+		
+		List<Map<String, Object>> fileList = movieDao.fileselectList(no);
+		resultMap.put("fileList", fileList);
+		
+		return resultMap;
+	}
+	
 }
