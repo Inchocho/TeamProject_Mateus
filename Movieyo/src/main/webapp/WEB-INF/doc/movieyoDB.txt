@@ -39,14 +39,6 @@ CREATE TABLE MVY_MOVIE(
     MOVIE_RATE NUMBER DEFAULT 0        --점수(추천) 디폴트값 0 
 );
 
--- 영화 사진(변경 --> 아래 테이블로)
-CREATE TABLE MVY_MOVIE_PHOTO(
-    PHOTO_NO NUMBER PRIMARY KEY,    -- 기본키
-    MOVIE_NO NUMBER NOT NULL,                -- 외래키(MVY_MOVIE테이블의 MOVIE_NO)
-    PHOTO_NAME VARCHAR2(4000) NOT NULL
-);
-
-
 -- 영화 사진(2022.11.22 기존 파일업로드형식으로 사용하려고 칼럼명을 맞춤)
 CREATE TABLE MVY_MOVIE_PHOTO(
     IDX                NUMBER PRIMARY KEY,
