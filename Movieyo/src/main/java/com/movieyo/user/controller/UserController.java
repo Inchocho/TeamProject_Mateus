@@ -224,4 +224,6 @@ public class UserController {
 		public void UserFindpwPOST(@ModelAttribute UserDto userDto, HttpServletResponse response) throws Exception{
 			userService.userFindPw(response, userDto);
 		}
+		
+
 }
