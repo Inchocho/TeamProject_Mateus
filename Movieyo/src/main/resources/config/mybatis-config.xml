@@ -15,7 +15,16 @@
 		
 		<!-- 2022/11/22 BoardDto 추가 -->	
 		<typeAlias type="com.movieyo.board.dto.BoardDto"
-			alias="BoardDto" />	
+			alias="BoardDto" />
+			
+		<!-- 2022/11/23 RefundDto 추가 -->	
+		<typeAlias type="com.movieyo.refund.dto.RefundDto"
+			alias="RefundDto" />
+			
+		<!-- 2022/11/23 BuyDto 추가 -->	
+		<typeAlias type="com.movieyo.buy.dto.BuyDto"
+			alias="BuyDto" />			
+								
 	</typeAliases>
 	
 	

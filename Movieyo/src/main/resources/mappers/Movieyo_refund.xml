@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.movieyo.refund">
+	<resultMap type="refundDto" id="refundResultMap">
+		<id column="REFUND_NO" property="refundNo"/>
+		<result column="MOVIE_TITLE" property="movieTitle"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="MOVIE_PRICE" property="moviePrice"/>
+		<result column="BUY_DATE" property="buyDate"/>
+		<result column="BUY_NO" property="buyNo"/>
+		<result column="REFUND_DATE" property="refundDate"/>
+		<result column="REFUND_STATUS" property="refundStatus"/>		
+	</resultMap>
+	
+	<select id="refundSelectList" resultMap="refundResultMap" 
+		parameterType="int">
+		SELECT A.MOVIE_TITLE, A.MOVIE_PRICE, B.BUY_DATE, C.REFUND_DATE, C.REFUND_STATUS
+		FROM MVY_MOVIE A, MVY_BUY B, MVY_REFUND C
+		WHERE A.MOVIE_NO = B.MOVIE_NO
+		AND B.BUY_NO = C.BUY_NO
+		AND C.USER_NO = #{userNo}
+	</select>
+</mapper>
