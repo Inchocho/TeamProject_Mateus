@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.movieyo.buy">
+
+	<resultMap type="buyDto" id="buyResultMap">
+		<id column="BUY_NO" property="buyNo"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="MOVIE_NO" property="movieNo"/>
+		<result column="BUY_DATE" property="buyDate"/>
+		<result column="BUY_STATUS" property="buyStatus"/>		
+	</resultMap>
+	
+	<select id='buySelectList' parameterType='int' resultType='map'>
+		SELECT A.USER_NICKNAME, B.BUY_DATE, C.MOVIE_TITLE, C.MOVIE_PRICE, B.BUY_STATUS
+		FROM MVY_USER A,
+		     MVY_BUY B,
+		     MVY_MOVIE C
+		WHERE A.USER_NO = B.USER_NO
+		AND B.MOVIE_NO = C.MOVIE_NO
+		AND A.USER_NO = #{userNo}
+	</select>		
+
+</mapper>

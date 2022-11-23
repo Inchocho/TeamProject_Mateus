@@ -1,11 +1,9 @@
 package com.movieyo.buy.service;
 
-import java.util.List;
-
-import com.movieyo.refund.dto.RefundDto;
+import java.util.Map;
 
 public interface BuyService {
 
-	public List<RefundDto> buySelectList(int userNo);
+	public Map<String, Object> buySelectList(int userNo);
 
 }

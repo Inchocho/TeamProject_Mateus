@@ -1,6 +1,6 @@
 package com.movieyo.buy.service;
 
-import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.movieyo.buy.dao.BuyDao;
-import com.movieyo.refund.dto.RefundDto;
 
 @Service
 public class BuyServiceImpl implements BuyService {
@@ -20,9 +19,8 @@ public class BuyServiceImpl implements BuyService {
 	public BuyDao buyDao;
 
 	@Override
-	public List<RefundDto> buySelectList(int userNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public Map<String, Object> buySelectList(int userNo) {
+		return buyDao.buySelectList(userNo);
 	}
-
+	
 }
