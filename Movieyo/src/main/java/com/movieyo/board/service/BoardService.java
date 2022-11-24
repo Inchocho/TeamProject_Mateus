@@ -2,29 +2,27 @@ package com.movieyo.board.service;
 
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
 import com.movieyo.board.dto.BoardDto;
-import com.movieyo.user.dto.UserDto;
 
 public interface BoardService {
 
-	int getCount() throws Exception;
+	public int getCount() throws Exception;
 
-	int remove(Integer User_No, Integer board_No) throws Exception;
+	public int remove(Integer UserNo, Integer boardNo) throws Exception;
 
-	int write(BoardDto boardDto) throws Exception;
+	public int write(BoardDto boardDto) throws Exception;
 
-	List<BoardDto> getList() throws Exception;
+	public List<BoardDto> getList() throws Exception;
 
-	BoardDto read(Integer User_No) throws Exception;
+	public BoardDto read(Integer UserNo) throws Exception;
 
-	List<BoardDto> getPage(Map<String, Object> map) throws Exception;
+	public List<BoardDto> getPage(Map<String, Object> map) throws Exception;
 
-	int modify(BoardDto boardDto) throws Exception;
+	public int modify(BoardDto boardDto) throws Exception;
+
+	public int boardSelectTotalCount(String searchOption, String keyword);
+
+	List<BoardDto> boardSelectList(String searchOption, String keyword, int start, int end);
 
 	
 }
