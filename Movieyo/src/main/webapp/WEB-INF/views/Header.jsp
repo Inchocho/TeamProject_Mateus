@@ -15,7 +15,7 @@ body {
 	list-style: none;
 	padding: 5px;
 	align-items: center;
-	min-width: 800px;
+	min-width: 900px;
 	margin: 0px;
 }
 #adminHeaderUl{
@@ -56,8 +56,8 @@ body {
 				<a id="mainLogo" href="#" onclick="movePageMainFnc();">무비요</a>
 				<input type="button" value="순위">
 				<input type="button" value="작품전체">
-				<!-- 유저로그인시  [test = "${user.admin ne 1}"(?)]-->
-				<c:if test="true">
+				<!-- 유저로그인시 -->
+				<c:if test="${userDto.userAdmin ne 1}">
 				<input type="button" value="추천작품">
 				</c:if>
 			</li>
@@ -71,8 +71,8 @@ body {
 			</li>
 		</ul>
 	</div>
-	<!-- 관리자로그인시 [test = "${user.admin eq 1}"(?)]-->
-	<c:if test="true">
+	<!-- 관리자로그인시 -->
+	<c:if test="${userDto.userAdmin eq 1}">
 		<div style="background-color: black; height: 15px;">
 			<hr	style="display: inline-flex; color: white; align-content: flex-start; width: -webkit-fill-available;">
 		</div>

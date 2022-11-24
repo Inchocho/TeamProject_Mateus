@@ -10,13 +10,12 @@
 
 
 <script type="text/javascript">
-	var window = window.open(url, windowName, [windowFeatures]);
 	
 	function pwUpdate() {
 		location.href="./passwordUpdate.do?userNo=" + ${userDto.userNo};
 	}
 	function popUp() {
-		let popUrl = "/user/authorPop";
+		let popUrl = "/Movieyo/user/authorPop.do";
 		let popOption = "width = 650px, height=550px, top=300px, left=300px, scrollbars=yes";
 		
 		window.open(popUrl, "작가 찾기",popOption);

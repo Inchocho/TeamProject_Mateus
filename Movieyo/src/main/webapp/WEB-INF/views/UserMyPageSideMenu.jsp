@@ -41,7 +41,7 @@
 	   <div class="userMenuContainer">
 	 	<ul class="userMenuFlexBox">
 	 		<li><a href="/Movieyo/user/one.do?userNo=${userDto.userNo}" class="menulist">내정보</a></li>
-	 		<li><a href="/Movieyo/user/userMpoint.do?userNo=${userDto.userNo}" class="menulist">Mpay</a></li>
+	 		<li><a href="/Movieyo/user/userMpoint.do" class="menulist">Mpay</a></li>
 	 		<li><a href="#" class="menulist">장바구니</a></li>
 	 		<li><a href="#" class="menulist">구매내역</a></li>
 	 		<li><a href="#" class="menulist">환불내역</a></li>

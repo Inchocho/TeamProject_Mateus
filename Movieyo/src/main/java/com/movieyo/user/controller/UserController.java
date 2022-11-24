@@ -208,10 +208,12 @@ public class UserController {
 			return "redirect:/auth/login.do";
 		}
 		
-		@GetMapping("/user/authorPop")
-		public void authorPopGET() throws Exception{
+		@GetMapping("/user/authorPop.do")
+		public String authorPopGET() throws Exception{
 			
 			logger.info("authorPopGET.......");
+			
+			return "PopUp/authorPop";
 		
 		}
 		
@@ -225,5 +227,15 @@ public class UserController {
 			userService.userFindPw(response, userDto);
 		}
 		
-
+		@RequestMapping(value = "/user/userMpoint.do", method = {RequestMethod.GET, RequestMethod.POST})
+		public String userMpoint(HttpSession session, Model model) throws Exception{
+			
+			return "user/UserMPointView";
+		}
+		@RequestMapping(value = "/Popup/chargeMpointPop.do", method = RequestMethod.GET)
+		public String chargeMpoint(HttpSession session, Model model) throws Exception{
+			
+			return "PopUp/ChargeMpointPop";
+		}
+		
 }

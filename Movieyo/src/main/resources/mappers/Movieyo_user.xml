@@ -20,9 +20,9 @@
 
 	<select id="userExist" parameterType="map" 
 		resultMap="userResultMap">
-		SELECT USER_NO, USER_NAME, USER_CREDATE, USER_BIRTH, USER_NICKNAME, USER_GENDER
+		SELECT USER_NO, USER_NAME, USER_CREDATE, USER_BIRTH, USER_NICKNAME, USER_GENDER, USER_ADMIN, USER_CASH
 		FROM MVY_USER
-		WHERE USER_EMAIL = #{email} AND USER_PASSWORD = #{password}		
+		WHERE USER_EMAIL = #{email} AND USER_PASSWORD = #{password}
 	</select>
 	
 	<insert id="userInsertOne" parameterType="com.movieyo.user.dto.UserDto"
@@ -40,7 +40,7 @@
 	
 	<select id="userSelectOne" parameterType="int"
 		resultMap="userResultMap">
-		SELECT USER_NO, USER_NAME, USER_CREDATE, USER_BIRTH, USER_NICKNAME, USER_GENDER
+		SELECT USER_NO, USER_NAME, USER_CREDATE, USER_BIRTH, USER_NICKNAME, USER_GENDER, USER_ADMIN, USER_CASH
 		FROM MVY_USER
 		WHERE USER_NO = #{userNo}		
 	</select>
