@@ -28,8 +28,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public int remove(Integer User_No, Integer board_No) throws Exception {
-        return boardDao.delete(User_No, board_No);
+    public int remove(Integer UserNo, Integer boardNo) throws Exception {
+        return boardDao.delete(UserNo, boardNo);
     }
 
     @Override
@@ -43,9 +43,9 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public BoardDto read(Integer board_No) throws Exception {
-        BoardDto boardDto = boardDao.select(board_No);
-        boardDao.increaseViewCount(board_No);
+    public BoardDto read(Integer boardNo) throws Exception {
+        BoardDto boardDto = boardDao.select(boardNo);
+        boardDao.increaseViewCount(boardNo);
 
         return boardDto;
     }
@@ -59,6 +59,18 @@ public class BoardServiceImpl implements BoardService {
     public int modify(BoardDto boardDto) throws Exception {
         return boardDao.update(boardDto);
     }
+
+	@Override
+	public int boardSelectTotalCount(String searchOption, String keyword) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<BoardDto> boardSelectList(String searchOption, String keyword, int start, int end) {
+		// TODO Auto-generated method stub
+		return boardDao.boardSelectTotalCount(searchOption, keyword);
+	}
 
 	
 

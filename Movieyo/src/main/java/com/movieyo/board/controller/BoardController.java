@@ -1,30 +1,62 @@
 package com.movieyo.board.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.movieyo.board.dto.BoardDto;
 import com.movieyo.board.service.BoardService;
+import com.movieyo.util.Paging;
 
-@RequestMapping("/board")
+@Controller
 public class BoardController {
 	@Autowired
 	BoardService boardService;
 
-	@GetMapping("/list")
-	public String list(HttpServletRequest request) {
-		if(!loginCheck(request))
-			return "redirect:/loginCtr.do="+request.getRequestURL();  // 로그인을 안했으면 로그인 화면으로 이동
-
-		return "boardList"; // 로그인을 한 상태이면, 게시판 화면으로 이동
+	@RequestMapping(value="/board/board.do", method = RequestMethod.GET)
+	public String board(Model model) {
+	
+		return "board/board";
 	}
-	private boolean loginCheck(HttpServletRequest request) {
-		// 1. 세션을 얻어서
-		HttpSession session = request.getSession();
-		// 2. 세션에 id가 있는지 확인, 있으면 true를 반환
-		return session.getAttribute("id")!=null;
+
+	@RequestMapping(value = "/board/boardList.do", method = {RequestMethod.GET, RequestMethod.POST})
+	public String boardList(@RequestParam(defaultValue = "1") int curPage,
+			@RequestParam(defaultValue = "all") String searchOption, @RequestParam(defaultValue = "") String keyword,
+			Model model) {
+
+		
+
+		int totalCount = boardService.boardSelectTotalCount(searchOption, keyword);
+
+		Paging boardPaging = new Paging(totalCount, curPage);
+		int start = boardPaging.getPageBegin();
+		int end = boardPaging.getPageEnd();
+
+		List<BoardDto> boardList = boardService.boardSelectList(searchOption, keyword, start, end);
+
+		
+
+		Map<String, Object> searchMap = new HashMap<>();
+		searchMap.put("searchOption", searchOption);
+		searchMap.put("keyword", keyword);
+
+		Map<String, Object> pagingMap = new HashMap<String, Object>();
+		pagingMap.put("totalCount", totalCount);
+		pagingMap.put("boardPaging", boardPaging);
+
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("searchMap", searchMap);
+		model.addAttribute("pagingMap", pagingMap);
+
+		return "board/BoardList";
 	}
 }
