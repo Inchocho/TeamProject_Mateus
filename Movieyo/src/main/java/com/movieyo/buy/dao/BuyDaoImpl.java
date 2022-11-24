@@ -20,8 +20,8 @@ public class BuyDaoImpl implements BuyDao{
 	String namespace = "com.movieyo.buy.";
 
 	@Override
-	public Map<String, Object> buySelectList(int userNo) { 
-		return sqlSession.selectOne(namespace + "buySelectList", userNo);
+	public List<Map<String, Object>> buySelectList(int userNo) { 
+		return sqlSession.selectList(namespace + "buySelectList", userNo);
 	}
 	
 }

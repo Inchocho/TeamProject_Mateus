@@ -12,6 +12,8 @@
 <title>구매내역</title>
 </head>
 <body>
+	<jsp:include page="../Header.jsp"/>
+	<jsp:include page="../UserMyPageSideMenu.jsp"></jsp:include>
 
 	<table>
 		<tr>
@@ -19,13 +21,13 @@
 		</tr>
 		
 
-<%-- 	<c:forEach var="i" items="${buyMap}">  --%>
+	<c:forEach var="buyMap" items="${buyListMap}"> 
 		<tr>			
 			<td>
 				${buyMap.movieTitle}
 			</td>
 			<td>
-				${buyMap.price}				
+				${buyMap.moviePrice}				
 			</td>			
 			<td>
 				${buyMap.buyDate}
@@ -44,7 +46,7 @@
 				</c:choose>
 			</td>			
 		</tr>
-<%-- 	</c:forEach> --%>
+	</c:forEach>
 	
 		
 	</table>

@@ -1,5 +1,6 @@
 package com.movieyo.buy.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -19,7 +20,7 @@ public class BuyServiceImpl implements BuyService {
 	public BuyDao buyDao;
 
 	@Override
-	public Map<String, Object> buySelectList(int userNo) {
+	public List<Map<String, Object>> buySelectList(int userNo) {
 		return buyDao.buySelectList(userNo);
 	}
 	

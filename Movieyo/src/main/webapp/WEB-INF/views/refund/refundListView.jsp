@@ -12,6 +12,8 @@
 <title>환불목록</title>
 </head>
 <body>
+	<jsp:include page="../Header.jsp"/>
+	<jsp:include page="../UserMyPageSideMenu.jsp"></jsp:include>
 
 	<table>
 		<tr>
@@ -19,23 +21,23 @@
 		</tr>
 		
 
-	<c:forEach var="refundDto" items="${refundList}"> 
+	<c:forEach var="refundMap" items="${refundListMap}"> 
 		<tr>			
-			<td>${refundDto.movieTitle}</td>
+			<td>${refundMap.movieTitle}</td>
 			<td>
-				${refundDto.moviePrice}
+				${refundMap.moviePrice}
 			</td>
 			
 			<td>
 				<fmt:formatDate pattern="yyyy-MM-dd hh:mm" 
-					value = "${refundDto.buyDate}" />
+					value = "${refundMap.buyDate}" />
 			</td>
 			<td>
 				<fmt:formatDate pattern="yyyy-MM-dd hh:mm" 
-				value="${refundDto.refundDate}"/>
+				value="${refundMap.refundDate}"/>
 			</td>
 			<td>
-				${refundDto.refundStatus}
+				${refundMap.refundStatus}
 			</td>			
 		</tr>
 	</c:forEach>

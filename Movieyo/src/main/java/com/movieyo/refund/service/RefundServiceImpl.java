@@ -1,6 +1,7 @@
 package com.movieyo.refund.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.movieyo.refund.dao.RefundDao;
-import com.movieyo.refund.dto.RefundDto;
 
 @Service
 public class RefundServiceImpl implements RefundService {
@@ -20,7 +20,7 @@ public class RefundServiceImpl implements RefundService {
 	public RefundDao refundDao;
 
 	@Override
-	public List<RefundDto> refundSelectList(int userNo) {
+	public List<Map<String, Object>> refundSelectList(int userNo) {
 		return refundDao.refundSelectList(userNo);
 	}
 

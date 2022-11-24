@@ -1,12 +1,11 @@
 package com.movieyo.refund.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import com.movieyo.refund.dto.RefundDto;
 
 @Repository
 public class RefundDaoImpl implements RefundDao{
@@ -18,7 +17,7 @@ public class RefundDaoImpl implements RefundDao{
 	String namespace = "com.movieyo.refund.";
 
 	@Override
-	public List<RefundDto> refundSelectList(int userNo) { 
+	public List<Map<String, Object>> refundSelectList(int userNo) { 
 		return sqlSession.selectList(namespace + "refundSelectList", userNo);
 	}
 }

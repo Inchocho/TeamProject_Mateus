@@ -1,11 +1,10 @@
 package com.movieyo.refund.service;
 
 import java.util.List;
-
-import com.movieyo.refund.dto.RefundDto;
+import java.util.Map;
 
 public interface RefundService {
 
-	public List<RefundDto> refundSelectList(int userNo);
+	public List<Map<String, Object>> refundSelectList(int userNo);
 
 }

@@ -6,28 +6,21 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class RefundDto {
 
-	private int refundNo;		//기본키 - 환불번호
-	private int userNo;			//외래키 - 유저번호
-	private String movieTitle;	//영화제목
-	private int moviePrice;		//영화가격
-	private Date buyDate;		//구매일
-	private int buyNo;			//외래키 - 구매번호
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date refundDate;	//환불일
-	private String refundStatus;	//환불상태
+	private int refundNo;
+	private int userNo;
+	private int buyNo;
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
+	private Date refundDate;
+	private String refundStatus;
 	
 	public RefundDto() {
 		super();
 	}
 
-	public RefundDto(int refundNo, int userNo, String movieTitle, int moviePrice, Date buyDate, int buyNo,
-			Date refundDate, String refundStatus) {
+	public RefundDto(int refundNo, int userNo, int buyNo, Date refundDate, String refundStatus) {
 		super();
 		this.refundNo = refundNo;
 		this.userNo = userNo;
-		this.movieTitle = movieTitle;
-		this.moviePrice = moviePrice;
-		this.buyDate = buyDate;
 		this.buyNo = buyNo;
 		this.refundDate = refundDate;
 		this.refundStatus = refundStatus;
@@ -47,30 +40,6 @@ public class RefundDto {
 
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
-	}
-
-	public String getMovieTitle() {
-		return movieTitle;
-	}
-
-	public void setMovieTitle(String movieTitle) {
-		this.movieTitle = movieTitle;
-	}
-
-	public int getMoviePrice() {
-		return moviePrice;
-	}
-
-	public void setMoviePrice(int moviePrice) {
-		this.moviePrice = moviePrice;
-	}
-
-	public Date getBuyDate() {
-		return buyDate;
-	}
-
-	public void setBuyDate(Date buyDate) {
-		this.buyDate = buyDate;
 	}
 
 	public int getBuyNo() {
@@ -99,9 +68,9 @@ public class RefundDto {
 
 	@Override
 	public String toString() {
-		return "RefundDto [refundNo=" + refundNo + ", userNo=" + userNo + ", movieTitle=" + movieTitle + ", moviePrice="
-				+ moviePrice + ", buyDate=" + buyDate + ", buyNo=" + buyNo + ", refundDate=" + refundDate
-				+ ", refundStatus=" + refundStatus + "]";
+		return "RefundDto [refundNo=" + refundNo + ", userNo=" + userNo + ", buyNo=" + buyNo + ", refundDate="
+				+ refundDate + ", refundStatus=" + refundStatus + "]";
 	}
 	
+			
 }

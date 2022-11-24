@@ -1,7 +1,10 @@
 package com.movieyo.refund.controller;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,9 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.movieyo.refund.dto.RefundDto;
 import com.movieyo.refund.service.RefundService;
-import com.movieyo.user.service.UserService;
 
 @Controller
 public class RefundController {
@@ -31,13 +32,32 @@ public class RefundController {
 		
 		int userNo = 5;
 		
-		//후에 refundSelectList(유저번호) 들어갈예정
-		List<RefundDto> refundList =
-				refundService.refundSelectList(userNo);
+		List<Map<String, Object>> listMap = refundService.refundSelectList(userNo);
 		
-		//Map을 pagingMap 키로 model에 담아서
-		//MemberListView에서 ${pagingMap.memberPaging.blockBegin} pagingMap의 인스턴스를 EL태그로 사용한다
-		model.addAttribute("refundList", refundList);
+		List<Map<String, Object>> refundListMap = new ArrayList<Map<String,Object>>();
+		
+		System.out.println(listMap);
+		
+		for (int i = 0; i < listMap.size(); i++) {
+			Map<String, Object> refundMap = new HashMap<String, Object>();
+			
+			String movieTitle = (String)listMap.get(i).get("MOVIE_TITLE");
+			int moviePrice = Integer.parseInt(String.valueOf(listMap.get(i).get("MOVIE_PRICE")));
+			Date buyDate = (Date)listMap.get(i).get("BUY_DATE");
+			Date refundDate = (Date)listMap.get(i).get("REFUND_DATE");
+			String refundStatus = (String)listMap.get(i).get("REFUND_STATUS");
+			
+			refundMap.put("moviePrice", moviePrice);
+			refundMap.put("movieTitle", movieTitle);
+			refundMap.put("refundStatus", refundStatus);
+			refundMap.put("refundDate", refundDate);		
+			refundMap.put("buyDate", buyDate);		
+			
+			refundListMap.add(refundMap);			
+			
+		}
+		
+		model.addAttribute("refundListMap", refundListMap);
 		
 		return "refund/refundListView";
 	}

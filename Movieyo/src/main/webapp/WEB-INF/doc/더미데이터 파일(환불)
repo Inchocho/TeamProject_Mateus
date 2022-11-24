@@ -4,11 +4,11 @@ INSERT INTO MVY_MOVIE VALUES(2,'박똘똘','2012','한국','감장백','113분',
 INSERT INTO MVY_MOVIE VALUES(3,'백똘똘','2013','한국','백장백','107분','18세이용가',12000,'31일','31일',0);
 INSERT INTO MVY_MOVIE VALUES(4,'장똘똘','2014','한국','두장백','98분','18세이용가',5000,'41일','41일',0);
 
--- 유저 예제 4개(유저번호PK, 이메일, 비밀번호, 이름, 생년월일, 등록일, 닉네임, 성별)
-INSERT INTO MVY_USER VALUES(2,'이메일1','1234','일메일맨1','2011-03-03',SYSDATE,'이메일맨짱1호','남자');
-INSERT INTO MVY_USER VALUES(3,'이메일22','1234','이메일맨2','2012-05-13',SYSDATE,'이메일맨짱2희호','남자');
-INSERT INTO MVY_USER VALUES(4,'이메일333','1234','삼메일맨3','2014-04-23',SYSDATE,'이메일맨짱3육구','남자');
-INSERT INTO MVY_USER VALUES(5,'이메일4444','1234','사메일맨4','2015-07-03',SYSDATE,'이메일맨짱4장님','남자');
+-- 유저 예제 4개(유저번호PK, 이메일, 비밀번호, 이름, 생년월일, 등록일, 닉네임, 성별, 캐쉬, 관리자체크)
+INSERT INTO MVY_USER VALUES(2,'이메일1','1234','일메일맨1','2011-03-03',SYSDATE,'이메일맨짱1호','남자', 0, 0);
+INSERT INTO MVY_USER VALUES(3,'이메일22','1234','이메일맨2','2012-05-13',SYSDATE,'이메일맨짱2희호','남자', 0, 0);
+INSERT INTO MVY_USER VALUES(4,'이메일333','1234','삼메일맨3','2014-04-23',SYSDATE,'이메일맨짱3육구','남자', 0, 0);
+INSERT INTO MVY_USER VALUES(5,'이메일4444','1234','사메일맨4','2015-07-03',SYSDATE,'이메일맨짱4장님','남자', 0, 0);
 
 -- 구매 예제 4개(구매번호 PK, 영화번호 FK, 유저번호 FK, 구매일, 구매상태)
 INSERT INTO MVY_BUY VALUES(1, 4, 2, SYSDATE, '구매');
@@ -19,8 +19,8 @@ INSERT INTO MVY_BUY VALUES(5, 2, 5, SYSDATE, '구매');
 INSERT INTO MVY_BUY VALUES(6, 3, 5, SYSDATE, '구매');
 INSERT INTO MVY_BUY VALUES(7, 4, 5, SYSDATE, '구매');
 
--- 환불 예제 4개(환불번호 PK, 영화제목, 영화가격, 구매일, 유저번호 FK, 구매번호 FK, 환불신청일, 환불상태)
-INSERT INTO MVY_REFUND VALUES(1, '김똘똘', 5000, SYSDATE, 5, 4, SYSDATE, '환불신청');
-INSERT INTO MVY_REFUND VALUES(2, '박똘똘', 10000, SYSDATE, 5, 5, SYSDATE, '환불신청');
-INSERT INTO MVY_REFUND VALUES(3, '백똘똘', 12000, SYSDATE, 5, 6, SYSDATE, '환불신청');
-INSERT INTO MVY_REFUND VALUES(4, '장똘똘', 15000, SYSDATE, 5, 7, SYSDATE, '환불신청');
+-- 환불 예제 4개(환불번호 PK, 유저번호, 구매번호, 환불신청일, 환불상태)
+INSERT INTO MVY_REFUND VALUES(1, 5, 4, SYSDATE, '환불신청');
+INSERT INTO MVY_REFUND VALUES(2, 5, 5, SYSDATE, '환불신청');
+INSERT INTO MVY_REFUND VALUES(3, 5, 6, SYSDATE, '환불신청');
+INSERT INTO MVY_REFUND VALUES(4, 5, 7, SYSDATE, '환불신청');
