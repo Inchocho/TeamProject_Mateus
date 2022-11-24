@@ -3,6 +3,7 @@ package com.movieyo.board.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,39 +19,30 @@ public class BoardDaoImpl implements BoardDao {
 	String namespace = "com.movieyo.board.";	
 
 	@Override
-	public BoardDto select(Integer user_No) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public BoardDto select(Integer boardNo) throws Exception {
+		return sqlSession.selectOne(namespace + "select", boardNo);	}
 
 	@Override
-	public int delete(Integer user_No, Integer board_No) throws Exception {
-		// TODO Auto-generated method stub
+	public int delete(Integer userNo, Integer boardNo) throws Exception {
 		return 0;
 	}
 
 	@Override
 	public int insert(BoardDto dto) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+		return sqlSession.insert(namespace+"insert", dto);	}
 
 	@Override
 	public int update(BoardDto dto) throws Exception {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int increaseViewCount(Object board_No) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	public int increaseViewCount(Object boardNo) throws Exception {
+		 return sqlSession.update(namespace+"update", boardNo);	}
 
 	@Override
-	public List<BoardDto> selectPage(Map<String, Object> map) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<BoardDto> selectPage(Map map) throws Exception {
+		  return sqlSession.selectList(namespace+"selectPage", map);
 	}
 
 	@Override
@@ -62,13 +54,22 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public int deleteAll() throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		 return sqlSession.selectOne(namespace+"deleteAll");	
 	}
 
 	@Override
 	public int count() throws Exception {
 		// TODO Auto-generated method stub
-		return 0;
+		 return sqlSession.selectOne(namespace+"count");	
 	}
+
+	@Override
+	public List<BoardDto> boardSelectTotalCount(String searchOption, String keyword) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	
 
 }

@@ -83,8 +83,9 @@ CREATE TABLE MVY_USER(
     USER_BIRTH DATE NOT NULL,                -- 생일
     USER_CREDATE DATE NOT NULL,				 -- 유저 생성일
     USER_NICKNAME VARCHAR2(40) NOT NULL,     -- 닉네임
-    USER_GENDER VARCHAR2(10) NOT NULL        -- 성별
+    USER_GENDER VARCHAR2(10) NOT NULL,        -- 성별
     --USER_GENRE VARCHAR2(40)
+    USER_CASH	NUMBER	DEFAULT 0			 -- 유저캐쉬(11/24 -- 충전내역테이블에서 가져옴)
 );	
 
 -- 장르테이블

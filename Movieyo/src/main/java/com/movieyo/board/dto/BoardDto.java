@@ -4,8 +4,8 @@ import java.sql.Date;
 import java.util.Objects;
 
 public class BoardDto {
-	private int board_No;
-	private int user_No;
+	private int boardNo;
+	private int userNo;
 	private String boardHead;
 	private String boardTitle;
 	private String boardContent;
@@ -13,11 +13,11 @@ public class BoardDto {
 	private Date boardCredate;
 	private Date boardModdate;
 	
-	public BoardDto(int board_No, int user_No, String boardHead, String boardTitle, String boardContent, int boardCount,
+	public BoardDto(int boardNo, int userNo, String boardHead, String boardTitle, String boardContent, int boardCount,
 			Date boardCredate, Date boardModdate) {
 		super();
-		this.board_No = board_No;
-		this.user_No = user_No;
+		this.boardNo = boardNo;
+		this.userNo = userNo;
 		this.boardHead = boardHead;
 		this.boardTitle = boardTitle;
 		this.boardContent = boardContent;
@@ -27,19 +27,19 @@ public class BoardDto {
 	}
 
 	public int getBoard_No() {
-		return board_No;
+		return boardNo;
 	}
 
 	public void setBoard_No(int board_No) {
-		this.board_No = board_No;
+		this.boardNo = board_No;
 	}
 
 	public int getUser_No() {
-		return user_No;
+		return userNo;
 	}
 
 	public void setUser_No(int user_No) {
-		this.user_No = user_No;
+		this.userNo = user_No;
 	}
 
 	public String getBoardHead() {
@@ -92,7 +92,7 @@ public class BoardDto {
 
 	@Override
 	public String toString() {
-		return "BoardDto [board_No=" + board_No + ", user_No=" + user_No + ", boardHead=" + boardHead + ", boardTitle="
+		return "BoardDto [boardNo=" + boardNo + ", userNo=" + userNo + ", boardHead=" + boardHead + ", boardTitle="
 				+ boardTitle + ", boardContent=" + boardContent + ", boardCount=" + boardCount + ", boardCredate="
 				+ boardCredate + ", boardModdate=" + boardModdate + "]";
 	}
