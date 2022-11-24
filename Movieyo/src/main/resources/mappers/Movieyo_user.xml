@@ -14,6 +14,8 @@
 			javaType="java.util.Date"/>
 		<result column="USER_NICKNAME" property="nickname"/>
 		<result column="USER_GENDER" property="gender"/>
+		<result column="USER_CASH" property="userCash"/>
+		<result column="USER_ADMIN" property="userAdmin"/>
 	</resultMap>
 
 	<select id="userExist" parameterType="map" 
