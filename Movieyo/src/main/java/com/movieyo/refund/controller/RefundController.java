@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +30,7 @@ public class RefundController {
 	//로그인 세션값 필요 (파라미터 HttpSession session 추가필요)
 	@RequestMapping(value = "/refund/list.do"
 			, method = {RequestMethod.GET, RequestMethod.POST})
-	public String refundList(Model model) {		
-		
-		int userNo = 5;
+	public String refundList(Model model, int userNo) {		
 		
 		List<Map<String, Object>> listMap = refundService.refundSelectList(userNo);
 		
@@ -61,5 +61,5 @@ public class RefundController {
 		
 		return "refund/refundListView";
 	}
-
+	
 }

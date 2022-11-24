@@ -217,14 +217,19 @@ CREATE SEQUENCE MVY_USER_CHARGE_NO_SEQ -- 유저충전번호(기본키) 시퀀�
     INCREMENT BY 1;
 
 ----------- 데이터 추가 예제
-DESC GENRE;
--- GENRE 데이터 삽입 (장르번호 - PK, 장르이름)
-INSERT INTO GENRE VALUES(1,'코미디');
-INSERT INTO GENRE VALUES(2,'액션');
-INSERT INTO GENRE VALUES(3,'호러');
-INSERT INTO GENRE VALUES(4,'멜로');
-INSERT INTO GENRE VALUES(5,'로맨스');
-INSERT INTO GENRE VALUES(6,'음악');
+-- GENRE 테이블에 사용할 데이터값(2022-11-24)
+INSERT INTO GENRE VALUES(1, '애니메이션');
+INSERT INTO GENRE VALUES(2, '드라마');
+INSERT INTO GENRE VALUES(3, '코미디');
+INSERT INTO GENRE VALUES(4, '다큐멘터리');
+INSERT INTO GENRE VALUES(5, '범죄');
+INSERT INTO GENRE VALUES(6, '성인물(에로)');
+INSERT INTO GENRE VALUES(7, 'SF');
+INSERT INTO GENRE VALUES(8, '멜로/로맨스');
+INSERT INTO GENRE VALUES(9, '어드벤처');
+INSERT INTO GENRE VALUES(10, '공포(호러)');
+INSERT INTO GENRE VALUES(11, '스릴러');
+INSERT INTO GENRE VALUES(12, '기타');
 
 DESC MVY_MOVIE;
 

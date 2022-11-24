@@ -48,6 +48,10 @@ body {
 	function myInfo() {
 		location.href = '../user/one.do?userNo=' + ${userDto.userNo};
 	}
+	
+	function refund(){
+		location.href = '../refund/list.do?userNo=' + ${userDto.userNo};
+	}
 </script>
 </head>
 <div class="headerDiv">
@@ -88,7 +92,7 @@ body {
 					<input type="button" value="회원관리">
 				</li>
 				<li>
-					<input type="button" value="환불관리">
+					<input type="button" value="환불관리" onclick="refund();">
 				</li>
 				<li style="padding-right: 20px;">
 					<input type="button" value="게시판관리">
