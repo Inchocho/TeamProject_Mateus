@@ -81,15 +81,15 @@ public class MovieServiceImpl implements MovieService{
 	}
 
 	@Override
-	public Map<String, Object> movieSelectOne(int no) {
+	public Map<String, Object> movieSelectOne(int movieNo) {
 		// TODO Auto-generated method stub
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		
-		MovieDto movieDto = movieDao.movieSelectOne(no);
+		MovieDto movieDto = movieDao.movieSelectOne(movieNo);
 		
 		resultMap.put("movieDto", movieDto);
 		
-		List<Map<String, Object>> fileList = movieDao.fileselectList(no);
+		List<Map<String, Object>> fileList = movieDao.fileselectList(movieNo);
 		resultMap.put("fileList", fileList);
 		
 		return resultMap;

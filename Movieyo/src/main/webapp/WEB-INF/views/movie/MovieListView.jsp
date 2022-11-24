@@ -118,7 +118,7 @@ th {
 					<a href="#" onclick="pageMoveMovieDetailFnc();">
 						${movieDto.movieTitle}
 					</a>
-					<input type="hidden" name="no" value="${movieDto.movieNo}">
+					<input type="hidden" name="movieNo" value="${movieDto.movieNo}">
 					<input type="hidden" id="movieDatailCurPage" name="curPage" value="">
 					<input type="hidden" name="keyword" value="${searchMap.keyword}">
 					<input type="hidden" name="searchOption" value="${searchMap.searchOption}">

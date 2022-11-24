@@ -126,13 +126,13 @@ public class MovieController {
 	
 	//	상세보기 (선택시 상세정보를 보여줌 readOnly 페이지)
 		@RequestMapping(value="/movie/one.do", method = RequestMethod.GET)
-		public String memberOne(int no, Model model
+		public String memberOne(int movieNo, Model model
 				, @RequestParam(defaultValue = "1") int curPage
 				, @RequestParam(defaultValue = "all")String searchOption
 				, @RequestParam(defaultValue = "")String keyword) {
-			logger.debug("Welcome MemberController memberOne!{}" , no);
+			logger.debug("Welcome MovieController movieOne!{}" , movieNo);
 			
-			Map<String, Object> map = movieService.movieSelectOne(no);
+			Map<String, Object> map = movieService.movieSelectOne(movieNo);
 			MovieDto movieDto = (MovieDto) map.get("movieDto");
 			
 			Map<String, Object> searchMap = new HashMap<String, Object>();
@@ -147,6 +147,19 @@ public class MovieController {
 			model.addAttribute("searchMap", searchMap);
 			
 			return "movie/MovieOneView";
+		}
+		
+		@RequestMapping(value="/movie/update.do")
+		public String userUpdate(int movieNo, Model model) {
+			logger.debug("Welcome userUpdate enter {}", movieNo);
+			
+			Map<String, Object> map = movieService.movieSelectOne(movieNo);
+			
+			MovieDto movieDto = (MovieDto) map.get("movieDto");
+			
+			model.addAttribute("movieDto", movieDto);
+			
+			return "movie/MovieUpdateForm";
 		}
 	
 }

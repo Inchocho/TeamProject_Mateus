@@ -17,8 +17,8 @@ public interface MovieDao {
 
 	public List<MovieDto> movieSelectList(String searchOption, String keyword, int start, int end);
 
-	public MovieDto movieSelectOne(int no);
+	public MovieDto movieSelectOne(int movieNo);
 
-	public List<Map<String, Object>> fileselectList(int no);
+	public List<Map<String, Object>> fileselectList(int movieNo);
 
 }

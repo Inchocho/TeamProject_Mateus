@@ -37,7 +37,7 @@
 			</c:otherwise>
 		</c:choose>
 	
-	<form action='/movie/update.do' method='get'>
+	<form action='movie/update.do' method='get'>
 		영화제목: <input type='text' name='movieTitle' 
 			value='${movieDto.movieTitle}' readonly="readonly"><br>
 		제작연도: <input type="text" name='prdtYear' value="${movieDto.prdtYear}"> <br> 

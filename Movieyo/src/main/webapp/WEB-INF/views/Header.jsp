@@ -38,11 +38,11 @@ body {
 
 <script type="text/javascript">
 	function movieAdd() {
-		location.href = '../movie/addMovie.do'
+		location.href = '../movie/addMovie.do';
 	}
 
 	function movieList() {
-		location.href = '../movie/list.do'
+		location.href = '../movie/list.do';
 	}
 	
 	function myInfo() {

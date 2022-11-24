@@ -15,5 +15,5 @@ public interface MovieService {
 
 	public List<MovieDto> movieSelectList(String searchOption, String keyword, int start, int end);
 
-	public Map<String, Object> movieSelectOne(int no);
+	public Map<String, Object> movieSelectOne(int movieNo);
 }
