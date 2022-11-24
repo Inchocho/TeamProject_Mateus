@@ -74,7 +74,7 @@ CREATE TABLE MVY_REFUND(
 );
 
 	
--- 유저
+-- 유저(11/24 - 유저캐쉬, 관리자확인 칼럼 추가)
 CREATE TABLE MVY_USER(
     USER_NO NUMBER PRIMARY KEY,     -- 기본키
     USER_EMAIL VARCHAR2(40) NOT NULL,        -- 이메일
@@ -85,7 +85,8 @@ CREATE TABLE MVY_USER(
     USER_NICKNAME VARCHAR2(40) NOT NULL,     -- 닉네임
     USER_GENDER VARCHAR2(10) NOT NULL,        -- 성별
     --USER_GENRE VARCHAR2(40)
-    USER_CASH	NUMBER	DEFAULT 0			 -- 유저캐쉬(11/24 -- 충전내역테이블에서 가져옴)
+    USER_CASH	NUMBER	DEFAULT 0,			 -- 유저캐쉬(11/24 -- 충전내역테이블에서 가져옴)
+    USER_ADMIN  NUMBER  DEFAULT 0            -- 관리자확인(11/24 -- DEFAULT 0 (유저) 관리자 1)
 );	
 
 -- 장르테이블
@@ -120,12 +121,12 @@ CREATE TABLE MVY_BOARD(
     BOARD_COUNT NUMBER DEFAULT 0             -- 조회수(디폴트 0)
 );
 
--- 유저 캐쉬충전
+-- 유저 캐쉬충전(11/24 -- 일단 보류)
 CREATE TABLE MVY_USER_CHARGE(
     CHARGE_NO NUMBER PRIMARY KEY,   -- 기본키
     USER_NO NUMBER NOT NULL,                 -- 외래키 유저	MVY_USER 테이블의 USER_NO
     CHARGE_DATE DATE NOT NULL,               -- 충전일
-    USER_CASH NUMBER NOT NULL                -- 유저캐쉬
+    CHARGE_CASH NUMBER NOT NULL              -- 충전한 캐쉬내역
 );
 
 -- 테이블 제약조건(외래키) 추가
@@ -226,9 +227,6 @@ INSERT INTO GENRE VALUES(5,'로맨스');
 INSERT INTO GENRE VALUES(6,'음악');
 
 DESC MVY_MOVIE;
--- MVY_MOVIE 데이터 삽입 (영화번호 - PK, 영화제목, 제작년도,제작국가,감독,상영시간,영화등급,가격,영화점수(추천))
-INSERT INTO MVY_MOVIE VALUES(1,'코믹영화1호의역습','1992','대한민국','김호동','120','12세이용가',7000,0);
-INSERT INTO MVY_MOVIE VALUES(2,'코믹영화2호의등장','1995','대한민국','김호동','123','12세이용가',12000,0);
 
 -- MVY_MOVIE_PHOTO 데이터 삽입 (사진번호 - PK,영화번호 - FK)
 INSERT INTO MVY_MOVIE_PHOTO VALUES(1,1,'사진1');
@@ -239,13 +237,11 @@ INSERT INTO GENRE_MOVIE VALUES(1,1,1);  -- 장르무비 기본키1, 영화번호
 INSERT INTO GENRE_MOVIE VALUES(2,2,2);  -- 장르무비 기본키1, 영화번호1, 장르번호1
 
 -- MVY_USER 데이터 삽입 (유저번호 - PK, 이메일, 비밀번호, 이름, 생년월일, 생성일, 닉네임, 성별)
-INSERT INTO MVY_USER VALUES(1,'herais100@naver.com','1234','이현석','1995-12-11', SYSDATE, '이현짱석','남자');
+INSERT INTO MVY_USER VALUE(USER_NO, USER_EMAIL, USER_PASSWORD, USER_NAME, USER_BIRTH, USER_CREDATE, USER_NICKNAME, USER_GENDER)
+VALUES(1, '1', '1', '관리자', '2000-01-01', SYSDATE, '관리자닉네임', '남자');
 
 -- GENRE_USER 데이터 삽입 (장르유저번호 - PK, 영화번호 - FK, 장르번호 - FK)
 INSERT INTO GENRE_USER VALUES(1,1,5);
-
--- MVY_USER_CHARGE 데이터 삽입 (충전번호 - PK, 유저번호 - FK, 충전일, 현재보유캐쉬)
-INSERT INTO MVY_USER_CHARGE VALUES(1,1,SYSDATE,50000);
 
 -- MVY_CART 데이터 삽입 (카트번호 - PK, 유저번호 - FK, 영화번호 - FK)
 INSERT INTO MVY_CART VALUES(1,1,1);
@@ -283,11 +279,9 @@ AND C.GENRE_NO = B.GENRE_NO
 AND A.USER_NO = 1;
 
 -- 유저충전 테이블에는 유저번호를 통해 유저의 잔여캐쉬를 보여줌
-SELECT A.USER_NICKNAME, B.USER_CASH 
-FROM MVY_USER A,
-     MVY_USER_CHARGE B
-WHERE A.USER_NO = B.USER_NO
-AND A.USER_NO = 1;
+SELECT USER_NICKNAME, USER_CASH 
+FROM MVY_USER
+WHERE USER_NO = 1;
 
 -- 구매내역 테이블에는 유저번호를 통해 유저가 구매한 구매내역을 보여줌 
 SELECT A.USER_NICKNAME, B.BUY_DATE, C.MOVIE_TITLE, C.MOVIE_PRICE, B.BUY_STATUS

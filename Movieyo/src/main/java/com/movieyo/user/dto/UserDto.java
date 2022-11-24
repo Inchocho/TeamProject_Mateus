@@ -15,9 +15,15 @@ public class UserDto {
 	private Date userCreateDate;
 	private String nickname;
 	private String gender;
+	private int userCash;
+	private int userAdmin;
 	
+	public UserDto() {
+		super();
+	}
+
 	public UserDto(int userNo, String email, String password, String userName, Date userBirth, Date userCreateDate,
-			String nickname, String gender) {
+			String nickname, String gender, int userCash, int userAdmin) {
 		super();
 		this.userNo = userNo;
 		Email = email;
@@ -27,10 +33,8 @@ public class UserDto {
 		this.userCreateDate = userCreateDate;
 		this.nickname = nickname;
 		this.gender = gender;
-	}
-
-	public UserDto() {
-		super();
+		this.userCash = userCash;
+		this.userAdmin = userAdmin;
 	}
 
 	public int getUserNo() {
@@ -97,11 +101,27 @@ public class UserDto {
 		this.gender = gender;
 	}
 
+	public int getUserCash() {
+		return userCash;
+	}
+
+	public void setUserCash(int userCash) {
+		this.userCash = userCash;
+	}
+
+	public int getUserAdmin() {
+		return userAdmin;
+	}
+
+	public void setUserAdmin(int userAdmin) {
+		this.userAdmin = userAdmin;
+	}
+
 	@Override
 	public String toString() {
 		return "UserDto [userNo=" + userNo + ", Email=" + Email + ", Password=" + Password + ", userName=" + userName
 				+ ", userBirth=" + userBirth + ", userCreateDate=" + userCreateDate + ", nickname=" + nickname
-				+ ", gender=" + gender + "]";
+				+ ", gender=" + gender + ", userCash=" + userCash + ", userAdmin=" + userAdmin + "]";
 	}
 	
 }
