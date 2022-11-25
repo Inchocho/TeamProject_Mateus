@@ -7,7 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <script type="text/javascript">
-
+	function buyAdd() {
+		location.href = '../buy/addBuy.do'
+	}
 </script>
 <title>구매내역</title>
 </head>
@@ -86,6 +88,7 @@
 		
 		<input type="text" name="keyword" value="${searchMap.keyword}" placeholder="검색">
 		<input type="submit" value="검색">			
+		<button type="button" onclick="buyAdd();">구매내역등록</button>
 	</form>	
 
 </body>

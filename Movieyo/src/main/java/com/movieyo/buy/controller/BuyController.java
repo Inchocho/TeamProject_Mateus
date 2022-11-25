@@ -17,8 +17,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.movieyo.buy.dto.BuyDto;
 import com.movieyo.buy.service.BuyService;
+import com.movieyo.movie.dto.MovieDto;
+import com.movieyo.user.dto.UserDto;
 import com.movieyo.util.Paging;
 
 @Controller
@@ -100,7 +104,51 @@ public class BuyController {
 		model.addAttribute("pagingMap", pagingMap);
 		model.addAttribute("searchMap", searchMap);		
 		
-		return "buy/buyListView";
+		return "buy/BuyListView";
+	}	
+	
+	@RequestMapping(value = "/buy/addBuy.do", method = RequestMethod.GET)
+	public String buyAdd(Model model, HttpSession session) {
+		
+		UserDto userDto = (UserDto)session.getAttribute("userDto");
+		
+		System.out.println(userDto);
+		
+		model.addAttribute(userDto);
+		
+		logger.trace("Welcome BuyController buyAdd 구매폼으로 이동!!!");
+		
+		return "buy/BuyForm";
+	}
+	
+	@RequestMapping(value = "/buy/addCtr.do", method = RequestMethod.POST)
+	public String buyAddCtr(BuyDto buyDto, Model model) {
+		logger.trace("Welcome BuyController buyAddCtr 구매내역 추가!!! " 
+			+ buyDto);
+		
+			//폼으로 해당정보를 넘기는지 확인
+			System.out.println(buyDto);
+		
+			//해당 유저의 캐쉬를 감소하기 위한 userNo
+			int userNo = buyDto.getBuyNo();
+			
+			//구매한 영화의 평가를 올리기 위한 movieNo
+			int movieNo = buyDto.getMovieNo();
+		
+		try {
+			buyService.buyInsertOne(buyDto);
+			
+//			buyService.updateCash(userNo);
+			
+//			buyService.updateMovie(movieNo);
+			
+		} catch (Exception e) {
+			System.out.println("오랜만에 예외 처리 한다");
+			System.out.println("파일 문제 예외일 가능성 높음");
+			e.printStackTrace();
+		}
+				
+		return "redirect:/buy/BuyListView";
 	}	
 
 }

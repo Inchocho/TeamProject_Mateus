@@ -8,6 +8,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.movieyo.buy.dto.BuyDto;
+
 @Repository
 public class BuyDaoImpl implements BuyDao{
 	
@@ -47,6 +49,12 @@ public class BuyDaoImpl implements BuyDao{
 		map.put("end", end);
 		
 		return sqlSession.selectList(namespace + "buySelectList", map);
+	}
+
+	@Override
+	public Object buyInsertOne(BuyDto buyDto) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert(namespace + "buyInsertOne", buyDto);
 	}
 
 

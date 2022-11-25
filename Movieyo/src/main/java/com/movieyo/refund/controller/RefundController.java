@@ -98,7 +98,7 @@ public class RefundController {
 		model.addAttribute("pagingMap", pagingMap);
 		model.addAttribute("searchMap", searchMap);
 		
-		return "refund/refundListView";
+		return "refund/RefundListView";
 	}
 	
 }

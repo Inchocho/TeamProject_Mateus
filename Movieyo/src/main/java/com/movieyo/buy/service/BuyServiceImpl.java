@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.movieyo.buy.dao.BuyDao;
+import com.movieyo.buy.dto.BuyDto;
 
 @Service
 public class BuyServiceImpl implements BuyService {
@@ -35,6 +36,12 @@ public class BuyServiceImpl implements BuyService {
 		System.out.println(end + "페이지엔드");
 		
 		return buyDao.buySelectList(searchOption, keyword, start, end, userNo);
+	}
+
+	@Override
+	public void buyInsertOne(BuyDto buyDto) {
+		// TODO Auto-generated method stub
+		buyDao.buyInsertOne(buyDto);
 	}
 
 
