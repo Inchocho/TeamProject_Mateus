@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>영화목록</title>
+<title>Moviyo</title>
 
 <style type="text/css">
 	table, tr, td, th{
@@ -60,12 +60,23 @@
     font-size: 16px;
     resize: none;
 }
-
+.curPageDiv{
+	margin-left: 200px;
+}
 .titleContainer{
 	border-bottom: 2px solid #252525;
 	margin: 3px 3px 3px 0px;
 }
-
+.titleContainer h1{
+	margin-left: 30px;
+}
+.contContainer{
+    width: 600px;
+    margin: 10px 0 0 30px;
+}
+.contContainer table{
+	width: 600px;
+}
   
 #ul li {
   list-style-type: none;
@@ -76,9 +87,21 @@
 th {
 	background-color: gray;
 } 
-
+.cartSelectInfo, .csiCkBox, .csiCkBoxView{
+	display: flex;
+}
+.cartSelectInfo{
+	flex-direction: column;
+	align-items: center;
+}
+.csiCkBox{
+	align-items: center;
+}
+.csiCkBoxView{
+	flex-direction: column;
+}
 </style>
-<script type="text/javascript" src="/springHome2/resources/js/jquery-3.6.1.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 
 <script type="text/javascript">
 	function pageMoveMovieDetailFnc() {
@@ -103,49 +126,43 @@ th {
 	<jsp:include page="/WEB-INF/views/Header.jsp"/>
 	</header>
 	<jsp:include page="/WEB-INF/views/UserMyPageSideMenu.jsp"></jsp:include>
+	<div class="curPageDiv">
+	
 	<div class="titleContainer">
 		<h1>장바구니</h1>
-		
 	</div>
-	
+		
+	<form action="buyCartSelect.do">
+		<!-- contContainer 다넣기? -->
+	</form>
+	<div class="contContainer">
 	<table>
 		<tr>
-			<th>번호</th><th>영화제목</th><th>장르</th><th>감독</th><th>작성자</th><th>등록일</th>
+			<th>영화제목</th><th>가격</th><th>담은날짜</th><th>선택</th>
 		</tr>
-		<c:if test="${not empty movieList}">
-		<c:forEach var="movieDto" items="${movieList}">
-		<tr>
-			<td>${movieDto.movieNo}</td>
-			<td>
-				<form id="movieDetailForm" action="./one.do" method="get">			
-					<a href="#" onclick="pageMoveMovieDetailFnc();">
-						${movieDto.movieTitle}
-					</a>
-					<input type="hidden" name="movieNo" value="${movieDto.movieNo}">
-					<input type="hidden" id="movieDatailCurPage" name="curPage" value="">
-					<input type="hidden" name="keyword" value="${searchMap.keyword}">
-					<input type="hidden" name="searchOption" value="${searchMap.searchOption}">
-				</form>
-			</td>
-			<td>장르</td>
-			<td>
-				${movieDto.director}
-			</td>
-			<td>
-				작성자
-			</td>
-			
-			<td>${movieDto.creDate}</td>
-		</tr>
+		<c:if test="true">
+		<c:forEach var="userCartDto" items="${cartList}">
 		</c:forEach>
+		<tr>
+			<td>${cartDto.movieTitle}1</td>
+			<td>${cartDto.moviePrice}1</td>
+			<td>${cartDto.inCartDate}1</td>
+			<td><input type="checkbox"></td>
+		</tr>
+			
 		</c:if>
-		<c:if test="${empty movieList}">
+		<c:if test="${empty cartList}">
 			<tr>
-				<td colspan="6" id="tdId">영화가 존재하지 않습니다</td>
+				<td colspan="4" id="tdId">장바구니가 비었습니다</td>
 			</tr>		
 		</c:if>
 	</table>
-	
+	<div style="display: flex; flex-direction: row-reverse;"><div class="cartSelectInfo">
+		<div class="csiCkBox">
+			<div class="csiCkBoxView"><span>선택한항목</span><span>가격합계</span></div><div>전체선택체크박스</div>
+		</div>
+		<div>구매버튼</div>
+	</div></div>
 	<!-- jsp:include는 forward처럼 데이터를 유지시킨다 -->
 	<jsp:include page="/WEB-INF/views/common/Paging.jsp"/>
 	
@@ -156,11 +173,14 @@ th {
 		<input type="hidden"  name="searchOption" value="${searchMap.searchOption}">
 	</form>
 	
-
-	
 	<form action="./list.do" method="post">
 		<select name="searchOption">
 			<c:choose>
+				<c:when test="true">
+					<option value="all"<c:if test="${searchMap.searchOption eq 'all'}">selected</c:if>>감독+제목</option>
+					<option value="MOVIE_DIRECTOR">감독</option>
+					<option value="MOVIE_TITLE">제목</option>					
+				</c:when>
 				<c:when test="${searchMap.searchOption == 'all'}">
 					<option value="all"<c:if test="${searchMap.searchOption eq 'all'}">selected</c:if>>감독+제목</option>
 					<option value="MOVIE_DIRECTOR">감독</option>
@@ -181,10 +201,10 @@ th {
 		
 		<input type="text" name="keyword" value="${searchMap.keyword}" placeholder="검색">
 		<input type="submit" value="검색">
-		<button type="button" onclick="movieAdd();">영화등록</button>
 	</form>
 		
-	
+	</div>
+	</div>
 	<jsp:include page="/WEB-INF/views/Tail.jsp"/>
 	
 </body>
