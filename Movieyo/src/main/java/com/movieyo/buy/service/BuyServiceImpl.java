@@ -20,8 +20,23 @@ public class BuyServiceImpl implements BuyService {
 	public BuyDao buyDao;
 
 	@Override
-	public List<Map<String, Object>> buySelectList(int userNo) {
-		return buyDao.buySelectList(userNo);
+	public int buySelectTotalCount(String searchOption, String keyword, int userNo) {
+		// TODO Auto-generated method stub
+		return buyDao.buySelectTotalCount(searchOption, keyword, userNo);
 	}
+
+	@Override
+	public List<Map<String, Object>> buySelectList(String searchOption, String keyword, int start, int end,
+			int userNo) {
+		// TODO Auto-generated method stub
+		System.out.println(searchOption + "서치옵션");
+		System.out.println(keyword + "키워드");
+		System.out.println(start + "페이지시작");
+		System.out.println(end + "페이지엔드");
+		
+		return buyDao.buySelectList(searchOption, keyword, start, end, userNo);
+	}
+
+
 	
 }

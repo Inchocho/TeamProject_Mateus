@@ -5,6 +5,9 @@ import java.util.Map;
 
 public interface BuyService {
 
-	public List<Map<String, Object>> buySelectList(int userNo);
+	int buySelectTotalCount(String searchOption, String keyword, int userNo);
+
+	List<Map<String, Object>> buySelectList(String searchOption, String keyword, int start, int end, int userNo);
+
 
 }

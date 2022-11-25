@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.movieyo.refund.service.RefundService;
+import com.movieyo.util.Paging;
 
 @Controller
 public class RefundController {
@@ -30,9 +30,46 @@ public class RefundController {
 	//로그인 세션값 필요 (파라미터 HttpSession session 추가필요)
 	@RequestMapping(value = "/refund/list.do"
 			, method = {RequestMethod.GET, RequestMethod.POST})
-	public String refundList(Model model, int userNo) {		
+	public String refundList(@RequestParam(defaultValue = "1") int curPage, Model model,
+			@RequestParam(defaultValue = "all")String searchOption
+		  , @RequestParam(defaultValue = "")String keyword,
+			int userNo) {
 		
-		List<Map<String, Object>> listMap = refundService.refundSelectList(userNo);
+		logger.info("Welcome RefundController refundList! curPage: {}" + ", searchOption: {}"
+				, curPage, searchOption);		
+		
+		logger.info("keyword: {}",keyword);	
+		
+		int totalCount = refundService.refundSelectTotalCount(searchOption, keyword, userNo);
+		
+		logger.info("totalCount: {}", totalCount);
+		
+		Paging refundPaging = new Paging(totalCount, curPage);		
+		
+		int start = refundPaging.getPageBegin();
+		int end = refundPaging.getPageEnd();
+		
+		List<Map<String, Object>> listMap 
+			= refundService.refundSelectList(searchOption, keyword, start, end, userNo);
+		
+		//sql 페이징 쿼리실행결과 + 토탈카운트를 담아서 멤버리스트와 같이 모델에 담아준다
+		//map을 활용하면 다양한 데이터를 쉽게 객체를 만들 수 있다
+		//Map의 value타입이 Object인 이유 -> 스프링은 객체지향 프로그래밍 
+		Map<String, Object> pagingMap = 
+				new HashMap<String, Object>();
+		
+		//Map에다가 totalCount, memberPaging을 key로해서 담고
+		pagingMap.put("totalCount", totalCount);
+		pagingMap.put("moviePaging", refundPaging);
+		
+		Map<String, Object> searchMap = 
+				new HashMap<String, Object>();
+		
+		searchMap.put("searchOption", searchOption);
+		searchMap.put("keyword", keyword);
+		
+		logger.info("curPage: {}", curPage);
+		logger.info("curBlock: {}", refundPaging.getCurBlock());		
 		
 		List<Map<String, Object>> refundListMap = new ArrayList<Map<String,Object>>();
 		
@@ -58,6 +95,8 @@ public class RefundController {
 		}
 		
 		model.addAttribute("refundListMap", refundListMap);
+		model.addAttribute("pagingMap", pagingMap);
+		model.addAttribute("searchMap", searchMap);
 		
 		return "refund/refundListView";
 	}

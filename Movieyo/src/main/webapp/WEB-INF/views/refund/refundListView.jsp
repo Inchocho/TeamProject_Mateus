@@ -44,6 +44,45 @@
 	
 		
 	</table>
-
+	
+	<!-- jsp:include는 forward처럼 데이터를 유지시킨다 -->
+	<jsp:include page="/WEB-INF/views/common/Paging.jsp"/>
+	
+	<form action="./list.do" id="pagingForm" method="post">
+		<input type="hidden" id="curPage" name="curPage"
+			value="${pagingMap.moviePaging.curPage}">	
+		<input type="hidden"  name="userNo" value="${userDto.userNo}">
+		<input type="hidden"  name="keyword" value="${searchMap.keyword}">
+		<input type="hidden"  name="searchOption" value="${searchMap.searchOption}">
+	</form>	
+	
+	<form action="./list.do" method="post">
+		<select name="searchOption">
+			<c:choose>
+				<c:when test="${searchMap.searchOption == 'all'}">
+					<option value="all"<c:if test="${searchMap.searchOption eq 'all'}">selected</c:if>>전체</option>
+					<option value="MOVIE_TITLE">영화제목</option>
+					<option value="REFUND_STATUS">환불상태</option>					
+				</c:when>
+				<c:when test="${searchMap.searchOption == 'MOVIE_TITLE'}">
+					<option value="all">전체</option>
+					<option value="MOVIE_TITLE"<c:if test="${searchMap.searchOption eq 'MOVIE_TITLE'}">selected</c:if>>영화제목</option>
+					<option value="REFUND_STATUS">환불상태</option>					
+				</c:when>				
+				<c:when test="${searchMap.searchOption == 'REFUND_STATUS'}">
+					<option value="all">전체</option>
+					<option value="MOVIE_TITLE">영화제목</option>					
+					<option value="REFUND_STATUS"<c:if test="${searchMap.searchOption eq 'REFUND_STATUS'}">selected</c:if>>환불상태</option>
+				</c:when>				
+			</c:choose>
+		</select>
+		<input type='hidden' name='userNo' value="${userDto.userNo}">	
+		
+		<input type="text" name="keyword" value="${searchMap.keyword}" placeholder="검색">
+		<input type="submit" value="검색">			
+	</form>
+	
+	<input type='text' name='userNo' value="${userDto.userNo}">
+	
 </body>
 </html>

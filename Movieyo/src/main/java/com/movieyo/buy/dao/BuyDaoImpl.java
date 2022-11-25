@@ -1,14 +1,12 @@
 package com.movieyo.buy.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import com.movieyo.buy.dto.BuyDto;
-import com.movieyo.refund.dto.RefundDto;
 
 @Repository
 public class BuyDaoImpl implements BuyDao{
@@ -20,8 +18,37 @@ public class BuyDaoImpl implements BuyDao{
 	String namespace = "com.movieyo.buy.";
 
 	@Override
-	public List<Map<String, Object>> buySelectList(int userNo) { 
-		return sqlSession.selectList(namespace + "buySelectList", userNo);
+	public int buySelectTotalCount(String searchOption, String keyword, int userNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+		map.put("userNo", userNo);
+		
+		return sqlSession.selectOne(namespace + "buySelectTotalCount", map);
 	}
+
+	@Override
+	public List<Map<String, Object>> buySelectList(String searchOption, String keyword, int start, int end,
+			int userNo) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		System.out.println(searchOption + "서치옵션DD");
+		System.out.println(keyword + "키워드DD");
+		System.out.println(start + "페이지시작DD");
+		System.out.println(end + "페이지엔드DD");		
+		System.out.println(userNo + "유저번호DD");
+		
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);		
+		map.put("userNo", userNo);
+		map.put("start", start);
+		map.put("end", end);
+		
+		return sqlSession.selectList(namespace + "buySelectList", map);
+	}
+
+
 	
 }

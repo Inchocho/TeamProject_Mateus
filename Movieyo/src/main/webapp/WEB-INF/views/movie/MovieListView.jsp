@@ -82,12 +82,16 @@ th {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script type="text/javascript">
-	function pageMoveMovieDetailFnc() {
+	function pageMoveMovieDetailFnc(index) {
 		var movieDatailCurPageObj = document.getElementById("movieDatailCurPage");
 		
 		movieDatailCurPageObj.value = document.getElementById("curPage").value;
 		
-		var movieDetailFormObj = document.getElementById("movieDetailForm");
+		var str = "movieDetailForm" + index;
+		
+		console.log(str);		
+		
+		var movieDetailFormObj = document.getElementById(str);
 		
 		movieDetailFormObj.submit();
 		
@@ -110,12 +114,12 @@ th {
 			<th>번호</th><th>영화제목</th><th>장르</th><th>감독</th><th>작성자</th><th>등록일</th>
 		</tr>
 		<c:if test="${not empty movieList}">
-		<c:forEach var="movieDto" items="${movieList}">
+		<c:forEach var="movieDto" items="${movieList}" varStatus="status">
 		<tr>
 			<td>${movieDto.movieNo}</td>
 			<td>
-				<form id="movieDetailForm" action="./one.do" method="get">			
-					<a href="#" onclick="pageMoveMovieDetailFnc();">
+				<form id="movieDetailForm${status.index}" action="./one.do" method="get">					
+					<a href="#" onclick="pageMoveMovieDetailFnc(${status.index});">
 						${movieDto.movieTitle}
 					</a>
 					<input type="hidden" name="movieNo" value="${movieDto.movieNo}">
