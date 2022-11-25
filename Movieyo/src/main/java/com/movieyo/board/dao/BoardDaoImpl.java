@@ -1,5 +1,6 @@
 package com.movieyo.board.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,60 +17,61 @@ public class BoardDaoImpl implements BoardDao {
 	@Autowired
 	SqlSessionTemplate sqlSession;
 	
-	String namespace = "com.movieyo.board.";	
-
+	String namespace = "com.movieyo.board.";
+	//게시물 작성
 	@Override
-	public BoardDto select(Integer boardNo) throws Exception {
-		return sqlSession.selectOne(namespace + "select", boardNo);	}
-
-	@Override
-	public int delete(Integer userNo, Integer boardNo) throws Exception {
-		return 0;
-	}
-
-	@Override
-	public int insert(BoardDto dto) throws Exception {
-		return sqlSession.insert(namespace+"insert", dto);	}
-
-	@Override
-	public int update(BoardDto dto) throws Exception {
-		return 0;
-	}
-
-	@Override
-	public int increaseViewCount(Object boardNo) throws Exception {
-		 return sqlSession.update(namespace+"update", boardNo);	}
-
-	@Override
-	public List<BoardDto> selectPage(Map map) throws Exception {
-		  return sqlSession.selectList(namespace+"selectPage", map);
-	}
-
-	@Override
-	public List<BoardDto> selectAll() throws Exception {
+	public int boardInsertOne(BoardDto boardDto) {
 		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.insert(namespace+ "boardInsertOne", boardDto);
 	}
 
 	@Override
-	public int deleteAll() throws Exception {
+	public int boardSelectTotalCount(String searchOption, String keyword) {
 		// TODO Auto-generated method stub
-		 return sqlSession.selectOne(namespace+"deleteAll");	
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("searchOption", searchOption);	
+		map.put("keyword", keyword);
+		
+		return sqlSession.selectOne(namespace + "boardSelectTotalCount", map) ;
+	}
+	//게시물 조회
+	@Override
+	public List<BoardDto> boardSelectList(String searchOption, String keyword, int start, int end) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("keyword", keyword);
+		map.put("start", start);
+		map.put("end", end);
+		map.put("searchOption", searchOption);
+		
+		return sqlSession.selectList(namespace + "boardSelectList", map);
+		
 	}
 
 	@Override
-	public int count() throws Exception {
+	public BoardDto boardSelectOne(int boardNo) {
 		// TODO Auto-generated method stub
-		 return sqlSession.selectOne(namespace+"count");	
-	}
+		return sqlSession.selectOne(namespace + "boardSelectOne", boardNo);	}
+
 
 	@Override
-	public List<BoardDto> boardSelectTotalCount(String searchOption, String keyword) {
+	public int boardUpdateOne(BoardDto boardDto) {
 		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.update(namespace + "boardUpdateOne", boardDto);
 	}
+	// 조회수
+	@Override
+	public void boardViewCount(int boardNo) {
+		// TODO Auto-generated method stub
+		sqlSession.update(namespace+ "boardViewCount",boardNo);
+	}	
 
-	
-	
 
 }
+
+	
+	
+
+
