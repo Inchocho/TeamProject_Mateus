@@ -76,14 +76,15 @@ table {
 	<div class="userMpointDiv">
 		<h2 class="mpayAttribute" style="margin-right: 270px;">충전</h2>
 		<!-- 포인트 충전시 afterMpoint 보내기 -->
-	<div id="chargeInfo">
+	<form action="/user/chargeMpoint.do" method="post" id="chargeForm">
 		<input id="beforeMpoint" type="hidden" value="${userDto.userCash}">
 		<input id="chargePoint" type="hidden" value="">
 		<span class="userMpointTd">충전할 금액</span>
 		<input id="userInputPoint" type="text" maxlength="10" onkeyup="inputNumberFormat(this);"
 		placeholder="충전하실 금액을 입력하세요" style="height: 20px;" value=""> 원
-		<input id="afterMpoint" name="" type="hidden">
-	</div>
+		<input id="afterMpoint" name="afterMpoint" type="hidden">
+	</form>
+	
 		<div class="plusBtnBox">
 		
 		<input class="pricePlusBtn" type="button" value="+5,000 원">
@@ -98,8 +99,9 @@ table {
 			</tr>
 		</table>
 	</div>
-		<input id="chargeBtn" type="button" value="충전하기">
+		<input id="chargeTryBtn" type="button" value="충전하기">
 </div>
+<jsp:include page="/WEB-INF/views/PopUp/ChargeMpointPop.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/Tail.jsp" />
 </body>
 <script type="text/javascript">
@@ -107,10 +109,13 @@ table {
 	var chargePointObj = document.getElementById("chargePoint");
 	var afterMpointObj = document.getElementById("afterMpoint");
 	var afterMpointViewObj = document.getElementById("afterMpointView");
+	
 	var beforePoint = document.getElementById("beforeMpoint").value;
-	afterMpointViewObj.innerHTML = beforePoint;
 	var chargePoint = chargePointObj.value;
 	var afterPoint = parseInt(beforePoint);
+	
+	afterMpointViewObj.innerHTML = beforePoint;
+	
 	inputChargePointObj.addEventListener("keyup", function(e) {
 		chargePointObj.value = inputChargePointObj.value;
 		//keyup이벤트로 콤마추가되어 숫자전체가 안잡혀서 콤마 지우는 포멧
@@ -125,18 +130,7 @@ table {
 		
 		afterMpointViewObj.innerHTML = afterPoint;
 	});
-	
-	var chargeBtn = document.getElementById("chargeBtn");
-	var chargeForm = document.getElementById("chargeForm");
-	
-	chargeBtn.addEventListener("click", function(e) {
 
-		chargePointObj.value = inputChargePointObj.value;
-		afterMpointObj.value = afterPoint;
-		var urlCharge = "/Movieyo/Popup/chargeMpointPop.do";
-		var popStyle = "width = 650px, height=550px, top=300px, left=300px, scrollbars=yes";
-		window.open(urlCharge, "_pop",popStyle);
-	});
 	
 	var pricePlusBtnList = document.getElementsByClassName("pricePlusBtn");
 	
@@ -188,7 +182,25 @@ table {
 			afterPoint = parseInt(beforePoint) + parseInt(chargePoint);
 			afterMpointViewObj.innerHTML = afterPoint;
 		});
-		
+	
+	var chargeTryBtn = document.getElementById("chargeTryBtn");
+	var popup_layerObj = document.getElementById("popup_layer");
+	
+	chargeTryBtn.addEventListener("click", function(e) {
+		var chargePriceCheck = document.getElementById("chargePriceCheck");
+		chargePointObj.value = inputChargePointObj.value;
+		afterMpointObj.value = afterPoint;
+		chargePriceCheck.innerHTML = inputChargePointObj.value + " 원";
+		popup_layer.style.visibility = "visible";
+	});
+	
+	var chageBtn = document.getElementById("chargeBtn");
+	var chargeForm = document.getElementById("chargeForm");
+	
+	chageBtn.addEventListener("click", function(e) {
+		chargeForm.submit();
+	});
+	
 	
 	function comma(str) {
         str = String(str);

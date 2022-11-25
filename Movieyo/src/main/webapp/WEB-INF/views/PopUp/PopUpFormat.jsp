@@ -22,16 +22,17 @@
   <div class="popup_box">
       <!--팝업 컨텐츠 영역-->
       <div class="popup_cont">
-          <h2>충전 하시겠습니까?</h2>
-          <p id="chargePriceCheck"></p>
+          <h2 id="">팝업제목?</h2>
+          <p id="">내용</p>
       </div>
       <!--팝업 버튼 영역-->
       <div class="popup_btn">
-          <a id="chargeBtn" href="#" class="chargeBtn">충전</a> 
-          <a href="#" onclick="cancelFnc();" class="cancel">취소</a>
+          <a id="" href="#" class="">확인</a> 
+          <a href="#" onclick="cancelFnc();" class="cancel">닫기</a>
       </div>
   </div>
 </div>
+
 <script type="text/javascript">
 function cancelFnc() {
 	var popup_layer = document.getElementById("popup_layer");
