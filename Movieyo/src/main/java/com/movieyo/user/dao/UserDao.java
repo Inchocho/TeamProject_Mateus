@@ -27,6 +27,8 @@ public interface UserDao {
 	public List<UserDto> userSelectList(String searchOption, String keyword, int start, int end);
 
 	public void userGenre(int checkNum, int userNo);
+
+	public UserDto chargeMpointCtr(UserDto userDto, int afterMpoint);
 	
 	
 }

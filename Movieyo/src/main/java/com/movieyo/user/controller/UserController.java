@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -297,6 +298,18 @@ public class UserController {
 		public String chargeMpoint(HttpSession session, Model model) throws Exception{
 			
 			return "PopUp/ChargeMpointPop";
+		}
+		@RequestMapping(value = "/user/chargeMpointCtr.do", method = {RequestMethod.GET, RequestMethod.POST})
+		public String chargeMpointCtr(int afterMpoint, HttpSession session, Model model) throws Exception{
+			UserDto userDto = (UserDto) session.getAttribute("userDto");
+			
+			UserDto userDtoCarged  = userService.chargeMpointCtr(userDto,afterMpoint);
+			
+			session.removeAttribute("userDto");
+			session.setAttribute("userDto", userDtoCarged);
+			model.addAttribute("userDto", userDtoCarged);
+			
+			return "redirect:userMpoint.do";
 		}
 		
 }

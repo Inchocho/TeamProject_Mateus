@@ -90,7 +90,11 @@
 		FROM MVY_USER
 		<include refid="search"></include>
 	</select>
-	
+	<update id="updateCash" parameterType="map">
+		UPDATE MVY_USER
+		SET USER_CASH = #{userCash}
+		WHERE USER_NO = #{userNo}
+	</update>
 	<select id="userSelectList" resultMap="userResultMap">
 		SELECT MV.USER_NO, MV.USER_EMAIL, MV.USER_NICKNAME
 		      , MV.USER_NAME, MV.USER_BIRTH, MV.USER_GENDER, MV.USER_CASH
