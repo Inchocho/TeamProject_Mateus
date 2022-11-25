@@ -79,7 +79,7 @@ th {
 } 
 
 </style>
-<script type="text/javascript" src="/springHome2/resources/js/jquery-3.6.1.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script type="text/javascript">
 	function pageMoveMovieDetailFnc() {

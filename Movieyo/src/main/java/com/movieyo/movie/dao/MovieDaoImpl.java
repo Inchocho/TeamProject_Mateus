@@ -67,5 +67,17 @@ public class MovieDaoImpl implements MovieDao{
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(namespace + "fileselectList", movieNo);
 	}
+
+	@Override
+	public int movieUpdateOne(MovieDto movieDto) {
+		// TODO Auto-generated method stub
+		return sqlSession.update(namespace + "movieUpdateOne", movieDto);
+	}
+
+	@Override
+	public void movieDeleteOne(int movieNo) {
+		// TODO Auto-generated method stub
+		sqlSession.delete(namespace + "movieDeleteOne", movieNo);
+	}
 	
 }

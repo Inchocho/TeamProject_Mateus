@@ -44,9 +44,6 @@ table{
 	<jsp:include page="/WEB-INF/views/Header.jsp"/>
 	<h1>회원목록</h1>
 	
-	<p>
-		<a href="./add.do">신규 회원 추가</a>
-	</p>
 	
 	<form action="./list.do" method="post">
 		<select name="searchOption">
@@ -79,11 +76,11 @@ table{
 	
 	<table>
 		<tr>
-			<th>번호</th><th>이름</th><th>이메일</th><th>가입일</th><th></th>
+			<th>이메일</th><th>닉네임</th><th>이름</th><th>생년월일</th><th>성별</th><th>캐쉬</th>
 		</tr>
 		
 		<c:choose>
-			<c:when test="${empty memberList}">
+			<c:when test="${empty userList}">
 				<tr>
 					<td colspan="5" 
 						style="width: 500px; height: 400px; 
@@ -93,30 +90,36 @@ table{
 				</tr>
 			</c:when>
 			<c:otherwise>
-				<c:forEach var="memberDto" items="${memberList}"> 
+				<c:forEach var="userDto" items="${userList}"> 
 		<tr>			
-			<td>${memberDto.no}</td>
+			<td>${userDto.email}</td>
+<!-- 			<td> -->
+<!-- 				<form id='memberDetailForm' action="./one.do" method="get"> -->
+<!-- 					<a href='#' onclick="pageMoveMemberDetailFnc();"> -->
+<%-- 						${memberDto.name} --%>
+<!-- 					</a> -->
+<%-- 					<input type="hidden" name="userNo" value="${userDto.userNo}"> --%>
+<!-- 					<input type="hidden" id="memberDetailCurPage"  -->
+<!-- 						name="curPage" value=""> -->
+<!-- 					<input type="hidden" name="keyword"  -->
+<%-- 						value="${searchMap.keyword}"> --%>
+<!-- 					<input type="hidden" name="searchOption"  -->
+<%-- 						value="${searchMap.searchOption}"> --%>
+<!-- 				</form> -->
+<!-- 			</td> -->
+			<td>${userDto.nickname}</td>
 			<td>
-				<form id='memberDetailForm' action="./one.do" method="get">
-					<a href='#' onclick="pageMoveMemberDetailFnc();">
-						${memberDto.name}
-					</a>
-					<input type="hidden" name="no" value="${memberDto.no}">
-					<input type="hidden" id="memberDetailCurPage" 
-						name="curPage" value="">
-					<input type="hidden" name="keyword" 
-						value="${searchMap.keyword}">
-					<input type="hidden" name="searchOption" 
-						value="${searchMap.searchOption}">
-				</form>
+			${userDto.userName}
 			</td>
-			<td>${memberDto.email}</td>
 			<td>
 				<fmt:formatDate pattern="yyyy-MM-dd hh:mm" 
-				value="${memberDto.createDate}"/>
+				value="${userDto.userBirth}"/>
 			</td>
 			<td>
-				<a href='./deleteCtr.do?no=${memberDto.no}'>[삭제]</a>
+			${userDto.gender}
+			</td>
+			<td>
+			${userDto.userCash}
 			</td>
 		</tr>
 				</c:forEach>

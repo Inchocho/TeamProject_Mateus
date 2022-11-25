@@ -23,7 +23,11 @@
 			
 		<!-- 2022/11/23 BuyDto 추가 -->	
 		<typeAlias type="com.movieyo.buy.dto.BuyDto"
-			alias="BuyDto" />			
+			alias="BuyDto" />		
+			
+				<!-- 2022/11/25 BuyDto 추가 -->	
+		<typeAlias type="com.movieyo.user.dto.UserGenreDto"
+			alias="UserGenreDto" />		
 								
 	</typeAliases>
 	

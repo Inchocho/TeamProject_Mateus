@@ -1,5 +1,7 @@
 package com.movieyo.user.dao;
 
+import java.util.List;
+
 import com.movieyo.user.dto.UserDto;
 
 public interface UserDao {
@@ -19,6 +21,12 @@ public interface UserDao {
 	//비밀번호변경
 	public int updatePw(UserDto userDto)throws Exception;
 	public UserDto readMember(String email);
+
+	public int userSelectTotalCount(String searchOption, String keyword);
+
+	public List<UserDto> userSelectList(String searchOption, String keyword, int start, int end);
+
+	public void userGenre(int checkNum, int userNo);
 	
 	
 }

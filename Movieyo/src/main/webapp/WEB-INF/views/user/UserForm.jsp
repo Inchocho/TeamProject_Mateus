@@ -7,12 +7,14 @@
 
 <title>회원 등록</title>
 
+<script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+
 <script type="text/javascript">
 	function pageMoveListFnc() {
 		location.href = '../auth/login.do';
 	}
 	
-	   function checkOnlyOne(element) {
+	function checkOnlyOne(element) {
 	        
 	        const checkboxes 
 	            = document.getElementsByName("gender");
@@ -22,7 +24,9 @@
 	        })
 	        
 	        element.checked = true;
-	      }
+	}
+	
+	
 
 </script>
 
@@ -59,17 +63,19 @@
       <input type="checkbox" name="gender" value="남" onclick="checkOnlyOne(this)">남
       <input type="checkbox" name="gender" value="여" onclick="checkOnlyOne(this)">여 <br>
       
-<!--       선호장르<br> -->
-<!--       <input type="checkbox" name="genre" value="1">액션 -->
-<!--       <input type="checkbox" name="genre" value="2">코미디<br> -->
-<!--       <input type="checkbox" name="genre" value="3">드라마 -->
-<!--       <input type="checkbox" name="genre" value="4">스릴러<br> -->
-<!--       <input type="checkbox" name="genre" value="5">멜로 -->
-<!--       <input type="checkbox" name="genre" value="6">SF<br> -->
-<!--       <input type="checkbox" name="genre" value="7">스포츠 -->
-<!--       <input type="checkbox" name="genre" value="8">공포<br> -->
-<!--       <input type="checkbox" name="genre" value="9">판타지 -->
-<!--       <input type="checkbox" name="genre" value="10">음악<br> -->
+      선호장르<br>
+      <input type="checkbox" name="genreNo[]" value="1">애니메이션
+      <input type="checkbox" name="genreNo[]" value="2">드라마<br>
+      <input type="checkbox" name="genreNo[]" value="3">코미디
+      <input type="checkbox" name="genreNo[]" value="4">다큐멘터리<br>
+      <input type="checkbox" name="genreNo[]" value="5">범죄
+      <input type="checkbox" name="genreNo[]" value="6">성인물(에로)<br>
+      <input type="checkbox" name="genreNo[]" value="7">SF
+      <input type="checkbox" name="genreNo[]" value="8">멜로/로맨스<br>
+      <input type="checkbox" name="genreNo[]" value="9">어드벤처
+      <input type="checkbox" name="genreNo[]" value="10">공포(호러)<br>
+      <input type="checkbox" name="genreNo[]" value="11">스릴러<br>
+      <input type="checkbox" name="genreNo[]" value="12">기타<br>
             
          
       <input type='button' value='뒤로가기' onclick='pageMoveListFnc();'><br>

@@ -1,6 +1,8 @@
 package com.movieyo.user.dao;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,5 +70,43 @@ public class UserDaoImpl implements UserDao{
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("com.movieyo.user.readMember", email);
 	}
+
+	@Override
+	public int userSelectTotalCount(String searchOption, String keyword) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+		
+		return sqlSession.selectOne("com.movieyo.user.userSelectTotalCount", map);
+	}
+
+	@Override
+	public List<UserDto> userSelectList(String searchOption, String keyword, int start, int end) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("keyword", keyword);
+		map.put("start", start);
+		map.put("end", end);
+		map.put("searchOption", searchOption);
+		
+		return sqlSession.selectList("com.movieyo.user.userSelectList", map);
+	}
+
+	@Override
+	public void userGenre(int checkNum, int userNo) {
+		// TODO Auto-generated method stub
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("genreNo", checkNum);
+		map.put("userNo", userNo);
+		
+		sqlSession.insert("com.movieyo.genre.userGenre", map);
+	}
+
+	
 	
 }

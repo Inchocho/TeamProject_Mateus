@@ -77,7 +77,7 @@
 	
 	<select id="movieSelectOne" parameterType="int"
 		resultMap="movieResultMap">
-		SELECT MOVIE_TITLE, MOVIE_PRDTYEAR, MOVIE_NATION
+		SELECT MOVIE_NO, MOVIE_TITLE, MOVIE_PRDTYEAR, MOVIE_NATION
 		, MOVIE_DIRECTOR, MOVIE_RUNTIME, MOVIE_GRADE, MOVIE_PRICE, MOVIE_CREDATE
 		FROM MVY_MOVIE
 		WHERE MOVIE_NO = #{movieNo}
@@ -89,6 +89,26 @@
 		FROM MVY_MOVIE_PHOTO
 		WHERE PARENT_SEQ = #{movieNo}
 	</select>
+	
+	<update id="movieUpdateOne" parameterType="movieDto">
+		UPDATE MVY_MOVIE
+		<set>
+			<if test="movieTitle != ''">MOVIE_TITLE = #{movieTitle},</if>
+			<if test="prdtYear != ''">MOVIE_PRDTYEAR = #{prdtYear},</if>
+			<if test="nation != ''">MOVIE_NATION = #{nation},</if>
+			<if test="director != ''">MOVIE_DIRECTOR = #{director},</if>
+			<if test="runtime != ''">MOVIE_RUNTIME = #{runtime},</if>
+			<if test="grade != ''">MOVIE_GRADE = #{grade},</if>
+			<if test="price != ''">MOVIE_PRICE = #{price}</if>
+<!-- 			MOD_DATE = SYSDATE -->
+		</set>
+		WHERE MOVIE_NO = #{movieNo}
+	</update>
+	
+	<delete id="movieDeleteOne" parameterType="int">
+		DELETE FROM MVY_MOVIE
+		WHERE MOVIE_NO = #{movieNo}
+	</delete>
 	
 	
 	

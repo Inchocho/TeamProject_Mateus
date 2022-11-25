@@ -2,6 +2,7 @@ package com.movieyo.user.service;
 
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -160,4 +161,24 @@ public class UserServiceImpl implements UserService{
 					}
 				}
 
+				@Override
+				public int userSelectTotalCount(String searchOption, String keyword) {
+					// TODO Auto-generated method stub
+					return userDao.userSelectTotalCount(searchOption, keyword);
+				}
+
+				@Override
+				public List<UserDto> userSelectList(String searchOption, String keyword, int start, int end) {
+					// TODO Auto-generated method stub
+					return userDao.userSelectList(searchOption, keyword, start, end);
+				}
+
+				@Override
+				public void userGenre(int checkNum, int userNo) {
+					// TODO Auto-generated method stub
+					userDao.userGenre(checkNum, userNo);
+				}
+
+				
+				
 }

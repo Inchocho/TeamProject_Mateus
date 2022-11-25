@@ -1,5 +1,6 @@
 package com.movieyo.user.service;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +28,14 @@ public interface UserService {
 		
 	//이메일발송
 	public void sendEmail(UserDto userDto, String Div)throws Exception;
+
+	public int userSelectTotalCount(String searchOption, String keyword);
+
+	public List<UserDto> userSelectList(String searchOption, String keyword, int start, int end);
+
+	public void userGenre(int checkNum, int userNo);
+
+
 	
 		
 		

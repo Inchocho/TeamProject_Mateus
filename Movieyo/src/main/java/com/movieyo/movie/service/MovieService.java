@@ -16,4 +16,8 @@ public interface MovieService {
 	public List<MovieDto> movieSelectList(String searchOption, String keyword, int start, int end);
 
 	public Map<String, Object> movieSelectOne(int movieNo);
+
+	public void movieUpdateOne(MovieDto movieDto);
+
+	public void movieDeleteOne(int movieNo);
 }

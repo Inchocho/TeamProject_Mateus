@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.movieyo.genre">
+	
+	<resultMap type="UserGenreDto" id="genreResultMap">
+		<id column="GENRE_USER_NO" property="genreUserNo"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="GENRE_NO" property="genreNo"/>
+	</resultMap>
+	
+	<insert id="userGenre" parameterType="com.movieyo.user.dto.UserGenreDto"
+		useGeneratedKeys="true" keyProperty="genreUserNo">
+		
+		<selectKey keyProperty="genreUserNo" resultType="int" order="BEFORE">
+			select GENRE_USER_NO_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+			INSERT INTO GENRE_USER
+			VALUE(GENRE_USER_NO, USER_NO, GENRE_NO)
+			VALUES(#{genreUserNo},#{userNo},#{genreNo})
+	</insert>
+	
+	
+	
+</mapper>

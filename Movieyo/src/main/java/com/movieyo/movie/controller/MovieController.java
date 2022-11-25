@@ -18,8 +18,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.movieyo.movie.dto.MovieDto;
 import com.movieyo.movie.service.MovieService;
-import com.movieyo.user.dto.UserDto;
-import com.movieyo.user.service.UserService;
 import com.movieyo.util.Paging;
 
 @Controller
@@ -101,7 +99,6 @@ public class MovieController {
 		Map<String, Object> pagingMap = 
 				new HashMap<String, Object>();
 		
-		
 		//Map에다가 totalCount, memberPaging을 key로해서 담고
 		pagingMap.put("totalCount", totalCount);
 		pagingMap.put("moviePaging", moviePaging);
@@ -126,7 +123,7 @@ public class MovieController {
 	
 	//	상세보기 (선택시 상세정보를 보여줌 readOnly 페이지)
 		@RequestMapping(value="/movie/one.do", method = RequestMethod.GET)
-		public String memberOne(int movieNo, Model model
+		public String movieOne(int movieNo, Model model
 				, @RequestParam(defaultValue = "1") int curPage
 				, @RequestParam(defaultValue = "all")String searchOption
 				, @RequestParam(defaultValue = "")String keyword) {
@@ -150,16 +147,46 @@ public class MovieController {
 		}
 		
 		@RequestMapping(value="/movie/update.do")
-		public String userUpdate(int movieNo, Model model) {
-			logger.debug("Welcome userUpdate enter {}", movieNo);
+		public String movieUpdate(int movieNo, Model model
+				, @RequestParam(defaultValue = "1") int curPage
+				, @RequestParam(defaultValue = "all")String searchOption
+				, @RequestParam(defaultValue = "")String keyword) {
+			logger.debug("Welcome MovieController movieOne!{}" , movieNo);
 			
 			Map<String, Object> map = movieService.movieSelectOne(movieNo);
-			
 			MovieDto movieDto = (MovieDto) map.get("movieDto");
 			
+			Map<String, Object> searchMap = new HashMap<String, Object>();
+			searchMap.put("searchOption", searchOption);
+			searchMap.put("keyword", keyword);
+			searchMap.put("curPage", curPage);
+			
+			List<Map<String, Object>> fileList = (List<Map<String, Object>>) map.get("fileList");
+			
 			model.addAttribute("movieDto", movieDto);
+			model.addAttribute("fileList", fileList);
+			model.addAttribute("searchMap", searchMap);
 			
 			return "movie/MovieUpdateForm";
+		}
+		
+		@RequestMapping(value = "/movie/updateCtr.do", method = RequestMethod.POST)
+		public String movieUpdateCtr(HttpSession session, MovieDto movieDto, Model model)  {
+		                     // email.password 네임값을 가져옴(@RequestMapping의 힘)
+		    logger.info("Welcome movieController movieUpdateCtr!" + movieDto);
+		      
+		    movieService.movieUpdateOne(movieDto);
+		      
+		    return "redirect:/movie/list.do";
+		}
+		
+		@RequestMapping(value="/movie/deleteCtr.do", method = RequestMethod.GET)
+		public String movieDelete(int movieNo, HttpSession session, Model model) {
+			logger.info("Welcome MovieController movieDeleteCtr! " + movieNo);
+			
+			movieService.movieDeleteOne(movieNo);
+			
+			return "redirect:/movie/list.do";
 		}
 	
 }

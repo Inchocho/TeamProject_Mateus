@@ -94,5 +94,19 @@ public class MovieServiceImpl implements MovieService{
 		
 		return resultMap;
 	}
+
+	@Override
+	public void movieUpdateOne(MovieDto movieDto) {
+		// TODO Auto-generated method stub
+		
+		movieDao.movieUpdateOne(movieDto);
+	}
+
+	@Override
+	public void movieDeleteOne(int movieNo) {
+		// TODO Auto-generated method stub
+		
+		movieDao.movieDeleteOne(movieNo);
+	}
 	
 }

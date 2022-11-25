@@ -21,4 +21,8 @@ public interface MovieDao {
 
 	public List<Map<String, Object>> fileselectList(int movieNo);
 
+	public int movieUpdateOne(MovieDto movieDto);
+
+	public void movieDeleteOne(int movieNo);
+
 }

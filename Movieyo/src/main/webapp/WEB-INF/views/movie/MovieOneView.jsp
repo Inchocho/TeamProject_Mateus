@@ -10,8 +10,11 @@
 
 
 <script type="text/javascript">
-// 	function pwUpdate() {
-// 		location.href="./passwordUpdate.do?userNo=" + ${userDto.userNo};
+	function deleteFnc(movieNo){
+		var url = "./deleteCtr.do?movieNo=" + movieNo;
+		location.href = url;
+	}
+
 </script>
 
 </head>
@@ -37,17 +40,19 @@
 			</c:otherwise>
 		</c:choose>
 	
-	<form action='/movie/update.do' method='get'>
+	<form action='./update.do' method='get'>
+		영화번호: <input type="text" name="movieNo" value="${movieDto.movieNo}" readonly="readonly"><br>
+	
 		영화제목: <input type='text' name='movieTitle' 
 			value='${movieDto.movieTitle}' readonly="readonly"><br>
-		제작연도: <input type="text" name='prdtYear' value="${movieDto.prdtYear}"> <br> 
-		국가 :	<input type="text" name="nation" value="${movieDto.nation}"> <br>
-		감독 :	<input type="text" name="director" value="${movieDto.director}"> <br>
-		장르 :	<input type="text" name="genre" value="장르(아직없음)"> <br>	
-		상영시간 :	<input type="text" name="runtime" value="${movieDto.runtime}"> <br>	
-		연령등급 :	<input type="text" name="grade" value="${movieDto.grade}"> <br>
-		가격 :	<input type="text" name="price" value="${movieDto.price}"> <br>
-		등록일 :	<input type="text" name="creDate" value="${movieDto.creDate}"> <br>
+		제작연도: <input type="text" name='prdtYear' value="${movieDto.prdtYear}" readonly="readonly"> <br> 
+		국가 :	<input type="text" name="nation" value="${movieDto.nation}" readonly="readonly"> <br>
+		감독 :	<input type="text" name="director" value="${movieDto.director}" readonly="readonly"> <br>
+		장르 :	<input type="text" name="genre" value="장르(아직없음)" readonly="readonly"> <br>	
+		상영시간 :	<input type="text" name="runtime" value="${movieDto.runtime}" readonly="readonly"> <br>	
+		연령등급 :	<input type="text" name="grade" value="${movieDto.grade}" readonly="readonly"> <br>
+		가격 :	<input type="text" name="price" value="${movieDto.price}" readonly="readonly"> <br>
+		등록일 :	<input type="text" name="creDate" value="${movieDto.creDate}" readonly="readonly"> <br>
 			
 		영화내용
 		<div style="border: 1px solid black; width: 400px;">
@@ -58,7 +63,7 @@
 
 		<input type='submit' value='수정'>
 		<input type="button" value="목록" onclick="">
-		<input type="button" value="삭제" onclick="">					
+		<input type="button" value="삭제" onclick="deleteFnc(${movieDto.movieNo});">					
 	</form>
 	
 	<jsp:include page="../Tail.jsp" />

@@ -17,6 +17,18 @@
 		<result column="USER_CASH" property="userCash"/>
 		<result column="USER_ADMIN" property="userAdmin"/>
 	</resultMap>
+	
+	<sql id="search">
+		<choose>
+			<when test="searchOption == 'all'">
+				WHERE USER_NAME LIKE '%'||#{keyword}||'%'
+				OR USER_NICKNAME LIKE '%'||#{keyword}||'%'
+			</when>
+			<otherwise>
+				WHERE ${searchOption} LIKE '%'||#{keyword}||'%'
+			</otherwise>
+		</choose>
+	</sql>
 
 	<select id="userExist" parameterType="map" 
 		resultMap="userResultMap">
@@ -72,6 +84,26 @@
 		FROM MVY_USER
 		WHERE USER_EMAIL = #{email}		
 	</select>
-
+	
+	<select id="userSelectTotalCount" resultType="java.lang.Integer" parameterType="map">
+		SELECT COUNT(*)
+		FROM MVY_USER
+		<include refid="search"></include>
+	</select>
+	
+	<select id="userSelectList" resultMap="userResultMap">
+		SELECT MV.USER_NO, MV.USER_EMAIL, MV.USER_NICKNAME
+		      , MV.USER_NAME, MV.USER_BIRTH, MV.USER_GENDER, MV.USER_CASH
+		   FROM (
+		        SELECT ROWNUM RNUM, M.USER_NO, M.USER_EMAIL, M.USER_NICKNAME
+		      , M.USER_NAME, M.USER_BIRTH, M.USER_GENDER, M.USER_CASH
+		        FROM (
+	                SELECT USER_NO, USER_EMAIL, USER_NICKNAME, USER_NAME, USER_BIRTH, USER_GENDER, USER_CASH
+	         	   	   FROM MVY_USER
+	         	   	   <include refid="search"></include>
+			           ORDER BY USER_NO ASC) M
+      				) MV
+		WHERE MV.RNUM BETWEEN #{start} AND #{end}
+	</select>	
 
 </mapper>
