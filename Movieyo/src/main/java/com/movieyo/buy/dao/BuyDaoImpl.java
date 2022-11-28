@@ -8,6 +8,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.movieyo.buy.dto.BuyDto;
+
 @Repository
 public class BuyDaoImpl implements BuyDao{
 	
@@ -30,7 +32,7 @@ public class BuyDaoImpl implements BuyDao{
 
 	@Override
 	public List<Map<String, Object>> buySelectList(String searchOption, String keyword, int start, int end,
-			int userNo) {
+			int userNo, int userAdmin) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -43,10 +45,17 @@ public class BuyDaoImpl implements BuyDao{
 		map.put("searchOption", searchOption);
 		map.put("keyword", keyword);		
 		map.put("userNo", userNo);
+		map.put("userAdmin", userAdmin);	// --> 세션에서 유저어드민을 가져와서 관리자 확인
 		map.put("start", start);
 		map.put("end", end);
 		
 		return sqlSession.selectList(namespace + "buySelectList", map);
+	}
+
+	@Override
+	public Object buyInsertOne(BuyDto buyDto) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert(namespace + "buyInsertOne", buyDto);
 	}
 
 

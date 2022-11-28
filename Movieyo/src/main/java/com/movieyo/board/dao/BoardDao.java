@@ -1,29 +1,24 @@
 package com.movieyo.board.dao;
 
 import java.util.List;
-import java.util.Map;
-
 import com.movieyo.board.dto.BoardDto;
 
 public interface BoardDao {
-	BoardDto select(Integer boardNo) throws Exception;
 
-	int delete(Integer userNo, Integer boardNo) throws Exception;
+	public int boardInsertOne(BoardDto boardDto);
+	
+	public int boardSelectTotalCount(String searchOption, String keyword);
 
-	int insert(BoardDto dto) throws Exception;
+	public List<BoardDto> boardSelectList(String searchOption, String keyword, int start, int end);
 
-	int update(BoardDto dto) throws Exception;
+	public BoardDto boardSelectOne(int boardNo);
 
-	int increaseViewCount(Object boardNo) throws Exception;
+	public int boardUpdateOne(BoardDto boardDto);
 
-	List<BoardDto> selectPage(Map map) throws Exception;
+	public void boardViewCount(int boardNo) throws Exception;
 
-	List<BoardDto> selectAll() throws Exception;
-
-	int deleteAll() throws Exception;
-
-	int count() throws Exception;
-
-	List<BoardDto> boardSelectTotalCount(String searchOption, String keyword);
+	
+	
+	
 
 }

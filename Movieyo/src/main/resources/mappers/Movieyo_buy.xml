@@ -24,6 +24,13 @@
         </choose>
     </sql>	
     
+    <!-- 관리자의 경우 조회 -->
+    <sql id="buyListSearch">    	
+   		<if test="userAdmin == 0">
+   		    AND A.USER_NO = #{userNo}	
+   		</if>
+    </sql>
+    
 <!-- 	영화수 -->
 	<select id="buySelectTotalCount" resultType="java.lang.Integer" parameterType="map">
 		SELECT COUNT(*) FROM    
@@ -49,8 +56,21 @@
 				<include refid="search"></include>
 				AND A.USER_NO = B.USER_NO
 				AND B.MOVIE_NO = C.MOVIE_NO
-				AND A.USER_NO = #{userNo}) M ) BUY
+				<include refid="buyListSearch"></include>
+				) M ) BUY
 		WHERE BUY.RNUM BETWEEN #{start} AND #{end}
-	</select>		
+	</select>	
+	
+	<!-- 구매내역 추가 -->
+	<insert id="buyInsertOne" parameterType="com.movieyo.buy.dto.BuyDto"
+	useGeneratedKeys="true" keyProperty="buyNo">
+		
+		<selectKey keyProperty="buyNo" resultType="int" order="BEFORE">
+			select MVY_BUY_NO_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+			INSERT INTO MVY_BUY
+			VALUE(BUY_NO, MOVIE_NO, USER_NO, BUY_DATE, BUY_STATUS)
+			VALUES(#{buyNo}, #{movieNo}, #{userNo}, SYSDATE, '보유중')
+	</insert>		
 
 </mapper>

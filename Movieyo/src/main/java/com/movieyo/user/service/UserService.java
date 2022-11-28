@@ -35,6 +35,8 @@ public interface UserService {
 
 	public void userGenre(int checkNum, int userNo);
 
+	public UserDto chargeMpointCtr(UserDto userDto, int afterMpoint);
+
 
 	
 		

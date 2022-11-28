@@ -9,37 +9,41 @@ public class BoardDto {
 	private String boardHead;
 	private String boardTitle;
 	private String boardContent;
-	private int boardCount;
 	private Date boardCredate;
 	private Date boardModdate;
+	private int boardCount;
 	
-	public BoardDto(int boardNo, int userNo, String boardHead, String boardTitle, String boardContent, int boardCount,
-			Date boardCredate, Date boardModdate) {
+	public BoardDto() {
+		super();
+	}
+
+	public BoardDto(int boardNo, int userNo, String boardHead, String boardTitle, String boardContent,
+			Date boardCredate, Date boardModdate, int boardCount) {
 		super();
 		this.boardNo = boardNo;
 		this.userNo = userNo;
 		this.boardHead = boardHead;
 		this.boardTitle = boardTitle;
 		this.boardContent = boardContent;
-		this.boardCount = boardCount;
 		this.boardCredate = boardCredate;
 		this.boardModdate = boardModdate;
+		this.boardCount = boardCount;
 	}
 
-	public int getBoard_No() {
+	public int getBoardNo() {
 		return boardNo;
 	}
 
-	public void setBoard_No(int board_No) {
-		this.boardNo = board_No;
+	public void setBoardNo(int boardNo) {
+		this.boardNo = boardNo;
 	}
 
-	public int getUser_No() {
+	public int getUserNo() {
 		return userNo;
 	}
 
-	public void setUser_No(int user_No) {
-		this.userNo = user_No;
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
 	}
 
 	public String getBoardHead() {
@@ -66,14 +70,6 @@ public class BoardDto {
 		this.boardContent = boardContent;
 	}
 
-	public int getBoardCount() {
-		return boardCount;
-	}
-
-	public void setBoardCount(int boardCount) {
-		this.boardCount = boardCount;
-	}
-
 	public Date getBoardCredate() {
 		return boardCredate;
 	}
@@ -90,15 +86,22 @@ public class BoardDto {
 		this.boardModdate = boardModdate;
 	}
 
+	public int getBoardCount() {
+		return boardCount;
+	}
+
+	public void setBoardCount(int boardCount) {
+		this.boardCount = boardCount;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardDto [boardNo=" + boardNo + ", userNo=" + userNo + ", boardHead=" + boardHead + ", boardTitle="
-				+ boardTitle + ", boardContent=" + boardContent + ", boardCount=" + boardCount + ", boardCredate="
-				+ boardCredate + ", boardModdate=" + boardModdate + "]";
+				+ boardTitle + ", boardContent=" + boardContent + ", boardCredate=" + boardCredate + ", boardModdate="
+				+ boardModdate + ", boardCount=" + boardCount + "]";
 	}
+	
 
-	
-	
 
 }
 	

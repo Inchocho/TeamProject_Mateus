@@ -23,6 +23,13 @@
             </otherwise>
         </choose>
     </sql>
+    
+    <!-- 관리자의 경우 조회 -->
+    <sql id="refundListSearch">    	
+   		<if test="userAdmin == 0">
+   		    AND C.USER_NO = #{userNo}	
+   		</if>
+    </sql>    
 	
 <!-- 	영화수 -->
 	<select id="refundSelectTotalCount" resultType="java.lang.Integer" parameterType="map">
@@ -45,7 +52,8 @@
             <include refid="search"></include>
             AND A.MOVIE_NO = B.MOVIE_NO
             AND B.BUY_NO = C.BUY_NO
-   	        AND C.USER_NO = #{userNo}) M) RF
+   	        <include refid="refundListSearch"></include>
+   	        ) M) RF
    	        WHERE RF.RNUM BETWEEN #{start} AND #{end}		    	 		        
 	</select>
 </mapper>

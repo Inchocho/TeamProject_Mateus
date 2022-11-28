@@ -7,9 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <script type="text/javascript">
-
+	function buyAdd() {
+		location.href = '../buy/addBuy.do'
+	}
 </script>
-<title>환불목록</title>
+<title>구매내역</title>
 </head>
 <body>
 	<jsp:include page="../Header.jsp"/>
@@ -17,27 +19,34 @@
 
 	<table>
 		<tr>
-			<th>영화제목</th><th>가격</th><th>구매일</th><th>신청일</th><th>상태</th>
+			<th>영화제목</th><th>가격</th><th>구매일</th><th>상태</th><th>환불상태</th>
 		</tr>
 		
 
-	<c:forEach var="refundMap" items="${refundListMap}"> 
+	<c:forEach var="buyMap" items="${buyListMap}"> 
 		<tr>			
-			<td>${refundMap.movieTitle}</td>
 			<td>
-				${refundMap.moviePrice}
-			</td>
-			
-			<td>
-				<fmt:formatDate pattern="yyyy-MM-dd hh:mm" 
-					value = "${refundMap.buyDate}" />
+				${buyMap.movieTitle}
 			</td>
 			<td>
-				<fmt:formatDate pattern="yyyy-MM-dd hh:mm" 
-				value="${refundMap.refundDate}"/>
+				${buyMap.moviePrice}				
+			</td>			
+			<td>
+				<fmt:formatDate pattern="yyyy-MM-dd"
+				value = "${buyMap.buyDate}"/>
 			</td>
 			<td>
-				${refundMap.refundStatus}
+				${buyMap.buyStatus}
+			</td>		
+			<td>
+				<c:choose>
+					<c:when test="#">
+						<input type='button' value='신청'>
+					</c:when>
+					<c:otherwise>
+						불가
+					</c:otherwise>				
+				</c:choose>
 			</td>			
 		</tr>
 	</c:forEach>
@@ -51,10 +60,10 @@
 	<form action="./list.do" id="pagingForm" method="post">
 		<input type="hidden" id="curPage" name="curPage"
 			value="${pagingMap.moviePaging.curPage}">	
-		<input type="hidden"  name="userNo" value="${userDto.userNo}">
+	    <input type="hidden"  name="userNo" value="${userDto.userNo}">			
 		<input type="hidden"  name="keyword" value="${searchMap.keyword}">
 		<input type="hidden"  name="searchOption" value="${searchMap.searchOption}">
-	</form>	
+	</form>		
 	
 	<form action="./list.do" method="post">
 		<select name="searchOption">
@@ -62,17 +71,17 @@
 				<c:when test="${searchMap.searchOption == 'all'}">
 					<option value="all"<c:if test="${searchMap.searchOption eq 'all'}">selected</c:if>>전체</option>
 					<option value="MOVIE_TITLE">영화제목</option>
-					<option value="REFUND_STATUS">환불상태</option>					
+					<option value="BUY_STATUS">환불상태</option>					
 				</c:when>
 				<c:when test="${searchMap.searchOption == 'MOVIE_TITLE'}">
 					<option value="all">전체</option>
 					<option value="MOVIE_TITLE"<c:if test="${searchMap.searchOption eq 'MOVIE_TITLE'}">selected</c:if>>영화제목</option>
-					<option value="REFUND_STATUS">환불상태</option>					
+					<option value="BUY_STATUS">환불상태</option>					
 				</c:when>				
-				<c:when test="${searchMap.searchOption == 'REFUND_STATUS'}">
+				<c:when test="${searchMap.searchOption == 'BUY_STATUS'}">
 					<option value="all">전체</option>
 					<option value="MOVIE_TITLE">영화제목</option>					
-					<option value="REFUND_STATUS"<c:if test="${searchMap.searchOption eq 'REFUND_STATUS'}">selected</c:if>>환불상태</option>
+					<option value="BUY_STATUS"<c:if test="${searchMap.searchOption eq 'BUY_STATUS'}">selected</c:if>>환불상태</option>
 				</c:when>				
 			</c:choose>
 		</select>
@@ -80,9 +89,8 @@
 		
 		<input type="text" name="keyword" value="${searchMap.keyword}" placeholder="검색">
 		<input type="submit" value="검색">			
-	</form>
-	
-	<input type='text' name='userNo' value="${userDto.userNo}">
-	
+		<button type="button" onclick="buyAdd();">구매내역등록</button>
+	</form>	
+
 </body>
 </html>

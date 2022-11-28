@@ -76,9 +76,9 @@ table {
 	<div class="userMpointDiv">
 		<h2 class="mpayAttribute" style="margin-right: 270px;">충전</h2>
 		<!-- 포인트 충전시 afterMpoint 보내기 -->
-	<form action="/user/chargeMpoint.do" method="post" id="chargeForm">
+	<form action="chargeMpointCtr.do" method="get" id="chargeForm">
 		<input id="beforeMpoint" type="hidden" value="${userDto.userCash}">
-		<input id="chargePoint" type="hidden" value="">
+		<input id="chargePoint" type="hidden" value="0">
 		<span class="userMpointTd">충전할 금액</span>
 		<input id="userInputPoint" type="text" maxlength="10" onkeyup="inputNumberFormat(this);"
 		placeholder="충전하실 금액을 입력하세요" style="height: 20px;" value=""> 원
@@ -191,14 +191,21 @@ table {
 		chargePointObj.value = inputChargePointObj.value;
 		afterMpointObj.value = afterPoint;
 		chargePriceCheck.innerHTML = inputChargePointObj.value + " 원";
-		popup_layer.style.visibility = "visible";
+		if (chargePointObj.value == 0) {
+			e.preventDefault();
+			alert("충전금액이 입력되지 않았습니다.")
+		}else{
+			popup_layer.style.visibility = "visible";
+		}
 	});
 	
 	var chageBtn = document.getElementById("chargeBtn");
 	var chargeForm = document.getElementById("chargeForm");
 	
 	chageBtn.addEventListener("click", function(e) {
+		
 		chargeForm.submit();
+				
 	});
 	
 	

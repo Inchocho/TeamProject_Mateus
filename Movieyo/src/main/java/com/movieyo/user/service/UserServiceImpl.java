@@ -179,6 +179,14 @@ public class UserServiceImpl implements UserService{
 					userDao.userGenre(checkNum, userNo);
 				}
 
+				@Override
+				public UserDto chargeMpointCtr(UserDto userDto, int afterMpoint) {
+					// TODO Auto-generated method stub
+					UserDto userDtoNew= userDao.chargeMpointCtr(userDto,afterMpoint);
+					
+					return userDtoNew;
+				}
+
 				
 				
 }

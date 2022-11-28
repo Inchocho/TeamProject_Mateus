@@ -107,6 +107,21 @@ public class UserDaoImpl implements UserDao{
 		sqlSession.insert("com.movieyo.genre.userGenre", map);
 	}
 
+	@Override
+	public UserDto chargeMpointCtr(UserDto userDto, int afterMpoint) {
+		// TODO Auto-generated method stub
+		int userNo = userDto.getUserNo();
+		userDto.setUserCash(afterMpoint);
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("userCash", afterMpoint);
+		map.put("userNo", userNo);
+		
+		sqlSession.update("com.movieyo.user.updateCash",map);
+		
+		return userDto;
+	}
+
 	
 	
 }

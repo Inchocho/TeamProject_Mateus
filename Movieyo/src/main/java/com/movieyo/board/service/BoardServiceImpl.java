@@ -1,76 +1,80 @@
 package com.movieyo.board.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.movieyo.board.dao.BoardDao;
 import com.movieyo.board.dto.BoardDto;
-import com.movieyo.util.FileUtils;
+import com.movieyo.movie.dto.MovieDto;
+
 
 @Service
 public class BoardServiceImpl implements BoardService {
     @Autowired
     public BoardDao boardDao;
 
-    @Resource(name="fileUtils")
-	private FileUtils fileUtils;
+	@Override
+	public List<BoardDto> boardSelectList(String searchOption, String keyword, int start, int end) {
+		// TODO Auto-generated method stub
+		return boardDao.boardSelectList(searchOption, keyword, start, end);
+	}
 
-	private Object boardCount;
-    
-    @Override
-    public int getCount() throws Exception {
-        return boardDao.count();
-    }
+	@Override
+	public BoardDto boardExist(String email, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-    @Override
-    public int remove(Integer UserNo, Integer boardNo) throws Exception {
-        return boardDao.delete(UserNo, boardNo);
-    }
+	@Override
+	public Map<String, Object> boardSelectOne(int boardNo) {
+		// TODO Auto-generated method stub
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		BoardDto boardDto = boardDao.boardSelectOne(boardNo);
+		
+		resultMap.put("boardDto", boardDto);
 
-    @Override
-    public int write(BoardDto boardDto) throws Exception {
-        return boardDao.insert(boardDto);
-    }
+		
+		return resultMap;
+	}
 
-    @Override
-    public List<BoardDto> getList() throws Exception {
-        return boardDao.selectAll();
-    }
 
-    @Override
-    public BoardDto read(Integer boardNo) throws Exception {
-        BoardDto boardDto = boardDao.select(boardNo);
-        boardDao.increaseViewCount(boardNo);
+	@Override
+	public void boardInsertOne(BoardDto boardDto) throws Exception {
+		// TODO Auto-generated method stub
+		boardDao.boardInsertOne(boardDto);
+	}
 
-        return boardDto;
-    }
-
-    @Override
-    public List<BoardDto> getPage(Map<String, Object> map) throws Exception {
-        return boardDao.selectPage(map);
-    }
-
-    @Override
-    public int modify(BoardDto boardDto) throws Exception {
-        return boardDao.update(boardDto);
-    }
 
 	@Override
 	public int boardSelectTotalCount(String searchOption, String keyword) {
 		// TODO Auto-generated method stub
-		return 0;
+		return boardDao.boardSelectTotalCount(searchOption, keyword);
 	}
 
 	@Override
-	public List<BoardDto> boardSelectList(String searchOption, String keyword, int start, int end) {
+	public void boardUpdateOne(BoardDto boardDto) {
 		// TODO Auto-generated method stub
-		return boardDao.boardSelectTotalCount(searchOption, keyword);
+		boardDao.boardUpdateOne(boardDto);
 	}
+
+	@Override
+	public void boardViewCount(int boardNo) throws Exception {
+		// TODO Auto-generated method stub
+		boardDao.boardViewCount(boardNo);
+	}
+
+
+    
+
+	
+
+
+
+	
 
 	
 

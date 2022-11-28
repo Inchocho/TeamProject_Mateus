@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.movieyo.buy.dao.BuyDao;
+import com.movieyo.buy.dto.BuyDto;
 
 @Service
 public class BuyServiceImpl implements BuyService {
@@ -27,14 +28,20 @@ public class BuyServiceImpl implements BuyService {
 
 	@Override
 	public List<Map<String, Object>> buySelectList(String searchOption, String keyword, int start, int end,
-			int userNo) {
+			int userNo, int userAdmin) {
 		// TODO Auto-generated method stub
 		System.out.println(searchOption + "서치옵션");
 		System.out.println(keyword + "키워드");
 		System.out.println(start + "페이지시작");
 		System.out.println(end + "페이지엔드");
 		
-		return buyDao.buySelectList(searchOption, keyword, start, end, userNo);
+		return buyDao.buySelectList(searchOption, keyword, start, end, userNo, userAdmin);
+	}
+
+	@Override
+	public void buyInsertOne(BuyDto buyDto) {
+		// TODO Auto-generated method stub
+		buyDao.buyInsertOne(buyDto);
 	}
 
 
