@@ -17,11 +17,18 @@
 
 	<table>
 		<tr>
-			<th>영화제목</th><th>가격</th><th>구매일</th><th>신청일</th><th>상태</th>
+			<th>영화제목</th>
+			<th>가격</th>
+			<th>구매일</th>
+			<th>신청일</th>
+			<th>상태</th>
+			<c:if test="${userDto.userAdmin == 1}">	<!-- 관리자가 유저환불내역을 허가함 -->
+			<th>환불허가</th>
+			</c:if>
 		</tr>
 		
 
-	<c:forEach var="refundMap" items="${refundListMap}"> 
+	<c:forEach var="refundMap" items="${refundListMap}" varStatus="status"> 
 		<tr>			
 			<td>${refundMap.movieTitle}</td>
 			<td>
@@ -38,7 +45,22 @@
 			</td>
 			<td>
 				${refundMap.refundStatus}
-			</td>			
+			</td>
+			<c:if test="${userDto.userAdmin == 1}">	<!-- 관리자가 유저환불내역을 허가함 -->
+				<td>			
+				<form id="refundAdmit${status.index}" action="../refund/admitRefund.do" method="GET">					
+					<a href="#" onclick="admitRefund(${status.index});">					
+						<input id='rBtn' type='button' value='환불'>					
+					</a>
+					<input type="hidden" name="refundNo" value="${refundMap.refundNo}">
+					<input type='hidden' name='movieNo' value="${refundMap.movieNo}">
+					<input type='hidden' name='userNo' value="${refundMap.userNo}">
+					<input type="hidden" id="buyCurPage" name="curPage" value="">
+					<input type="hidden" name="keyword" value="${searchMap.keyword}">
+					<input type="hidden" name="searchOption" value="${searchMap.searchOption}">
+				</form>								
+				</td>
+			</c:if>		
 		</tr>
 	</c:forEach>
 	

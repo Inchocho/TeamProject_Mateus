@@ -10,6 +10,26 @@
 	function buyAdd() {
 		location.href = '../buy/addBuy.do'
 	}
+	
+	function moveRefund(index) {
+		var rBtnObj = document.getElementById("rBtn");
+		
+		var buyCurPageObj = document.getElementById("buyCurPage");
+		
+		buyCurPageObj.value = document.getElementById("curPage").value;
+		
+		var str = "refundAddForm" + index;
+		
+		console.log(str);		
+		
+		var refundAddFormObj = document.getElementById(str);
+		
+		refundAddFormObj.submit();
+		
+		rBtn.disabled = 'disabled';
+		
+	}	
+
 </script>
 <title>구매내역</title>
 </head>
@@ -20,16 +40,19 @@
 	<table>
 		<tr>
 			<th>영화제목</th><th>가격</th><th>구매일</th><th>상태</th><th>환불상태</th>
+			<c:if test='${userDto.userAdmin == 1}'>
+				<th>구매자</th>				
+			</c:if>			
 		</tr>
 		
 
-	<c:forEach var="buyMap" items="${buyListMap}"> 
+	<c:forEach var="buyMap" items="${buyListMap}" varStatus="status">		
 		<tr>			
 			<td>
 				${buyMap.movieTitle}
 			</td>
 			<td>
-				${buyMap.moviePrice}				
+				${buyMap.moviePrice}원				
 			</td>			
 			<td>
 				<fmt:formatDate pattern="yyyy-MM-dd"
@@ -39,16 +62,21 @@
 				${buyMap.buyStatus}
 			</td>		
 			<td>
-				<c:choose>
-					<c:when test="#">
-						<input type='button' value='신청'>
-					</c:when>
-					<c:otherwise>
-						불가
-					</c:otherwise>				
-				</c:choose>
-			</td>			
-		</tr>
+			<form id="refundAddForm${status.index}" action="../refund/addRefund.do" method="GET">					
+				<a href="#" onclick="moveRefund(${status.index});">
+					<input id='rBtn' type='button' value='환불하기'>					
+				</a>
+				<input type="hidden" name="buyNo" value="${buyMap.buyNo}">
+				<input type='hidden' name='userNo' value="${buyMap.userNo}">
+				<input type="hidden" id="buyCurPage" name="curPage" value="">
+				<input type="hidden" name="keyword" value="${searchMap.keyword}">
+				<input type="hidden" name="searchOption" value="${searchMap.searchOption}">
+			</form>						
+			</td>		
+			<c:if test='${userDto.userAdmin == 1}'>
+				<td>${buyMap.userNickName}</td>
+			</c:if>	
+		</tr>		
 	</c:forEach>
 	
 		
@@ -71,18 +99,27 @@
 				<c:when test="${searchMap.searchOption == 'all'}">
 					<option value="all"<c:if test="${searchMap.searchOption eq 'all'}">selected</c:if>>전체</option>
 					<option value="MOVIE_TITLE">영화제목</option>
-					<option value="BUY_STATUS">환불상태</option>					
+					<option value="BUY_STATUS">환불상태</option>
+					<option value="USER_NICKNAME">구매자</option>					
 				</c:when>
 				<c:when test="${searchMap.searchOption == 'MOVIE_TITLE'}">
 					<option value="all">전체</option>
 					<option value="MOVIE_TITLE"<c:if test="${searchMap.searchOption eq 'MOVIE_TITLE'}">selected</c:if>>영화제목</option>
-					<option value="BUY_STATUS">환불상태</option>					
+					<option value="BUY_STATUS">환불상태</option>		
+					<option value="USER_NICKNAME">구매자</option>								
 				</c:when>				
 				<c:when test="${searchMap.searchOption == 'BUY_STATUS'}">
 					<option value="all">전체</option>
 					<option value="MOVIE_TITLE">영화제목</option>					
 					<option value="BUY_STATUS"<c:if test="${searchMap.searchOption eq 'BUY_STATUS'}">selected</c:if>>환불상태</option>
-				</c:when>				
+					<option value="USER_NICKNAME">구매자</option>
+				</c:when>
+				<c:when test="${searchMap.searchOption == 'USER_NICKNAME'}">
+					<option value="all">전체</option>
+					<option value="MOVIE_TITLE">영화제목</option>
+					<option value="BUY_STATUS">환불상태</option>					
+					<option value="USER_NICKNAME"<c:if test="${searchMap.searchOption eq 'USER_NICKNAME'}">selected</c:if>>구매자</option>
+				</c:when>	
 			</c:choose>
 		</select>
 		<input type='hidden' name='userNo' value="${userDto.userNo}">	
