@@ -4,16 +4,25 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원탈퇴</title>
 <style>
 
 </style>
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
-<script type="text/javascript">
 
+
+<script type="text/javascript">
+	if (genre == "음악") {
+		
+	}
+	
 </script>
 </head>
 <body>
-	<h1>뻐킹팝업</h1>
+	<h1>회원탈퇴</h1>
+	${userDto.userName}님 정말로 탈퇴하시겠습니까?
+	${userDto.password}ㅁㅁㅁㅁ
+	<input type="text">
+	<input type="text">
 </body>
 </html>
