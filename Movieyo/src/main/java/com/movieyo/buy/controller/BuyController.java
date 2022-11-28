@@ -34,13 +34,18 @@ public class BuyController {
 	@Autowired
 	private BuyService buyService;
 	
-	//로그인 세션값 필요 (파라미터 HttpSession session 추가필요)
+	// 세션을 받아옴 --> userAdmin 정보를 사용해서 관리자 전용 쿼리를 실행
 	@RequestMapping(value = "/buy/list.do"
 			, method = {RequestMethod.GET, RequestMethod.POST})
 	public String buyList(@RequestParam(defaultValue = "1") int curPage, Model model,
 			@RequestParam(defaultValue = "all")String searchOption
-		  , @RequestParam(defaultValue = "")String keyword,
-			int userNo) {
+		  , @RequestParam(defaultValue = "")String keyword
+		  , HttpSession session
+		  ,	int userNo) {
+		
+		UserDto userDto = (UserDto) session.getAttribute("userDto");
+		
+		int userAdmin = userDto.getUserAdmin();		
 		
 		logger.info("Welcome BuyController buyList! curPage: {}" + ", searchOption: {}"
 				, curPage, searchOption);		
@@ -56,7 +61,7 @@ public class BuyController {
 		int start = buyPaging.getPageBegin();
 		int end = buyPaging.getPageEnd();		
 				
-		List<Map<String, Object>> listMap = buyService.buySelectList(searchOption, keyword, start, end, userNo);
+		List<Map<String, Object>> listMap = buyService.buySelectList(searchOption, keyword, start, end, userNo, userAdmin);
 		
 		//sql 페이징 쿼리실행결과 + 토탈카운트를 담아서 멤버리스트와 같이 모델에 담아준다
 		//map을 활용하면 다양한 데이터를 쉽게 객체를 만들 수 있다

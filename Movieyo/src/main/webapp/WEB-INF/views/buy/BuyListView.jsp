@@ -32,7 +32,8 @@
 				${buyMap.moviePrice}				
 			</td>			
 			<td>
-				${buyMap.buyDate}
+				<fmt:formatDate pattern="yyyy-MM-dd"
+				value = "${buyMap.buyDate}"/>
 			</td>
 			<td>
 				${buyMap.buyStatus}

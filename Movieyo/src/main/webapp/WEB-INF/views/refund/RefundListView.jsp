@@ -29,11 +29,11 @@
 			</td>
 			
 			<td>
-				<fmt:formatDate pattern="yyyy-MM-dd hh:mm" 
+				<fmt:formatDate pattern="yyyy-MM-dd" 
 					value = "${refundMap.buyDate}" />
 			</td>
 			<td>
-				<fmt:formatDate pattern="yyyy-MM-dd hh:mm" 
+				<fmt:formatDate pattern="yyyy-MM-dd" 
 				value="${refundMap.refundDate}"/>
 			</td>
 			<td>
@@ -62,17 +62,17 @@
 				<c:when test="${searchMap.searchOption == 'all'}">
 					<option value="all"<c:if test="${searchMap.searchOption eq 'all'}">selected</c:if>>전체</option>
 					<option value="MOVIE_TITLE">영화제목</option>
-					<option value="REFUND_STATUS">환불상태</option>					
+					<option value="REFUND_STATUS">구매상태</option>					
 				</c:when>
 				<c:when test="${searchMap.searchOption == 'MOVIE_TITLE'}">
 					<option value="all">전체</option>
 					<option value="MOVIE_TITLE"<c:if test="${searchMap.searchOption eq 'MOVIE_TITLE'}">selected</c:if>>영화제목</option>
-					<option value="REFUND_STATUS">환불상태</option>					
+					<option value="REFUND_STATUS">구매상태</option>					
 				</c:when>				
 				<c:when test="${searchMap.searchOption == 'REFUND_STATUS'}">
 					<option value="all">전체</option>
 					<option value="MOVIE_TITLE">영화제목</option>					
-					<option value="REFUND_STATUS"<c:if test="${searchMap.searchOption eq 'REFUND_STATUS'}">selected</c:if>>환불상태</option>
+					<option value="REFUND_STATUS"<c:if test="${searchMap.searchOption eq 'REFUND_STATUS'}">selected</c:if>>구매상태</option>
 				</c:when>				
 			</c:choose>
 		</select>
@@ -80,9 +80,7 @@
 		
 		<input type="text" name="keyword" value="${searchMap.keyword}" placeholder="검색">
 		<input type="submit" value="검색">			
-	</form>
-	
-	<input type='text' name='userNo' value="${userDto.userNo}">
+	</form>	
 	
 </body>
 </html>

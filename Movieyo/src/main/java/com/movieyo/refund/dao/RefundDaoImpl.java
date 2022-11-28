@@ -32,7 +32,7 @@ public class RefundDaoImpl implements RefundDao{
 
 	@Override
 	public List<Map<String, Object>> refundSelectList(String searchOption, String keyword, int start, int end,
-			int userNo) {
+			int userNo, int userAdmin) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		System.out.println(searchOption + "서치옵션DD");
@@ -44,6 +44,7 @@ public class RefundDaoImpl implements RefundDao{
 		map.put("searchOption", searchOption);
 		map.put("keyword", keyword);		
 		map.put("userNo", userNo);
+		map.put("userAdmin", userAdmin);
 		map.put("start", start);
 		map.put("end", end);
 		

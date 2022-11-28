@@ -32,7 +32,7 @@ public class BuyDaoImpl implements BuyDao{
 
 	@Override
 	public List<Map<String, Object>> buySelectList(String searchOption, String keyword, int start, int end,
-			int userNo) {
+			int userNo, int userAdmin) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -45,6 +45,7 @@ public class BuyDaoImpl implements BuyDao{
 		map.put("searchOption", searchOption);
 		map.put("keyword", keyword);		
 		map.put("userNo", userNo);
+		map.put("userAdmin", userAdmin);	// --> 세션에서 유저어드민을 가져와서 관리자 확인
 		map.put("start", start);
 		map.put("end", end);
 		
