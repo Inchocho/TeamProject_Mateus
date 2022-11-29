@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.movieyo.cart">
+
+	<resultMap type="cartDto" id="cartResultMap">
+		<id column="CART_NO" property="cartNo"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="MOVIE_NO" property="movieNo"/>
+		<result column="CART_INCARTDATE" property="inCartDate"/>
+	</resultMap>
+	
+	<!-- 나머지는 해당 서치옵션만 -->
+    <sql id="search">
+        <choose>
+            <when test="searchOption == 'all'">
+                WHERE MOVIE_TITLE LIKE '%'||#{keyword}||'%' 
+                OR CART_INCARTDATE LIKE '%'||#{keyword}||'%' 
+            </when>
+            <otherwise>
+                WHERE ${searchOption} LIKE '%'||#{keyword}||'%'
+            </otherwise>
+        </choose>
+    </sql>	
+    
+
+    
+<!-- cart 목록 수 -->
+<!-- 	<select id="buySelectTotalCount" resultType="java.lang.Integer" parameterType="map">			 -->
+<!-- 		SELECT COUNT(*)  -->
+<!-- 		FROM (SELECT A.USER_NICKNAME, B.BUY_DATE, C.MOVIE_TITLE, C.MOVIE_PRICE, B.BUY_STATUS  -->
+<!-- 		FROM MVY_USER A,  -->
+<!-- 			MVY_BUY B,  -->
+<!-- 			MVY_MOVIE C  -->
+<!-- 			WHERE A.USER_NO = B.USER_NO  -->
+<!-- 			AND B.MOVIE_NO = C.MOVIE_NO -->
+<!-- 			<include refid="buyListSearch"></include>) M   -->
+<!-- 			<include refid="search"></include>			            -->
+<!-- 	</select>	 -->
+	
+<!-- 	<select id='buySelectList' parameterType='map' resultType='map'> -->
+<!-- 	SELECT BUY.USER_NICKNAME, BUY.USER_NO, BUY.BUY_DATE, BUY.MOVIE_TITLE, BUY.MOVIE_PRICE, BUY.BUY_STATUS, BUY.BUY_NO -->
+<!-- 	FROM -->
+<!-- 		(SELECT ROWNUM RNUM, M.USER_NICKNAME, M.USER_NO, M.BUY_DATE, M.MOVIE_TITLE, M.MOVIE_PRICE, M.BUY_STATUS, M.BUY_NO -->
+<!-- 			FROM -->
+<!-- 			(SELECT A.USER_NICKNAME, A.USER_NO, B.BUY_DATE, C.MOVIE_TITLE, C.MOVIE_PRICE, B.BUY_STATUS, B.BUY_NO -->
+<!-- 			FROM MVY_USER A, -->
+<!-- 			     MVY_BUY B, -->
+<!-- 			     MVY_MOVIE C				 -->
+<!-- 				WHERE A.USER_NO = B.USER_NO -->
+<!-- 				AND B.MOVIE_NO = C.MOVIE_NO -->
+<!-- 				<include refid="buyListSearch"></include> -->
+<!-- 				) M  -->
+<!-- 				<include refid="search"></include> -->
+<!-- 				) BUY -->
+<!-- 		WHERE BUY.RNUM BETWEEN #{start} AND #{end} -->
+<!-- 	</select>	 -->
+	
+	<!-- 장바구니 추가 -->
+	<insert id="cartInsertOne" parameterType="com.movieyo.cart.dto.CartDto"
+	useGeneratedKeys="true" keyProperty="cartNo">
+		
+		<selectKey keyProperty="cartNo" resultType="int" order="BEFORE">
+			SELECT MVY_CART_NO_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+			INSERT INTO MVY_CART
+			VALUE(CART_NO, MOVIE_NO, USER_NO)
+			VALUES(#{cartNo}, #{movieNo}, #{userNo})
+	</insert>		
+	
+	<!-- 장바구니 중복 조회 -->
+	<select id="cartExist" parameterType='map' resultMap="cartResultMap">
+		SELECT CART_NO, USER_NO, MOVIE_NO, CATR_INCARTDATE
+		FROM MVY_CART
+		WHERE USER_NO = #{userNo}
+		AND MOVIE_NO = #{movieNo}
+	</select>
+
+</mapper>
