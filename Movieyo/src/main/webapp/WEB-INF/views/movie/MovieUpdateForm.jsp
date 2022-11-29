@@ -105,7 +105,7 @@ img{
 				<c:forEach var="row" items="${fileList}" varStatus="obj">
 <!-- 					<input type="button" value="이미지" name="file"> -->
 <%-- 					${row.ORIGINAL_FILE_NAME}(${row.FILE_SIZE}kb)<br> --%>
-					<img alt="image not found" src="<c:url value='/img/${row.STORED_FILE_NAME}'/>">
+					<img alt="image not found" src="<c:url value='/image/${row.STORED_FILE_NAME}'/>">
 					<a href="#this" id="delete_${obj.index}">삭제</a><br>
 <!-- 					<br> -->
 				</c:forEach>

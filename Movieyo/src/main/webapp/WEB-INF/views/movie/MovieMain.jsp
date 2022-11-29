@@ -20,11 +20,13 @@
 </script>
 </head>
 <body>
+	<jsp:include page="/WEB-INF/views/Header.jsp"/>
+	
 	<h1>내가 메인이다</h1>
 	
 			
 	<c:forEach var="row" items="${fileList}" varStatus="status">
-		<img alt="image not found" src="<c:url value='/img/${row.get(0).STORED_FILE_NAME}'/>">
+		<img alt="image not found" src="<c:url value='/image/${row.get(0).STORED_FILE_NAME}'/>">
 					
 		<c:set var="movieDto" value="${movieList[status.index]}"/>
 			${movieDto.movieTitle}
@@ -32,6 +34,7 @@
 	
 	</c:forEach>
 	
+	<jsp:include page="../Tail.jsp" />
 	
 </body>
 </html>

@@ -56,7 +56,8 @@ public class UserController {
 		if(userDto != null) {
 			session.setAttribute("userDto", userDto);
 			
-			viewUrl =  "redirect:../user/one.do?userNo=" +  userDto.getUserNo();
+//			viewUrl =  "redirect:../user/one.do?userNo=" +  userDto.getUserNo();
+			viewUrl = "redirect:../movie/main.do";
 		}else {
 			viewUrl = "/auth/LoginFail";
 		}
