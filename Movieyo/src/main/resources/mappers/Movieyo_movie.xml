@@ -5,16 +5,19 @@
 
 	<resultMap type="movieDto" id="movieResultMap">
 		<id column="MOVIE_NO" property="movieNo"/>
+		<result column="GENRE_NO" property="genreNo"/>
+		<result column="GENRE_NAME" property="genreName"/>
 		<result column="MOVIE_TITLE" property="movieTitle"/>
-		<result column="MOVIE_PRDTYEAR" property="prdtYear"/>
+		<result column="MOVIE_PRDTYEAR" property="prdtYear" javaType="java.util.Date"/>
 		<result column="MOVIE_NATION" property="nation"/>
 		<result column="MOVIE_DIRECTOR" property="director"/>
 		<result column="MOVIE_RUNTIME" property="runtime"/>
 		<result column="MOVIE_GRADE" property="grade"/>
 		<result column="MOVIE_PRICE" property="price"/>
-		<result column="MOVIE_CREDATE" property="creDate"/>
-		<result column="MOVIE_MODDATE" property="modDate"/>
+		<result column="MOVIE_REGISTRANT" property="registrant"/>
+		<result column="MOVIE_CREDATE" property="creDate" javaType="java.util.Date"/>
 		<result column="MOVIE_RATE" property="rate"/>
+		<result column="MOVIE_STORY" property="movieStory"/>
 	</resultMap>
 
 	<sql id="search">
@@ -37,10 +40,12 @@
 			select MVY_MOVIE_NO_SEQ.NEXTVAL FROM DUAL
 		</selectKey>
 			INSERT INTO MVY_MOVIE
-			VALUE(MOVIE_NO, MOVIE_TITLE, MOVIE_PRDTYEAR, MOVIE_NATION, MOVIE_DIRECTOR,
-				MOVIE_RUNTIME, MOVIE_GRADE, MOVIE_PRICE, MOVIE_CREDATE, MOVIE_MODDATE, MOVIE_RATE)
-			VALUES(#{movieNo}, #{movieTitle}, #{prdtYear}, #{nation}, #{director}, #{runtime}
-			, #{grade}, #{price}, '1', '1', #{rate})
+			VALUE(MOVIE_NO, GENRE_NO, GENRE_NAME, MOVIE_TITLE,
+				MOVIE_PRDTYEAR, MOVIE_NATION, MOVIE_DIRECTOR,
+				MOVIE_RUNTIME, MOVIE_GRADE, MOVIE_PRICE, MOVIE_REGISTRANT, MOVIE_CREDATE, MOVIE_STORY)
+			VALUES(#{movieNo}, #{genreNo}, #{genreName}, #{movieTitle},
+				#{prdtYear}, #{nation}, #{director}, #{runtime}
+				, #{grade}, #{price}, #{registrant}, SYSDATE, #{movieStory})
 	</insert>
 	
 	<!-- 영화포토에 사진 추가(파일업로드) -->
@@ -52,15 +57,16 @@
 		(MVY_MOVIE_PHOTO_SEQ.NEXTVAL, #{parentSeq}, #{original_file_name},
 		 #{stored_file_name}, #{file_size}, SYSDATE)
 	</insert>
-	
+
 <!-- 	영화리스트 -->
 	<select id="movieSelectList" resultMap="movieResultMap">
-		SELECT MV.MOVIE_NO, MV.MOVIE_TITLE, MV.MOVIE_DIRECTOR, MV.MOVIE_CREDATE
+		SELECT MV.MOVIE_NO, MV.GENRE_NO, MV.MOVIE_TITLE, MV.MOVIE_DIRECTOR, MV.MOVIE_CREDATE, MV.GENRE_NAME, MV.MOVIE_REGISTRANT
 		   FROM (
-		        SELECT ROWNUM RNUM, M.MOVIE_NO, M.MOVIE_TITLE
-		      , M.MOVIE_DIRECTOR, M.MOVIE_CREDATE
+		        SELECT ROWNUM RNUM, M.MOVIE_NO, M.GENRE_NO, M.MOVIE_TITLE
+		      , M.MOVIE_DIRECTOR, M.MOVIE_CREDATE, M.GENRE_NAME, M.MOVIE_REGISTRANT
 		        FROM (
-	                SELECT MOVIE_NO, MOVIE_TITLE, MOVIE_DIRECTOR, MOVIE_CREDATE
+	                SELECT MOVIE_NO, GENRE_NO, MOVIE_TITLE, MOVIE_DIRECTOR, MOVIE_CREDATE,
+	                	GENRE_NAME, MOVIE_REGISTRANT
 	         	   	   FROM MVY_MOVIE
 	         	   	   <include refid="search"></include>
 			           ORDER BY MOVIE_NO ASC) M
@@ -77,8 +83,8 @@
 	
 	<select id="movieSelectOne" parameterType="int"
 		resultMap="movieResultMap">
-		SELECT MOVIE_NO, MOVIE_TITLE, MOVIE_PRDTYEAR, MOVIE_NATION
-		, MOVIE_DIRECTOR, MOVIE_RUNTIME, MOVIE_GRADE, MOVIE_PRICE, MOVIE_CREDATE
+		SELECT MOVIE_NO, GENRE_NO, MOVIE_TITLE, MOVIE_PRDTYEAR, MOVIE_NATION
+		, MOVIE_DIRECTOR, MOVIE_RUNTIME, MOVIE_GRADE, MOVIE_PRICE, MOVIE_CREDATE, GENRE_NAME, MOVIE_STORY
 		FROM MVY_MOVIE
 		WHERE MOVIE_NO = #{movieNo}
 	</select>	
@@ -94,13 +100,18 @@
 		UPDATE MVY_MOVIE
 		<set>
 			<if test="movieTitle != ''">MOVIE_TITLE = #{movieTitle},</if>
-			<if test="prdtYear != ''">MOVIE_PRDTYEAR = #{prdtYear},</if>
+			MOVIE_PRDTYEAR = #{prdtYear},
 			<if test="nation != ''">MOVIE_NATION = #{nation},</if>
 			<if test="director != ''">MOVIE_DIRECTOR = #{director},</if>
+
+			<if test="genreNo != ''">GENRE_NO = #{genreNo},</if>
+			<if test="genreName != ''">GENRE_NAME = #{genreName},</if>
+			
 			<if test="runtime != ''">MOVIE_RUNTIME = #{runtime},</if>
 			<if test="grade != ''">MOVIE_GRADE = #{grade},</if>
-			<if test="price != ''">MOVIE_PRICE = #{price}</if>
-<!-- 			MOD_DATE = SYSDATE -->
+			<if test="price != ''">MOVIE_PRICE = #{price},</if>
+			<if test="movieStory != ''">MOVIE_STORY = #{movieStory}</if>
+			
 		</set>
 		WHERE MOVIE_NO = #{movieNo}
 	</update>

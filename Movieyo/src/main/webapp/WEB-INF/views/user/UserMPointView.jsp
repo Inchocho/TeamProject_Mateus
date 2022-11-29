@@ -183,6 +183,7 @@ table {
 			afterMpointViewObj.innerHTML = afterPoint;
 		});
 	
+//	충전버튼 눌렀을때 충전값 있으면 모달창
 	var chargeTryBtn = document.getElementById("chargeTryBtn");
 	var popup_layerObj = document.getElementById("popup_layer");
 	
@@ -198,7 +199,7 @@ table {
 			popup_layer.style.visibility = "visible";
 		}
 	});
-	
+//충전 submit
 	var chageBtn = document.getElementById("chargeBtn");
 	var chargeForm = document.getElementById("chargeForm");
 	

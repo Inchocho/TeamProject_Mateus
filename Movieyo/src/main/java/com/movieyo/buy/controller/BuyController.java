@@ -34,13 +34,18 @@ public class BuyController {
 	@Autowired
 	private BuyService buyService;
 	
-	//로그인 세션값 필요 (파라미터 HttpSession session 추가필요)
+	// 세션을 받아옴 --> userAdmin 정보를 사용해서 관리자 전용 쿼리를 실행
 	@RequestMapping(value = "/buy/list.do"
 			, method = {RequestMethod.GET, RequestMethod.POST})
 	public String buyList(@RequestParam(defaultValue = "1") int curPage, Model model,
 			@RequestParam(defaultValue = "all")String searchOption
-		  , @RequestParam(defaultValue = "")String keyword,
-			int userNo) {
+		  , @RequestParam(defaultValue = "")String keyword
+		  , HttpSession session
+		  ,	int userNo) {
+		
+		UserDto userDto = (UserDto) session.getAttribute("userDto");
+		
+		int userAdmin = userDto.getUserAdmin();		
 		
 		logger.info("Welcome BuyController buyList! curPage: {}" + ", searchOption: {}"
 				, curPage, searchOption);		
@@ -56,7 +61,7 @@ public class BuyController {
 		int start = buyPaging.getPageBegin();
 		int end = buyPaging.getPageEnd();		
 				
-		List<Map<String, Object>> listMap = buyService.buySelectList(searchOption, keyword, start, end, userNo);
+		List<Map<String, Object>> listMap = buyService.buySelectList(searchOption, keyword, start, end, userNo, userAdmin);
 		
 		//sql 페이징 쿼리실행결과 + 토탈카운트를 담아서 멤버리스트와 같이 모델에 담아준다
 		//map을 활용하면 다양한 데이터를 쉽게 객체를 만들 수 있다
@@ -79,22 +84,25 @@ public class BuyController {
 		
 		List<Map<String, Object>> buyListMap = new ArrayList<Map<String,Object>>();
 		
-		System.out.println(listMap);
-		
 		for (int i = 0; i < listMap.size(); i++) {
 			Map<String, Object> buyMap = new HashMap<String, Object>();
 			
 			int moviePrice = Integer.parseInt(String.valueOf(listMap.get(i).get("MOVIE_PRICE")));
+			int buyNo = Integer.parseInt(String.valueOf(listMap.get(i).get("BUY_NO")));			
 			String userNickName = (String)listMap.get(i).get("USER_NICKNAME");
 			String movieTitle = (String)listMap.get(i).get("MOVIE_TITLE");
 			String buyStatus = (String)listMap.get(i).get("BUY_STATUS");
 			Date buyDate = (Date)listMap.get(i).get("BUY_DATE");
+			int buyUserNo = Integer.parseInt(String.valueOf(listMap.get(i).get("USER_NO")));
 			
 			buyMap.put("moviePrice", moviePrice);
 			buyMap.put("userNickName", userNickName);
 			buyMap.put("movieTitle", movieTitle);
 			buyMap.put("buyStatus", buyStatus);
 			buyMap.put("buyDate", buyDate);		
+			buyMap.put("buyNo", buyNo);
+			buyMap.put("buyUserNo", buyUserNo);
+			buyMap.put("userNo", userNo);
 			
 			buyListMap.add(buyMap);			
 			
@@ -106,13 +114,11 @@ public class BuyController {
 		
 		return "buy/BuyListView";
 	}	
-	
+
 	@RequestMapping(value = "/buy/addBuy.do", method = RequestMethod.GET)
 	public String buyAdd(Model model, HttpSession session) {
 		
 		UserDto userDto = (UserDto)session.getAttribute("userDto");
-		
-		System.out.println(userDto);
 		
 		model.addAttribute(userDto);
 		
@@ -122,22 +128,25 @@ public class BuyController {
 	}
 	
 	@RequestMapping(value = "/buy/addCtr.do", method = RequestMethod.POST)
-	public String buyAddCtr(BuyDto buyDto, Model model) {
+	public String buyAddCtr(BuyDto buyDto, Model model, int userNo, int movieNo) {
 		logger.trace("Welcome BuyController buyAddCtr 구매내역 추가!!! " 
 			+ buyDto);
 		
-			//폼으로 해당정보를 넘기는지 확인
-			System.out.println(buyDto);
-		
-			//해당 유저의 캐쉬를 감소하기 위한 userNo
-			int userNo = buyDto.getBuyNo();
+			BuyDto buyDto2 = buyService.buyExist(userNo, movieNo);
 			
-			//구매한 영화의 평가를 올리기 위한 movieNo
-			int movieNo = buyDto.getMovieNo();
+			//폼으로 해당정보를 넘기는지 확인
+//			System.out.println(buyDto);		
+			
+			String viewUrl = "";
 		
 		try {
-			buyService.buyInsertOne(buyDto);
-			
+			if(buyDto2 != null) {	
+				System.out.println("이미 존재하는 영화");
+				viewUrl =  "redirect:../buy/list.do?userNo=" +  userNo;
+			}else {				
+				buyService.buyInsertOne(buyDto);
+				viewUrl =  "redirect:../buy/list.do?userNo=" +  userNo;
+			}
 //			buyService.updateCash(userNo);
 			
 //			buyService.updateMovie(movieNo);
@@ -148,7 +157,7 @@ public class BuyController {
 			e.printStackTrace();
 		}
 				
-		return "redirect:/buy/BuyListView";
+		return viewUrl;
 	}	
 
 }

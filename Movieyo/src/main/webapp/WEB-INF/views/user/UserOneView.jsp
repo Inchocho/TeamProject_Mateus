@@ -50,6 +50,7 @@
 		<input type="button" value="비밀번호 변경"
 		onclick="pwUpdate();">
 		<a onclick="popUp()">회원탈퇴</a>
+		<input type="text" value="${userDto.password}">
 <%-- 		 <a href='./deleteCtr.do?no=${userDto.no}'>회원탈퇴</a><br> --%>
 					
 	</form>

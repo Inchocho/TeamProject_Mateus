@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.movieyo.refund.dao.RefundDao;
+import com.movieyo.refund.dto.RefundDto;
 
 @Service
 public class RefundServiceImpl implements RefundService {
@@ -26,14 +27,22 @@ public class RefundServiceImpl implements RefundService {
 	}
 
 	@Override
-	public List<Map<String, Object>> refundSelectList(String searchOption, String keyword, int start, int end, int userNo) {
+	public List<Map<String, Object>> refundSelectList(String searchOption, String keyword
+			, int start, int end, int userNo, int userAdmin) {
 		// TODO Auto-generated method stub
-		System.out.println(searchOption + "서치옵션");
-		System.out.println(keyword + "키워드");
-		System.out.println(start + "페이지시작");
-		System.out.println(end + "페이지엔드");
-		
-		return refundDao.refundSelectList(searchOption, keyword, start, end, userNo);
+		return refundDao.refundSelectList(searchOption, keyword, start, end, userNo, userAdmin);
+	}
+
+	@Override
+	public void refundInsertOne(int buyNo, int userNo) {
+		// TODO Auto-generated method stub
+		refundDao.refundInsertOne(buyNo, userNo);
+	}
+
+	@Override
+	public int refundExist(int buyNo, int userNo) {
+		// TODO Auto-generated method stub
+		return refundDao.refundExist(buyNo, userNo);
 	}
 
 

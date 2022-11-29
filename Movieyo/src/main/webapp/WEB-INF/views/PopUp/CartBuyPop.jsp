@@ -9,12 +9,27 @@
 .popup_box{position: relative;top:50%;left:50%; width:550px;transform:translate(-50%, -50%);z-index:1002;box-sizing:border-box;background:#252526;}
 /*컨텐츠 영역*/
 .popup_box .popup_cont {padding:50px;line-height:1.4rem;font-size:14px;}
-.popup_box .popup_cont .pop_cont_title {padding:15px 0;color:#F08080;margin:0; text-align: center;}
-.popup_box .popup_cont .pop_cont_cont{ border: 1px solid #F08080; color:#F08080; text-align: center; font-weight: bold;}
+.popup_box .popup_cont .pop_cont_title, .pop_cont_Mpoint {padding:15px 0;color:#F08080;margin:0; text-align: center; font-weight: bold;}
+.popup_box .popup_cont .pop_cont_cont{ border: 1px solid #F08080; color:#F08080; text-align: center;}
 /*버튼영역*/
 .popup_box .popup_btn {display:table;width:100%;height:70px;}
 .popup_box .popup_btn a {display: table-cell; color:#fff; font-size:17px;text-align:center;vertical-align:middle;text-decoration:none; background: #02ace0;}
 .popup_box .popup_btn a.cancel{background-color: gray;}
+/*추가*/
+.popup_box .popup_cont .pop_cont_cont ul{
+	list-style-position: inside;
+	text-align: left;
+}
+.popup_box .popup_cont .pop_cont_cont{
+	margin: 0 120px 0 120px;
+}
+#popViewUserCash{
+	text-decoration: underline;
+	
+}
+.pop_cont_Mpoint a{
+	color: #F08080;
+}
 </style>
 </head>
 
@@ -22,12 +37,20 @@
   <div class="popup_box">
       <!--팝업 컨텐츠 영역-->
       <div class="popup_cont">
-          <h2 id="" class="pop_cont_title">제목?</h2>
-          <div id="" class="pop_cont_cont">내용</div>
+          <h2 id="" class="pop_cont_title">구매 하시겠습니까?</h2>
+          <div id="" class="pop_cont_cont">
+          	<ul>
+          		<li>영화제목 외 <span id="selCountMinOne"></span></li>
+          		<li><span id="selPrice"></span> 원</li>
+            </ul>
+          </div>
+          <div class="pop_cont_Mpoint">
+          	보유Mpoint: <a id="popViewUserCash" href="/Movieyo/user/userMpoint.do">${userDto.userCash}</a> 원
+          </div>
       </div>
       <!--팝업 버튼 영역-->
       <div class="popup_btn">
-          <a id="" href="#" class="">확인</a> 
+          <a id="buyBtn" href="#" class="">구매</a> 
           <a href="#" onclick="cancelFnc();" class="cancel">닫기</a>
       </div>
   </div>
