@@ -26,35 +26,25 @@
 
     
 <!-- cart 목록 수 -->
-<!-- 	<select id="buySelectTotalCount" resultType="java.lang.Integer" parameterType="map">			 -->
-<!-- 		SELECT COUNT(*)  -->
-<!-- 		FROM (SELECT A.USER_NICKNAME, B.BUY_DATE, C.MOVIE_TITLE, C.MOVIE_PRICE, B.BUY_STATUS  -->
-<!-- 		FROM MVY_USER A,  -->
-<!-- 			MVY_BUY B,  -->
-<!-- 			MVY_MOVIE C  -->
-<!-- 			WHERE A.USER_NO = B.USER_NO  -->
-<!-- 			AND B.MOVIE_NO = C.MOVIE_NO -->
-<!-- 			<include refid="buyListSearch"></include>) M   -->
-<!-- 			<include refid="search"></include>			            -->
-<!-- 	</select>	 -->
-	
-<!-- 	<select id='buySelectList' parameterType='map' resultType='map'> -->
-<!-- 	SELECT BUY.USER_NICKNAME, BUY.USER_NO, BUY.BUY_DATE, BUY.MOVIE_TITLE, BUY.MOVIE_PRICE, BUY.BUY_STATUS, BUY.BUY_NO -->
-<!-- 	FROM -->
-<!-- 		(SELECT ROWNUM RNUM, M.USER_NICKNAME, M.USER_NO, M.BUY_DATE, M.MOVIE_TITLE, M.MOVIE_PRICE, M.BUY_STATUS, M.BUY_NO -->
-<!-- 			FROM -->
-<!-- 			(SELECT A.USER_NICKNAME, A.USER_NO, B.BUY_DATE, C.MOVIE_TITLE, C.MOVIE_PRICE, B.BUY_STATUS, B.BUY_NO -->
-<!-- 			FROM MVY_USER A, -->
-<!-- 			     MVY_BUY B, -->
-<!-- 			     MVY_MOVIE C				 -->
-<!-- 				WHERE A.USER_NO = B.USER_NO -->
-<!-- 				AND B.MOVIE_NO = C.MOVIE_NO -->
-<!-- 				<include refid="buyListSearch"></include> -->
-<!-- 				) M  -->
-<!-- 				<include refid="search"></include> -->
-<!-- 				) BUY -->
-<!-- 		WHERE BUY.RNUM BETWEEN #{start} AND #{end} -->
-<!-- 	</select>	 -->
+	<select id="selectTotalCount" resultType="java.lang.Integer" parameterType="map">			
+		SELECT COUNT(*) 
+		FROM (SELECT C.CART_NO, C.USER_NO, C.MOVIE_NO, M.MOVIE_TITLE , M.MOVIE_PRICE, C.CATR_INCARTDATE
+			FROM MVY_CART C, MVY_MOVIE M
+			WHERE C.USER_NO = #{userNo}) CART
+			<include refid="search"></include>
+	</select>	
+<!-- cart 리스트(userNo에 매칭되는) -->
+	<select id='selectList' parameterType='map' resultType='map'>
+	SELECT CART.CART_NO, CART.USER_NO, CART.MOVIE_NO, CART.MOVIE_TITLE , CART.MOVIE_PRICE, CART.CATR_INCARTDATE
+	FROM
+		(SELECT ROWNUM RNUM, FILT.CART_NO, FILT.USER_NO, FILT.MOVIE_NO, FILT.MOVIE_TITLE , FILT.MOVIE_PRICE, FILT.CATR_INCARTDATE
+			FROM
+				(SELECT C.CART_NO, C.USER_NO, C.MOVIE_NO, M.MOVIE_TITLE , M.MOVIE_PRICE, C.CATR_INCARTDATE
+				FROM MVY_CART C, MVY_MOVIE M, MVY_USER U				
+				WHERE C.USER_NO = #{userNo}) FILT 
+			<include refid="search"></include>) CART
+		WHERE CART.RNUM BETWEEN #{start} AND #{end}
+	</select>	
 	
 	<!-- 장바구니 추가 -->
 	<insert id="cartInsertOne" parameterType="com.movieyo.cart.dto.CartDto"

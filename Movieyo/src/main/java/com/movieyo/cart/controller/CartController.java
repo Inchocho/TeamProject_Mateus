@@ -23,7 +23,9 @@ import com.movieyo.buy.dto.BuyDto;
 import com.movieyo.buy.service.BuyService;
 import com.movieyo.cart.service.CartService;
 import com.movieyo.movie.dto.MovieDto;
+import com.movieyo.movie.service.MovieService;
 import com.movieyo.user.dto.UserDto;
+import com.movieyo.util.CartPaging;
 import com.movieyo.util.Paging;
 
 @Controller
@@ -34,20 +36,20 @@ public class CartController {
 	
 	@Autowired
 	private CartService cartService;
+	private MovieService movieService;
+	private BuyService buyService;
 	
 	//
-/*보류	
+	
 	@RequestMapping(value = "/cart/list.do", method = {RequestMethod.GET, RequestMethod.POST})
-	public String buyList(@RequestParam(defaultValue = "1") int curPage, Model model,
+	public String cartList(@RequestParam(defaultValue = "1") int curPage, Model model,
 			@RequestParam(defaultValue = "all")String searchOption
 		  , @RequestParam(defaultValue = "")String keyword
 		  , HttpSession session) {
-		
+
 		UserDto userDto = (UserDto) session.getAttribute("userDto");
 		
 		int userNo = userDto.getUserNo();
-		
-		int userAdmin = userDto.getUserAdmin();		
 		
 		logger.info("Welcome cartController cartList! curPage: {}" + ", searchOption: {}"
 				, curPage, searchOption);		
@@ -58,25 +60,20 @@ public class CartController {
 		
 		logger.info("totalCount: {}", totalCount);
 		
-		Paging paging = new Paging(totalCount, curPage);		
+		CartPaging paging = new CartPaging(totalCount, curPage);		
 		
 		int start = paging.getPageBegin();
 		int end = paging.getPageEnd();		
-				
+
 		List<Map<String, Object>> listMap = cartService.selectList(searchOption, keyword, start, end, userNo);
 		
-		//sql 페이징 쿼리실행결과 + 토탈카운트를 담아서 멤버리스트와 같이 모델에 담아준다
-		//map을 활용하면 다양한 데이터를 쉽게 객체를 만들 수 있다
-		//Map의 value타입이 Object인 이유 -> 스프링은 객체지향 프로그래밍 
-		Map<String, Object> pagingMap = 
-				new HashMap<String, Object>();
+		Map<String, Object> pagingMap = new HashMap<String, Object>();
 		
-		//Map에다가 totalCount, memberPaging을 key로해서 담고
+		//Map에다가 totalCount, Paging을 key로해서 담고
 		pagingMap.put("totalCount", totalCount);
-		pagingMap.put("moviePaging", paging);
+		pagingMap.put("cartPaging", paging);
 		
-		Map<String, Object> searchMap = 
-				new HashMap<String, Object>();
+		Map<String, Object> searchMap = new HashMap<String, Object>();
 		
 		searchMap.put("searchOption", searchOption);
 		searchMap.put("keyword", keyword);
@@ -93,14 +90,12 @@ public class CartController {
 			int buyNo = Integer.parseInt(String.valueOf(listMap.get(i).get("BUY_NO")));			
 			String userNickName = (String)listMap.get(i).get("USER_NICKNAME");
 			String movieTitle = (String)listMap.get(i).get("MOVIE_TITLE");
-			String buyStatus = (String)listMap.get(i).get("BUY_STATUS");
 			Date buyDate = (Date)listMap.get(i).get("BUY_DATE");
 			int buyUserNo = Integer.parseInt(String.valueOf(listMap.get(i).get("USER_NO")));
 			
 			buyMap.put("moviePrice", moviePrice);
 			buyMap.put("userNickName", userNickName);
 			buyMap.put("movieTitle", movieTitle);
-			buyMap.put("buyStatus", buyStatus);
 			buyMap.put("buyDate", buyDate);		
 			buyMap.put("buyNo", buyNo);
 			buyMap.put("buyUserNo", buyUserNo);
@@ -115,8 +110,7 @@ public class CartController {
 		model.addAttribute("searchMap", searchMap);		
 		
 		return "cart/UserCartListView";
-	}
-		
+	}	
 
 	@RequestMapping(value = "/buy/addBuy.do", method = RequestMethod.GET)
 	public String buyAdd(Model model, HttpSession session) {
@@ -135,7 +129,7 @@ public class CartController {
 		logger.trace("Welcome BuyController buyAddCtr 구매내역 추가!!! " 
 			+ buyDto);
 		
-			BuyDto buyDto2 = Service.buyExist(userNo, movieNo);
+			BuyDto buyDto2 = buyService.buyExist(userNo, movieNo);
 			
 			//폼으로 해당정보를 넘기는지 확인
 //			System.out.println(buyDto);		
@@ -162,5 +156,5 @@ public class CartController {
 				
 		return viewUrl;
 	}	
-*/
+
 }

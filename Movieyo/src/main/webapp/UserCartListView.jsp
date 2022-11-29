@@ -175,7 +175,7 @@ th {
 	
 	<form action="./list.do" id="pagingForm" method="post">
 		<input type="hidden" id="curPage" name="curPage"
-			value="${pagingMap.curPage}">
+			value="${pagingMap.cartPaging.curPage}">
 		<input type="hidden"  name="keyword" value="${searchMap.keyword}">
 		<input type="hidden"  name="searchOption" value="${searchMap.searchOption}">
 	</form>

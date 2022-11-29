@@ -17,9 +17,36 @@ public class CartDaoImpl implements CartDao{
 	SqlSessionTemplate sqlSession;
 	
 	//mapper의 namespace를 함수로 생성해서 사용하자
-	String namespace(String inputStr) {
+	String name(String inputStr) {
 		String resultN = "com.movieyo.cart." + inputStr;
 		return resultN;
+	}
+
+	@Override
+	public int selectTotalCount(String searchOption, String keyword, int userNo) {
+		// TODO Auto-generated method stub
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+		map.put("userNo", userNo);
+		
+		return sqlSession.selectOne(name("selectTotalCount"), map);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectList(String searchOption, String keyword, int start, int end, int userNo) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+		map.put("start", start);
+		map.put("end", end);
+		map.put("userNo", userNo);
+		
+		return sqlSession.selectList(name("selectList"), map);
 	}
 
 }
