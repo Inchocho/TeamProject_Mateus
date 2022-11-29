@@ -6,42 +6,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script type="text/javascript">
-	$(function(){
-		$('#rBtn').on('click',function(event){
-			$('input[name=rBtn]').prop('type', 'text');
-			$('input[name=rBtn]').val('처리중');
-		});
-	});
-	
-	$('input').on('click', function () {
-		   $(this).prop('type', 'text');
-	});	
-	
-	function buyAdd() {
-		location.href = '../buy/addBuy.do'
-	}
-	
-	function moveRefund(index) {
-		var rBtnObj = document.getElementById("rBtn");
-		
-		var buyCurPageObj = document.getElementById("buyCurPage");
-		
-		buyCurPageObj.value = document.getElementById("curPage").value;
-		
-		var str = "refundAddForm" + index;
-		
-		console.log(str);		
-		
-		var refundAddFormObj = document.getElementById(str);
-		
-		refundAddFormObj.submit();
-		
-		rBtn.disabled = 'disabled';
-		
-	}	
-
-</script>
 <title>구매내역</title>
 </head>
 <body>
@@ -82,7 +46,7 @@
 			</c:if>	
 			<td>
 			<form id="refundAddForm${status.index}" action="../refund/addRefund.do" method="GET">					
-				<a href="#" onclick="moveRefund(${status.index});">
+				<a id ="reFundA' href="#" onclick="moveRefund(${status.index});">
 					<input id='rBtn' name='rBtn' type='button' value='환불하기'
 					onclick="this.value='신청중';$(this).attr('type','text');">					
 				</a>
@@ -147,4 +111,41 @@
 	</form>	
 
 </body>
+<script type="text/javascript">
+	$(function(){
+		$('#rBtn').on('click',function(event){
+			$('input[name=rBtn]').prop('type', 'text');
+			$('input[name=rBtn]').val('처리중');
+		});
+	});
+	
+	$('input').on('click', function () {
+		   $(this).prop('type', 'text');
+	});	
+	
+	function buyAdd() {	//실제로는 폼에서 선택하고 보내줘야함
+		location.href = '../buy/addBuy.do?moviePrice=100000'; 
+	}
+	
+	function moveRefund(index) {
+		
+		var buyCurPageObj = document.getElementById("buyCurPage");
+		
+		buyCurPageObj.value = document.getElementById("curPage").value;
+		
+		var str = "refundAddForm" + index;
+		
+		console.log(str);		
+		
+		var refundAddFormObj = document.getElementById(str);
+		
+		refundAddFormObj.submit();
+
+		var refundAObj = document.getElementById("refundA");
+
+		refundAObj.innerHTML = "<input type='text' value='처리중'>";
+		
+	}	
+
+</script>
 </html>

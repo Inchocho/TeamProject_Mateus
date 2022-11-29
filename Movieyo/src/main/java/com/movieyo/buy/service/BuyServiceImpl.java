@@ -21,9 +21,9 @@ public class BuyServiceImpl implements BuyService {
 	public BuyDao buyDao;
 
 	@Override
-	public int buySelectTotalCount(String searchOption, String keyword, int userNo) {
+	public int buySelectTotalCount(String searchOption, String keyword, int userNo, int userAdmin) {
 		// TODO Auto-generated method stub
-		return buyDao.buySelectTotalCount(searchOption, keyword, userNo);
+		return buyDao.buySelectTotalCount(searchOption, keyword, userNo, userAdmin);
 	}
 
 	@Override

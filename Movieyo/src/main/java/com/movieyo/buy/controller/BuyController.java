@@ -45,14 +45,14 @@ public class BuyController {
 		
 		UserDto userDto = (UserDto) session.getAttribute("userDto");
 		
-		int userAdmin = userDto.getUserAdmin();		
+		int userAdmin = userDto.getUserAdmin();	
 		
 		logger.info("Welcome BuyController buyList! curPage: {}" + ", searchOption: {}"
 				, curPage, searchOption);		
 		
 		logger.info("keyword: {}",keyword);	
 		
-		int totalCount = buyService.buySelectTotalCount(searchOption, keyword, userNo);
+		int totalCount = buyService.buySelectTotalCount(searchOption, keyword, userNo, userAdmin);
 		
 		logger.info("totalCount: {}", totalCount);
 		
@@ -116,15 +116,31 @@ public class BuyController {
 	}	
 
 	@RequestMapping(value = "/buy/addBuy.do", method = RequestMethod.GET)
-	public String buyAdd(Model model, HttpSession session) {
+	public String buyAdd(Model model, HttpSession session, int moviePrice) {
 		
 		UserDto userDto = (UserDto)session.getAttribute("userDto");
 		
-		model.addAttribute(userDto);
+		//11.29: moviePrice -> 영화 선택시 가격 받을거임 지금은 임의로 가격정해줌
+		//현재 화면에서 10만으로 고정된값
+		//실제로는 영화상세화면에서 구매버튼을 누를때 폼안에 Get방식으로 moviePrice를 받아서 넘길것임		
 		
-		logger.trace("Welcome BuyController buyAdd 구매폼으로 이동!!!");
+		int userCash = userDto.getUserCash();
 		
-		return "buy/BuyForm";
+		if(userCash <  moviePrice) {
+			System.out.println("유저가 가진돈보다 많아!!!");
+			
+			logger.trace("Welcome BuyController buyAdd 구매폼으로 이동!!!");
+			
+			return "user/UserMPointView";
+			
+		}else {
+			model.addAttribute(userDto);
+			
+			logger.trace("Welcome BuyController buyAdd 구매폼으로 이동!!!");
+			
+			return "buy/BuyForm";			
+		}
+
 	}
 	
 	@RequestMapping(value = "/buy/addCtr.do", method = RequestMethod.POST)

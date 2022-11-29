@@ -20,13 +20,14 @@ public class RefundDaoImpl implements RefundDao{
 	String namespace = "com.movieyo.refund.";
 
 	@Override
-	public int refundSelectTotalCount(String searchOption, String keyword, int userNo) {
+	public int refundSelectTotalCount(String searchOption, String keyword, int userNo, int userAdmin) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("searchOption", searchOption);
 		map.put("keyword", keyword);
 		map.put("userNo", userNo);
+		map.put("userAdmin", userAdmin);
 		
 		return sqlSession.selectOne(namespace + "refundSelectTotalCount", map);
 	}
@@ -66,5 +67,21 @@ public class RefundDaoImpl implements RefundDao{
 		map.put("userNo", userNo);
 		
 		return sqlSession.selectOne(namespace + "refundExist", map);
+	}
+
+
+	@Override
+	public void updateRefund(RefundDto refundDto, int admit) {
+		// TODO Auto-generated method stub
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		int buyNo = refundDto.getBuyNo();
+		
+		map.put("admit", admit);
+		map.put("buyNo", buyNo);
+		
+		sqlSession.update(namespace + "updateRefund", map);
+		
 	}
 }
