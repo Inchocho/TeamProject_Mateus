@@ -76,6 +76,7 @@
 }
 .contContainer table{
 	width: 600px;
+	text-align: center;
 }
   
 #ul li {
@@ -96,29 +97,27 @@ th {
 }
 .csiCkBox{
 	align-items: center;
+	width: 250px;
+	justify-content: space-between;
 }
 .csiCkBoxView{
 	flex-direction: column;
 }
-</style>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 
-<script type="text/javascript">
-	function pageMoveMovieDetailFnc() {
-		var movieDatailCurPageObj = document.getElementById("movieDatailCurPage");
-		
-		movieDatailCurPageObj.value = document.getElementById("curPage").value;
-		
-		var movieDetailFormObj = document.getElementById("movieDetailForm");
-		
-		movieDetailFormObj.submit();
-		
-	}
-	
-	function movieAdd() {
-		location.href = '../movie/addMovie.do'
-	}
-</script>
+#buyCartSelBtn{
+	width: 250px;
+    background-color: #02ace0;
+    border: 1px solid black;
+    color: #fff;
+}
+#delCartSelBtn{
+	width: 250px;
+    background-color: #fd7d40;
+    border: 1px solid black;
+    color: #fff;
+}
+</style>
+
 </head>
 
 <body>
@@ -132,22 +131,29 @@ th {
 		<h1>장바구니</h1>
 	</div>
 		
-	<form action="buyCartSelect.do">
-		<!-- contContainer 다넣기? -->
-	</form>
 	<div class="contContainer">
+	<form id="buyCartSelectForm">
 	<table>
 		<tr>
-			<th>영화제목</th><th>가격</th><th>담은날짜</th><th>선택</th>
+			<th>영화제목</th><th>가격(원)</th><th>담은날짜</th><th>선택</th>
 		</tr>
 		<c:if test="true">
-		<c:forEach var="userCartDto" items="${cartList}">
+		<c:forEach var="cartDto" items="${cartList}">
+		<!-- cartDto = [cartNo, userNo, movieNo, inCartDate] -->
+		<!-- map// cart.user / cart.movie -->
+		
 		</c:forEach>
 		<tr>
-			<td>${cartDto.movieTitle}1</td>
-			<td>${cartDto.moviePrice}1</td>
+			<td>${cart.movie.title}1</td>
+			<td id="cartPsel${cartDto.cartNo}1">${cart.movie.price}3000</td>
 			<td>${cartDto.inCartDate}1</td>
-			<td><input type="checkbox"></td>
+			<td><input type="checkbox" id="cartSelCN${cartDto.cartNo}1" value="${cartDto.movieNo}"></td>
+		</tr>
+		<tr>
+			<td>${cart.movie.title}2</td>
+			<td id="cartPsel${cartDto.cartNo}2">${cart.movie.price}8000</td>
+			<td>${cartDto.inCartDate}2</td>
+			<td><input type="checkbox" id="cartSelCN${cartDto.cartNo}2" value="${cartDto.movieNo}"></td>
 		</tr>
 			
 		</c:if>
@@ -159,16 +165,23 @@ th {
 	</table>
 	<div style="display: flex; flex-direction: row-reverse;"><div class="cartSelectInfo">
 		<div class="csiCkBox">
-			<div class="csiCkBoxView"><span>선택한항목</span><span>가격합계</span></div><div>전체선택체크박스</div>
+			<div class="csiCkBoxView">
+			<input type="hidden" id="cartSelCount" value="0">
+			<input type="hidden" id="cartSelPrice" value="0">
+			<span>선택한항목:　<span id="cartSelCountView"></span><span style="float: right;">　개</span></span>
+			<span>가격합계:　<span id="cartSelPriceView"></span><span style="float: right;">　원</span></span></div>
+			<div>전체선택<input type="checkbox" id="allck"></div>
 		</div>
-		<div>구매버튼</div>
+		<div><input type="button" value="선택항목 구매하기" id="buyCartSelBtn"></div>
+		<div><input type="button" value="선택항목 장바구니에서 제외" id="delCartSelBtn"></div>
 	</div></div>
-	<!-- jsp:include는 forward처럼 데이터를 유지시킨다 -->
+	</form>
+
 	<jsp:include page="/WEB-INF/views/common/Paging.jsp"/>
 	
 	<form action="./list.do" id="pagingForm" method="post">
 		<input type="hidden" id="curPage" name="curPage"
-			value="${pagingMap.moviePaging.curPage}">	
+			value="${pagingMap.curPage}">
 		<input type="hidden"  name="keyword" value="${searchMap.keyword}">
 		<input type="hidden"  name="searchOption" value="${searchMap.searchOption}">
 	</form>
@@ -176,25 +189,25 @@ th {
 	<form action="./list.do" method="post">
 		<select name="searchOption">
 			<c:choose>
-				<c:when test="true">
-					<option value="all"<c:if test="${searchMap.searchOption eq 'all'}">selected</c:if>>감독+제목</option>
-					<option value="MOVIE_DIRECTOR">감독</option>
-					<option value="MOVIE_TITLE">제목</option>					
+				<c:when test="TRUE">
+					<option value="all"<c:if test="${searchMap.searchOption eq 'all'}">selected</c:if>>제목 + 담은날짜</option>
+					<option value="MOVIE_NO_TITLE">제목</option>					
+					<option value="CART_INCARTDATE">담은날짜</option>
 				</c:when>
 				<c:when test="${searchMap.searchOption == 'all'}">
-					<option value="all"<c:if test="${searchMap.searchOption eq 'all'}">selected</c:if>>감독+제목</option>
-					<option value="MOVIE_DIRECTOR">감독</option>
-					<option value="MOVIE_TITLE">제목</option>					
+					<option value="all"<c:if test="${searchMap.searchOption eq 'all'}">selected</c:if>>제목 + 담은날짜</option>
+					<option value="MOVIE_NO_TITLE">제목</option>					
+					<option value="CART_INCARTDATE">담은날짜</option>
 				</c:when>
-				<c:when test="${searchMap.searchOption == 'MOVIE_DIRECTOR'}">
-					<option value="all">감독+제목</option>
-					<option value="MOVIE_DIRECTOR"<c:if test="${searchMap.searchOption eq 'MOVIE_DIRECTOR'}">selected</c:if>>감독</option>
-					<option value="MOVIE_TITLE">제목</option>					
-				</c:when>				
 				<c:when test="${searchMap.searchOption == 'MOVIE_TITLE'}">
+					<option value="all">제목 + 담은날짜</option>
+					<option value="MOVIE_NO_TITLE"<c:if test="${searchMap.searchOption eq 'MOVIE_TITLE'}">selected</c:if>>제목</option>
+					<option value="CART_INCARTDATE">담은날짜</option>
+				</c:when>				
+				<c:when test="${searchMap.searchOption == 'MOVIE_NO_TITLE'}">
 					<option value="all">감독+제목</option>
-					<option value="MOVIE_DIRECTOR">감독</option>
-					<option value="MOVIE_TITLE"<c:if test="${searchMap.searchOption eq 'MOVIE_TITLE'}">selected</c:if>>제목</option>
+					<option value="MOVIE_NO_TITLE">제목</option>					
+					<option value="CART_INCARTDATE"<c:if test="${searchMap.searchOption eq 'MOVIE_DIRECTOR'}">selected</c:if>>담은날짜</option>
 				</c:when>				
 			</c:choose>
 		</select>
@@ -205,8 +218,127 @@ th {
 		
 	</div>
 	</div>
+	<jsp:include page="/WEB-INF/views/PopUp/CartBuyPop.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/Tail.jsp"/>
 	
 </body>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<script type="text/javascript">
+//선택항목,합계 보여주기
+var htmlStr = $('#cartSelCount').val();
+$('#cartSelCountView').html(htmlStr);
+	htmlStr = $('#cartSelPrice').val();
+	htmlStr = comma(htmlStr);
+$('#cartSelPriceView').html(htmlStr);
+	//다른작업시 넣을 Fnc
+	function selViewRefresh() {
+		var htmlStr = $('#cartSelCount').val();
+		$('#cartSelCountView').html(htmlStr);
+			htmlStr = $('#cartSelPrice').val();
+			htmlStr = comma(htmlStr);
+		$('#cartSelPriceView').html(htmlStr);
+	};
 
+//선택항목구매하기 모달창띄우기
+var buyCartSelBtn = document.getElementById("buyCartSelBtn");
+var popup_layerObj = document.getElementById("popup_layer");
+
+buyCartSelBtn.addEventListener("click", function(e) {
+	var cartSelCount = document.getElementById("cartSelCount");
+	if (cartSelCount.value == 0) {
+		e.preventDefault();
+		alert("선택하신항목이 없습니다.")
+	}else{
+		var htmlStr = $('#cartSelCount').val() -1;
+		$('#selCountMinOne').html(htmlStr);
+		htmlStr = $('#cartSelPrice').val();
+		htmlStr = comma(htmlStr);
+		$('#selPrice').html(htmlStr);
+		htmlStr = $('#popViewUserCash').text();
+		htmlStr = comma(htmlStr);
+		$('#popViewUserCash').html(htmlStr);
+		popup_layer.style.visibility = "visible";
+	}
+});
+	//선택항목 구매 submit
+	var buyBtn = document.getElementById("buyBtn");
+	buyBtn.addEventListener("click", function(e) {
+		$('#buyCartSelectForm').attr("action", "cart/cartBuy.do");
+		$('#buyCartSelectForm').submit();
+	});
+	
+//선택항목 제외
+	var delCartSelBtn = document.getElementById("delCartSelBtn");
+	delCartSelBtn.addEventListener("click", function(e) {
+		//cartList중 세션userNo 의 cartDto 제거 후 redirect:장바구니
+		$("input[id^='cartSelCN']").attr("name", "movieNo");
+// 		$('#buyCartSelectForm').attr("action", "cart/cartDelete.do");
+// 		$('#buyCartSelectForm').submit();
+	});
+	
+//체크박스 선택
+	var count = 0;
+	var sumPrice = 0;
+	
+	$("input[id^='cartSelCN']").bind('change', function(){
+		if ($(this).is(':checked')) {
+			sumPrice += parseInt($(this).parent().siblings("td[id^='cartPsel']").text());
+			count++;
+		}else{
+			sumPrice -= parseInt($(this).parent().siblings("td[id^='cartPsel']").text());
+			count--;
+		}
+		$('#cartSelCount').val(count);
+		$('#cartSelPrice').val(sumPrice);
+		selViewRefresh();
+	});
+//체크박스 전체선택
+	var countAll = $("input[id^='cartSelCN']").length;
+	var sumPriceAll =0;
+	$("td[id^='cartPsel']").each(function() {
+		sumPriceAll += parseInt($(this).text());
+	});
+	
+$('#allck').change(function() {
+	if ($(this).is(':checked')) {
+		$("input[id^='cartSelCN']").prop('checked',true);
+		count = countAll;
+		sumPrice = sumPriceAll;
+	}else {
+		$("input[id^='cartSelCN']").prop('checked',false);
+		count = 0;
+		sumPrice = 0;
+	}
+	$('#cartSelCount').val(count);
+	$('#cartSelPrice').val(sumPrice);
+	selViewRefresh();
+});
+
+
+
+// 숫자 콤마 포멧터
+	function comma(str) {
+        str = String(str);
+        return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+    }
+
+    function uncomma(str) {
+        str = String(str);
+        return str.replace(/[^\d]+/g, '');
+    } 
+    
+    function inputNumberFormat(obj) {
+        obj.value = comma(uncomma(obj.value));
+    }
+    
+    function inputOnlyNumberFormat(obj) {
+        obj.value = onlynumber(uncomma(obj.value));
+    }
+    
+    function onlynumber(str) {
+	    str = String(str);
+	    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1');
+	}
+
+</script>
 </html>

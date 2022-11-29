@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.movieyo.refund.service.RefundService;
+import com.movieyo.user.dto.UserDto;
 import com.movieyo.util.Paging;
 
 @Controller
@@ -32,8 +35,14 @@ public class RefundController {
 			, method = {RequestMethod.GET, RequestMethod.POST})
 	public String refundList(@RequestParam(defaultValue = "1") int curPage, Model model,
 			@RequestParam(defaultValue = "all")String searchOption
-		  , @RequestParam(defaultValue = "")String keyword,
-			int userNo) {
+		  , @RequestParam(defaultValue = "")String keyword
+		  , HttpSession session
+		  , int userNo) {
+		
+		UserDto userDto = (UserDto)session.getAttribute("userDto");
+		
+		//userAdmin을 통해 환불내역 조회
+		int userAdmin = userDto.getUserAdmin();
 		
 		logger.info("Welcome RefundController refundList! curPage: {}" + ", searchOption: {}"
 				, curPage, searchOption);		
@@ -50,7 +59,7 @@ public class RefundController {
 		int end = refundPaging.getPageEnd();
 		
 		List<Map<String, Object>> listMap 
-			= refundService.refundSelectList(searchOption, keyword, start, end, userNo);
+			= refundService.refundSelectList(searchOption, keyword, start, end, userNo, userAdmin);
 		
 		//sql 페이징 쿼리실행결과 + 토탈카운트를 담아서 멤버리스트와 같이 모델에 담아준다
 		//map을 활용하면 다양한 데이터를 쉽게 객체를 만들 수 있다
@@ -73,22 +82,27 @@ public class RefundController {
 		
 		List<Map<String, Object>> refundListMap = new ArrayList<Map<String,Object>>();
 		
-		System.out.println(listMap);
-		
 		for (int i = 0; i < listMap.size(); i++) {
 			Map<String, Object> refundMap = new HashMap<String, Object>();
 			
+			int refundNo = Integer.parseInt(String.valueOf(listMap.get(i).get("REFUND_NO")));
+			int movieNo = Integer.parseInt(String.valueOf(listMap.get(i).get("MOVIE_NO")));
 			String movieTitle = (String)listMap.get(i).get("MOVIE_TITLE");
 			int moviePrice = Integer.parseInt(String.valueOf(listMap.get(i).get("MOVIE_PRICE")));
 			Date buyDate = (Date)listMap.get(i).get("BUY_DATE");
 			Date refundDate = (Date)listMap.get(i).get("REFUND_DATE");
 			String refundStatus = (String)listMap.get(i).get("REFUND_STATUS");
+			int refundUserNo = Integer.parseInt(String.valueOf(listMap.get(i).get("USER_NO")));
 			
 			refundMap.put("moviePrice", moviePrice);
 			refundMap.put("movieTitle", movieTitle);
 			refundMap.put("refundStatus", refundStatus);
 			refundMap.put("refundDate", refundDate);		
-			refundMap.put("buyDate", buyDate);		
+			refundMap.put("buyDate", buyDate);
+			refundMap.put("refundNo", refundNo);
+			refundMap.put("movieNo", movieNo);
+			refundMap.put("refundUserNo", refundUserNo);
+			refundMap.put("userNo", userNo);
 			
 			refundListMap.add(refundMap);			
 			
@@ -99,6 +113,23 @@ public class RefundController {
 		model.addAttribute("searchMap", searchMap);
 		
 		return "refund/RefundListView";
+	}
+	
+	//구매내역에서 환불버튼 누르면 해당 번호가 환불내역에 쌓임
+	@RequestMapping(value = "/refund/addRefund.do", method = RequestMethod.GET)
+	public String addRefund(Model model, HttpSession session, int buyNo, int userNo) {
+		
+			int chk = refundService.refundExist(buyNo, userNo);
+			System.out.println(chk + "와와와와");
+			if(chk == 0) {
+				System.out.println("여기탔니?");
+				refundService.refundInsertOne(buyNo, userNo);
+			}else {
+				System.out.println("이프문 타는지 확인");
+				return "redirect:./list.do";				
+			}
+
+		return "redirect:./list.do?userNo=" +  userNo;
 	}
 	
 }

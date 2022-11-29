@@ -23,6 +23,19 @@ public interface BoardService {
 
 	public void boardViewCount(int boardNo) throws Exception;
 
+	void boardRemoveOne(int boardNo) throws Exception;
+
+	public void boardCountUp(int boardNo);
+
+	public void updateBoard(BoardDto boardDto) throws Exception;
+
+	public void boardDeleteOne(int boardNo);
+
+//	public void boardUpdate(BoardDto boardDto);
+
+	
+
+
 	
 
 

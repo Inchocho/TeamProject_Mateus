@@ -87,11 +87,9 @@ th {
 		
 		movieDatailCurPageObj.value = document.getElementById("curPage").value;
 		
-		var str = "movieDetailForm" + index;
+		var formId = "movieDetailForm" + index;
 		
-		console.log(str);		
-		
-		var movieDetailFormObj = document.getElementById(str);
+		var movieDetailFormObj = document.getElementById(formId);
 		
 		movieDetailFormObj.submit();
 		
@@ -128,15 +126,16 @@ th {
 					<input type="hidden" name="searchOption" value="${searchMap.searchOption}">
 				</form>
 			</td>
-			<td>장르</td>
+			<td>${movieDto.genreName}</td>
 			<td>
 				${movieDto.director}
 			</td>
 			<td>
-				작성자
+				${movieDto.registrant}
 			</td>
 			
-			<td>${movieDto.creDate}</td>
+			<td><fmt:formatDate pattern="yyyy-MM-dd"
+								value="${movieDto.creDate}" /></td>
 		</tr>
 		</c:forEach>
 		</c:if>

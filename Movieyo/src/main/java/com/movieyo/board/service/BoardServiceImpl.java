@@ -67,16 +67,44 @@ public class BoardServiceImpl implements BoardService {
 		boardDao.boardViewCount(boardNo);
 	}
 
+	@Override
+	public void boardRemoveOne(int boardNo) throws Exception {
+		// TODO Auto-generated method stub
+		boardDao.boardRemoveOne(boardNo);
+	}
 
-    
+	@Override
+	public void boardCountUp(int boardNo) {
+		// TODO Auto-generated method stub
+		boardDao.boardCountUp(boardNo);
+	}
+
+//	@Override
+//	public void boardUpdate(BoardDto boardDto) {
+//		// TODO Auto-generated method stub
+//		boardDao.boardUpdate(boardDto);
+//	}
 
 	
 
+		
+	
 
+	@Override
+	public void updateBoard(BoardDto boardDto) throws Exception {
+		// TODO Auto-generated method stub
+		boardDao.updateBoard(boardDto);
+		
+	}
+
+	@Override
+	public void boardDeleteOne(int boardNo) {
+		// TODO Auto-generated method stub
+		boardDao.boardDeleteOne(boardNo);
+	}
 
 	
 
 	
-
-
+	
 }

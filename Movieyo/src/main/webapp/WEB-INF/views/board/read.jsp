@@ -19,7 +19,7 @@
 
 
 
-<p><label>글번호</label> <input type="text" name ="bno" value ="${boardDto.boardNo}" readonly="readonly"></p>
+<p><label>글번호</label> <input type="text" name ="no" value ="${boardDto.boardNo}" readonly="readonly"></p>
 
 <p><label>제목</label> <input type="text" name ="title" style="background-color:#B0E0E6;" value ="${boardDto.boardTitle}" readonly="readonly"></p>
 

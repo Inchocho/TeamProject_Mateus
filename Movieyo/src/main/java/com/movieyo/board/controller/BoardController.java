@@ -9,11 +9,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.movieyo.board.dao.BoardDao;
 import com.movieyo.board.dto.BoardDto;
 import com.movieyo.board.service.BoardService;
 import com.movieyo.util.Paging;
@@ -93,8 +93,36 @@ public class BoardController {
 		return "board/boardList";
 	}
 
+	// 게시글 상세 화면으로
 	@RequestMapping(value = "/board/one.do", method = RequestMethod.GET)
-	public String boardOne(int boardNo, Model model, @RequestParam(defaultValue = "1") int curPage,
+	public String boardOne(int boardNo, int curPage, String searchOption, String keyword, Model model) {
+//		logger.info("Welcome boardOne! enter - {}" + no);
+
+		System.out.println("상세보기 1");
+
+		Map<String, Object> map = boardService.boardSelectOne(boardNo);
+
+		BoardDto boardDto = (BoardDto) map.get("boardDto");
+		List<Map<String, Object>> fileList = (List<Map<String, Object>>) map.get("fileList");
+
+		boardService.boardCountUp(boardNo);
+
+		Map<String, Object> prevMap = new HashMap<>();
+		prevMap.put("curPage", curPage);
+		prevMap.put("searchOption", searchOption);
+		prevMap.put("keyword", keyword);
+
+		model.addAttribute("boardDto", boardDto);
+		model.addAttribute("fileList", fileList);
+		model.addAttribute("prevMap", prevMap);
+
+		return "board/boardOneView";
+	}
+
+	
+
+	@RequestMapping(value = "/board/update.do")
+	public String boardUpdate(int boardNo, Model model, @RequestParam(defaultValue = "1") int curPage,
 			@RequestParam(defaultValue = "all") String searchOption, @RequestParam(defaultValue = "") String keyword) {
 
 		Map<String, Object> map = boardService.boardSelectOne(boardNo);
@@ -104,21 +132,50 @@ public class BoardController {
 		searchMap.put("searchOption", searchOption);
 		searchMap.put("keyword", keyword);
 		searchMap.put("curPage", curPage);
-		try {
-			boardService.boardViewCount(boardNo);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 		List<Map<String, Object>> fileList = (List<Map<String, Object>>) map.get("fileList");
 
 		model.addAttribute("boardDto", boardDto);
 		model.addAttribute("fileList", fileList);
 		model.addAttribute("searchMap", searchMap);
 
-		return "board/boardOneView";
+		return "board/boardUpdateForm";
 	}
 
-	
-	
+	@RequestMapping(value = "/board/updateCtr.do", method = RequestMethod.POST)
+	public String boardUpdateCtr(HttpSession session, BoardDto boardDto, Model model) {
+		// email.password 네임값을 가져옴(@RequestMapping의 힘)
+
+		boardService.boardUpdateOne(boardDto);
+
+		return "redirect:/board/list.do";
+	}
+
+	@RequestMapping(value = "/board/deleteCtr.do", method = RequestMethod.GET)
+	public String boardDelete(int boardNo, HttpSession session, Model model) {
+
+		boardService.boardDeleteOne(boardNo);
+
+		return "redirect:/board/list.do";
+	}
+
+
+
+	// 회원수정 화면으로
+	@RequestMapping(value = "board/updateBoard.do", method = RequestMethod.GET)
+	public String updateBoard(BoardDto boardDto) throws Exception {
+
+//		 	BoardDto boardDto = new BoardDto();
+
+		System.out.println(boardDto);
+//		 	boardDto.setBoardTitle(boardTitle);
+//			boardDto.setBoardContent(boardContent);
+//			boardDto.setBoardNo(boardNo);
+
+//			System.out.println("제목" + boardTitle + "내용" + boardContent + "게시판번호" + boardNo);
+
+		boardService.updateBoard(boardDto);
+		return "board/boardUpdateForm";
+	}
+
 }

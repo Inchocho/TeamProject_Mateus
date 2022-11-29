@@ -32,19 +32,14 @@ public class BuyDaoImpl implements BuyDao{
 
 	@Override
 	public List<Map<String, Object>> buySelectList(String searchOption, String keyword, int start, int end,
-			int userNo) {
+			int userNo, int userAdmin) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		
-		System.out.println(searchOption + "서치옵션DD");
-		System.out.println(keyword + "키워드DD");
-		System.out.println(start + "페이지시작DD");
-		System.out.println(end + "페이지엔드DD");		
-		System.out.println(userNo + "유저번호DD");
 		
 		map.put("searchOption", searchOption);
 		map.put("keyword", keyword);		
 		map.put("userNo", userNo);
+		map.put("userAdmin", userAdmin);	// --> 세션에서 유저어드민을 가져와서 관리자 확인
 		map.put("start", start);
 		map.put("end", end);
 		
@@ -52,11 +47,21 @@ public class BuyDaoImpl implements BuyDao{
 	}
 
 	@Override
-	public Object buyInsertOne(BuyDto buyDto) {
+	public void buyInsertOne(BuyDto buyDto) {
 		// TODO Auto-generated method stub
-		return sqlSession.insert(namespace + "buyInsertOne", buyDto);
+		sqlSession.insert(namespace + "buyInsertOne", buyDto);
 	}
 
+	@Override
+	public BuyDto buyExist(int userNo, int movieNo) {
+		// TODO Auto-generated method stub
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userNo", userNo);
+		map.put("movieNo", movieNo);
+		
+		return sqlSession.selectOne(namespace + "buyExist", map);
+	}
 
 	
 }

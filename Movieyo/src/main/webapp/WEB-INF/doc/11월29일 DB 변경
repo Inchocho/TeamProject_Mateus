@@ -1,0 +1,9 @@
+-- 장바구니
+DROP TABLE MVY_CART;
+
+CREATE TABLE MVY_CART(
+    CART_NO NUMBER PRIMARY KEY, -- 기본키
+    USER_NO NUMBER NOT NULL,             -- 유저번호 외래키1 (유저) MVY_USER테이블의 USER_NO
+    MOVIE_NO NUMBER NOT NULL,             -- 영화번호 외래키2 (상품) MVY_MOVIE테이블의 MOVIE_NO
+    CATR_INCARTDATE DATE DEFAULT SYSDATE
+);

@@ -1,6 +1,10 @@
 package com.movieyo.board.dao;
 
 import java.util.List;
+import java.util.Map;
+
+import org.springframework.ui.Model;
+
 import com.movieyo.board.dto.BoardDto;
 
 public interface BoardDao {
@@ -17,6 +21,25 @@ public interface BoardDao {
 
 	public void boardViewCount(int boardNo) throws Exception;
 
+	public int boardRemoveOne(int boardNo) throws Exception;
+
+	public void boardCountUp(int boardNo);
+	
+	public void updateBoard(BoardDto boardDto) throws Exception;
+
+	public void boardDeleteOne(int boardNo);
+
+	
+
+	
+	
+//	public int boardUpdate(BoardDto boardDto);
+	
+
+
+	
+
+	
 	
 	
 	

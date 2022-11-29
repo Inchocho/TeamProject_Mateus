@@ -28,11 +28,12 @@
 	</sql>
 
 
-
-	<delete id="boardDeleteOne" parameterType="int">
-		DELETE FROM MVY_BOARD
-		WHERE BOARD_NO = #{BOARD_NO}
-	</delete>
+<!-- 게시글 삭제 -->
+	 <delete id="delete" parameterType="map">
+        DELETE FROM MVY_BOARD 
+        WHERE BOARD_NO = #{boardNo}
+    </delete>
+    
 <!-- 	게시글 추가 -->
     <insert id="boardInsertOne" parameterType="boardDto" useGeneratedKeys="true" keyProperty="boardNo">
     
@@ -55,22 +56,54 @@
 				, BOARD_CONTENT, BOARD_CREDATE, BOARD_MODDATE, BOARD_COUNT
 	         	   	   FROM MVY_BOARD	
 	         	   	   <include refid="search"></include>
-			           ORDER BY BOARD_NO ASC) B
+			           ORDER BY BOARD_NO DESC) B
       				) BD
 		WHERE BD.RNUM BETWEEN #{start} AND #{end}
 	</select>
 	
-   <!-- 	게시글 총갯수 -->
+    <!-- 	게시글 총갯수 -->
 	<select id="boardSelectTotalCount" resultType="java.lang.Integer" parameterType="map">
 		SELECT COUNT(*)
-		FROM MVY_BOARD
+		FROM MVY_board
 		<include refid="search"></include>
 	</select>
+	<!-- 	게시글 전체 선택 -->
+	<select id="selectAll" resultType="BoardDto">
+        SELECT BOARD_NO, BOARD_title, BOARD_content, BOARD_, BOARD_CREDATE, BOARD_COUNT
+        FROM MVY_BOARD
+        ORDER BY BOARD_CREDATE DESC, BOARD_NO DESC
+	</select>
 	
-	
-	<update id="boardViewCount" parameterType="int">
+
+    <!-- 	게시물 조회수 -->
+    <update id="boardCountUp" parameterType="int">
+    	UPDATE MVY_BOARD
+    	SET BOARD_COUNT = BOARD_COUNT + 1
+    	WHERE BOARD_NO = #{boardNo}
+    </update>
+    
+	<select id="boardSelectOne" parameterType="int" 
+		resultMap="boardResultMap">
+		SELECT *  
+		FROM MVY_BOARD
+		WHERE BOARD_NO = #{boardNo} 
+	</select>
+<!-- 	게시물 수정 -->
+	<update id="updateBoard" parameterType="map">
         UPDATE MVY_BOARD
-        SET   BOARD_COUNT = BOARD_COUNT + 1
+        SET   BOARD_TITLE = #{boardTitle}, BOARD_CONTENT = #{boardContent}, BOARD_CREDATE = SYSDATE
         WHERE BOARD_NO = #{boardNo}
     </update>
+
+<!-- 	<update id="updateBoard" parameterType="boardDto"> -->
+<!-- 		UPDATE MVY_BOARD -->
+<!-- 		<set> -->
+<!-- 			<if test="boardNo != ''">BOARD_NO = #{boardNo},</if> -->
+<!-- 			<if test="boardTitle != ''">BOARD_TITLE = #{boardTitle},</if>  -->
+<!-- 			<if test="boardContent	 != ''">BOARD_CONTENT = #{boardContent},</if> -->
+<!-- 			MOD_DATE = SYSDATE -->
+<!-- 		</set> -->
+<!-- 		WHERE BOARD_NO = #{boardNo} -->
+<!-- 	</update> -->
+	
 </mapper>

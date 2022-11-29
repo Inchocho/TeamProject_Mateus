@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>게시판</title>
+<title>게시판리스트</title>
 
 <style type="text/css">
 table, tr, td, th {
@@ -28,6 +28,9 @@ table {
 }
 boardCredate{
  border-collapse: col
+}
+#searchFrm{
+	margin-left: 552px;
 }
 </style>
 
@@ -81,7 +84,7 @@ boardCredate{
 					<tr>
 						<td>${boardDto.boardNo}</td>
 						<td>
-							<form id='boardDetailForm' action="./board.do" method="get">
+							<form id='boardDetailForm' action="./one.do" method="get">
 								<a href='#' onclick="pageMoveBoardDetailFnc();">
 									${boardDto.boardTitle} </a> 
 									<input type="hidden" name="boardNo" value="${boardDto.boardNo}"> 
@@ -92,15 +95,40 @@ boardCredate{
 							</form>
 						</td>
 						<td>${boardDto.boardContent}</td>
-						<td><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss"
+						<td class="boardCredate"><fmt:formatDate pattern="	yyyy-MM-dd hh:mm:ss"
 								value="${boardDto.boardCredate}" /></td>
-						<td>${boardDto.boardCount}</td>
+						<td class="boardCount">${boardDto.boardCount}</td>
 					</tr>
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
 
 	</table>
+<form action="./boardList.do" method="post" id="searchFrm">
+		<select id="searchOptionSel" name="searchOption">
+			<c:choose>
+				<c:when test="${searchMap.searchOption == 'all'}">
+					<option value="all" selected="selected">글번호+글제목</option>
+					<option value="boNo">글번호</option>
+					<option value="title">제목</option>
+				</c:when>
+				<c:when test="${searchMap.searchOption == 'bNo'}">
+					<option value="all">글번호+글제목</option>
+					<option value="boNo" selected="selected">글번호</option>
+					<option value="boTitle">글제목</option>
+				</c:when>
+				<c:when test="${searchMap.searchOption == 'boTitle'}">
+					<option value="all">글번호+글제목</option>
+					<option value="boNo" >글번호</option>
+					<option value="boTitle" selected="selected">글제목</option>
+				</c:when>
+			</c:choose>
+		</select>
+		<input type="text"  name="keyword" value="${searchMap.keyword}" placeholder="검색">
+	
+		<input type="submit" value="검색">
+	</form>
+
 
 	<!-- jsp:include는 forward처럼 데이터를 유지시킨다 -->
 	<jsp:include page="/WEB-INF/views/common/Paging.jsp"/>
