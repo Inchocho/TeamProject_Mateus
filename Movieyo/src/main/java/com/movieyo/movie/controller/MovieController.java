@@ -171,11 +171,18 @@ public class MovieController {
 		}
 		
 		@RequestMapping(value = "/movie/updateCtr.do", method = RequestMethod.POST)
-		public String movieUpdateCtr(HttpSession session, MovieDto movieDto, Model model)  {
+		public String movieUpdateCtr(HttpSession session,
+				MultipartHttpServletRequest mulRequest,
+				MovieDto movieDto, Model model)  {
 		                     // email.password 네임값을 가져옴(@RequestMapping의 힘)
 		    logger.info("Welcome movieController movieUpdateCtr!" + movieDto);
 		      
-		    movieService.movieUpdateOne(movieDto);
+		    try {
+				movieService.movieUpdateOne(movieDto,mulRequest);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		      
 		    return "redirect:/movie/list.do";
 		}

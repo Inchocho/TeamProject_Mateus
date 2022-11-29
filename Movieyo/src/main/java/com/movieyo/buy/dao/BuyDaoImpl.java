@@ -53,11 +53,21 @@ public class BuyDaoImpl implements BuyDao{
 	}
 
 	@Override
-	public Object buyInsertOne(BuyDto buyDto) {
+	public void buyInsertOne(BuyDto buyDto) {
 		// TODO Auto-generated method stub
-		return sqlSession.insert(namespace + "buyInsertOne", buyDto);
+		sqlSession.insert(namespace + "buyInsertOne", buyDto);
 	}
 
+	@Override
+	public BuyDto buyExist(int userNo, int movieNo) {
+		// TODO Auto-generated method stub
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userNo", userNo);
+		map.put("movieNo", movieNo);
+		
+		return sqlSession.selectOne(namespace + "buyExist", map);
+	}
 
 	
 }

@@ -12,8 +12,33 @@
 img{
  width: 250px;
  height: 360px;
-
 }
+
+.file input[type="file"] {  /* 파일 필드 숨기기 */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip:rect(0,0,0,0);
+  border: 0;
+}
+
+.file label {
+  display: inline-block;
+  padding: .5em .75em;
+  color: #999;
+  font-size: inherit;
+  line-height: normal;
+  vertical-align: middle;
+  background-color: black;
+  cursor: pointer;
+  border: 1px solid #ebebeb;
+  border-bottom-color: #e2e2e2;
+  border-radius: .25em;
+}
+
 </style>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -48,15 +73,20 @@ img{
 		
 			<c:otherwise>
 				<c:forEach var="row" items="${fileList}">
-					<input type="button" value="이미지" name="file">
-					${row.ORIGINAL_FILE_NAME}(${row.FILE_SIZE}kb)<br>
+<!-- 					<input type="button" value="이미지" name="file"> -->
+<%-- 					${row.ORIGINAL_FILE_NAME}(${row.FILE_SIZE}kb)<br> --%>
 					<img alt="image not found" src="<c:url value='/img/${row.STORED_FILE_NAME}'/>">
 					<br>
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
+		
 	
-	<form action='./updateCtr.do' method='post'>
+	<form action='./updateCtr.do' method='post' enctype="multipart/form-data">
+		<div class="file">
+			<label for="file">사진등록</label>
+			<input type='file' name='file' id="file">
+		</div>
 		<input type="hidden" name="movieNo" value="${movieDto.movieNo}"><br>
 		영화제목: <input type='text' name='movieTitle' 
 			value='${movieDto.movieTitle}'><br>
@@ -88,7 +118,8 @@ img{
 								value="${movieDto.creDate}"/> <br>
 			
 		영화내용 <br>
-		<textarea name="movieStory" style="width: 800px; height: 400px;">${movieDto.movieStory}</textarea>
+		<textarea name="movieStory" style="width: 800px; height: 400px;">${movieDto.movieStory}</textarea><br>
+		
 		<input type='submit' value='저장하기'>
 		<input type="button" value="취소" onclick="">
 	</form>

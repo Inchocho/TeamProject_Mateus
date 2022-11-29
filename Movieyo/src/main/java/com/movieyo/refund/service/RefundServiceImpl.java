@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.movieyo.refund.dao.RefundDao;
+import com.movieyo.refund.dto.RefundDto;
 
 @Service
 public class RefundServiceImpl implements RefundService {
@@ -35,6 +36,12 @@ public class RefundServiceImpl implements RefundService {
 		System.out.println(end + "페이지엔드");
 		
 		return refundDao.refundSelectList(searchOption, keyword, start, end, userNo, userAdmin);
+	}
+
+	@Override
+	public void refundInsertOne(int buyNo, int userNo) {
+		// TODO Auto-generated method stub
+		refundDao.refundInsertOne(buyNo, userNo);
 	}
 
 
