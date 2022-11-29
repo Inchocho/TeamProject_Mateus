@@ -16,7 +16,9 @@
     <sql id="search">
         <choose>
             <when test="searchOption == 'all'">
-                WHERE C.MOVIE_TITLE LIKE '%'||#{keyword}||'%'                
+                WHERE MOVIE_TITLE LIKE '%'||#{keyword}||'%' 
+                OR USER_NICKNAME LIKE '%'||#{keyword}||'%' 
+                OR BUY_STATUS LIKE '%'||#{keyword}||'%'              
             </when>
             <otherwise>
                 WHERE ${searchOption} LIKE '%'||#{keyword}||'%'
@@ -32,32 +34,33 @@
     </sql>
     
 <!-- 	영화수 -->
-	<select id="buySelectTotalCount" resultType="java.lang.Integer" parameterType="map">
-		SELECT COUNT(*) FROM    
-      	  (SELECT A.USER_NICKNAME, B.BUY_DATE, C.MOVIE_TITLE, C.MOVIE_PRICE, B.BUY_STATUS
-            FROM MVY_USER A, 
-            	 MVY_BUY B, 
-            	 MVY_MOVIE C
-        	<include refid="search"></include>                        
-            	AND A.USER_NO = B.USER_NO            
-            	AND B.MOVIE_NO = C.MOVIE_NO
-            	AND A.USER_NO = #{userNo}) M		
+	<select id="buySelectTotalCount" resultType="java.lang.Integer" parameterType="map">			
+		SELECT COUNT(*) 
+		FROM (SELECT A.USER_NICKNAME, B.BUY_DATE, C.MOVIE_TITLE, C.MOVIE_PRICE, B.BUY_STATUS 
+		FROM MVY_USER A, 
+			MVY_BUY B, 
+			MVY_MOVIE C 
+			WHERE A.USER_NO = B.USER_NO 
+			AND B.MOVIE_NO = C.MOVIE_NO
+			<include refid="buyListSearch"></include>) M  
+			<include refid="search"></include>			           
 	</select>	
 	
 	<select id='buySelectList' parameterType='map' resultType='map'>
-	SELECT BUY.USER_NICKNAME, BUY.BUY_DATE, BUY.MOVIE_TITLE, BUY.MOVIE_PRICE, BUY.BUY_STATUS
+	SELECT BUY.USER_NICKNAME, BUY.USER_NO, BUY.BUY_DATE, BUY.MOVIE_TITLE, BUY.MOVIE_PRICE, BUY.BUY_STATUS, BUY.BUY_NO
 	FROM
-		(SELECT ROWNUM RNUM, M.USER_NICKNAME, M.BUY_DATE, M.MOVIE_TITLE, M.MOVIE_PRICE, M.BUY_STATUS
+		(SELECT ROWNUM RNUM, M.USER_NICKNAME, M.USER_NO, M.BUY_DATE, M.MOVIE_TITLE, M.MOVIE_PRICE, M.BUY_STATUS, M.BUY_NO
 			FROM
-			(SELECT A.USER_NICKNAME, B.BUY_DATE, C.MOVIE_TITLE, C.MOVIE_PRICE, B.BUY_STATUS
+			(SELECT A.USER_NICKNAME, A.USER_NO, B.BUY_DATE, C.MOVIE_TITLE, C.MOVIE_PRICE, B.BUY_STATUS, B.BUY_NO
 			FROM MVY_USER A,
 			     MVY_BUY B,
-			     MVY_MOVIE C
-				<include refid="search"></include>
-				AND A.USER_NO = B.USER_NO
+			     MVY_MOVIE C				
+				WHERE A.USER_NO = B.USER_NO
 				AND B.MOVIE_NO = C.MOVIE_NO
 				<include refid="buyListSearch"></include>
-				) M ) BUY
+				) M 
+				<include refid="search"></include>
+				) BUY
 		WHERE BUY.RNUM BETWEEN #{start} AND #{end}
 	</select>	
 	
@@ -66,11 +69,19 @@
 	useGeneratedKeys="true" keyProperty="buyNo">
 		
 		<selectKey keyProperty="buyNo" resultType="int" order="BEFORE">
-			select MVY_BUY_NO_SEQ.NEXTVAL FROM DUAL
+			SELECT MVY_BUY_NO_SEQ.NEXTVAL FROM DUAL
 		</selectKey>
 			INSERT INTO MVY_BUY
-			VALUE(BUY_NO, MOVIE_NO, USER_NO, BUY_DATE, BUY_STATUS)
-			VALUES(#{buyNo}, #{movieNo}, #{userNo}, SYSDATE, '보유중')
+			VALUE(BUY_NO, MOVIE_NO, USER_NO)
+			VALUES(#{buyNo}, #{movieNo}, #{userNo})
 	</insert>		
+	
+	<!-- 구매내역 중복 조회 -->
+	<select id="buyExist" parameterType='map' resultMap="buyResultMap">
+		SELECT BUY_NO, MOVIE_NO, BUY_DATE, BUY_STATUS
+		FROM MVY_BUY
+		WHERE USER_NO = #{userNo}
+		AND MOVIE_NO = #{movieNo}
+	</select>
 
 </mapper>

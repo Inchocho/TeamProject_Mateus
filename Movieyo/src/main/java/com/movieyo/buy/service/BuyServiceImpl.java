@@ -44,6 +44,11 @@ public class BuyServiceImpl implements BuyService {
 		buyDao.buyInsertOne(buyDto);
 	}
 
+	@Override
+	public BuyDto buyExist(int userNo, int movieNo) {
+		// TODO Auto-generated method stub
+		return buyDao.buyExist(userNo, movieNo);
+	}
 
 	
 }

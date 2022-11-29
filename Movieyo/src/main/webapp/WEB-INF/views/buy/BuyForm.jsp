@@ -16,11 +16,11 @@
 	<jsp:include page="../Header.jsp"/>
 	
 	<form action="./addCtr.do" method="post" id='submitForm'>		
-		구매번호:	<input type="text" name='buyNo'><br>
-		영화번호: <input type="text" name='movieNo'><br>
-		유저번호: <input type="text" name='userNo' value='${userDto.userNo}'><br>
-		구매일자: <input type="text" name='buyDate'><br>
-		구매상태: <input type='text' name='buyStatus'><br>
+		구매번호:	<input type="hidden" name='buyNo' value='1'><br>
+		영화번호: <input type="hidden" name='movieNo' value='1'><br>
+		유저번호: <input type="hidden" name='userNo' value='${userDto.userNo}'><br>
+		구매일자: <input type="hidden" name='buyDate' value=''><br>
+		구매상태: <input type="hidden" name='buyStatus' value=''><br>
 		<input type='submit' value='추가' id='submitBtn'>				
 	</form>	
 

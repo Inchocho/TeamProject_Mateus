@@ -13,5 +13,6 @@ public interface BuyService {
 
 	public void buyInsertOne(BuyDto buyDto);
 
+	public BuyDto buyExist(int userNo, int movieNo);	  
 
 }

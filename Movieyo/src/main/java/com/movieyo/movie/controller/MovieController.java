@@ -146,7 +146,7 @@ public class MovieController {
 			return "movie/MovieOneView";
 		}
 		
-		@RequestMapping(value="/movie/update.do")
+		@RequestMapping(value="/movie/update.do", method = RequestMethod.POST)
 		public String movieUpdate(int movieNo, Model model
 				, @RequestParam(defaultValue = "1") int curPage
 				, @RequestParam(defaultValue = "all")String searchOption

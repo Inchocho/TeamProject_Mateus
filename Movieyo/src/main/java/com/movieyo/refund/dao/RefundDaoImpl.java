@@ -8,6 +8,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.movieyo.refund.dto.RefundDto;
+
 @Repository
 public class RefundDaoImpl implements RefundDao{
 
@@ -49,5 +51,16 @@ public class RefundDaoImpl implements RefundDao{
 		map.put("end", end);
 		
 		return sqlSession.selectList(namespace + "refundSelectList", map);
+	}
+
+
+	@Override
+	public void refundInsertOne(int buyNo, int userNo) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String,Object>();
+		map.put("buyNo", buyNo);
+		map.put("userNo", userNo);
+		
+		sqlSession.insert(namespace + "refundInsertOne", map);
 	}
 }

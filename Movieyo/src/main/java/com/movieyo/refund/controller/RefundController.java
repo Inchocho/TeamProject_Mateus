@@ -82,11 +82,11 @@ public class RefundController {
 		
 		List<Map<String, Object>> refundListMap = new ArrayList<Map<String,Object>>();
 		
-		System.out.println(listMap);
-		
 		for (int i = 0; i < listMap.size(); i++) {
 			Map<String, Object> refundMap = new HashMap<String, Object>();
 			
+			int refundNo = Integer.parseInt(String.valueOf(listMap.get(i).get("REFUND_NO")));
+			int movieNo = Integer.parseInt(String.valueOf(listMap.get(i).get("MOVIE_NO")));
 			String movieTitle = (String)listMap.get(i).get("MOVIE_TITLE");
 			int moviePrice = Integer.parseInt(String.valueOf(listMap.get(i).get("MOVIE_PRICE")));
 			Date buyDate = (Date)listMap.get(i).get("BUY_DATE");
@@ -97,7 +97,10 @@ public class RefundController {
 			refundMap.put("movieTitle", movieTitle);
 			refundMap.put("refundStatus", refundStatus);
 			refundMap.put("refundDate", refundDate);		
-			refundMap.put("buyDate", buyDate);		
+			refundMap.put("buyDate", buyDate);
+			refundMap.put("refundNo", refundNo);
+			refundMap.put("movieNo", movieNo);
+			refundMap.put("userNo", userNo);
 			
 			refundListMap.add(refundMap);			
 			
@@ -109,5 +112,15 @@ public class RefundController {
 		
 		return "refund/RefundListView";
 	}
+	
+	//구매내역에서 환불버튼 누르면 해당 번호가 환불내역에 쌓임
+	@RequestMapping(value = "/refund/addRefund.do", method = RequestMethod.GET)
+	public String addRefund(Model model, HttpSession session, int buyNo, int userNo) {
+		
+		refundService.refundInsertOne(buyNo, userNo);
+		
+		return "redirect:./list.do?userNo=" +  userNo;
+	}
+		
 	
 }

@@ -29,6 +29,8 @@
 		<form action="./passwordUpdateCtr.do" method="post">
 			번호: <input type="text" name='userNo'
 			value='${userDto.userNo}' readonly="readonly"><br>
+			비밀번호: <input type="text" value="${userDto.password}">
+			${userDto.password}ㅁㅁㅁㅁ
 			<input type="password" placeholder="현재비밀번호:"><br>
 			<input type="password" name="password" placeholder="변경할 비밀번호:"><br>
 			<input type="password" placeholder="비밀번호 확인:"><br>
