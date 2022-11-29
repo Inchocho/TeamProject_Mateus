@@ -92,6 +92,7 @@ public class RefundController {
 			Date buyDate = (Date)listMap.get(i).get("BUY_DATE");
 			Date refundDate = (Date)listMap.get(i).get("REFUND_DATE");
 			String refundStatus = (String)listMap.get(i).get("REFUND_STATUS");
+			int refundUserNo = Integer.parseInt(String.valueOf(listMap.get(i).get("USER_NO")));
 			
 			refundMap.put("moviePrice", moviePrice);
 			refundMap.put("movieTitle", movieTitle);
@@ -100,6 +101,7 @@ public class RefundController {
 			refundMap.put("buyDate", buyDate);
 			refundMap.put("refundNo", refundNo);
 			refundMap.put("movieNo", movieNo);
+			refundMap.put("refundUserNo", refundUserNo);
 			refundMap.put("userNo", userNo);
 			
 			refundListMap.add(refundMap);			
@@ -117,10 +119,17 @@ public class RefundController {
 	@RequestMapping(value = "/refund/addRefund.do", method = RequestMethod.GET)
 	public String addRefund(Model model, HttpSession session, int buyNo, int userNo) {
 		
-		refundService.refundInsertOne(buyNo, userNo);
-		
+			int chk = refundService.refundExist(buyNo, userNo);
+			System.out.println(chk + "와와와와");
+			if(chk == 0) {
+				System.out.println("여기탔니?");
+				refundService.refundInsertOne(buyNo, userNo);
+			}else {
+				System.out.println("이프문 타는지 확인");
+				return "redirect:./list.do";				
+			}
+
 		return "redirect:./list.do?userNo=" +  userNo;
 	}
-		
 	
 }

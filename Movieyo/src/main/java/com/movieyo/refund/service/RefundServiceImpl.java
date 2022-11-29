@@ -30,11 +30,6 @@ public class RefundServiceImpl implements RefundService {
 	public List<Map<String, Object>> refundSelectList(String searchOption, String keyword
 			, int start, int end, int userNo, int userAdmin) {
 		// TODO Auto-generated method stub
-		System.out.println(searchOption + "서치옵션");
-		System.out.println(keyword + "키워드");
-		System.out.println(start + "페이지시작");
-		System.out.println(end + "페이지엔드");
-		
 		return refundDao.refundSelectList(searchOption, keyword, start, end, userNo, userAdmin);
 	}
 
@@ -42,6 +37,12 @@ public class RefundServiceImpl implements RefundService {
 	public void refundInsertOne(int buyNo, int userNo) {
 		// TODO Auto-generated method stub
 		refundDao.refundInsertOne(buyNo, userNo);
+	}
+
+	@Override
+	public int refundExist(int buyNo, int userNo) {
+		// TODO Auto-generated method stub
+		return refundDao.refundExist(buyNo, userNo);
 	}
 
 

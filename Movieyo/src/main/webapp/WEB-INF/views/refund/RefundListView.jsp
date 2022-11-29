@@ -23,6 +23,7 @@
 			<th>신청일</th>
 			<th>상태</th>
 			<c:if test="${userDto.userAdmin == 1}">	<!-- 관리자가 유저환불내역을 허가함 -->
+			<th>유저번호</th>	
 			<th>환불허가</th>
 			</c:if>
 		</tr>
@@ -47,6 +48,9 @@
 				${refundMap.refundStatus}
 			</td>
 			<c:if test="${userDto.userAdmin == 1}">	<!-- 관리자가 유저환불내역을 허가함 -->
+			<td>
+				${refundMap.refundUserNo}
+			</td>						
 				<td>			
 				<form id="refundAdmit${status.index}" action="../refund/admitRefund.do" method="GET">					
 					<a href="#" onclick="admitRefund(${status.index});">					

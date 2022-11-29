@@ -7,6 +7,17 @@
 <head>
 <meta charset="UTF-8">
 <script type="text/javascript">
+	$(function(){
+		$('#rBtn').on('click',function(event){
+			$('input[name=rBtn]').prop('type', 'text');
+			$('input[name=rBtn]').val('처리중');
+		});
+	});
+	
+	$('input').on('click', function () {
+		   $(this).prop('type', 'text');
+	});	
+	
 	function buyAdd() {
 		location.href = '../buy/addBuy.do'
 	}
@@ -39,10 +50,13 @@
 
 	<table>
 		<tr>
-			<th>영화제목</th><th>가격</th><th>구매일</th><th>상태</th><th>환불상태</th>
+			<th>영화제목</th><th>가격</th><th>구매일</th><th>상태</th>
 			<c:if test='${userDto.userAdmin == 1}'>
-				<th>구매자</th>				
+				<th>구매자</th>
+				<th>회원번호</th>	
+				<th>구매번호</th>			
 			</c:if>			
+			<th>환불</th>
 		</tr>
 		
 
@@ -60,11 +74,17 @@
 			</td>
 			<td>
 				${buyMap.buyStatus}
-			</td>		
+			</td>			
+			<c:if test='${userDto.userAdmin == 1}'>
+				<td>${buyMap.userNickName}</td>
+				<td>${buyMap.buyUserNo}</td>
+				<td>${buyMap.buyNo}</td>
+			</c:if>	
 			<td>
 			<form id="refundAddForm${status.index}" action="../refund/addRefund.do" method="GET">					
 				<a href="#" onclick="moveRefund(${status.index});">
-					<input id='rBtn' type='button' value='환불하기'>					
+					<input id='rBtn' name='rBtn' type='button' value='환불하기'
+					onclick="this.value='신청중';$(this).attr('type','text');">					
 				</a>
 				<input type="hidden" name="buyNo" value="${buyMap.buyNo}">
 				<input type='hidden' name='userNo' value="${buyMap.userNo}">
@@ -72,10 +92,7 @@
 				<input type="hidden" name="keyword" value="${searchMap.keyword}">
 				<input type="hidden" name="searchOption" value="${searchMap.searchOption}">
 			</form>						
-			</td>		
-			<c:if test='${userDto.userAdmin == 1}'>
-				<td>${buyMap.userNickName}</td>
-			</c:if>	
+			</td>				
 		</tr>		
 	</c:forEach>
 	

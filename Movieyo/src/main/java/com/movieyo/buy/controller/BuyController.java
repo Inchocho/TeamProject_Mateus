@@ -84,8 +84,6 @@ public class BuyController {
 		
 		List<Map<String, Object>> buyListMap = new ArrayList<Map<String,Object>>();
 		
-//		System.out.println(listMap);
-		
 		for (int i = 0; i < listMap.size(); i++) {
 			Map<String, Object> buyMap = new HashMap<String, Object>();
 			
@@ -95,6 +93,7 @@ public class BuyController {
 			String movieTitle = (String)listMap.get(i).get("MOVIE_TITLE");
 			String buyStatus = (String)listMap.get(i).get("BUY_STATUS");
 			Date buyDate = (Date)listMap.get(i).get("BUY_DATE");
+			int buyUserNo = Integer.parseInt(String.valueOf(listMap.get(i).get("USER_NO")));
 			
 			buyMap.put("moviePrice", moviePrice);
 			buyMap.put("userNickName", userNickName);
@@ -102,6 +101,7 @@ public class BuyController {
 			buyMap.put("buyStatus", buyStatus);
 			buyMap.put("buyDate", buyDate);		
 			buyMap.put("buyNo", buyNo);
+			buyMap.put("buyUserNo", buyUserNo);
 			buyMap.put("userNo", userNo);
 			
 			buyListMap.add(buyMap);			
@@ -120,8 +120,6 @@ public class BuyController {
 		
 		UserDto userDto = (UserDto)session.getAttribute("userDto");
 		
-		System.out.println(userDto);
-		
 		model.addAttribute(userDto);
 		
 		logger.trace("Welcome BuyController buyAdd 구매폼으로 이동!!!");
@@ -137,7 +135,7 @@ public class BuyController {
 			BuyDto buyDto2 = buyService.buyExist(userNo, movieNo);
 			
 			//폼으로 해당정보를 넘기는지 확인
-			System.out.println(buyDto);		
+//			System.out.println(buyDto);		
 			
 			String viewUrl = "";
 		

@@ -72,4 +72,12 @@
 			VALUE(REFUND_NO, USER_NO, BUY_NO)
 			VALUES(#{refundNo}, #{userNo}, #{buyNo})
 	</insert>		
+	
+	<!-- 환불내역이 존재하는지 확인 -->
+	<select id="refundExist" resultType="java.lang.Integer" parameterType="map">
+		SELECT COUNT(REFUND_NO)
+		FROM MVY_REFUND
+		WHERE USER_NO = #{userNo} 
+		AND BUY_NO = #{buyNo}
+	</select>
 </mapper>

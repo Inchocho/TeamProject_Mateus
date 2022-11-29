@@ -13,4 +13,6 @@ public interface RefundDao {
 
 	public void refundInsertOne(int buyNo, int userNo);
 
+	public int refundExist(int buyNo, int userNo);
+
 }

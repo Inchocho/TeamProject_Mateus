@@ -36,12 +36,6 @@ public class BuyDaoImpl implements BuyDao{
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		System.out.println(searchOption + "서치옵션DD");
-		System.out.println(keyword + "키워드DD");
-		System.out.println(start + "페이지시작DD");
-		System.out.println(end + "페이지엔드DD");		
-		System.out.println(userNo + "유저번호DD");
-		
 		map.put("searchOption", searchOption);
 		map.put("keyword", keyword);		
 		map.put("userNo", userNo);
