@@ -77,6 +77,8 @@ public class MovieServiceImpl implements MovieService{
 	@Override
 	public List<MovieDto> movieSelectList(String searchOption, String keyword, int start, int end) {
 		// TODO Auto-generated method stub
+		// movieNo를 뽑을 쿼리 
+		
 		return movieDao.movieSelectList(searchOption, keyword, start, end);
 	}
 
@@ -139,5 +141,22 @@ public class MovieServiceImpl implements MovieService{
 		
 		movieDao.movieDeleteOne(movieNo);
 	}
+
+	@Override
+	public List<Integer> movieNoSelect() {
+		// TODO Auto-generated method stub
+		return movieDao.movieNoSelect();
+	}
+
+	@Override
+	public Map<String, Object> moviefileOne(int movieNo2) {
+		// TODO Auto-generated method stub
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<Map<String, Object>> fileList = movieDao.fileselectList(movieNo2);
+		resultMap.put("fileList", fileList);
+		
+		return resultMap;
+	}
+
 	
 }

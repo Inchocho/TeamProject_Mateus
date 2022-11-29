@@ -20,4 +20,9 @@ public interface MovieService {
 	public void movieUpdateOne(MovieDto movieDto, MultipartHttpServletRequest mulRequest) throws Exception;
 
 	public void movieDeleteOne(int movieNo);
+
+	public List<Integer> movieNoSelect();
+
+	public Map<String, Object> moviefileOne(int movieNo2);
+
 }

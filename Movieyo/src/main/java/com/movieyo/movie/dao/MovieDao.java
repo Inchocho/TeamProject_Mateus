@@ -25,4 +25,6 @@ public interface MovieDao {
 
 	public void movieDeleteOne(int movieNo);
 
+	public List<Integer> movieNoSelect();
+
 }

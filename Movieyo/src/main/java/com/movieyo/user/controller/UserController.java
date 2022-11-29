@@ -312,4 +312,14 @@ public class UserController {
 			return "redirect:userMpoint.do";
 		}
 		
+		@RequestMapping(value="/user/logout.do", method = RequestMethod.GET)
+		public String logout(HttpSession session) {
+				
+			logger.info("Goodbye UserController logout!");
+			
+			session.invalidate();
+			
+			return "redirect:/auth/login.do";
+		}
+		
 }

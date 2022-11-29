@@ -57,6 +57,36 @@ img{
 			$("#genreName").val(optionVal);
 		});
 	});
+	
+	function addFileFnc() {
+		var obj = $('#fileContent');
+		
+		var htmlStr = "";
+		
+		htmlStr += '<div>';
+		htmlStr += '<input type="hidden" id="fileIdx" name="fileIex" value="">';
+		htmlStr += '<input type="file" id="file0" name="file0">';
+		htmlStr += '<a href="#this" id="delete0">삭제</a> <br>';
+		htmlStr += '</div>';
+
+		obj.html(htmlStr);
+		
+		$('a[id^="delete"]').on('click', function (e) {
+			e.preventDefault();
+			deleteFileFnc($(this));
+		});
+	}
+	
+	function deleteFileFnc(obj) {
+		obj.parent().remove();
+	}
+	
+	$(function () {
+		$("a[id ^='delete']").on('click', function (e) {
+			e.preventDefault();
+			deleteFileFnc($(this));
+		});
+	});
 </script>
 
 </head>
@@ -65,22 +95,23 @@ img{
 
 	<jsp:include page="../Header.jsp" />
 	<h1>영화수정</h1>
-	
+	<div id="fileContent">
 		<c:choose>
 			<c:when test="${empty fileList}">
 					첨부파일이 없습니다.<br>			
 			</c:when>
 		
 			<c:otherwise>
-				<c:forEach var="row" items="${fileList}">
+				<c:forEach var="row" items="${fileList}" varStatus="obj">
 <!-- 					<input type="button" value="이미지" name="file"> -->
 <%-- 					${row.ORIGINAL_FILE_NAME}(${row.FILE_SIZE}kb)<br> --%>
 					<img alt="image not found" src="<c:url value='/img/${row.STORED_FILE_NAME}'/>">
-					<br>
+					<a href="#this" id="delete_${obj.index}">삭제</a><br>
+<!-- 					<br> -->
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
-		
+	</div>	
 	
 	<form action='./updateCtr.do' method='post' enctype="multipart/form-data">
 		<div class="file">
