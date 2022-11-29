@@ -112,7 +112,7 @@ public class CartController {
 		return "cart/UserCartListView";
 	}	
 
-	@RequestMapping(value = "/buy/addBuy.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/cart/addCart", method = RequestMethod.GET)
 	public String buyAdd(Model model, HttpSession session) {
 		
 		UserDto userDto = (UserDto)session.getAttribute("userDto");
@@ -124,7 +124,7 @@ public class CartController {
 		return "buy/BuyForm";
 	}
 	
-	@RequestMapping(value = "/buy/addCtr.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/cart", method = RequestMethod.POST)
 	public String buyAddCtr(BuyDto buyDto, Model model, int userNo, int movieNo) {
 		logger.trace("Welcome BuyController buyAddCtr 구매내역 추가!!! " 
 			+ buyDto);
