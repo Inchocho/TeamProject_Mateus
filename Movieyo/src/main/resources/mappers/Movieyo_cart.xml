@@ -28,20 +28,20 @@
 <!-- cart 목록 수 -->
 	<select id="selectTotalCount" resultType="java.lang.Integer" parameterType="map">			
 		SELECT COUNT(*) 
-		FROM (SELECT C.CART_NO, C.USER_NO, C.MOVIE_NO, M.MOVIE_TITLE , M.MOVIE_PRICE, C.CATR_INCARTDATE
+		FROM (SELECT C.CART_NO, C.USER_NO, C.MOVIE_NO, M.MOVIE_TITLE , M.MOVIE_PRICE, C.CART_INCARTDATE
 			FROM MVY_CART C, MVY_MOVIE M
-			WHERE C.USER_NO = #{userNo}) CART
+			WHERE C.USER_NO = #{userNo} AND C.MOVIE_NO = M.MOVIE_NO) CART
 			<include refid="search"></include>
 	</select>	
 <!-- cart 리스트(userNo에 매칭되는) -->
 	<select id='selectList' parameterType='map' resultType='map'>
-	SELECT CART.CART_NO, CART.USER_NO, CART.MOVIE_NO, CART.MOVIE_TITLE , CART.MOVIE_PRICE, CART.CATR_INCARTDATE
+	SELECT CART.CART_NO, CART.USER_NO, CART.MOVIE_NO, CART.MOVIE_TITLE , CART.MOVIE_PRICE, CART.CART_INCARTDATE
 	FROM
-		(SELECT ROWNUM RNUM, FILT.CART_NO, FILT.USER_NO, FILT.MOVIE_NO, FILT.MOVIE_TITLE , FILT.MOVIE_PRICE, FILT.CATR_INCARTDATE
+		(SELECT ROWNUM RNUM, FILT.CART_NO, FILT.USER_NO, FILT.MOVIE_NO, FILT.MOVIE_TITLE , FILT.MOVIE_PRICE, FILT.CART_INCARTDATE
 			FROM
-				(SELECT C.CART_NO, C.USER_NO, C.MOVIE_NO, M.MOVIE_TITLE , M.MOVIE_PRICE, C.CATR_INCARTDATE
-				FROM MVY_CART C, MVY_MOVIE M, MVY_USER U				
-				WHERE C.USER_NO = #{userNo}) FILT 
+				(SELECT C.CART_NO, C.USER_NO, C.MOVIE_NO, M.MOVIE_TITLE , M.MOVIE_PRICE, C.CART_INCARTDATE
+				FROM MVY_CART C, MVY_MOVIE M				
+				WHERE C.USER_NO = #{userNo} AND C.MOVIE_NO = M.MOVIE_NO) FILT 
 			<include refid="search"></include>) CART
 		WHERE CART.RNUM BETWEEN #{start} AND #{end}
 	</select>	
@@ -59,11 +59,12 @@
 	</insert>		
 	
 	<!-- 장바구니 중복 조회 -->
-	<select id="cartExist" parameterType='map' resultMap="cartResultMap">
-		SELECT CART_NO, USER_NO, MOVIE_NO, CATR_INCARTDATE
-		FROM MVY_CART
-		WHERE USER_NO = #{userNo}
-		AND MOVIE_NO = #{movieNo}
+	<select id="cartExist" parameterType='map' resultType="java.lang.Integer">
+		SELECT COUNT(*)
+		FROM (SELECT CART_NO, USER_NO, MOVIE_NO, CART_INCARTDATE
+			FROM MVY_CART
+			WHERE USER_NO = #{userNo}
+			AND MOVIE_NO = #{movieNo})
 	</select>
 
 </mapper>

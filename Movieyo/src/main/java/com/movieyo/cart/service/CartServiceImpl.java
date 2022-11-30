@@ -31,6 +31,12 @@ public class CartServiceImpl implements CartService {
 		return cartDao.selectList(searchOption,keyword,start,end,userNo);
 	}
 
+	@Override
+	public int cartExistOne(int userNo, int movieNo) {
+		// TODO Auto-generated method stub
+		return cartDao.cartExistOne(userNo,movieNo);
+	}
+
 	
 	
 }

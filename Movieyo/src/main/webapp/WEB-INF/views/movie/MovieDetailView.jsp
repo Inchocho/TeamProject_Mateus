@@ -44,7 +44,7 @@ img{
 	
 	<form id="detailForm">
 	<input type="hidden" name="userNo" value="${userDto.userNo}">
-		영화번호: <input type="text" name="movieNo" value="${movieDto.movieNo}" readonly="readonly"><br>
+	<input type="hidden" name="movieNo" value="${movieDto.movieNo}">
 	
 		영화제목: <input type='text' name='movieTitle' 
 			value='${movieDto.movieTitle}' readonly="readonly"><br>
@@ -64,11 +64,20 @@ img{
 		영화내용<br>
 		<textarea name="movieStory" style="width: 800px; height: 400px;" readonly="readonly">${movieDto.movieStory}</textarea>
 		<br>
+		<c:if test="${userDto.userAdmin eq 1}">
+			<input type="button" value='수정' onclick="moveMovieUD();">
+		</c:if>
 	</form>
+	<c:if test="${userDto.userAdmin eq 0}">
+		<c:if test="${buyCheck eq 0}">
 		<input type="button" value='구매' onclick="buyMoviePopFnc();">
+<%-- 	<jsp:include page="/WEB-INF/views/PopUp/BuyMoviePop.jsp"></jsp:include> --%>
+		</c:if>
+		<c:if test="${cartCheck eq 0}">
 		<input type="button" value="장바구니" onclick="inCartMoviePopFnc();">
 <%-- 	<jsp:include page="/WEB-INF/views/PopUp/InCartMoviePop.jsp"></jsp:include> --%>
-<%-- 	<jsp:include page="/WEB-INF/views/PopUp/BuyMoviePop.jsp"></jsp:include> --%>
+		</c:if>
+	</c:if>
 	<jsp:include page="../Tail.jsp" />
 </body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>

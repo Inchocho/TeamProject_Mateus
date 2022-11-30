@@ -139,14 +139,14 @@ th {
 			<th>영화제목</th><th>가격(원)</th><th>담은날짜</th><th>선택</th>
 		</tr>
 		<c:if test="${not empty cartList}">
-		<c:forEach var="cartDto" items="${cartList}">
+		<c:forEach var="cart" items="${cartList}">
 		<!-- cartDto = [cartNo, userNo, movieNo, inCartDate] -->
 		<!-- map// cart.cartNo,userNo,inCartDate / cart.movie -->
 		<tr>
-			<td>${cart.movieTitle}</td>
-			<td id="cartPsel${cart.cartNo}">${cart.moviePrice}</td>
-			<td>${cart.inCartDate}</td>
-			<td><input type="checkbox" id="cartSelCN${cart.cartNo}" value="${cart.cartNo}"></td>
+			<td id="tdMtitle${cartList.cart.cartNo}">${cartList.cart.movieTitle}</td>
+			<td id="cartPsel${cartList.cart.cartNo}">${cartList.cart.moviePrice}</td>
+			<td>${cartList.cart.inCartDate}</td>
+			<td><input type="checkbox" id="cartSelCN${cartList.cart.cartNo}" value="${cartList.cart.cartNo}"></td>
 		</tr>
 		</c:forEach>
 	
@@ -183,11 +183,6 @@ th {
 	<form action="./list.do" method="post">
 		<select name="searchOption">
 			<c:choose>
-				<c:when test="TRUE">
-					<option value="all"<c:if test="${searchMap.searchOption eq 'all'}">selected</c:if>>제목 + 담은날짜</option>
-					<option value="MOVIE_TITLE">제목</option>					
-					<option value="CART_INCARTDATE">담은날짜</option>
-				</c:when>
 				<c:when test="${searchMap.searchOption == 'all'}">
 					<option value="all"<c:if test="${searchMap.searchOption eq 'all'}">selected</c:if>>제목 + 담은날짜</option>
 					<option value="MOVIE_TITLE">제목</option>					
@@ -243,14 +238,23 @@ buyCartSelBtn.addEventListener("click", function(e) {
 		e.preventDefault();
 		alert("선택하신항목이 없습니다.")
 	}else{
-		var htmlStr = $('#cartSelCount').val() -1;
+		var htmlStr = "";
+		htmlStr = $('#cartSelCount').val() -1;
 		$('#selCountMinOne').html(htmlStr);
+		
 		htmlStr = $('#cartSelPrice').val();
 		htmlStr = comma(htmlStr);
 		$('#selPrice').html(htmlStr);
+		
 		htmlStr = $('#popViewUserCash').text();
 		htmlStr = comma(htmlStr);
 		$('#popViewUserCash').html(htmlStr);
+		//
+		var checkedFir = $('.selCartMovie').first();
+		var findMtitle = "#tdMtitle" + checkedFir.val();
+		htmlStr = checkedFir.parent().siblings(findMtitle).text();
+		$('#selMovieTitleFir').html(htmlStr);
+		
 		popup_layer.style.visibility = "visible";
 	}
 });
@@ -276,9 +280,11 @@ buyCartSelBtn.addEventListener("click", function(e) {
 	
 	$("input[id^='cartSelCN']").bind('change', function(){
 		if ($(this).is(':checked')) {
+			$(this).attr("class", "selCartMovie");
 			sumPrice += parseInt($(this).parent().siblings("td[id^='cartPsel']").text());
 			count++;
 		}else{
+			$(this).removeAttr("class");
 			sumPrice -= parseInt($(this).parent().siblings("td[id^='cartPsel']").text());
 			count--;
 		}

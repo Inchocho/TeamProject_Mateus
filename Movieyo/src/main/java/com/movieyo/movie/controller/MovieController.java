@@ -32,8 +32,10 @@ public class MovieController {
 	= LoggerFactory.getLogger(MovieController.class);
 	
 	@Autowired
-	private MovieService movieService;	
-	private BuyService buyService;	
+	private MovieService movieService;
+	@Autowired
+	private BuyService buyService;
+	@Autowired
 	private CartService cartService;	
 	
 	//apiTest 영화목록 들어가기
@@ -280,10 +282,13 @@ public class MovieController {
 			logger.debug("Welcome MovieController movieOne!{}" , movieNo);
 			
 			UserDto userDto = (UserDto)session.getAttribute("userDto");
-//			int userNo = userDto.getUserNo();
-//			int buyCheck = buyService.buyExistOne(userNo,movieNo);
-//			
-//			model.addAttribute("buyCheck", buyCheck);
+			int userNo = userDto.getUserNo();
+			System.out.println(userNo);
+			int buyCheck = buyService.buyExistOne(userNo,movieNo);
+			int cartCheck = cartService.cartExistOne(userNo,movieNo);
+		
+			model.addAttribute("buyCheck", buyCheck);
+			model.addAttribute("cartCheck", cartCheck);
 			
 			Map<String, Object> map = movieService.movieSelectOne(movieNo);
 			

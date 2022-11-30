@@ -97,10 +97,9 @@ public class CartController {
 			cart.put("cartNo", cartNo);
 			cart.put("userNo", userNo);
 			
-			
+			cartList.add(i,cart);
 		}
 		
-		model.addAttribute("cart", cart);
 		model.addAttribute("cartList", cartList);
 		model.addAttribute("pagingMap", pagingMap);
 		model.addAttribute("searchMap", searchMap);		
@@ -117,7 +116,7 @@ public class CartController {
 		
 		logger.trace("Welcome CartController cartAdd 구매폼으로 이동!!!");
 		
-		return "buy/BuyForm";
+		return "user/UserCartListView";
 	}
 	
 //	@RequestMapping(value = "/cart", method = RequestMethod.POST)

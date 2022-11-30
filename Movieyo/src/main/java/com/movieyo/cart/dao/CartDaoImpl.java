@@ -49,4 +49,15 @@ public class CartDaoImpl implements CartDao{
 		return sqlSession.selectList(name("selectList"), map);
 	}
 
+	@Override
+	public int cartExistOne(int userNo, int movieNo) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("userNo", userNo);
+		map.put("movieNo", movieNo);
+		
+		return sqlSession.selectOne(name("cartExist"), map);
+	}
+
 }

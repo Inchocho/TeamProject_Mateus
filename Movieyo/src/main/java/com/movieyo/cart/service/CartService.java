@@ -10,6 +10,8 @@ public interface CartService {
 	List<Map<String, Object>> selectList(String searchOption,
 			String keyword, int start, int end, int userNo);
 
+	int cartExistOne(int userNo, int movieNo);
+
   
 
 }

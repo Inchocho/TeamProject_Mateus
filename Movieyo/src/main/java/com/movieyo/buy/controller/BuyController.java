@@ -118,31 +118,31 @@ public class BuyController {
 
 
 	
-//	@RequestMapping(value = "/buy/addCtr.do", method = RequestMethod.POST)
-//	public String buyAddCtr(BuyDto buyDto, Model model, int userNo, int movieNo) {
-//		logger.trace("Welcome BuyController buyAddCtr 구매내역 추가!!! " 
-//			+ buyDto);
-//		
-//			int isCheck = buyService.buyExistOne(userNo, movieNo);
-//			
-//			String viewUrl = "";
-//		
-//		try {
-//			if(isCheck != 0) {	
-//				System.out.println("이미 존재하는 영화");
-//				viewUrl =  "redirect:../buy/list.do?userNo=" +  userNo;
-//			}else {				
-//				buyService.buyInsertOne(buyDto);
-//				viewUrl =  "redirect:../buy/list.do?userNo=" +  userNo;
-//			}
-//			
-//		} catch (Exception e) {
-//			System.out.println("오랜만에 예외 처리 한다");
-//			System.out.println("파일 문제 예외일 가능성 높음");
-//			e.printStackTrace();
-//		}
-//				
-//		return viewUrl;
-//	}	
+	@RequestMapping(value = "/buy/addCtr.do", method = RequestMethod.POST)
+	public String buyAddCtr(BuyDto buyDto, Model model, int userNo, int movieNo) {
+		logger.trace("Welcome BuyController buyAddCtr 구매내역 추가!!! " 
+			+ buyDto);
+		
+			int isCheck = buyService.buyExistOne(userNo, movieNo);
+			
+			String viewUrl = "";
+		
+		try {
+			if(isCheck != 0) {	
+				System.out.println("이미 존재하는 영화");
+				viewUrl =  "redirect:../buy/list.do?userNo=" +  userNo;
+			}else {				
+				buyService.buyInsertOne(buyDto);
+				viewUrl =  "redirect:../buy/list.do?userNo=" +  userNo;
+			}
+			
+		} catch (Exception e) {
+			System.out.println("오랜만에 예외 처리 한다");
+			System.out.println("파일 문제 예외일 가능성 높음");
+			e.printStackTrace();
+		}
+				
+		return viewUrl;
+	}	
 
 }

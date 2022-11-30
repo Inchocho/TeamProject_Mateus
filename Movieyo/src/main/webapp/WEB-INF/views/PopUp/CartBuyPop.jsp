@@ -40,7 +40,7 @@
           <h2 id="" class="pop_cont_title">구매 하시겠습니까?</h2>
           <div id="" class="pop_cont_cont">
           	<ul>
-          		<li>영화제목 외 <span id="selCountMinOne"></span></li>
+          		<li><span id="selMovieTitleFir"></span> 외 <span id="selCountMinOne"></span></li>
           		<li><span id="selPrice"></span> 원</li>
             </ul>
           </div>
