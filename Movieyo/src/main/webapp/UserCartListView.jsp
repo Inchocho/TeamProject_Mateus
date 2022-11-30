@@ -143,10 +143,10 @@ th {
 		<!-- cartDto = [cartNo, userNo, movieNo, inCartDate] -->
 		<!-- map// cart.cartNo,userNo,inCartDate / cart.movie -->
 		<tr>
-			<td>${cart.movie.title}</td>
-			<td id="cartPsel${cart.cartNo}">${cart.movie.price}</td>
+			<td>${cart.movieTitle}</td>
+			<td id="cartPsel${cart.cartNo}">${cart.moviePrice}</td>
 			<td>${cart.inCartDate}</td>
-			<td><input type="checkbox" id="cartSelCN${cart.cartNo}" value="${cart.movieNo}"></td>
+			<td><input type="checkbox" id="cartSelCN${cart.cartNo}" value="${cart.cartNo}"></td>
 		</tr>
 		</c:forEach>
 	

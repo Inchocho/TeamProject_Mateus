@@ -116,33 +116,7 @@ public class BuyController {
 		return "buy/BuyListView";
 	}	
 
-	@RequestMapping(value = "/buy/addBuy.do", method = RequestMethod.GET)
-	public String buyAdd(Model model, HttpSession session, int moviePrice) {
-		
-		UserDto userDto = (UserDto)session.getAttribute("userDto");
-		
-		//11.29: moviePrice -> 영화 선택시 가격 받을거임 지금은 임의로 가격정해줌
-		//현재 화면에서 10만으로 고정된값
-		//실제로는 영화상세화면에서 구매버튼을 누를때 폼안에 Get방식으로 moviePrice를 받아서 넘길것임		
-		
-		int userCash = userDto.getUserCash();
-		
-		if(userCash <  moviePrice) {
-			System.out.println("유저가 가진돈보다 많아!!!");
-			
-			logger.trace("Welcome BuyController buyAdd 구매폼으로 이동!!!");
-			
-			return "user/UserMPointView";
-			
-		}else {
-			model.addAttribute(userDto);
-			
-			logger.trace("Welcome BuyController buyAdd 구매폼으로 이동!!!");
-			
-			return "buy/BuyForm";			
-		}
 
-	}
 	
 	@RequestMapping(value = "/buy/addCtr.do", method = RequestMethod.POST)
 	public String buyAddCtr(BuyDto buyDto, Model model, int userNo, int movieNo) {

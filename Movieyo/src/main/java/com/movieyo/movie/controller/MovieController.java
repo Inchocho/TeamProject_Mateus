@@ -266,6 +266,31 @@ public class MovieController {
 			return "movie/MovieMain";
 		}
 		
-		
+		//	영화상세보기 (선택시 상세정보를 보여줌 readOnly 페이지)
+		@RequestMapping(value="/movie/detail.do", method = RequestMethod.GET)
+		public String movieDetail(int movieNo, Model model
+				, @RequestParam(defaultValue = "1") int curPage
+				, @RequestParam(defaultValue = "all")String searchOption
+				, @RequestParam(defaultValue = "")String keyword) {
+			logger.debug("Welcome MovieController movieOne!{}" , movieNo);
+			
+			Map<String, Object> map = movieService.movieSelectOne(movieNo);
+			
+			
+			MovieDto movieDto = (MovieDto) map.get("movieDto");
+			
+			Map<String, Object> searchMap = new HashMap<String, Object>();
+			searchMap.put("searchOption", searchOption);
+			searchMap.put("keyword", keyword);
+			searchMap.put("curPage", curPage);
+			
+			List<Map<String, Object>> fileList = (List<Map<String, Object>>) map.get("fileList");
+			
+			model.addAttribute("movieDto", movieDto);
+			model.addAttribute("fileList", fileList);
+			model.addAttribute("searchMap", searchMap);
+			
+			return "movie/MovieDetailView";
+		}
 	
 }

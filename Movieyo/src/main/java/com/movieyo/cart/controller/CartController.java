@@ -65,7 +65,7 @@ public class CartController {
 		int start = paging.getPageBegin();
 		int end = paging.getPageEnd();		
 
-		List<Map<String, Object>> listMap = cartService.selectList(searchOption, keyword, start, end, userNo);
+		List<Map<String, Object>> cartList = cartService.selectList(searchOption, keyword, start, end, userNo);
 		
 		Map<String, Object> pagingMap = new HashMap<String, Object>();
 		
@@ -81,35 +81,31 @@ public class CartController {
 		logger.info("curPage: {}", curPage);
 		logger.info("curBlock: {}", paging.getCurBlock());			
 		
-		List<Map<String, Object>> buyListMap = new ArrayList<Map<String,Object>>();
-		
-		for (int i = 0; i < listMap.size(); i++) {
-			Map<String, Object> buyMap = new HashMap<String, Object>();
+		Map<String, Object> cart = new HashMap<String, Object>();
+		for (int i = 0; i < cartList.size(); i++) {
 			
-			int moviePrice = Integer.parseInt(String.valueOf(listMap.get(i).get("MOVIE_PRICE")));
-			int buyNo = Integer.parseInt(String.valueOf(listMap.get(i).get("BUY_NO")));			
-			String userNickName = (String)listMap.get(i).get("USER_NICKNAME");
-			String movieTitle = (String)listMap.get(i).get("MOVIE_TITLE");
-			Date buyDate = (Date)listMap.get(i).get("BUY_DATE");
-			int buyUserNo = Integer.parseInt(String.valueOf(listMap.get(i).get("USER_NO")));
+			int movieNo = Integer.parseInt(String.valueOf(cartList.get(i).get("MOVIE_NO")));
+			String movieTitle = (String)cartList.get(i).get("MOVIE_TITLE");
+			int moviePrice = Integer.parseInt(String.valueOf(cartList.get(i).get("MOVIE_PRICE")));
+			int cartNo = Integer.parseInt(String.valueOf(cartList.get(i).get("CART_NO")));			
+			Date inCartDate = (Date)cartList.get(i).get("CATR_INCARTDATE");
 			
-			buyMap.put("moviePrice", moviePrice);
-			buyMap.put("userNickName", userNickName);
-			buyMap.put("movieTitle", movieTitle);
-			buyMap.put("buyDate", buyDate);		
-			buyMap.put("buyNo", buyNo);
-			buyMap.put("buyUserNo", buyUserNo);
-			buyMap.put("userNo", userNo);
+			cart.put("movieNo", movieNo);
+			cart.put("moviePrice", moviePrice);
+			cart.put("movieTitle", movieTitle);
+			cart.put("inCartDate", inCartDate);		
+			cart.put("cartNo", cartNo);
+			cart.put("userNo", userNo);
 			
-			buyListMap.add(buyMap);			
 			
 		}
 		
-		model.addAttribute("buyListMap", buyListMap);
+		model.addAttribute("cart", cart);
+		model.addAttribute("cartList", cartList);
 		model.addAttribute("pagingMap", pagingMap);
 		model.addAttribute("searchMap", searchMap);		
 		
-		return "cart/UserCartListView";
+		return "user/UserCartListView";
 	}	
 
 	@RequestMapping(value = "/cart/addCart", method = RequestMethod.GET)
@@ -119,7 +115,7 @@ public class CartController {
 		
 		model.addAttribute(userDto);
 		
-		logger.trace("Welcome BuyController buyAdd 구매폼으로 이동!!!");
+		logger.trace("Welcome CartController cartAdd 구매폼으로 이동!!!");
 		
 		return "buy/BuyForm";
 	}

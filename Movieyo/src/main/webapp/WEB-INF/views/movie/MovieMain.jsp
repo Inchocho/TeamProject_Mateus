@@ -16,7 +16,10 @@ img {
 </style>
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
-	
+	function movePageMovieDtail(movieNo) {
+		var url = "./detail.do?movieNo=" + movieNo;
+		location.href = url;
+	}
 </script>
 </head>
 <body>
@@ -27,13 +30,13 @@ img {
 
 	<div style="display: flex;">
 		<c:forEach var="row" items="${fileList}" varStatus="status">
-			<div style="margin: 10px;">
+			<c:set var="movieDto" value="${movieList[status.index]}" />
+			<div style="margin: 10px;" onclick="movePageMovieDtail(${movieDto.movieNo});">
 				<div>
 					<img alt="image not found"
 						src="<c:url value='/image/${row.get(0).STORED_FILE_NAME}'/>">
 				</div>
 				<div>
-					<c:set var="movieDto" value="${movieList[status.index]}" />
 					${movieDto.movieTitle}<br> ${movieDto.genreName}
 				</div>
 			</div>
