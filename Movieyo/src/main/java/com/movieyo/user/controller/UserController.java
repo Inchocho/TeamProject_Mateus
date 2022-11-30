@@ -153,15 +153,17 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/user/one.do", method = {RequestMethod.GET, RequestMethod.POST})
-	public String userOne(int userNo, Model model) {
+	public String userOne(int userNo, Model model, HttpSession session) {
 		logger.debug("Welcome UserController userOne!"
 				+ " userNo" , userNo);
 		
 		Map<String, Object> map = userService.userSelectOne(userNo);
 		UserDto userDto = (UserDto)map.get("userDto");
 		
-		
-		model.addAttribute("userDto", userDto);
+		System.out.println(userDto.getNickname());
+		System.out.println(userDto.getUserAdmin());
+	
+		model.addAttribute("userDto2", userDto);
 		
 		return "user/UserOneView";
 	}
@@ -182,7 +184,6 @@ public class UserController {
 	//수정시 바로바로 적용되게 바꾸기(세션?)
 		@RequestMapping(value = "/user/updateCtr.do", method = RequestMethod.POST)
 		   public String userUpdateCtr(HttpSession session, UserDto userDto, Model model)  {
-		                     // email.password 네임값을 가져옴(@RequestMapping의 힘)
 		      logger.info("Welcome userController userUpdateCtr!" + userDto);
 		      
 		      try {
@@ -202,12 +203,14 @@ public class UserController {
 		            	newUserDto.setUserNo(userDto.getUserNo());
 		            	newUserDto.setEmail(userDto.getEmail());
 		            	newUserDto.setNickname(userDto.getNickname());
-		               
+		                newUserDto.setUserAdmin(userDto.getUserAdmin());
+		            	
 		               session.removeAttribute("userDto");
 		               
 		               session.setAttribute("userDto", newUserDto);
 		            }
 		         }
+		         model.addAttribute("userDto2", userDto);
 		      
 		      return "user/UserOneView";
 		   }
@@ -235,6 +238,7 @@ public class UserController {
 			UserDto userDto2 = (UserDto)map.get("userDto");
 			
 			 try {
+				 System.out.println(userDto.getNickname() + "aaaaaaaaaaaaaaaaaaaaaa1");
 		    	  userService.passwordUpdate(userDto);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -248,6 +252,10 @@ public class UserController {
 		            
 		            	UserDto newUserDto = new UserDto();
 		               
+		            	System.out.println(userDto.getNickname() + "aaaaaaaaaaaaaaaaaaaaaa2");
+		            	
+		            	newUserDto.setPassword(userDto.getEmail());
+		            	newUserDto.setPassword(userDto.getNickname());
 		            	newUserDto.setPassword(userDto.getPassword());
 		               session.removeAttribute("userDto");
 		               
@@ -255,12 +263,12 @@ public class UserController {
 		            }
 		         }
 		         
-		         model.addAttribute("userDto", userDto2);
+		         model.addAttribute("userDto2", userDto2);
 			
 			return "user/UserOneView";
 		}
 		
-		@RequestMapping(value="/user/deleteCtr.do", method = RequestMethod.GET)
+		@RequestMapping(value="/user/deleteCtr.do", method = RequestMethod.POST)
 		public String userDelete(int userNo, HttpSession session, Model model) {
 			logger.info("Welcome userController userDeleteCtr! " + userNo);
 			
@@ -268,14 +276,16 @@ public class UserController {
 			
 			session.invalidate();
 			
+
+			
 			return "redirect:/auth/login.do";
 		}
 		
 		@GetMapping("/user/authorPop.do")
-		public String authorPopGET() throws Exception{
+		public String authorPopGET(int userNo, Model model) throws Exception{
 			
 			logger.info("authorPopGET.......");
-			
+			model.addAttribute("userNo", userNo);
 			return "PopUp/authorPop";
 		
 		}

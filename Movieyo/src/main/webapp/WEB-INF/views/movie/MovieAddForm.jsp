@@ -43,10 +43,19 @@ a {
 <script type="text/javascript">
 	
 	$(function (){
-		$("#genreNo").click(function () {
-			var a = $("#genreNo option:checked").text();
-			$("#genreName").val(a);
-		});
+		$("#genreNo").on({
+			keyup : function(){
+				var a = $("#genreNo option:checked").text();
+				$("#genreName").val(a);
+			},
+			
+			click : function() {
+				var a = $("#genreNo option:checked").text();
+				$("#genreName").val(a);
+			}
+		});	
+		
+		
 		
 		$('#submitBtn').click(function () {
 			
@@ -132,7 +141,7 @@ a {
 			     <option value="11">스릴러</option>
 			     <option value="12">기타</option>
 		     </select> <br>
-		<input type="hidden" name="genreName" id="genreName" value="">
+		장르명: <input type="text" name="genreName" id="genreName" value=""><br>
 		상영시간: <input type='text' name='runtime' id='runtime'><br>
 			<a id="runtimeText">숫자만 입력해주세요</a>
 		상영등급: <input type='text' name='grade' id='grade'><br>
