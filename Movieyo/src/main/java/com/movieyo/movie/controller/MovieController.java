@@ -223,7 +223,7 @@ public class MovieController {
 			for (int i = 0; i < movieNo.size(); i++) {
 				int movieNo2 = Integer.parseInt(String.valueOf(movieNo.get(i))); 
 
-				Map<String, Object> map = movieService.moviefileOne(movieNo2);
+				Map<String, Object> map = movieService.moviefileOne(movieNo2);				
 				List<Map<String, Object>> listlist = (List<Map<String, Object>>) map.get("fileList");
 				fileList.add(listlist);
 			}
