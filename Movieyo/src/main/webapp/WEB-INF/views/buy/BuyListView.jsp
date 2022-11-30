@@ -104,7 +104,6 @@
 		
 		<input type="text" name="keyword" value="${searchMap.keyword}" placeholder="검색">
 		<input type="submit" value="검색">			
-		<button type="button" onclick="buyAdd();">구매내역등록</button>
 	</form>	
 	
 	<input type="button" name="abcd" id="abcd" value="제이쿼리">
@@ -112,11 +111,5 @@
 </body>
 <script type="text/javascript">
 
-	window.onload = function(){
-		var refundSubmitObj = document.getElementById('refundSubmit');
-		var statusObj = document.getElementById('status');
-		
-		console.log(statusObj.value);
-	}
 </script>
 </html>

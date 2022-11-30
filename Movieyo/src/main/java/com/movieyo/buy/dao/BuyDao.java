@@ -13,6 +13,6 @@ public interface BuyDao {
 
 	public void buyInsertOne(BuyDto buyDto);
 
-	public BuyDto buyExist(int userNo, int movieNo);
+	public int buyExistOne(int userNo, int movieNo);
 
 }

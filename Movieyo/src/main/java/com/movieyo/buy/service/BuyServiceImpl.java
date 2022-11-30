@@ -41,9 +41,9 @@ public class BuyServiceImpl implements BuyService {
 	}
 
 	@Override
-	public BuyDto buyExist(int userNo, int movieNo) {
+	public int buyExistOne(int userNo, int movieNo) {
 		// TODO Auto-generated method stub
-		return buyDao.buyExist(userNo, movieNo);
+		return buyDao.buyExistOne(userNo, movieNo);
 	}
 
 	

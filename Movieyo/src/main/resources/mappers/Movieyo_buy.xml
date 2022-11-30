@@ -77,8 +77,8 @@
 	</insert>		
 	
 	<!-- 구매내역 중복 조회 -->
-	<select id="buyExist" parameterType='map' resultMap="buyResultMap">
-		SELECT BUY_NO, MOVIE_NO, BUY_DATE, BUY_STATUS
+	<select id="buyExistOne" parameterType='map' resultType="java.lang.Integer">
+		SELECT COUNT(BUY_NO)
 		FROM MVY_BUY
 		WHERE USER_NO = #{userNo}
 		AND MOVIE_NO = #{movieNo}
