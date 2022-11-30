@@ -9,7 +9,11 @@
 <title>영화추가</title>
 
 <style type="text/css">
-/* .file input[type="file"] {  /* 파일 필드 숨기기 */ */
+a {
+	display: none;
+	color: red;
+}
+/* .file input[type="file"] {  /* 파일 필드 숨기기 */
 /*   position: absolute; */
 /*   width: 1px; */
 /*   height: 1px; */
@@ -38,15 +42,58 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
 	
-	
-	
-
 	$(function (){
 		$("#genreNo").click(function () {
 			var a = $("#genreNo option:checked").text();
 			$("#genreName").val(a);
 		});
+		
+		$('#submitBtn').click(function () {
+			
+// 			영화제목
+			var movieTitle = $('#movieTitle').val();
+			if (movieTitle == "") {
+				$('#movieTitleText').css('display', 'block');
+			}else {
+				$('#movieTitleText').css('display', 'none');
+			}
+			
+// 			제작연도
+			var prdtYear = $('#prdtYear').val().length;
+			alert(prdtYear);
+			
+			if (prdtYear == 0) {
+				$('#prdtYearText').css('display', 'block');
+			}else if (prdtYear > 4 || prdtYear < 4) {
+				$('#prdtYearText').css('display', 'block');
+				$('#prdtYearText').html('년도 4자리만 입력해주세요');
+			}else if (prdtYear == 4) {
+				$('#prdtYearText').css('display', 'none');
+			}
+			
+// 			국가
+			var nation = $('#nation').val();
+			
+			if (nation == "") {
+				$('#nationText').css('display', 'block');
+			}else {
+				$('#nationText').css('display', 'none');
+			}
+			
+			
+			
+// 			상영시간
+			var runtime = $('#runtime').val();
+			var numChk = /[0-9]/;
+			
+			if (runtime != numChk) {
+				$('#runtimeText').css('display', 'block');								
+			}
+			
+		});
 	});
+	
+	
 	
 // 			$("#moviegenre").val()= $("#genreNo option:checked").text();
 // 			$("#moviegenre").val() = $("#genreNo option:checked").text();
@@ -65,8 +112,11 @@
 			<input type='file' name='file' id="file">
 		</div>
 		영화제목:	<input type="text" name='movieTitle' id='movieTitle'><br>
+		<a id="movieTitleText">영화제목을 입력해주세요</a>
 		제작연도: <input type="text" name='prdtYear' id='prdtYear'><br>
+			<a id="prdtYearText">년도를 입력해주세요</a>
 		국가: <input type="text" name='nation' id='nation'><br>
+			<a id="nationText">국가를 입력해주세요</a>
 		감독: <input type="text" name='director' id='director'><br>
 		장르: <select name="genreNo" id="genreNo">
 				 <option value="1">애니메이션</option>
@@ -84,13 +134,14 @@
 		     </select> <br>
 		<input type="hidden" name="genreName" id="genreName" value="">
 		상영시간: <input type='text' name='runtime' id='runtime'><br>
+			<a id="runtimeText">숫자만 입력해주세요</a>
 		상영등급: <input type='text' name='grade' id='grade'><br>
 		가격: <input type="number" step="1000" name='price' id='price'><br>
 		영화내용: <br>
 		<textarea name="movieStory" style="width: 400px; height: 400px;"></textarea><br>
 		등록자: <input type="text" name="registrant" value="${userDto.userName}" readonly="readonly"><br>
 		
-		<input type='submit' value='등록' id='submitBtn'>
+		<input type="button" value='등록' id='submitBtn'>
 		<input type="button" value="취소">				
 	</form>
 </body>

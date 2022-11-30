@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.movieyo.movie.dto.MovieDto;
 import com.movieyo.user.dto.UserDto;
@@ -42,7 +43,6 @@ public class UserController {
 		
 		return "auth/LoginForm";
 	}
-	
 	@RequestMapping(value="/auth/loginCtr.do", method = RequestMethod.POST)
 	public String loginCtr(String email, String password
 			, HttpSession session, Model model) {	
@@ -51,7 +51,6 @@ public class UserController {
 		
 		UserDto userDto = userService.userExist(email, password);
 		
-		
 		String viewUrl = "";
 		if(userDto != null) {
 			session.setAttribute("userDto", userDto);
@@ -59,7 +58,8 @@ public class UserController {
 //			viewUrl =  "redirect:../user/one.do?userNo=" +  userDto.getUserNo();
 			viewUrl = "redirect:../movie/main.do";
 		}else {
-			viewUrl = "/auth/LoginFail";
+			viewUrl = "redirect:/auth/login.do";
+//			viewUrl = "<script>alert('이메일틀림');location.href='./login.do'</script>";
 		}
 		
 		return viewUrl;

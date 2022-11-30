@@ -21,10 +21,9 @@
 			if (a != b) {
 				alert("비밀번호를 확인해주세요");
 			}else if (b != c) {
-				
-			}
-			
-			else {
+				alert("비밀번호를 확인해주세요");
+			}else {
+				alert("회원탈퇴가 처리되었습니다.");
 				formId.submit();
 			}
 		});
@@ -37,7 +36,7 @@
 	<h1>회원탈퇴</h1>
 	${userDto.nickname}님 정말로 탈퇴하시겠습니까?<br>
 	
-	<form action="123" method="post" id="formId">
+	<form action="#" method="post" id="formId">
 		<input type="hidden" value="${userDto.password}" id="password">
 		<input type="text" value="" placeholder="비밀번호:" id="changePw"><br>
 		<input type="text" value="" placeholder="비밀번호 확인:" id="changePwC"><br>
