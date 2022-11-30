@@ -176,6 +176,9 @@ public class UserController {
 		
 		UserDto userDto = (UserDto) map.get("userDto");
 		
+		System.out.println(userDto.getNickname());
+		System.out.println(userDto.getUserAdmin());
+		
 		model.addAttribute("userDto", userDto);
 		
 		return "user/UserUpdateForm";
@@ -194,16 +197,30 @@ public class UserController {
 		      
 		         UserDto sessionUserDto =
 		               (UserDto)session.getAttribute("userDto");
+		         System.out.println(sessionUserDto.getUserAdmin() +  "aaaaaaaa");
+		         
 		         
 		         if (sessionUserDto != null) {
 		            if (sessionUserDto.getUserNo() == userDto.getUserNo()) {
 		            
 		            	UserDto newUserDto = new UserDto();
 		               
+		            	
+		            	System.out.println(userDto.getUserNo());
+		            	System.out.println(sessionUserDto.getEmail());
+		            	System.out.println(userDto.getNickname());
+		            	System.out.println(sessionUserDto.getUserAdmin());
+		            	
+		            	System.out.println(userDto.getUserBirth()+"asd");
+		            	System.out.println(sessionUserDto.getUserBirth()+"qwe");
+		            	
+		            	newUserDto.setUserBirth(userDto.getUserBirth());
 		            	newUserDto.setUserNo(userDto.getUserNo());
-		            	newUserDto.setEmail(userDto.getEmail());
+		            	newUserDto.setEmail(sessionUserDto.getEmail());
 		            	newUserDto.setNickname(userDto.getNickname());
-		                newUserDto.setUserAdmin(userDto.getUserAdmin());
+		                newUserDto.setUserAdmin(sessionUserDto.getUserAdmin());
+		                
+		                System.out.println(newUserDto.getUserAdmin());
 		            	
 		               session.removeAttribute("userDto");
 		               
