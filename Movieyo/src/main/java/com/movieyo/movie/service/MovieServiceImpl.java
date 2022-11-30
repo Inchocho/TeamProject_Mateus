@@ -99,50 +99,43 @@ public class MovieServiceImpl implements MovieService{
 		return resultMap;
 	}
 
-	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public int movieUpdateOne(MovieDto movieDto, MultipartHttpServletRequest multipartHttpServletRequest, int fileIdx) throws Exception {
+	public void movieUpdateOne(MovieDto movieDto, MultipartHttpServletRequest mulRequest) throws Exception {
 		// TODO Auto-generated method stub
-		int resultNum = 0;
 		
-		try {
-			resultNum = movieDao.movieUpdateOne(movieDto);
+		movieDao.movieUpdateOne(movieDto);
+		
+		Iterator<String> iterator = mulRequest.getFileNames();
+		MultipartFile multipartFile = null;
+		
+		while(iterator.hasNext()) {
+			multipartFile = mulRequest.getFile(iterator.next());
 			
-			int parentSeq = movieDto.getMovieNo();
-			Map<String, Object> tempFileMap = movieDao.fileSelectStoredFileName(parentSeq);
-			
-			List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(parentSeq, multipartHttpServletRequest);
-			
-			if (list.isEmpty() == false) {
-				if (tempFileMap != null) {
-					System.out.println("시이이이이이이잉발ㄹㄹㄹㄹㄹㄹㄹㄹㄹㄹ");
-					
-					movieDao.fileDelete(parentSeq);
-					
-					//삭제만 처리하고 변경은 막기위해 예외처리
-//					throw new Exception();
-					
-					//기존의 파일이 존재하는데 새로운 파일로 변경하는 경우
-					fileUtils.parseUpdateFileInfo(tempFileMap);
-				}
+			if(multipartFile.isEmpty() == false) {
+				log.debug("-------- file start --------");
 				
-				for (Map<String, Object> map : list) {
-					movieDao.insertFile(map);
-				}
-			}else if(fileIdx == -1){
-				if (tempFileMap != null) {
-					movieDao.fileDelete(parentSeq);
-					fileUtils.parseUpdateFileInfo(tempFileMap);
-				}
+				log.debug("name : {}", multipartFile.getName());
+				log.debug("fileName : {}", multipartFile.getOriginalFilename());
+				log.debug("size : {}", multipartFile.getSize());
+				
+				log.debug("-------- file end --------\n");
 			}
-		} catch (Exception e) {
-			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-		}
+		}	// while end
 		
-	
-	return resultNum;
+		//10.18파일 업로드에 들어가는 memberDto.getNo를 처리하기위해 생성후 조회하는 쿼리를  수행
+		//int parentSeq = memberDao.getMemberNo();
 		
-			}
+		//mapper에서 generateKey를 통해 getNo를 얻어옴
+		int parentSeq = movieDto.getMovieNo();
+			
+		List<Map<String, Object>> list
+		= fileUtils.parseInsertFileInfo(parentSeq, mulRequest);
+		
+		//다수의 동시 업로드를 처리하기 위해 list를 사용함 - 기존 단건 업로드시 Map형식으로 작성하면 끝
+		for (int i = 0; i < list.size(); i++) {
+			movieDao.insertFile(list.get(i));
+		}	
+	}
 
 	@Override
 	public void movieDeleteOne(int movieNo) {

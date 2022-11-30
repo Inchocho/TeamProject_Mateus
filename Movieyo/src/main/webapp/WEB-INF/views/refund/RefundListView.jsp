@@ -73,7 +73,7 @@ function admitRefund(index) {
 					<input type="hidden" name="refundNo" value="${refundMap.refundNo}">
 					<input type="hidden" name="buyNo" value="${refundMap.buyNo}">
 					<input type='hidden' name='movieNo' value="${refundMap.movieNo}">
-					<input type='hidden' name='userNo' value="${refundMap.userNo}">
+					<input type='hidden' name='userNo' value="${refundMap.refundUserNo}">
 					<input type="hidden" name="moviePrice" value="${refundMap.moviePrice}">
 					<input type="hidden" id="refundCurPage" name="curPage" value="">
 					<input type="hidden" name="keyword" value="${searchMap.keyword}">

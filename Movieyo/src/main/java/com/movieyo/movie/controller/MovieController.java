@@ -183,7 +183,7 @@ public class MovieController {
 		    logger.info("Welcome movieController movieUpdateCtr!" + movieDto);
 		      
 		    try {
-				movieService.movieUpdateOne(movieDto,mulRequest,fileIdx);
+				movieService.movieUpdateOne(movieDto,mulRequest);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

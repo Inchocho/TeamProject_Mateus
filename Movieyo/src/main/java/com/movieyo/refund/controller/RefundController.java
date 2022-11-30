@@ -16,9 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.movieyo.movie.dto.MovieDto;
 import com.movieyo.refund.dto.RefundDto;
 import com.movieyo.refund.service.RefundService;
 import com.movieyo.user.dto.UserDto;
@@ -97,7 +95,7 @@ public class RefundController {
 			Date buyDate = (Date)listMap.get(i).get("BUY_DATE");
 			Date refundDate = (Date)listMap.get(i).get("REFUND_DATE");
 			String refundStatus = (String)listMap.get(i).get("REFUND_STATUS");
-			int refundUserNo = Integer.parseInt(String.valueOf(listMap.get(i).get("USER_NO")));
+			int refundUserNo = Integer.parseInt(String.valueOf(listMap.get(i).get("USER_NO")));			
 			
 			refundMap.put("moviePrice", moviePrice);
 			refundMap.put("movieTitle", movieTitle);
@@ -131,7 +129,7 @@ public class RefundController {
 				System.out.println("여기탔니?");
 				refundService.refundInsertOne(buyNo, userNo);
 			}else {
-				System.out.println("이프문 타는지 확인");
+				System.out.println("이프문 타는지 확인 + 구매내역에서 환불신청시 안탔으면 타는 로그");
 				return "redirect:./list.do?userNo=" + userNo;				
 			}
 
@@ -145,14 +143,24 @@ public class RefundController {
 	                     // email.password 네임값을 가져옴(@RequestMapping의 힘)
 	    logger.info("Welcome refundController updateRefund!" + refundDto);
 	    
-	    int userNo = refundDto.getUserNo();	    
-	      
+	    int refundUserNo = refundDto.getUserNo();	    
+	    int buyNo = refundDto.getBuyNo();
+	    
 	    try {
 	    	//int admit -> 예(1),아니오(0) --> 일단 1만 받음			
-			int refundChk = refundService.updateRefund(refundDto, admit);
+	    	int refundChk = 0;
+			refundChk = refundService.updateRefund(refundDto, admit);
 			
-			if(refundChk != 0) {
-				refundService.updateCash(userNo, moviePrice);
+			System.out.println(refundChk + "환불처리 됬는지 확인용");
+			
+			if(refundChk != 0) {							
+				refundService.updateCash(refundUserNo, moviePrice);
+				
+				int updateCash = refundService.checkCash(refundUserNo);
+				System.out.println("해당 유저 환불받은 후 잔여캐쉬" + updateCash);
+				
+				refundService.updateBuy(buyNo);				
+				
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

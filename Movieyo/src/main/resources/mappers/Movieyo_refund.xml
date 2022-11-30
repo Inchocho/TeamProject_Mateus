@@ -110,10 +110,16 @@
 	</update>	
 	
 	<!-- 환불처리3 환불한 영화 구매내역 상태 변경 -->
-	<update id="updateBuy" parameterType="map">
+	<update id="updateBuy" parameterType="int">
 		UPDATE MVY_BUY SET
 		BUY_STATUS = '환불처리완료'
 		WHERE BUY_NO = #{buyNo}
 	</update>
+	
+	<select id="checkCash" parameterType="int" resultType="java.lang.Integer">
+		SELECT USER_CASH 
+		FROM MVY_USER
+		WHERE USER_NO = #{userNo}
+	</select>
 	
 </mapper>

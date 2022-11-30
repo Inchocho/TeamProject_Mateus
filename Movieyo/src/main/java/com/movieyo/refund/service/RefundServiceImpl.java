@@ -55,18 +55,27 @@ public class RefundServiceImpl implements RefundService {
 	}
 
 	@Override
-	public void updateCash(int userNo, int moviePrice) {
+	public int updateCash(int userNo, int moviePrice) {
 		// TODO Auto-generated method stub
 		
 		//환불이 성공적으로 성공시 영화가격만큼 유저 캐쉬 증가
-		refundDao.updateCash(userNo, moviePrice);
+		return refundDao.updateCash(userNo, moviePrice);
 		
 	}
 	
 	@Override
 	public void updateBuy(int buyNo) {
 		
+		//환불이 성공적으로 성공시 (1)환불완료 -> (2)환불한 영화가격만큼 유저의 캐쉬증가 -> (3)구매상태 환불됨으로 변경
 		refundDao.updateBuy(buyNo);
+	}
+
+	@Override
+	public int checkCash(int userNo) {
+		// TODO Auto-generated method stub
+		
+		//환불이 성공적으로 완료 후 캐쉬가 갱신된후 해당 회원의 캐쉬를 조회
+		return refundDao.checkCash(userNo);
 	}
 
 
