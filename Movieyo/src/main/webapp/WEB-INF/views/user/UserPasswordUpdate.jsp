@@ -17,7 +17,34 @@
 	function pageMoveBeforeFnc(userNo){
 		location.href = 'one.do?userNo=' + userNo;
 	}
+	
+		function asd() {
+			var a = $('#password').val();
+			var b = $('#passwordC').val();
+			var c = $('#changePw').val();
+			var d = $('#changePwC').val();
+			
+// 			alert(a);
+// 			alert(b);
 
+			if (a != b) {
+				alert('현재비밀번호를 확인해주세요');
+			}else if (c != d) {
+				alert('비밀번호가 일치하지 않습니다');
+			}else {
+				submitFormObj = document.getElementById('submitForm');
+				alert('비밀번호 변경성공');
+				submitForm.submit();
+				
+			}
+		
+		}
+			
+		
+	
+			
+		
+		
 </script>
 </head>
 <body>
@@ -26,16 +53,15 @@
 	
 	<div id="div">
 		<h1>비밀번호 변경</h1><br>
-		<form action="./passwordUpdateCtr.do" method="post">
-			번호: <input type="text" name='userNo'
+		<form action="./passwordUpdateCtr.do" method="post" id="submitForm">
+			번호: <input type="hidden" name='userNo'
 			value='${userDto.userNo}' readonly="readonly"><br>
-			비밀번호: <input type="text" value="${userDto.password}">
-			${userDto.password}ㅁㅁㅁㅁ
-			<input type="password" placeholder="현재비밀번호:"><br>
-			<input type="password" name="password" placeholder="변경할 비밀번호:"><br>
-			<input type="password" placeholder="비밀번호 확인:"><br>
+			비밀번호: <input type="text" value="${userDto.password}" id="password">
+			<input type="password" placeholder="현재비밀번호:" id="passwordC"><br>
+			<input type="password" name="password" placeholder="변경할 비밀번호:" id="changePw"><br>
+			<input type="password" placeholder="비밀번호 재확인:" id="changePwC"><br>
 			
-			<input type="submit" value="변경하기">
+			<input type="button" value="변경하기" onclick="asd();" id="qwe">
 			<input type="button" value="취소" onclick='pageMoveBeforeFnc(${userDto.userNo});'>
 		</form>
 	</div>

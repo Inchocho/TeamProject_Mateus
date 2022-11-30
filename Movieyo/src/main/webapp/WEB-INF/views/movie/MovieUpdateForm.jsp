@@ -58,6 +58,37 @@ img{
 		});
 	});
 	
+	$(function () {
+		var pagingFormObj = document.getElementById('pagingForm');
+		
+		$('#moveUserListBtn').click(function(e){			
+			pagingFormObj.submit();
+		});		
+		
+		$("a[id ^='delete']").on('click', function (e) {
+			e.preventDefault();
+			deleteFileFnc($(this));
+		});
+	});
+	
+	function deleteFileFnc(obj) {
+		obj.parent().remove();
+	}
+	
+	function pageMoveListFnc() {
+		location.href = './list.do';
+	}
+	
+	function pageMoveDeleteFnc(no){
+		var url = "./deleteCtr.do?no=" + no;
+		location.href = url;
+	}
+	function pageMoveBackFnc(){
+		var pageMoveBackObj = document.getElementById("pageMoveBack");
+		
+		pageMoveBackObj.submit();
+	}
+
 	function addFileFnc() {
 		var obj = $('#fileContent');
 		
@@ -76,18 +107,8 @@ img{
 			deleteFileFnc($(this));
 		});
 	}
-	
-	function deleteFileFnc(obj) {
-		obj.parent().remove();
-	}
-	
-	$(function () {
-		$("a[id ^='delete']").on('click', function (e) {
-			e.preventDefault();
-			deleteFileFnc($(this));
-		});
-	});
 </script>
+
 
 </head>
 	
@@ -96,22 +117,27 @@ img{
 	<jsp:include page="../Header.jsp" />
 	<h1>영화수정</h1>
 	<div id="fileContent">
-		<c:choose>
-			<c:when test="${empty fileList}">
-					첨부파일이 없습니다.<br>			
-			</c:when>
-		
-			<c:otherwise>
-				<c:forEach var="row" items="${fileList}" varStatus="obj">
-<!-- 					<input type="button" value="이미지" name="file"> -->
-<%-- 					${row.ORIGINAL_FILE_NAME}(${row.FILE_SIZE}kb)<br> --%>
-					<img alt="image not found" src="<c:url value='/image/${row.STORED_FILE_NAME}'/>">
-					<a href="#this" id="delete_${obj.index}">삭제</a><br>
-<!-- 					<br> -->
-				</c:forEach>
-			</c:otherwise>
-		</c:choose>
-	</div>	
+			<div>
+				<c:choose>
+					<c:when test="${empty fileList}">
+						<input type="hidden" id="fileIdx" name="fileIdx" value="">
+						<input type="file" id="file0" name="file0">
+						<a href="#this" id="delete0" onclick="addFileFnc();">삭제</a><br>
+					</c:when>
+					
+					<c:otherwise>
+						<c:forEach var="row" items="${fileList}" varStatus="obj">
+							<input type="hidden" id="fileIdx_${obj.index}" name="fileIdx" value="${row.IDX}">
+							<img alt="image not found" src='<c:url value="/image/${row.STORED_FILE_NAME}"/>'><br>
+							${row.ORIGINAL_FILE_NAME} 
+							<input type="file" id="file_${obj.index}" name="file_${obj.index}">
+							(${row.FILE_SIZE}kb)
+							<a href="#this" id="delete_${obj.index}">삭제</a><br>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>
+			</div>
+		</div>	
 	
 	<form action='./updateCtr.do' method='post' enctype="multipart/form-data">
 		<div class="file">

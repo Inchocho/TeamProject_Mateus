@@ -24,16 +24,20 @@
 	
 	<h1>내가 메인이다</h1>
 	
-			
+	<div style="display: flex;">			
 	<c:forEach var="row" items="${fileList}" varStatus="status">
+		<div style="margin: 10px;">
+			<div>
 		<img alt="image not found" src="<c:url value='/image/${row.get(0).STORED_FILE_NAME}'/>">
-					
+		</div>
+		<div>					
 		<c:set var="movieDto" value="${movieList[status.index]}"/>
-			${movieDto.movieTitle}
+			${movieDto.movieTitle}<br>
 			${movieDto.genreName}
-	
+			</div>
+	</div>
 	</c:forEach>
-	
+	</div>
 	<jsp:include page="../Tail.jsp" />
 	
 </body>

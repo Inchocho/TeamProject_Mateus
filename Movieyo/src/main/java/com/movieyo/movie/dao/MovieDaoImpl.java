@@ -85,5 +85,17 @@ public class MovieDaoImpl implements MovieDao{
 		return sqlSession.selectList(namespace + "movieNoSelect");
 		
 	}
+
+	@Override
+	public Map<String, Object> fileSelectStoredFileName(int parentSeq) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace + "fileSelectStoredFileName", parentSeq);
+	}
+
+	@Override
+	public int fileDelete(int parentSeq) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete(namespace + "fileDelete", parentSeq);
+	}
 	
 }
