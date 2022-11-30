@@ -133,20 +133,20 @@ th {
 		
 	<div class="contContainer">
 	<form id="buyCartSelectForm">
-		<input type="hidden" value="${cart.userNo}">
+		<input type="hidden" value="${userDto.userNo}">
 	<table>
 		<tr>
 			<th>영화제목</th><th>가격(원)</th><th>담은날짜</th><th>선택</th>
 		</tr>
 		<c:if test="${not empty cartList}">
-		<c:forEach var="cart" items="${cartList}">
+		<c:forEach var="i" items="${cartList}">
 		<!-- cartDto = [cartNo, userNo, movieNo, inCartDate] -->
 		<!-- map// cart.cartNo,userNo,inCartDate / cart.movie -->
 		<tr>
-			<td id="tdMtitle${cartList.cart.cartNo}">${cartList.cart.movieTitle}</td>
-			<td id="cartPsel${cartList.cart.cartNo}">${cartList.cart.moviePrice}</td>
-			<td>${cartList.cart.inCartDate}</td>
-			<td><input type="checkbox" id="cartSelCN${cartList.cart.cartNo}" value="${cartList.cart.cartNo}"></td>
+			<td id="tdMtitle${cartList.i.cart.cartNo}">${cartList.i.cart.movieTitle}</td>
+			<td id="cartPsel${cartList.i.cart.cartNo}">${cartList.i.cart.moviePrice}</td>
+			<td>${cartList.i.cart.inCartDate}</td>
+			<td><input type="checkbox" id="cartSelCN${cartList.i.cart.cartNo}" value="${cartList.i.cart.cartNo}"></td>
 		</tr>
 		</c:forEach>
 	

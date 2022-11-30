@@ -95,7 +95,6 @@ public class CartController {
 			cart.put("movieTitle", movieTitle);
 			cart.put("inCartDate", inCartDate);		
 			cart.put("cartNo", cartNo);
-			cart.put("userNo", userNo);
 			
 			cartList.add(i,cart);
 		}
