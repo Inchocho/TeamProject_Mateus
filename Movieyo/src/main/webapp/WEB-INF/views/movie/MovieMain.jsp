@@ -24,6 +24,7 @@
 	
 	<h1>내가 메인이다</h1>
 	
+<<<<<<< HEAD
 	<div style="display: flex;">			
 	<c:forEach var="row" items="${fileList}" varStatus="status">
 		<div style="margin: 10px;">
@@ -39,6 +40,24 @@
 	</c:forEach>
 	</div>
 	<jsp:include page="../Tail.jsp" />
+=======
+	<c:choose>	
+		<c:when test="${empty fileList}">
+			첨부파일이 없습니다.
+		
+		</c:when>	
+		<c:otherwise>
+			<c:forEach var="row" items="${fileList}" varStatus="status">
+				<img alt="image not found" src="<c:url value='/image/${row.get(0).STORED_FILE_NAME}'/>">
+							
+				<c:set var="movieDto" value="${movieList[status.index]}"/>
+					${movieDto.movieTitle}
+					${movieDto.genreName}
+			</c:forEach>
+		</c:otherwise>
+	</c:choose>
+<%-- 	<jsp:include page="../Tail.jsp" /> --%>
+>>>>>>> branch 'main' of https://github.com/Inchocho/TeamProject_Movieyo.git
 	
 </body>
 </html>

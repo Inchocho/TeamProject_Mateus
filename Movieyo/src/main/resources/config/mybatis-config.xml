@@ -25,10 +25,13 @@
 		<typeAlias type="com.movieyo.buy.dto.BuyDto"
 			alias="BuyDto" />		
 			
-				<!-- 2022/11/25 UserGenreDto 추가 -->	
+		<!-- 2022/11/25 UserGenreDto 추가 -->	
 		<typeAlias type="com.movieyo.user.dto.UserGenreDto"
 			alias="UserGenreDto" />
 			
+		<!-- 2022/11/29 CartDto 추가 -->	
+		<typeAlias type="com.movieyo.cart.dto.CartDto"
+			alias="cartDto" />	
 	</typeAliases>
 	
 	

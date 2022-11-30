@@ -133,29 +133,23 @@ th {
 		
 	<div class="contContainer">
 	<form id="buyCartSelectForm">
+		<input type="hidden" value="${cart.userNo}">
 	<table>
 		<tr>
 			<th>영화제목</th><th>가격(원)</th><th>담은날짜</th><th>선택</th>
 		</tr>
-		<c:if test="true">
+		<c:if test="${not empty cartList}">
 		<c:forEach var="cartDto" items="${cartList}">
 		<!-- cartDto = [cartNo, userNo, movieNo, inCartDate] -->
-		<!-- map// cart.user / cart.movie -->
-		
+		<!-- map// cart.cartNo,userNo,inCartDate / cart.movie -->
+		<tr>
+			<td>${cart.movie.title}</td>
+			<td id="cartPsel${cart.cartNo}">${cart.movie.price}</td>
+			<td>${cart.inCartDate}</td>
+			<td><input type="checkbox" id="cartSelCN${cart.cartNo}" value="${cart.movieNo}"></td>
+		</tr>
 		</c:forEach>
-		<tr>
-			<td>${cart.movie.title}1</td>
-			<td id="cartPsel${cartDto.cartNo}1">${cart.movie.price}3000</td>
-			<td>${cartDto.inCartDate}1</td>
-			<td><input type="checkbox" id="cartSelCN${cartDto.cartNo}1" value="${cartDto.movieNo}"></td>
-		</tr>
-		<tr>
-			<td>${cart.movie.title}2</td>
-			<td id="cartPsel${cartDto.cartNo}2">${cart.movie.price}8000</td>
-			<td>${cartDto.inCartDate}2</td>
-			<td><input type="checkbox" id="cartSelCN${cartDto.cartNo}2" value="${cartDto.movieNo}"></td>
-		</tr>
-			
+	
 		</c:if>
 		<c:if test="${empty cartList}">
 			<tr>
@@ -181,7 +175,7 @@ th {
 	
 	<form action="./list.do" id="pagingForm" method="post">
 		<input type="hidden" id="curPage" name="curPage"
-			value="${pagingMap.curPage}">
+			value="${pagingMap.cartPaging.curPage}">
 		<input type="hidden"  name="keyword" value="${searchMap.keyword}">
 		<input type="hidden"  name="searchOption" value="${searchMap.searchOption}">
 	</form>
@@ -191,22 +185,22 @@ th {
 			<c:choose>
 				<c:when test="TRUE">
 					<option value="all"<c:if test="${searchMap.searchOption eq 'all'}">selected</c:if>>제목 + 담은날짜</option>
-					<option value="MOVIE_NO_TITLE">제목</option>					
+					<option value="MOVIE_TITLE">제목</option>					
 					<option value="CART_INCARTDATE">담은날짜</option>
 				</c:when>
 				<c:when test="${searchMap.searchOption == 'all'}">
 					<option value="all"<c:if test="${searchMap.searchOption eq 'all'}">selected</c:if>>제목 + 담은날짜</option>
-					<option value="MOVIE_NO_TITLE">제목</option>					
+					<option value="MOVIE_TITLE">제목</option>					
 					<option value="CART_INCARTDATE">담은날짜</option>
 				</c:when>
 				<c:when test="${searchMap.searchOption == 'MOVIE_TITLE'}">
 					<option value="all">제목 + 담은날짜</option>
-					<option value="MOVIE_NO_TITLE"<c:if test="${searchMap.searchOption eq 'MOVIE_TITLE'}">selected</c:if>>제목</option>
+					<option value="MOVIE_TITLE"<c:if test="${searchMap.searchOption eq 'MOVIE_TITLE'}">selected</c:if>>제목</option>
 					<option value="CART_INCARTDATE">담은날짜</option>
 				</c:when>				
-				<c:when test="${searchMap.searchOption == 'MOVIE_NO_TITLE'}">
+				<c:when test="${searchMap.searchOption == 'CART_INCARTDATE'}">
 					<option value="all">감독+제목</option>
-					<option value="MOVIE_NO_TITLE">제목</option>					
+					<option value="MOVIE_TITLE">제목</option>					
 					<option value="CART_INCARTDATE"<c:if test="${searchMap.searchOption eq 'MOVIE_DIRECTOR'}">selected</c:if>>담은날짜</option>
 				</c:when>				
 			</c:choose>

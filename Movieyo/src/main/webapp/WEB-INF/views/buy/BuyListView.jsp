@@ -114,13 +114,13 @@
 <script type="text/javascript">
 	$(function(){
 		$('#rBtn').on('click',function(event){
-			$('input[name=rBtn]').prop('type', 'text');
-			$('input[name=rBtn]').val('처리중');
+// 			$('input[name=rBtn]').prop('type', 'text');
+// 			$('input[name=rBtn]').val('처리중');
 		});
 	});
 	
 	$('input').on('click', function () {
-		   $(this).prop('type', 'text');
+// 		   $(this).prop('type', 'text');
 	});	
 	
 	function buyAdd() {	//실제로는 폼에서 선택하고 보내줘야함
@@ -141,9 +141,6 @@
 		
 		refundAddFormObj.submit();
 
-		var refundAObj = document.getElementById("refundA");
-
-		refundAObj.innerHTML = "<input type='text' value='처리중'>";
 		
 	}	
 
