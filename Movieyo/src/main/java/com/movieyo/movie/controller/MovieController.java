@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.movieyo.buy.service.BuyService;
+import com.movieyo.cart.service.CartService;
 import com.movieyo.movie.dto.MovieDto;
 import com.movieyo.movie.service.MovieService;
+import com.movieyo.user.dto.UserDto;
 import com.movieyo.util.Paging;
 
 @Controller
@@ -30,6 +33,8 @@ public class MovieController {
 	
 	@Autowired
 	private MovieService movieService;	
+	private BuyService buyService;	
+	private CartService cartService;	
 	
 	//apiTest 영화목록 들어가기
 	@RequestMapping(value="/movie/movie.do", method = RequestMethod.GET)
@@ -271,8 +276,15 @@ public class MovieController {
 		public String movieDetail(int movieNo, Model model
 				, @RequestParam(defaultValue = "1") int curPage
 				, @RequestParam(defaultValue = "all")String searchOption
-				, @RequestParam(defaultValue = "")String keyword) {
+				, @RequestParam(defaultValue = "")String keyword
+				, HttpSession session) {
 			logger.debug("Welcome MovieController movieOne!{}" , movieNo);
+			
+			UserDto userDto = (UserDto)session.getAttribute("userDto");
+//			int userNo = userDto.getUserNo();
+//			int buyCheck = buyService.buyExistOne(userNo,movieNo);
+//			
+//			model.addAttribute("buyCheck", buyCheck);
 			
 			Map<String, Object> map = movieService.movieSelectOne(movieNo);
 			
