@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.movieyo.refund.dao.RefundDao;
 import com.movieyo.refund.dto.RefundDto;
+import com.movieyo.user.dto.UserDto;
 
 @Service
 public class RefundServiceImpl implements RefundService {
@@ -76,6 +77,22 @@ public class RefundServiceImpl implements RefundService {
 		
 		//환불이 성공적으로 완료 후 캐쉬가 갱신된후 해당 회원의 캐쉬를 조회
 		return refundDao.checkCash(userNo);
+	}
+
+	//11월30일 체크장르 (유저의 선호장르를 확인하기위한 리스트타입 쿼리 -> 유저로 옮길예정)
+	@Override
+	public List<UserDto> checkGenre(int userNo) {
+		// TODO Auto-generated method stub
+		
+		//(refundDao -> userDao로 변경필요)
+		return refundDao.checkGenre(userNo);
+	}
+
+	@Override
+	public String genreName(int genreNo) {
+		// TODO Auto-generated method stub
+		
+		return refundDao.genreName(genreNo);
 	}
 
 

@@ -50,6 +50,9 @@
 			<input type="checkbox" name="gender" value="여" onclick="return false;" checked="checked">여 <br>
 		</c:if>
       	
+      	<input type="text" value="${userDto.userAdmin}">
+      	
+      	
 		
 		<input type='submit' value='저장하기'>
 	

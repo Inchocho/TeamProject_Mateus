@@ -153,8 +153,9 @@ public class RefundController {
 			
 			System.out.println(refundChk + "환불처리 됬는지 확인용");
 			
-			if(refundChk != 0) {							
+			if(refundChk != 0) {				
 				refundService.updateCash(refundUserNo, moviePrice);
+				model.addAttribute("refundChk", refundChk);
 				
 				int updateCash = refundService.checkCash(refundUserNo);
 				System.out.println("해당 유저 환불받은 후 잔여캐쉬" + updateCash);
@@ -166,7 +167,7 @@ public class RefundController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	      
+	      	    
 	    return "redirect:./list.do";
 	}	
 	
