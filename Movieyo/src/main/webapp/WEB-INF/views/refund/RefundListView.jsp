@@ -66,10 +66,17 @@ function admitRefund(index) {
 				${refundMap.refundUserNo}
 			</td>						
 				<td>			
-				<form id="refundAdmit${status.index}" action="../refund/updateRefund.do" method="POST">					
-					<a href="#" onclick="admitRefund(${status.index});">					
-						<input id='rBtnYes' type='button' value='수락'>					
-					</a>
+				<form id="refundAdmit${status.index}" action="../refund/updateRefund.do" method="POST">	
+					<c:choose>
+						<c:when test="${refundChk ==  0}">				
+							<a href="#" onclick="admitRefund(${status.index});">					
+								<input id='rBtnYes' type='button' value='수락'>					
+							</a>
+						</c:when>
+						<c:otherwise>
+							<input type="text" value="환불완료됨" readonly="readonly">
+						</c:otherwise>
+					</c:choose>
 					<input type="hidden" name="refundNo" value="${refundMap.refundNo}">
 					<input type="hidden" name="buyNo" value="${refundMap.buyNo}">
 					<input type='hidden' name='movieNo' value="${refundMap.movieNo}">

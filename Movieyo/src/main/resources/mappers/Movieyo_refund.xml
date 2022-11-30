@@ -122,4 +122,19 @@
 		WHERE USER_NO = #{userNo}
 	</select>
 	
+     <!-- 유저로 옮길에정 11월 30일 -->
+     <select id="checkGenre" parameterType="int" resultType="userDto">                    
+         SELECT * FROM 
+         GENRE_USER 
+         WHERE USER_NO = #{userNo}            
+     </select>
+     
+     <!-- 유저로 옮길예정 11월 30일 장르이름받기 -->
+     <select id="genreName" parameterType="int" resultType="String">
+     	SELECT GENRE_NAME
+     	FROM GENRE
+     	WHERE GENRE_NO = #{genreNo}
+     </select>
+     
+	
 </mapper>
