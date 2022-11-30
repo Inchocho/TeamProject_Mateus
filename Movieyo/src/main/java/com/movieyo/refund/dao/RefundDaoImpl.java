@@ -71,7 +71,7 @@ public class RefundDaoImpl implements RefundDao{
 
 
 	@Override
-	public void updateRefund(RefundDto refundDto, int admit) {
+	public int updateRefund(RefundDto refundDto, int admit) {
 		// TODO Auto-generated method stub
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -81,7 +81,26 @@ public class RefundDaoImpl implements RefundDao{
 		map.put("admit", admit);
 		map.put("buyNo", buyNo);
 		
-		sqlSession.update(namespace + "updateRefund", map);
+		return sqlSession.update(namespace + "updateRefund", map);
 		
+	}
+
+
+	@Override
+	public void updateCash(int userNo, int moviePrice) {
+		// TODO Auto-generated method stub
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("userNo", userNo);
+		map.put("moviePrice", moviePrice);
+		
+		sqlSession.update(namespace + "updateCash", map);
+	}
+	
+	@Override
+	public void updateBuy(int buyNo) {
+		
+		sqlSession.update(namespace + "updateBuy", buyNo);
 	}
 }

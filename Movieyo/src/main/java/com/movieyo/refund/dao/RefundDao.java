@@ -15,6 +15,9 @@ public interface RefundDao {
 
 	public int refundExist(int buyNo, int userNo);
 
-	public void updateRefund(RefundDto refundDto, int admit);
+	public int updateRefund(RefundDto refundDto, int admit);
 
+	public void updateCash(int userNo, int moviePrice);
+
+	public void updateBuy(int buyNo);
 }

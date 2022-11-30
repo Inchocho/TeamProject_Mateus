@@ -39,10 +39,11 @@ public class RefundController {
 	public String refundList(@RequestParam(defaultValue = "1") int curPage, Model model,
 			@RequestParam(defaultValue = "all")String searchOption
 		  , @RequestParam(defaultValue = "")String keyword
-		  , HttpSession session
-		  , int userNo) {
+		  , HttpSession session) {
 		
 		UserDto userDto = (UserDto)session.getAttribute("userDto");
+		
+		int userNo = userDto.getUserNo();
 		
 		//userAdmin을 통해 환불내역 조회
 		int userAdmin = userDto.getUserAdmin();
@@ -90,6 +91,7 @@ public class RefundController {
 			
 			int refundNo = Integer.parseInt(String.valueOf(listMap.get(i).get("REFUND_NO")));
 			int movieNo = Integer.parseInt(String.valueOf(listMap.get(i).get("MOVIE_NO")));
+			int buyNo = Integer.parseInt(String.valueOf(listMap.get(i).get("BUY_NO")));
 			String movieTitle = (String)listMap.get(i).get("MOVIE_TITLE");
 			int moviePrice = Integer.parseInt(String.valueOf(listMap.get(i).get("MOVIE_PRICE")));
 			Date buyDate = (Date)listMap.get(i).get("BUY_DATE");
@@ -103,6 +105,7 @@ public class RefundController {
 			refundMap.put("refundDate", refundDate);		
 			refundMap.put("buyDate", buyDate);
 			refundMap.put("refundNo", refundNo);
+			refundMap.put("buyNo", buyNo);
 			refundMap.put("movieNo", movieNo);
 			refundMap.put("refundUserNo", refundUserNo);
 			refundMap.put("userNo", userNo);
@@ -138,21 +141,25 @@ public class RefundController {
 	//관리자가 환불 버튼을 눌러주면 환불처리가 되고 유저 계좌에 영화가격만큼 돈이 올라감 
 	@RequestMapping(value = "/refund/updateRefund.do", method = RequestMethod.POST)
 	public String updateRefund(HttpSession session,			
-			RefundDto refundDto, Model model, int admit)  {
+			RefundDto refundDto, Model model, int admit, int moviePrice)  {
 	                     // email.password 네임값을 가져옴(@RequestMapping의 힘)
 	    logger.info("Welcome refundController updateRefund!" + refundDto);
 	    
-	    int userNo = refundDto.getUserNo();
+	    int userNo = refundDto.getUserNo();	    
 	      
 	    try {
-	    	//int admit -> 예(1),아니오(0)
-			refundService.updateRefund(refundDto, admit);
+	    	//int admit -> 예(1),아니오(0) --> 일단 1만 받음			
+			int refundChk = refundService.updateRefund(refundDto, admit);
+			
+			if(refundChk != 0) {
+				refundService.updateCash(userNo, moviePrice);
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	      
-	    return "redirect:./list.do?userNo=" +  userNo;
+	    return "redirect:./list.do";
 	}	
 	
 }

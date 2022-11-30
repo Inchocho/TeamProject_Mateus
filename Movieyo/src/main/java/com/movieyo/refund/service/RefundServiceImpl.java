@@ -46,10 +46,27 @@ public class RefundServiceImpl implements RefundService {
 	}
 
 	@Override
-	public void updateRefund(RefundDto refundDto, int admit) {
+	public int updateRefund(RefundDto refundDto, int admit) {
 		// TODO Auto-generated method stub
-		refundDao.updateRefund(refundDto, admit);
+		//admit 0 -> 환불불가 admit 1 -> 환불
 		
+		return refundDao.updateRefund(refundDto, admit);
+		
+	}
+
+	@Override
+	public void updateCash(int userNo, int moviePrice) {
+		// TODO Auto-generated method stub
+		
+		//환불이 성공적으로 성공시 영화가격만큼 유저 캐쉬 증가
+		refundDao.updateCash(userNo, moviePrice);
+		
+	}
+	
+	@Override
+	public void updateBuy(int buyNo) {
+		
+		refundDao.updateBuy(buyNo);
 	}
 
 
