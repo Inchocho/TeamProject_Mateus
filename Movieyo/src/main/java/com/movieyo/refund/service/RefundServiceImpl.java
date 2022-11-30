@@ -21,9 +21,9 @@ public class RefundServiceImpl implements RefundService {
 	public RefundDao refundDao;
 
 	@Override
-	public int refundSelectTotalCount(String searchOption, String keyword, int userNo) {
+	public int refundSelectTotalCount(String searchOption, String keyword, int userNo, int userAdmin) {
 		// TODO Auto-generated method stub
-		return refundDao.refundSelectTotalCount(searchOption, keyword, userNo);
+		return refundDao.refundSelectTotalCount(searchOption, keyword, userNo, userAdmin);
 	}
 
 	@Override
@@ -43,6 +43,13 @@ public class RefundServiceImpl implements RefundService {
 	public int refundExist(int buyNo, int userNo) {
 		// TODO Auto-generated method stub
 		return refundDao.refundExist(buyNo, userNo);
+	}
+
+	@Override
+	public void updateRefund(RefundDto refundDto, int admit) {
+		// TODO Auto-generated method stub
+		refundDao.updateRefund(refundDto, admit);
+		
 	}
 
 

@@ -16,7 +16,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.movieyo.movie.dto.MovieDto;
+import com.movieyo.refund.dto.RefundDto;
 import com.movieyo.refund.service.RefundService;
 import com.movieyo.user.dto.UserDto;
 import com.movieyo.util.Paging;
@@ -49,7 +52,7 @@ public class RefundController {
 		
 		logger.info("keyword: {}",keyword);	
 		
-		int totalCount = refundService.refundSelectTotalCount(searchOption, keyword, userNo);
+		int totalCount = refundService.refundSelectTotalCount(searchOption, keyword, userNo, userAdmin);
 		
 		logger.info("totalCount: {}", totalCount);
 		
@@ -126,10 +129,30 @@ public class RefundController {
 				refundService.refundInsertOne(buyNo, userNo);
 			}else {
 				System.out.println("이프문 타는지 확인");
-				return "redirect:./list.do";				
+				return "redirect:./list.do?userNo=" + userNo;				
 			}
 
 		return "redirect:./list.do?userNo=" +  userNo;
 	}
+	
+	//관리자가 환불 버튼을 눌러주면 환불처리가 되고 유저 계좌에 영화가격만큼 돈이 올라감 
+	@RequestMapping(value = "/refund/updateRefund.do", method = RequestMethod.POST)
+	public String updateRefund(HttpSession session,			
+			RefundDto refundDto, Model model, int admit)  {
+	                     // email.password 네임값을 가져옴(@RequestMapping의 힘)
+	    logger.info("Welcome refundController updateRefund!" + refundDto);
+	    
+	    int userNo = refundDto.getUserNo();
+	      
+	    try {
+	    	//int admit -> 예(1),아니오(0)
+			refundService.updateRefund(refundDto, admit);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	      
+	    return "redirect:./list.do?userNo=" +  userNo;
+	}	
 	
 }

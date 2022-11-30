@@ -56,6 +56,10 @@ body {
 	function userList() {
 		location.href = '../user/list.do';
 	}
+	
+	function logout() {
+		location.href = '../user/logout.do';
+	}
 </script>
 </head>
 <div class="headerDiv">
@@ -75,7 +79,7 @@ body {
 			</li>
 			<li style="color: white; padding-right: 20px;">${userDto.nickname} 님　
 				<input type="button" value="내정보" onclick="myInfo();">
-				<input type="button" value="로그아웃">
+				<input type="button" value="로그아웃" onclick="logout();">
 			</li>
 		</ul>
 	</div>

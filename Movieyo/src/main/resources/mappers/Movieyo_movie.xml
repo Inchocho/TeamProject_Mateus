@@ -121,6 +121,11 @@
 		WHERE MOVIE_NO = #{movieNo}
 	</delete>
 	
+	<select id="movieNoSelect" resultType="int">
+		SELECT MOVIE_NO
+		FROM MVY_MOVIE
+	</select>
+	
 	
 	
 </mapper>

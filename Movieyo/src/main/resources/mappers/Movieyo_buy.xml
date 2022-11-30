@@ -83,5 +83,5 @@
 		WHERE USER_NO = #{userNo}
 		AND MOVIE_NO = #{movieNo}
 	</select>
-
+	
 </mapper>

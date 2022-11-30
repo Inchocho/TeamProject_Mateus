@@ -56,7 +56,8 @@ public class UserController {
 		if(userDto != null) {
 			session.setAttribute("userDto", userDto);
 			
-			viewUrl =  "redirect:../user/one.do?userNo=" +  userDto.getUserNo();
+//			viewUrl =  "redirect:../user/one.do?userNo=" +  userDto.getUserNo();
+			viewUrl = "redirect:../movie/main.do";
 		}else {
 			viewUrl = "/auth/LoginFail";
 		}
@@ -310,6 +311,16 @@ public class UserController {
 			model.addAttribute("userDto", userDtoCarged);
 			
 			return "redirect:userMpoint.do";
+		}
+		
+		@RequestMapping(value="/user/logout.do", method = RequestMethod.GET)
+		public String logout(HttpSession session) {
+				
+			logger.info("Goodbye UserController logout!");
+			
+			session.invalidate();
+			
+			return "redirect:/auth/login.do";
 		}
 		
 }

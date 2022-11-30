@@ -20,12 +20,13 @@ public class BuyDaoImpl implements BuyDao{
 	String namespace = "com.movieyo.buy.";
 
 	@Override
-	public int buySelectTotalCount(String searchOption, String keyword, int userNo) {
+	public int buySelectTotalCount(String searchOption, String keyword, int userNo, int userAdmin) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("searchOption", searchOption);
 		map.put("keyword", keyword);
 		map.put("userNo", userNo);
+		map.put("userAdmin", userAdmin);
 		
 		return sqlSession.selectOne(namespace + "buySelectTotalCount", map);
 	}
@@ -42,6 +43,8 @@ public class BuyDaoImpl implements BuyDao{
 		map.put("userAdmin", userAdmin);	// --> 세션에서 유저어드민을 가져와서 관리자 확인
 		map.put("start", start);
 		map.put("end", end);
+		
+		System.out.println(userAdmin + "다오임플 유저어드민 권한");
 		
 		return sqlSession.selectList(namespace + "buySelectList", map);
 	}
@@ -63,5 +66,4 @@ public class BuyDaoImpl implements BuyDao{
 		return sqlSession.selectOne(namespace + "buyExist", map);
 	}
 
-	
 }

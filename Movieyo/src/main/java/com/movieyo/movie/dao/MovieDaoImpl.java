@@ -79,5 +79,11 @@ public class MovieDaoImpl implements MovieDao{
 		// TODO Auto-generated method stub
 		sqlSession.delete(namespace + "movieDeleteOne", movieNo);
 	}
+
+	@Override
+	public List<Integer> movieNoSelect() {
+		return sqlSession.selectList(namespace + "movieNoSelect");
+		
+	}
 	
 }
