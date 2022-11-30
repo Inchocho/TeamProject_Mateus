@@ -174,11 +174,12 @@ public class MovieController {
 			return "movie/MovieUpdateForm";
 		}
 		
+		
 		@RequestMapping(value = "/movie/updateCtr.do", method = RequestMethod.POST)
 		public String movieUpdateCtr(HttpSession session,
 				MultipartHttpServletRequest mulRequest,
-				MovieDto movieDto, Model model)  {
-		                     // email.password 네임값을 가져옴(@RequestMapping의 힘)
+				MovieDto movieDto, Model model,
+				@RequestParam(value= "fileIex", defaultValue = "-1")int fileIdx)  {
 		    logger.info("Welcome movieController movieUpdateCtr!" + movieDto);
 		      
 		    try {
@@ -223,7 +224,7 @@ public class MovieController {
 			for (int i = 0; i < movieNo.size(); i++) {
 				int movieNo2 = Integer.parseInt(String.valueOf(movieNo.get(i))); 
 
-				Map<String, Object> map = movieService.moviefileOne(movieNo2);
+				Map<String, Object> map = movieService.moviefileOne(movieNo2);				
 				List<Map<String, Object>> listlist = (List<Map<String, Object>>) map.get("fileList");
 				fileList.add(listlist);
 			}

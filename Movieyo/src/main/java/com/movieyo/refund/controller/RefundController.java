@@ -16,9 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.movieyo.movie.dto.MovieDto;
 import com.movieyo.refund.dto.RefundDto;
 import com.movieyo.refund.service.RefundService;
 import com.movieyo.user.dto.UserDto;
@@ -39,10 +37,11 @@ public class RefundController {
 	public String refundList(@RequestParam(defaultValue = "1") int curPage, Model model,
 			@RequestParam(defaultValue = "all")String searchOption
 		  , @RequestParam(defaultValue = "")String keyword
-		  , HttpSession session
-		  , int userNo) {
+		  , HttpSession session) {
 		
 		UserDto userDto = (UserDto)session.getAttribute("userDto");
+		
+		int userNo = userDto.getUserNo();
 		
 		//userAdmin을 통해 환불내역 조회
 		int userAdmin = userDto.getUserAdmin();
@@ -90,12 +89,13 @@ public class RefundController {
 			
 			int refundNo = Integer.parseInt(String.valueOf(listMap.get(i).get("REFUND_NO")));
 			int movieNo = Integer.parseInt(String.valueOf(listMap.get(i).get("MOVIE_NO")));
+			int buyNo = Integer.parseInt(String.valueOf(listMap.get(i).get("BUY_NO")));
 			String movieTitle = (String)listMap.get(i).get("MOVIE_TITLE");
 			int moviePrice = Integer.parseInt(String.valueOf(listMap.get(i).get("MOVIE_PRICE")));
 			Date buyDate = (Date)listMap.get(i).get("BUY_DATE");
 			Date refundDate = (Date)listMap.get(i).get("REFUND_DATE");
 			String refundStatus = (String)listMap.get(i).get("REFUND_STATUS");
-			int refundUserNo = Integer.parseInt(String.valueOf(listMap.get(i).get("USER_NO")));
+			int refundUserNo = Integer.parseInt(String.valueOf(listMap.get(i).get("USER_NO")));			
 			
 			refundMap.put("moviePrice", moviePrice);
 			refundMap.put("movieTitle", movieTitle);
@@ -103,6 +103,7 @@ public class RefundController {
 			refundMap.put("refundDate", refundDate);		
 			refundMap.put("buyDate", buyDate);
 			refundMap.put("refundNo", refundNo);
+			refundMap.put("buyNo", buyNo);
 			refundMap.put("movieNo", movieNo);
 			refundMap.put("refundUserNo", refundUserNo);
 			refundMap.put("userNo", userNo);
@@ -128,7 +129,7 @@ public class RefundController {
 				System.out.println("여기탔니?");
 				refundService.refundInsertOne(buyNo, userNo);
 			}else {
-				System.out.println("이프문 타는지 확인");
+				System.out.println("이프문 타는지 확인 + 구매내역에서 환불신청시 안탔으면 타는 로그");
 				return "redirect:./list.do?userNo=" + userNo;				
 			}
 
@@ -138,21 +139,35 @@ public class RefundController {
 	//관리자가 환불 버튼을 눌러주면 환불처리가 되고 유저 계좌에 영화가격만큼 돈이 올라감 
 	@RequestMapping(value = "/refund/updateRefund.do", method = RequestMethod.POST)
 	public String updateRefund(HttpSession session,			
-			RefundDto refundDto, Model model, int admit)  {
+			RefundDto refundDto, Model model, int admit, int moviePrice)  {
 	                     // email.password 네임값을 가져옴(@RequestMapping의 힘)
 	    logger.info("Welcome refundController updateRefund!" + refundDto);
 	    
-	    int userNo = refundDto.getUserNo();
-	      
+	    int refundUserNo = refundDto.getUserNo();	    
+	    int buyNo = refundDto.getBuyNo();
+	    
 	    try {
-	    	//int admit -> 예(1),아니오(0)
-			refundService.updateRefund(refundDto, admit);
+	    	//int admit -> 예(1),아니오(0) --> 일단 1만 받음			
+	    	int refundChk = 0;
+			refundChk = refundService.updateRefund(refundDto, admit);
+			
+			System.out.println(refundChk + "환불처리 됬는지 확인용");
+			
+			if(refundChk != 0) {							
+				refundService.updateCash(refundUserNo, moviePrice);
+				
+				int updateCash = refundService.checkCash(refundUserNo);
+				System.out.println("해당 유저 환불받은 후 잔여캐쉬" + updateCash);
+				
+				refundService.updateBuy(buyNo);				
+				
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	      
-	    return "redirect:./list.do?userNo=" +  userNo;
+	    return "redirect:./list.do";
 	}	
 	
 }

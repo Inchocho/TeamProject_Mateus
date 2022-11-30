@@ -15,6 +15,12 @@ public interface RefundService {
 
 	public int refundExist(int buyNo, int userNo);
 
-	public void updateRefund(RefundDto refundDto, int admit);
+	public int updateRefund(RefundDto refundDto, int admit);
+
+	public int updateCash(int userNo, int moviePrice);
+	
+	public void updateBuy(int buyNo);
+
+	public int checkCash(int userNo);
 
 }

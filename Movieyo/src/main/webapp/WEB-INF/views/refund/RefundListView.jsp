@@ -6,8 +6,22 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
 
+function admitRefund(index) {
+		
+		var refundCurPageObj = document.getElementById("refundCurPage");
+		
+		refundCurPageObj.value = document.getElementById("curPage").value;
+
+		var str = "refundAdmit" + index;
+		
+		var refundAddFormObj = document.getElementById(str);
+		
+		refundAddFormObj.submit();		
+	
+}	
 </script>
 <title>환불목록</title>
 </head>
@@ -52,16 +66,19 @@
 				${refundMap.refundUserNo}
 			</td>						
 				<td>			
-				<form id="refundAdmit${status.index}" action="../refund/admitRefund.do" method="GET">					
+				<form id="refundAdmit${status.index}" action="../refund/updateRefund.do" method="POST">					
 					<a href="#" onclick="admitRefund(${status.index});">					
-						<input id='rBtn' type='button' value='환불'>					
+						<input id='rBtnYes' type='button' value='수락'>					
 					</a>
 					<input type="hidden" name="refundNo" value="${refundMap.refundNo}">
+					<input type="hidden" name="buyNo" value="${refundMap.buyNo}">
 					<input type='hidden' name='movieNo' value="${refundMap.movieNo}">
-					<input type='hidden' name='userNo' value="${refundMap.userNo}">
-					<input type="hidden" id="buyCurPage" name="curPage" value="">
+					<input type='hidden' name='userNo' value="${refundMap.refundUserNo}">
+					<input type="hidden" name="moviePrice" value="${refundMap.moviePrice}">
+					<input type="hidden" id="refundCurPage" name="curPage" value="">
 					<input type="hidden" name="keyword" value="${searchMap.keyword}">
 					<input type="hidden" name="searchOption" value="${searchMap.searchOption}">
+					<input type="hidden" name="admit" value='1'>
 				</form>								
 				</td>
 			</c:if>		

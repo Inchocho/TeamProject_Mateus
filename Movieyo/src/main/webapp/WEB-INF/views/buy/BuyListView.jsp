@@ -36,7 +36,7 @@
 				<fmt:formatDate pattern="yyyy-MM-dd"
 				value = "${buyMap.buyDate}"/>
 			</td>
-			<td>
+			<td id='status'>
 				${buyMap.buyStatus}
 			</td>			
 			<c:if test='${userDto.userAdmin == 1}'>
@@ -45,13 +45,10 @@
 				<td>${buyMap.buyNo}</td>
 			</c:if>	
 			<td>
-			<form id="refundAddForm${status.index}" action="../refund/addRefund.do" method="GET">					
-				<a id ="reFundA' href="#" onclick="moveRefund(${status.index});">
-					<input id='rBtn' name='rBtn' type='button' value='환불하기'
-					onclick="this.value='신청중';$(this).attr('type','text');">					
-				</a>
+			<form id="refundAddFrom" action="../refund/addRefund.do" method="GET">					
+				<input type="submit" name='refundSubmitBtn' id='refundSubmit' value="환불하기">					
 				<input type="hidden" name="buyNo" value="${buyMap.buyNo}">
-				<input type='hidden' name='userNo' value="${buyMap.userNo}">
+				<input type='hidden' name='userNo' value="${buyMap.buyUserNo}">
 				<input type="hidden" id="buyCurPage" name="curPage" value="">
 				<input type="hidden" name="keyword" value="${searchMap.keyword}">
 				<input type="hidden" name="searchOption" value="${searchMap.searchOption}">
@@ -109,43 +106,17 @@
 		<input type="submit" value="검색">			
 		<button type="button" onclick="buyAdd();">구매내역등록</button>
 	</form>	
+	
+	<input type="button" name="abcd" id="abcd" value="제이쿼리">
 
 </body>
 <script type="text/javascript">
-	$(function(){
-		$('#rBtn').on('click',function(event){
-			$('input[name=rBtn]').prop('type', 'text');
-			$('input[name=rBtn]').val('처리중');
-		});
-	});
-	
-	$('input').on('click', function () {
-		   $(this).prop('type', 'text');
-	});	
-	
-	function buyAdd() {	//실제로는 폼에서 선택하고 보내줘야함
-		location.href = '../buy/addBuy.do?moviePrice=100000'; 
+
+	window.onload = function(){
+		var refundSubmitObj = document.getElementById('refundSubmit');
+		var statusObj = document.getElementById('status');
+		
+		console.log(statusObj.value);
 	}
-	
-	function moveRefund(index) {
-		
-		var buyCurPageObj = document.getElementById("buyCurPage");
-		
-		buyCurPageObj.value = document.getElementById("curPage").value;
-		
-		var str = "refundAddForm" + index;
-		
-		console.log(str);		
-		
-		var refundAddFormObj = document.getElementById(str);
-		
-		refundAddFormObj.submit();
-
-		var refundAObj = document.getElementById("refundA");
-
-		refundAObj.innerHTML = "<input type='text' value='처리중'>";
-		
-	}	
-
 </script>
 </html>

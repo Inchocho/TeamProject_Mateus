@@ -34,11 +34,11 @@
     <!-- 환불처리(관리자) 확인 -->
     <sql id="refundChk">
     	<choose>
-    		<when test="admit == 0">
-    			REFUND_STATUS = '취소'
+    		<when test="admit == 1">
+    			REFUND_STATUS = '환불완료'
     		</when>
     		<otherwise>
-    			REFUND_STATUS = '환불완료'
+    			REFUND_STATUS = '환불불가'
     		</otherwise>
     	</choose>
     </sql>
@@ -57,14 +57,16 @@
 	
 	<select id="refundSelectList" resultType="map" parameterType="map">
 			SELECT RF.MOVIE_TITLE, RF.MOVIE_PRICE, RF.BUY_DATE, RF.REFUND_DATE, RF.REFUND_STATUS
-			,RF.MOVIE_NO, RF.USER_NO, RF.REFUND_NO  
+			,RF.MOVIE_NO, RF.USER_NO, RF.REFUND_NO, RF.BUY_NO  
 			FROM   
 			(SELECT ROWNUM RNUM, M.MOVIE_TITLE, M.MOVIE_PRICE, M.BUY_DATE, M.REFUND_DATE, M.REFUND_STATUS
-			,M.MOVIE_NO, M.USER_NO, M.REFUND_NO    
+			,M.MOVIE_NO, M.USER_NO, M.REFUND_NO, M.BUY_NO    
 			FROM    
 			(SELECT A.MOVIE_TITLE, A.MOVIE_PRICE, B.BUY_DATE, C.REFUND_DATE, C.REFUND_STATUS    
-			,A.MOVIE_NO, B.USER_NO, C.REFUND_NO             
-			FROM MVY_MOVIE A, MVY_BUY B, MVY_REFUND C                        
+			,A.MOVIE_NO, B.USER_NO, C.REFUND_NO, C.BUY_NO             
+			FROM MVY_MOVIE A,
+			MVY_BUY B, 
+			MVY_REFUND C                        
 			WHERE A.MOVIE_NO = B.MOVIE_NO             
 			AND B.BUY_NO = C.BUY_NO
 			<include refid="refundListSearch"></include>                                            
@@ -99,5 +101,25 @@
 		<include refid="refundChk"></include>   
 		WHERE BUY_NO = #{buyNo}		
 	</update>
+	
+	<!-- 환불처리2 영화가격만큼 유저 캐쉬 증가-->
+	<update id="updateCash" parameterType="map">
+		UPDATE MVY_USER SET
+		USER_CASH = USER_CASH + #{moviePrice}		   
+		WHERE USER_NO = #{userNo}		
+	</update>	
+	
+	<!-- 환불처리3 환불한 영화 구매내역 상태 변경 -->
+	<update id="updateBuy" parameterType="int">
+		UPDATE MVY_BUY SET
+		BUY_STATUS = '환불처리완료'
+		WHERE BUY_NO = #{buyNo}
+	</update>
+	
+	<select id="checkCash" parameterType="int" resultType="java.lang.Integer">
+		SELECT USER_CASH 
+		FROM MVY_USER
+		WHERE USER_NO = #{userNo}
+	</select>
 	
 </mapper>

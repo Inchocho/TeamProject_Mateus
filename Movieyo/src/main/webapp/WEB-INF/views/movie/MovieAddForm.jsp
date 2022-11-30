@@ -7,10 +7,36 @@
 <head>
 <meta charset="UTF-8">
 <title>영화추가</title>
+
+<style type="text/css">
+/* .file input[type="file"] {  /* 파일 필드 숨기기 */ */
+/*   position: absolute; */
+/*   width: 1px; */
+/*   height: 1px; */
+/*   padding: 0; */
+/*   margin: -1px; */
+/*   overflow: hidden; */
+/*   clip:rect(0,0,0,0); */
+/*   border: 0; */
+/* } */
+
+/* .file label { */
+/*   display: inline-block; */
+/*   padding: .5em .75em; */
+/*   color: #999; */
+/*   font-size: inherit; */
+/*   line-height: normal; */
+/*   vertical-align: middle; */
+/*   background-color: black; */
+/*   cursor: pointer; */
+/*   border: 1px solid #ebebeb; */
+/*   border-bottom-color: #e2e2e2; */
+/*   border-radius: .25em; */
+/* } */
+
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
-	
-	
 	
 	
 	
@@ -31,9 +57,13 @@
 </head>
 <body>
 	<jsp:include page="../Header.jsp"/>
-	
+	<h1>영화등록</h1>	
 	<form action="./addCtr.do" method="post" id='submitForm'
 		enctype="multipart/form-data">
+		<div class="file">
+			<label for="file">사진등록</label>
+			<input type='file' name='file' id="file">
+		</div>
 		영화제목:	<input type="text" name='movieTitle' id='movieTitle'><br>
 		제작연도: <input type="text" name='prdtYear' id='prdtYear'><br>
 		국가: <input type="text" name='nation' id='nation'><br>
@@ -57,10 +87,11 @@
 		상영등급: <input type='text' name='grade' id='grade'><br>
 		가격: <input type="number" step="1000" name='price' id='price'><br>
 		영화내용: <br>
-		<textarea name="movieStory" style="width: 400px; height: 400px;"></textarea>
+		<textarea name="movieStory" style="width: 400px; height: 400px;"></textarea><br>
 		등록자: <input type="text" name="registrant" value="${userDto.userName}" readonly="readonly"><br>
-		파일: <input type='file' name='file'>
-		<input type='submit' value='추가' id='submitBtn'>				
+		
+		<input type='submit' value='등록' id='submitBtn'>
+		<input type="button" value="취소">				
 	</form>
 </body>
 </html>

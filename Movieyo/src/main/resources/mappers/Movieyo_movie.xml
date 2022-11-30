@@ -126,6 +126,16 @@
 		FROM MVY_MOVIE
 	</select>
 	
+	<select id="fileSelectStoredFileName" parameterType="int" resultType="map">
+		SELECT IDX, STORED_FILE_NAME
+		FROM TB_FILE
+		WHERE PARENT_SEQ = #{parentSeq}
+	</select>
+	
+	<delete id="fileDelete" parameterType="int">
+		DELETE FROM TB_FILE
+		WHERE PARENT_SEQ = #{parentSeq}
+	</delete>
 	
 	
 </mapper>

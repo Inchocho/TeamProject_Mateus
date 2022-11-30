@@ -215,13 +215,13 @@ public class UserController {
 		@RequestMapping(value = "/user/passwordUpdate.do", method = RequestMethod.GET)
 		public String userPasswordUpdate(Model model, UserDto userDto) {
 			logger.debug("Welcome UserController userPasswordUpdate {}", userDto);
-//			int no = userDto.getNo();
-//			
-//			Map<String, Object> map = userService.userSelectOne(no);
-//			UserDto userDto2 = (UserDto)map.get("userDto");
-//			
-//			
-			model.addAttribute("userDto", userDto);
+			int no = userDto.getUserNo();
+			
+			Map<String, Object> map = userService.userSelectOne(no);
+			UserDto userDto2 = (UserDto)map.get("userDto");
+			
+			
+			model.addAttribute("userDto", userDto2);
 			
 			return "user/UserPasswordUpdate";
 		}

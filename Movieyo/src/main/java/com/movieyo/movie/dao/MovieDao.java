@@ -27,4 +27,8 @@ public interface MovieDao {
 
 	public List<Integer> movieNoSelect();
 
+	public Map<String, Object> fileSelectStoredFileName(int parentSeq);
+
+	public int fileDelete(int parentSeq);
+
 }

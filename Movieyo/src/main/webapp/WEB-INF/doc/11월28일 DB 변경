@@ -18,7 +18,7 @@ MVY_BUY_USER_NO_FK FOREIGN KEY(USER_NO) REFERENCES MVY_USER(USER_NO);
 
 -- 환불테이블 변경
 환불신청일 -> 등록시 SYSDATE로 등록됨 
-환불상태 -> 디폴트값 '미신청'으로 등록됨
+환불상태 -> 디폴트값 '신청중'으로 등록됨
 유저번호 외래키로 사용
 
 CREATE TABLE MVY_REFUND(

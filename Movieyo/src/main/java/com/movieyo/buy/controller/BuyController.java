@@ -40,10 +40,11 @@ public class BuyController {
 	public String buyList(@RequestParam(defaultValue = "1") int curPage, Model model,
 			@RequestParam(defaultValue = "all")String searchOption
 		  , @RequestParam(defaultValue = "")String keyword
-		  , HttpSession session
-		  ,	int userNo) {
+		  , HttpSession session) {
 		
 		UserDto userDto = (UserDto) session.getAttribute("userDto");
+		
+		int userNo = userDto.getUserNo();
 		
 		int userAdmin = userDto.getUserAdmin();	
 		
