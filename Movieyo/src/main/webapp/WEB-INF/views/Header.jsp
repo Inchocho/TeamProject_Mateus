@@ -59,6 +59,7 @@ body {
     color: #ff81ab;
     font-size: 20px;
     border-radius: 8px;
+    margin: 10px;
 }
 .body_btn_css:hover {
 	background-color: rgba(135, 206, 235, 0.3);

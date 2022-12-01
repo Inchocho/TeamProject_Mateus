@@ -18,7 +18,7 @@
 .mpayAttribute{
 	color: #F08080;
 	font-weight: bold;
-	margin-right: 150px;
+	margin-right: 290px;
 }
 .userMpointDiv{
 	display: flex;
@@ -32,7 +32,7 @@ table {
 	border-collapse: collapse;
 }
 .userMpointTd{
-	width: 150px;
+	width: 220px;
 	height: 100px;
 	font-weight: bold;
 }
@@ -45,15 +45,35 @@ table {
 }
 .plusBtnBox{
 	display: flex;
-	justify-content: space-between;
-	margin-top: 10px;
-	width: 230px;
-	flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 10px;
+    width: 450px;
+    flex-wrap: wrap;
 }
 .pricePlusBtn{
 	width: 100px;
     margin-bottom: 5px;
     height: 40px;
+    background: snow;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 8px;
+}
+.pricePlusBtn:hover {
+	background-color: rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+}
+#chargeForm{
+	display: flex;
+    font-size: 20px;
+    align-items: center;
+}
+.input_cp_css{
+	height: 30px;
+    font-size: 17px;
+    text-align: center;
+    font-weight: 800;
+    width: 250px;
 }
 </style>
 </head>
@@ -74,14 +94,14 @@ table {
 		</table>
 	</div>
 	<div class="userMpointDiv">
-		<h2 class="mpayAttribute" style="margin-right: 270px;">충전</h2>
+		<h2 class="mpayAttribute" style="margin-right: 410px;">충전</h2>
 		<!-- 포인트 충전시 afterMpoint 보내기 -->
 	<form action="chargeMpointCtr.do" method="get" id="chargeForm">
 		<input id="beforeMpoint" type="hidden" value="${userDto.userCash}">
 		<input id="chargePoint" type="hidden" value="0">
-		<span class="userMpointTd">충전할 금액</span>
+		<span class="userMpointTd" style="height: 30px; width: 160px; margin-right: 10px">충전할 금액</span>
 		<input id="userInputPoint" type="text" maxlength="10" onkeyup="inputNumberFormat(this);"
-		placeholder="충전하실 금액을 입력하세요" style="height: 20px;" value=""> 원
+		placeholder="충전하실 금액을 입력하세요" class="input_cp_css" value=""> 원
 		<input id="afterMpoint" name="afterMpoint" type="hidden">
 	</form>
 	
@@ -99,7 +119,7 @@ table {
 			</tr>
 		</table>
 	</div>
-		<input id="chargeTryBtn" type="button" value="충전하기">
+		<input id="chargeTryBtn" type="button" value="충전하기" class="body_btn_css" style="width: 450px;">
 </div>
 <jsp:include page="/WEB-INF/views/PopUp/ChargeMpointPop.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/Tail.jsp" />
