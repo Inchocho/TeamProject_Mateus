@@ -52,8 +52,15 @@ public class UserController {
 		UserDto userDto = userService.userExist(email, password);
 		
 		String viewUrl = "";
-		if(userDto != null) {
+		if(userDto != null) {			
 			session.setAttribute("userDto", userDto);
+			
+			//유저권한 관리자(1)일 경우 header에 이름앞에 (관리자)가 달림
+			//userAdmin을 단계별로 뭘 주는 그런걸 만들 수 있겠네
+			if(userDto.getUserAdmin() != 0) {
+				String adminLabel = "(관리자)";
+				session.setAttribute("adminLabel", adminLabel);
+			}
 			
 //			viewUrl =  "redirect:../user/one.do?userNo=" +  userDto.getUserNo();
 			viewUrl = "redirect:../movie/main.do";
@@ -157,70 +164,101 @@ public class UserController {
 		logger.debug("Welcome UserController userOne!"
 				+ " userNo" , userNo);
 		
+		UserDto adminUserDto = (UserDto)session.getAttribute("userDto");
+		
+		int adminCheck = adminUserDto.getUserAdmin();
+		
 		Map<String, Object> map = userService.userSelectOne(userNo);
 		UserDto userDto = (UserDto)map.get("userDto");
 		
-		System.out.println(userDto.getNickname());
-		System.out.println(userDto.getUserAdmin());
+		System.out.println(userDto.getNickname() + "현재 유저의 닉네임");
+		System.out.println(userDto.getUserAdmin() + "현재 유저정보 관리자체크");
+		System.out.println(adminCheck + "관리자 여부확인");
 	
 		model.addAttribute("userDto2", userDto);
+		model.addAttribute("adminCheck", adminCheck);
 		
 		return "user/UserOneView";
 	}
 	
 	@RequestMapping(value="/user/update.do")
-	public String userUpdate(int userNo, Model model) {
+	public String userUpdate(int userNo, Model model, int adminCheck) {
 		logger.debug("Welcome userUpdate enter {}", userNo);
+	
+		System.out.println("유저 업데이트폼 진입전 세션의 관리자확인: " + adminCheck);
 		
 		Map<String, Object> map = userService.userSelectOne(userNo);
 		
 		UserDto userDto = (UserDto) map.get("userDto");
 		
+		System.out.println("현재 접근한 유저의 관리자 확인: " + userDto.getUserAdmin());
+		
 		model.addAttribute("userDto2", userDto);
+		model.addAttribute("adminCheck", adminCheck);
 		
 		return "user/UserUpdateForm";
 	}
 	
 	//수정시 바로바로 적용되게 바꾸기(세션?)
 		@RequestMapping(value = "/user/updateCtr.do", method = RequestMethod.POST)
-		   public String userUpdateCtr(HttpSession session, UserDto userDto, Model model)  {
+		   public String userUpdateCtr(HttpSession session, UserDto userDto, Model model, int adminCheck)  {
 		      logger.info("Welcome userController userUpdateCtr!" + userDto);
-		      
+		     UserDto sessionUserDto =
+		               (UserDto)session.getAttribute("userDto");
+		     
+		     System.out.println(sessionUserDto);
+		     System.out.println(sessionUserDto.getUserAdmin() + "현재 세션의 관리자체크유무");
+		     System.out.println(adminCheck + "현재 세션의 관리자번호 확인");
+		     
 		      try {
-		    	  userService.userUpdateOne(userDto);
 		    	  
-		    	  System.out.println(userDto);
+		    	  if(adminCheck == 1 || sessionUserDto.getUserNo() == userDto.getUserNo()) {
+		    		  userService.userUpdateOne(userDto);
+		    		  
+		    		  System.out.println(userDto);
+		    		  
+		    	  }else {
+		    		  System.out.println("본인이 아닙니다");
+		    	  }
+		    	  
 		    	  
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		      
 		      	 //sessionUserDto에 지금 세션(로그인한 유저)값이 담겨있다
-		         UserDto sessionUserDto =
-		               (UserDto)session.getAttribute("userDto");
-		         
 		         //세션의 값이 널이 아니면 (즉 로그인을 했으면)
 		         if (sessionUserDto != null) {
 		        	 //세션(로그인한 유저번호)이 전송된 폼의 userDto의 유저번호면
 		            if (sessionUserDto.getUserNo() == userDto.getUserNo()) {
-		            
-		            	//newUserDto라는 유저Dto를 생성
-		            	//처리하려는 작업 -> 세션값이 변경되므로 변경된 세션값으로 변경해줌
-		            	sessionUserDto.setNickname(userDto.getUserName());
-		            	sessionUserDto.setUserName(userDto.getNickname());
-		                
-		            	//기존 로그인할때 존재하는 세션값 삭제
-		               session.removeAttribute("userDto");
-		               
-		                //업데이트 후 변경된 값 세션에 저장
-		               session.setAttribute("userDto", sessionUserDto);		            		              
-		               
+		            		
+		            		String changeName = userDto.getUserName();	
+		            		String changeNickname = userDto.getNickname();
+		            		
+		            		System.out.println(changeName + "변경한 이름");
+		            		System.out.println(changeNickname + "변경한 닉네임");
+		            		
+		            		sessionUserDto.setUserName(changeName);
+		            		sessionUserDto.setNickname(changeNickname);
+
+		            		//기존 로그인할때 존재하는 세션값 삭제
+			               session.removeAttribute("userDto");
+				               
+			                //업데이트 후 변경된 값 세션에 저장
+			               session.setAttribute("userDto", sessionUserDto);
+		            	
 		            }
 		         }
 		         
 		         //업데이트된 userDto를 키값 userDto2로 화면에 뿌려줌
 		         //세션에 저장된 키값이 userDto라 userDto2로 key값을 담음
+		         
+//		         session.removeAttribute("userDto");
+//		         session.setAttribute("sessionUserDto", sessionUserDto);
+		         
+		         model.addAttribute("userDto", sessionUserDto);
 		         model.addAttribute("userDto2", userDto);
+		         model.addAttribute("adminCheck", adminCheck);
 		      
 		      return "user/UserOneView";
 		   }

@@ -77,7 +77,7 @@ body {
 			<li class="searchBox">
 			<input type="button" value="검색"><input type="search" value="" placeholder="영화를 검색해보세요">
 			</li>
-			<li style="color: white; padding-right: 20px;">${userDto.nickname} 님　
+			<li style="color: white; padding-right: 20px;">${adminLabel}${userDto.nickname} 님　
 				<input type="button" value="내정보" onclick="myInfo();">
 				<input type="button" value="로그아웃" onclick="logout();">
 			</li>

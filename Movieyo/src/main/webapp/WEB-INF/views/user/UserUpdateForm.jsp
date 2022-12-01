@@ -28,6 +28,7 @@
 	<h1>회원정보 수정</h1>
 	<form action='./updateCtr.do' method='post' 
 		enctype="multipart/form-data">
+		<input type='hidden' name='adminCheck' value='${adminCheck}'>
 		<input type="hidden" name='userNo' value='${userDto2.userNo}'>
 		이름: <input type='text' name='userName' id='memberName'
 			value='${userDto2.userName}'><br>
@@ -57,8 +58,7 @@
 <%-- 		</c:if> --%>
 
       	<br>
-      	
-      	유저권한: <input type="text" value="${userDto2.userAdmin}" name='userAdmin'>
+   			유저권한: <input type="text" value="${userDto2.userAdmin}" name='userAdmin'>
       	<br>
       	
 		<input type='submit' value='저장하기'>

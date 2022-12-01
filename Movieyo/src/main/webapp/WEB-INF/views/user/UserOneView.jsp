@@ -29,8 +29,16 @@
 
 	<jsp:include page="../Header.jsp" />
 	<jsp:include page="../UserMyPageSideMenu.jsp"></jsp:include>
-	<h1>내정보</h1>
+	<c:choose>
+		<c:when test='${adminCheck == 0 || userDto2.userAdmin == 1}'>	
+			<h1>내정보</h1>
+		</c:when>
+		<c:otherwise>
+			<h1>${userDto2.nickname}님의 회원정보</h1>
+		</c:otherwise>
+	</c:choose>
 	<form action='./update.do' method='get'>
+		<input type="hidden" name="adminCheck" value='${adminCheck}'>
 		<input type="hidden" name='userNo' value='${userDto2.userNo}'>
 		이름: <input type='text' name='userName' id='memberName'
 			value='${userDto2.userName}' readonly="readonly"><br>
@@ -46,8 +54,10 @@
 		작성글 갯수: 	<a href="#">작성글바로가기</a>		<br>
 			
 		<input type='submit' value='회원정보 수정'>
-		<input type="button" value="비밀번호 변경"
-		onclick="pwUpdate();">
+			<c:if test='${adminCheck == 0 || userDto2.userAdmin == 1}'>
+				<input type="button" value="비밀번호 변경"
+				onclick="pwUpdate();">
+			</c:if>
 		<a onclick="popUp()">
 			<input type="button" value="회원탈퇴">
 		</a>
