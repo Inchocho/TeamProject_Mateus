@@ -16,7 +16,9 @@
     <sql id="search">
         <choose>
             <when test="searchOption == 'all'">
-                WHERE M.MOVIE_TITLE LIKE '%'||#{keyword}||'%'                
+                WHERE M.MOVIE_TITLE LIKE '%'||#{keyword}||'%'     
+                OR M.REFUND_STATUS LIKE '%'||#{keyword}||'%'
+                OR M.REFUND_NO LIKE '%'||#{keyword}||'%'           
             </when>
             <otherwise>
                 WHERE ${searchOption} LIKE '%'||#{keyword}||'%'
@@ -46,8 +48,10 @@
 <!-- 	영화수 -->
 	<select id="refundSelectTotalCount" resultType="java.lang.Integer" parameterType="map">
 		SELECT COUNT(*) FROM    
-      	  (SELECT A.MOVIE_TITLE, A.MOVIE_PRICE, B.BUY_DATE, C.REFUND_DATE, C.REFUND_STATUS
-            FROM MVY_MOVIE A, MVY_BUY B, MVY_REFUND C        	                       
+      	  (SELECT A.MOVIE_TITLE, A.MOVIE_PRICE, B.BUY_DATE, C.REFUND_DATE, C.REFUND_STATUS, C.REFUND_NO
+            FROM MVY_MOVIE A, 
+            MVY_BUY B, 
+            MVY_REFUND C        	                       
             WHERE A.MOVIE_NO = B.MOVIE_NO            
             AND B.BUY_NO = C.BUY_NO
             <include refid="refundListSearch"></include>
@@ -57,22 +61,24 @@
 	
 	<select id="refundSelectList" resultType="map" parameterType="map">
 			SELECT RF.MOVIE_TITLE, RF.MOVIE_PRICE, RF.BUY_DATE, RF.REFUND_DATE, RF.REFUND_STATUS
-			,RF.MOVIE_NO, RF.USER_NO, RF.REFUND_NO, RF.BUY_NO  
+			,RF.MOVIE_NO, RF.USER_NO, RF.REFUND_NO, RF.BUY_NO, RF.USER_NICKNAME  
 			FROM   
 			(SELECT ROWNUM RNUM, M.MOVIE_TITLE, M.MOVIE_PRICE, M.BUY_DATE, M.REFUND_DATE, M.REFUND_STATUS
-			,M.MOVIE_NO, M.USER_NO, M.REFUND_NO, M.BUY_NO    
+			,M.MOVIE_NO, M.USER_NO, M.REFUND_NO, M.BUY_NO, M.USER_NICKNAME    
 			FROM    
 			(SELECT A.MOVIE_TITLE, A.MOVIE_PRICE, B.BUY_DATE, C.REFUND_DATE, C.REFUND_STATUS    
-			,A.MOVIE_NO, B.USER_NO, C.REFUND_NO, C.BUY_NO             
+			,A.MOVIE_NO, B.USER_NO, C.REFUND_NO, C.BUY_NO, D.USER_NICKNAME             
 			FROM MVY_MOVIE A,
 			MVY_BUY B, 
-			MVY_REFUND C                        
+			MVY_REFUND C,
+			MVY_USER D                        
 			WHERE A.MOVIE_NO = B.MOVIE_NO             
 			AND B.BUY_NO = C.BUY_NO
+			AND C.USER_NO = D.USER_NO
 			<include refid="refundListSearch"></include>                                            
 			) M                                       
 			<include refid="search"></include>) RF             
-			WHERE RF.RNUM BETWEEN #{start} AND #{end}   	            	 		        
+			WHERE RF.RNUM BETWEEN #{start} AND #{end}   				            	 		       
 	</select>
 	
 	<!-- 환불내역 추가 -->

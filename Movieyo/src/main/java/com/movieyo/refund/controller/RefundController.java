@@ -95,7 +95,8 @@ public class RefundController {
 			Date buyDate = (Date)listMap.get(i).get("BUY_DATE");
 			Date refundDate = (Date)listMap.get(i).get("REFUND_DATE");
 			String refundStatus = (String)listMap.get(i).get("REFUND_STATUS");
-			int refundUserNo = Integer.parseInt(String.valueOf(listMap.get(i).get("USER_NO")));			
+			int refundUserNo = Integer.parseInt(String.valueOf(listMap.get(i).get("USER_NO")));	
+			String refundUserNickname = (String)listMap.get(i).get("USER_NICKNAME");
 			
 			refundMap.put("moviePrice", moviePrice);
 			refundMap.put("movieTitle", movieTitle);
@@ -106,6 +107,7 @@ public class RefundController {
 			refundMap.put("buyNo", buyNo);
 			refundMap.put("movieNo", movieNo);
 			refundMap.put("refundUserNo", refundUserNo);
+			refundMap.put("refundUserNickname", refundUserNickname);
 			refundMap.put("userNo", userNo);
 			
 			refundListMap.add(refundMap);			
