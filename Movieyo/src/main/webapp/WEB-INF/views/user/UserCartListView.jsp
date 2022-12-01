@@ -209,6 +209,7 @@ th {
 	</div>
 	</div>
 	<jsp:include page="/WEB-INF/views/PopUp/CartBuyPop.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/PopUp/CartDelPop.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/Tail.jsp"/>
 	
 </body>
@@ -231,7 +232,7 @@ $('#cartSelPriceView').html(htmlStr);
 
 //선택항목구매하기 모달창띄우기
 var buyCartSelBtn = document.getElementById("buyCartSelBtn");
-var popup_layerObj = document.getElementById("popup_layer");
+var popup_layer_cartbuy = document.getElementById("popup_layer_cartbuy");
 
 buyCartSelBtn.addEventListener("click", function(e) {
 	var cartSelCount = document.getElementById("cartSelCount");
@@ -250,13 +251,13 @@ buyCartSelBtn.addEventListener("click", function(e) {
 		htmlStr = $('#popViewUserCash').text();
 		htmlStr = comma(htmlStr);
 		$('#popViewUserCash').html(htmlStr);
-		//
+		
 		var checkedFir = $('input[name=cartNo]').first();
 		var findMtitle = "#tdMtitle" + checkedFir.val();
 		htmlStr = checkedFir.parent().siblings(findMtitle).text();
 		$('#selMovieTitleFir').html(htmlStr);
 		
-		popup_layer.style.visibility = "visible";
+		popup_layer_cartbuy.style.visibility = "visible";
 	}
 });
 	//선택항목 구매 submit
@@ -265,8 +266,30 @@ buyCartSelBtn.addEventListener("click", function(e) {
 		$('#buyCartSelectForm').attr("action", "cart/cartBuy.do");
 		$('#buyCartSelectForm').submit();
 	});
-	
-//선택항목 제외
+//선택항목 제외하기 모달창띄우기
+var delCartSelBtn = document.getElementById("delCartSelBtn");
+var popup_layer_cartdel = document.getElementById("popup_layer_cartdel");
+
+delCartSelBtn.addEventListener("click", function(e) {
+	var cartSelCount = document.getElementById("cartSelCount");
+	if (cartSelCount.value == 0) {
+		e.preventDefault();
+		alert("선택하신항목이 없습니다.")
+	}else{
+		var htmlStr = "";
+		
+		$("input[name=cartNo]").each(function(i, element) {
+			var selMTID = '#tdMtitle' + $(this).val();
+			var delListMtitle = $(selMTID).text();
+			htmlStr += '<li>'+delListMtitle+'</li>'
+		});
+		
+		$('#cartdel_cont_ul').html(htmlStr);
+		
+		popup_layer_cartdel.style.visibility = "visible";
+	}
+});
+	//선택항목 제외
 	var delCartSelBtn = document.getElementById("delCartSelBtn");
 	delCartSelBtn.addEventListener("click", function(e) {
 // 		$('#buyCartSelectForm').attr("action", "cart/cartDelete.do");
