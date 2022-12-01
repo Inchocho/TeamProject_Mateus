@@ -91,7 +91,6 @@ public class CartController {
 			int moviePrice = Integer.parseInt(String.valueOf(cartDBList.get(i).get("MOVIE_PRICE")));
 			int cartNo = Integer.parseInt(String.valueOf(cartDBList.get(i).get("CART_NO")));			
 			Date inCartDate = (Date)cartDBList.get(i).get("CART_INCARTDATE");
-			System.out.println(inCartDate +" "+ i + "번");
 			cart.put("movieNo", movieNo);
 			cart.put("moviePrice", moviePrice);
 			cart.put("movieTitle", movieTitle);
@@ -126,37 +125,18 @@ public class CartController {
 		return url;
 	}
 	
-//	@RequestMapping(value = "/cart", method = RequestMethod.POST)
-//	public String buyAddCtr(BuyDto buyDto, Model model, int userNo, int movieNo) {
-//		logger.trace("Welcome BuyController buyAddCtr 구매내역 추가!!! " 
-//			+ buyDto);
-//		
-//			int isCheck = buyService.buyExistOne(userNo, movieNo);
-//			
-//			//폼으로 해당정보를 넘기는지 확인
-////			System.out.println(buyDto);		
-//			
-//			String viewUrl = "";
-//		
-//		try {
-//			if(isCheck != 0) {	
-//				System.out.println("이미 존재하는 영화");
-//				viewUrl =  "redirect:../buy/list.do?userNo=" +  userNo;
-//			}else {				
-//				buyService.buyInsertOne(buyDto);
-//				viewUrl =  "redirect:../buy/list.do?userNo=" +  userNo;
-//			}
-////			buyService.updateCash(userNo);
-//			
-////			buyService.updateMovie(movieNo);
-//			
-//		} catch (Exception e) {
-//			System.out.println("오랜만에 예외 처리 한다");
-//			System.out.println("파일 문제 예외일 가능성 높음");
-//			e.printStackTrace();
-//		}
-//				
-//		return viewUrl;
-//	}	
+	@RequestMapping(value = "/cart/deleteCart.do", method = {RequestMethod.GET, RequestMethod.POST})
+	public String deleteCart(int[] cartNo, Model model, HttpSession session) {
+		logger.debug("Welcome CartController deleteCart!{}" , cartNo);
+		//로그인한 유저번호 찾기
+		UserDto userDto = (UserDto)session.getAttribute("userDto");
+		int userNo = userDto.getUserNo();
+		for (int i = 0; i < cartNo.length; i++) {
+//			cartService.deleteCart(cartNo[i]);
+		}
+				
+		String url = "redirect:/cart/list.do";
+		return url;
+	}
 
 }

@@ -132,7 +132,7 @@ th {
 	</div>
 		
 	<div class="contContainer">
-	<form id="buyCartSelectForm">
+	<form id="cartSelectForm">
 	<table>
 		<tr>
 			<th>영화제목</th><th>가격(원)</th><th>담은날짜</th><th>선택</th>
@@ -263,8 +263,8 @@ buyCartSelBtn.addEventListener("click", function(e) {
 	//선택항목 구매 submit
 	var buyBtn = document.getElementById("buyBtn");
 	buyBtn.addEventListener("click", function(e) {
-		$('#buyCartSelectForm').attr("action", "cart/cartBuy.do");
-		$('#buyCartSelectForm').submit();
+		$('#cartSelectForm').attr("action", "cart/cartBuy.do");
+		$('#cartSelectForm').submit();
 	});
 //선택항목 제외하기 모달창띄우기
 var delCartSelBtn = document.getElementById("delCartSelBtn");
@@ -289,11 +289,11 @@ delCartSelBtn.addEventListener("click", function(e) {
 		popup_layer_cartdel.style.visibility = "visible";
 	}
 });
-	//선택항목 제외
-	var delCartSelBtn = document.getElementById("delCartSelBtn");
-	delCartSelBtn.addEventListener("click", function(e) {
-// 		$('#buyCartSelectForm').attr("action", "cart/cartDelete.do");
-// 		$('#buyCartSelectForm').submit();
+	//선택항목 제외 submit
+	var delBtn = document.getElementById("delBtn");
+	delBtn.addEventListener("click", function(e) {
+		$('#cartSelectForm').attr("action", "/Movieyo/cart/deleteCart.do");
+		$('#cartSelectForm').submit();
 	});
 	
 //체크박스 선택
