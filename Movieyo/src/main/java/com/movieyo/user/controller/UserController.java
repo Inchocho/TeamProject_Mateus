@@ -176,10 +176,7 @@ public class UserController {
 		
 		UserDto userDto = (UserDto) map.get("userDto");
 		
-		System.out.println(userDto.getNickname());
-		System.out.println(userDto.getUserAdmin());
-		
-		model.addAttribute("userDto", userDto);
+		model.addAttribute("userDto2", userDto);
 		
 		return "user/UserUpdateForm";
 	}
@@ -191,42 +188,38 @@ public class UserController {
 		      
 		      try {
 		    	  userService.userUpdateOne(userDto);
+		    	  
+		    	  System.out.println(userDto);
+		    	  
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		      
+		      	 //sessionUserDto에 지금 세션(로그인한 유저)값이 담겨있다
 		         UserDto sessionUserDto =
 		               (UserDto)session.getAttribute("userDto");
-		         System.out.println(sessionUserDto.getUserAdmin() +  "aaaaaaaa");
 		         
-		         
+		         //세션의 값이 널이 아니면 (즉 로그인을 했으면)
 		         if (sessionUserDto != null) {
+		        	 //세션(로그인한 유저번호)이 전송된 폼의 userDto의 유저번호면
 		            if (sessionUserDto.getUserNo() == userDto.getUserNo()) {
 		            
-		            	UserDto newUserDto = new UserDto();
-		               
-		            	
-		            	System.out.println(userDto.getUserNo());
-		            	System.out.println(sessionUserDto.getEmail());
-		            	System.out.println(userDto.getNickname());
-		            	System.out.println(sessionUserDto.getUserAdmin());
-		            	
-		            	System.out.println(userDto.getUserBirth()+"asd");
-		            	System.out.println(sessionUserDto.getUserBirth()+"qwe");
-		            	
-		            	newUserDto.setUserBirth(userDto.getUserBirth());
-		            	newUserDto.setUserNo(userDto.getUserNo());
-		            	newUserDto.setEmail(sessionUserDto.getEmail());
-		            	newUserDto.setNickname(userDto.getNickname());
-		                newUserDto.setUserAdmin(sessionUserDto.getUserAdmin());
+		            	//newUserDto라는 유저Dto를 생성
+		            	//처리하려는 작업 -> 세션값이 변경되므로 변경된 세션값으로 변경해줌
+		            	sessionUserDto.setNickname(userDto.getUserName());
+		            	sessionUserDto.setUserName(userDto.getNickname());
 		                
-		                System.out.println(newUserDto.getUserAdmin());
-		            	
+		            	//기존 로그인할때 존재하는 세션값 삭제
 		               session.removeAttribute("userDto");
 		               
-		               session.setAttribute("userDto", newUserDto);
+		                //업데이트 후 변경된 값 세션에 저장
+		               session.setAttribute("userDto", sessionUserDto);		            		              
+		               
 		            }
 		         }
+		         
+		         //업데이트된 userDto를 키값 userDto2로 화면에 뿌려줌
+		         //세션에 저장된 키값이 userDto라 userDto2로 key값을 담음
 		         model.addAttribute("userDto2", userDto);
 		      
 		      return "user/UserOneView";
@@ -239,7 +232,6 @@ public class UserController {
 			
 			Map<String, Object> map = userService.userSelectOne(no);
 			UserDto userDto2 = (UserDto)map.get("userDto");
-			
 			
 			model.addAttribute("userDto", userDto2);
 			
@@ -255,32 +247,12 @@ public class UserController {
 			UserDto userDto2 = (UserDto)map.get("userDto");
 			
 			 try {
-				 System.out.println(userDto.getNickname() + "aaaaaaaaaaaaaaaaaaaaaa1");
 		    	  userService.passwordUpdate(userDto);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		      
-		         UserDto sessionUserDto =
-		               (UserDto)session.getAttribute("userDto");
-		         
-		         if (sessionUserDto != null) {
-		            if (sessionUserDto.getUserNo() == userDto.getUserNo()) {
-		            
-		            	UserDto newUserDto = new UserDto();
-		               
-		            	System.out.println(userDto.getNickname() + "aaaaaaaaaaaaaaaaaaaaaa2");
-		            	
-		            	newUserDto.setPassword(userDto.getEmail());
-		            	newUserDto.setPassword(userDto.getNickname());
-		            	newUserDto.setPassword(userDto.getPassword());
-		               session.removeAttribute("userDto");
-		               
-		               session.setAttribute("userDto", newUserDto);
-		            }
-		         }
-		         
-		         model.addAttribute("userDto2", userDto2);
+			 model.addAttribute("userDto2", userDto2);
 			
 			return "user/UserOneView";
 		}

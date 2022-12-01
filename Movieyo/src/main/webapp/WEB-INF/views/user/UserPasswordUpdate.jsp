@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
   pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +10,7 @@
 <style>
 	#div{
 	border: 1px solid black;
-	width: 250px;
+	width: 450px;
 	}
 </style>
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
@@ -54,12 +55,16 @@
 	<div id="div">
 		<h1>비밀번호 변경</h1><br>
 		<form action="./passwordUpdateCtr.do" method="post" id="submitForm">
-			번호: <input type="hidden" name='userNo'
+			<input type="hidden" name='userNo'
 			value='${userDto.userNo}' readonly="readonly"><br>
-			비밀번호: <input type="text" value="${userDto.password}" id="password">
-			<input type="password" placeholder="현재비밀번호:" id="passwordC"><br>
-			<input type="password" name="password" placeholder="변경할 비밀번호:" id="changePw"><br>
-			<input type="password" placeholder="비밀번호 재확인:" id="changePwC"><br>
+			<!-- 비밀번호 변경확인 로직을 위한 hidden값 패스워드 -->
+			<input type="hidden" value="${userDto.password}" id="password">
+			현재 비밀번호  : <input type="password" placeholder="현재비밀번호:" id="passwordC"><br>
+			변경할비밀번호: <input type="password" name="password" placeholder="변경할 비밀번호:" id="changePw"><br>
+			비밀 번호확인  : <input type="password" placeholder="비밀번호 재확인:" id="changePwC"><br>
+			<input type='hidden' name='nickname' id='memberName'value='${userDto.nickname}'>
+			<input type='hidden' name='userName' id='memberName'value='${userDto.userName}'>
+			<input type='hidden' name='userAdmin' value="${userDto.userAdmin}">
 			
 			<input type="button" value="변경하기" onclick="asd();" id="qwe">
 			<input type="button" value="취소" onclick='pageMoveBeforeFnc(${userDto.userNo});'>

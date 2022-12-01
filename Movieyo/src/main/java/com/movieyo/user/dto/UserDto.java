@@ -12,6 +12,7 @@ public class UserDto {
 	private String userName;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date userBirth;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date userCreateDate;
 	private String nickname;
 	private String gender;
