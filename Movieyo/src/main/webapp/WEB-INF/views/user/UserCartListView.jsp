@@ -133,18 +133,21 @@ th {
 		
 	<div class="contContainer">
 	<form id="buyCartSelectForm">
-		<input type="hidden" value="${userDto.userNo}">
 	<table>
 		<tr>
 			<th>영화제목</th><th>가격(원)</th><th>담은날짜</th><th>선택</th>
 		</tr>
 		<c:if test="${not empty cartList}">
 		<c:forEach var="cart" items="${cartList}">
+		
 		<tr>
 			<td id="tdMtitle${cart.cartNo}">${cart.movieTitle}</td>
 			<td id="cartPsel${cart.cartNo}">${cart.moviePrice}</td>
 			<td><fmt:formatDate pattern="YYYY-MM-dd" value="${cart.inCartDate}"/></td>
-			<td><input type="checkbox" id="cartSelCN${cart.cartNo}" value="${cart.cartNo}"></td>
+			<td>
+			<input type="hidden" id="cartSelMN${cart.cartNo}" value="${cart.movieNo}">
+			<input type="checkbox" id="cartSelCN${cart.cartNo}" value="${cart.cartNo}">
+			</td>
 		</tr>
 		</c:forEach>
 	
@@ -248,7 +251,7 @@ buyCartSelBtn.addEventListener("click", function(e) {
 		htmlStr = comma(htmlStr);
 		$('#popViewUserCash').html(htmlStr);
 		//
-		var checkedFir = $('.selCartMovie').first();
+		var checkedFir = $('input[name=cartNo]').first();
 		var findMtitle = "#tdMtitle" + checkedFir.val();
 		htmlStr = checkedFir.parent().siblings(findMtitle).text();
 		$('#selMovieTitleFir').html(htmlStr);
@@ -266,8 +269,6 @@ buyCartSelBtn.addEventListener("click", function(e) {
 //선택항목 제외
 	var delCartSelBtn = document.getElementById("delCartSelBtn");
 	delCartSelBtn.addEventListener("click", function(e) {
-		//cartList중 세션userNo 의 cartDto 제거 후 redirect:장바구니
-		$("input[id^='cartSelCN']").attr("name", "movieNo");
 // 		$('#buyCartSelectForm').attr("action", "cart/cartDelete.do");
 // 		$('#buyCartSelectForm').submit();
 	});
@@ -276,13 +277,19 @@ buyCartSelBtn.addEventListener("click", function(e) {
 	var count = 0;
 	var sumPrice = 0;
 	
+
 	$("input[id^='cartSelCN']").bind('change', function(){
+		
+		var findMN ='#cartSelMN' + $(this).val();
+		
 		if ($(this).is(':checked')) {
-			$(this).attr("class", "selCartMovie");
+			$(this).attr("name", "cartNo");
+			$(this).siblings(findMN).attr("name", "movieNo");
 			sumPrice += parseInt($(this).parent().siblings("td[id^='cartPsel']").text());
 			count++;
 		}else{
-			$(this).removeAttr("class");
+			$(this).removeAttr("name");
+			$(this).siblings(findMN).removeAttr("name");
 			sumPrice -= parseInt($(this).parent().siblings("td[id^='cartPsel']").text());
 			count--;
 		}
@@ -300,12 +307,14 @@ buyCartSelBtn.addEventListener("click", function(e) {
 $('#allck').change(function() {
 	if ($(this).is(':checked')) {
 		$("input[id^='cartSelCN']").prop('checked',true);
-		$("input[id^='cartSelCN']").attr("class", "selCartMovie");
+		$("input[id^='cartSelCN']").attr("name", "cartNo");
+		$("input[id^='cartSelMN']").attr("name", "movieNo");
 		count = countAll;
 		sumPrice = sumPriceAll;
 	}else {
 		$("input[id^='cartSelCN']").prop('checked',false);
-		$("input[id^='cartSelCN']").removeAttr("class");
+		$("input[id^='cartSelCN']").removeAttr("name");
+		$("input[id^='cartSelMN']").removeAttr("name");
 		count = 0;
 		sumPrice = 0;
 	}
