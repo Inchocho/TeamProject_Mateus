@@ -14,6 +14,8 @@ public interface CartService {
 
 	void cartInsertOne(int userNo, int movieNo);
 
+	void deleteCart(int cartNo);
+
   
 
 }

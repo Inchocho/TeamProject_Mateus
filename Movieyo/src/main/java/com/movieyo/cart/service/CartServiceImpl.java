@@ -48,6 +48,12 @@ public class CartServiceImpl implements CartService {
 		cartDao.cartInsertOne(cartDto);
 	}
 
+	@Override
+	public void deleteCart(int cartNo) {
+		// TODO Auto-generated method stub
+		cartDao.deleteCart(cartNo);
+	}
+
 	
 	
 }

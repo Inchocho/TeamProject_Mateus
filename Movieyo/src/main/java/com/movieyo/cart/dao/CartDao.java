@@ -12,6 +12,7 @@ public interface CartDao {
 			String keyword, int start, int end, int userNo);
 	int cartExistOne(int userNo, int movieNo);
 	void cartInsertOne(CartDto cartDto);
+	void deleteCart(int cartNo);
 
 
 }

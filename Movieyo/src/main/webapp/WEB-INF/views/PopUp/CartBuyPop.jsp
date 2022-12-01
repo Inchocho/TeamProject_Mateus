@@ -4,7 +4,7 @@
 
 <head>
 <style type="text/css">
-#popup_layer_cartbuy {position:fixed;top:0;left:0;z-index: 10000; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4);} 
+#popup_layer_cartbuy {position:fixed;top:0;left:0;z-index: 10000; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.56); overflow: hidden scroll;} 
 /*추가*/
 .popup_box .popup_cont .pop_cont_cont ul{
 	list-style-position: inside;

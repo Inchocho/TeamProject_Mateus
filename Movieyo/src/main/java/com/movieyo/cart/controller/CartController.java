@@ -128,11 +128,9 @@ public class CartController {
 	@RequestMapping(value = "/cart/deleteCart.do", method = {RequestMethod.GET, RequestMethod.POST})
 	public String deleteCart(int[] cartNo, Model model, HttpSession session) {
 		logger.debug("Welcome CartController deleteCart!{}" , cartNo);
-		//로그인한 유저번호 찾기
-		UserDto userDto = (UserDto)session.getAttribute("userDto");
-		int userNo = userDto.getUserNo();
+		
 		for (int i = 0; i < cartNo.length; i++) {
-//			cartService.deleteCart(cartNo[i]);
+			cartService.deleteCart(cartNo[i]);
 		}
 				
 		String url = "redirect:/cart/list.do";

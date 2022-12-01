@@ -76,4 +76,12 @@ public class CartDaoImpl implements CartDao{
 		sqlSession.insert(name(mappingName), cartDto);
 	}
 
+	@Override
+	public void deleteCart(int cartNo) {
+		// TODO Auto-generated method stub
+		mappingName = "deleteCart";
+		
+		sqlSession.insert(name(mappingName), cartNo);
+	}
+
 }

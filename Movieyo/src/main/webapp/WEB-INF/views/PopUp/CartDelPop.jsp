@@ -4,7 +4,7 @@
 
 <head>
 <style type="text/css">
-#popup_layer_cartdel {position:fixed;top:0;left:0;z-index: 10000; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4);} 
+#popup_layer_cartdel {position:fixed;top:0;left:0;z-index: 10000; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.56); overflow: hidden scroll;} 
 /*팝업 박스*/
 .popup_box{position: relative;top:50%;left:50%; width:550px;transform:translate(-50%, -50%);z-index:1002;box-sizing:border-box;background:#252526;}
 /*컨텐츠 영역*/
@@ -15,6 +15,10 @@
 .popup_box .popup_btn {display:table;width:100%;height:70px;}
 .popup_box .popup_btn a {display: table-cell; width:50%; color:#fff; font-size:17px;text-align:center;vertical-align:middle;text-decoration:none; background: #02ace0;}
 .popup_box .popup_btn a.cancel{background-color: gray;}
+/*오픈시 doc*/
+.popup_focus{
+    overflow: hidden !important;
+}
 /*추가*/
 .popup_box .popup_btn a.delCart{background-color: #fd7d40;}
 .popup_box .popup_cont .pop_cont_cont ul{

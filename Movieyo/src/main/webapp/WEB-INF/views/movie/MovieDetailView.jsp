@@ -65,18 +65,23 @@ img{
 		<textarea name="movieStory" style="width: 800px; height: 400px;" readonly="readonly">${movieDto.movieStory}</textarea>
 		<br>
 		<c:if test="${userDto.userAdmin eq 1}">
-			<input type="button" value='수정' onclick="moveMovieUD();">
+			<input type="button" value='수정' onclick="moveMovieUD();" class="body_btn_css">
 		</c:if>
 	</form>
 	<c:if test="${userDto.userAdmin eq 0}">
 		<c:if test="${buyCheck eq 0}">
-		<input type="button" value='구매' onclick="buyMoviePopFnc();">
+		<input type="button" value='구매' onclick="buyMoviePopFnc();" class="body_btn_css">
 <%-- 	<jsp:include page="/WEB-INF/views/PopUp/BuyMoviePop.jsp"></jsp:include> --%>
 		</c:if>
-		<c:if test="${cartCheck eq 0}">
-		<input type="button" value="장바구니" onclick="inCartSubmitFnc();">
+	<c:choose>
+		<c:when test="${cartCheck eq 0}">
+		<input type="button" value="장바구니 담기" onclick="inCartSubmitFnc();" class="body_btn_css">
 <%-- 	<jsp:include page="/WEB-INF/views/PopUp/InCartMoviePop.jsp"></jsp:include> --%>
-		</c:if>
+		</c:when>
+		<c:when test="${cartCheck eq 1}">
+		<input type="button" value="장바구니로 이동" onclick="pageMoveCartFnc();" class="body_btn_css">
+		</c:when>
+	</c:choose>
 	</c:if>
 	<jsp:include page="../Tail.jsp" />
 </body>
@@ -95,6 +100,8 @@ function inCartSubmitFnc() {
 	$('#detailForm').attr('action','/Movieyo/cart/addCart.do');
 	$('#detailForm').submit();
 }
-
+function pageMoveCartFnc() {
+	location.href = "/Movieyo/cart/list.do";
+}
 </script>
 </html>

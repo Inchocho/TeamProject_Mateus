@@ -55,7 +55,13 @@
 			INSERT INTO MVY_CART
 			VALUE(CART_NO, MOVIE_NO, USER_NO)
 			VALUES(#{cartNo}, #{movieNo}, #{userNo})
-	</insert>		
+	</insert>
+	
+	<!-- 장바구니 제외-->
+	<delete id="deleteCart" parameterType="int">
+		DELETE FROM MVY_CART
+		WHERE CART_NO = #{cartNo}
+	</delete>
 	
 	<!-- 장바구니 중복 조회 -->
 	<select id="cartExist" parameterType='map' resultType="java.lang.Integer">
