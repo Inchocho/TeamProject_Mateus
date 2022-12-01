@@ -10,8 +10,8 @@
 <title>무비요</title>
 <style>
 img {
-	width: 200px;
-	height: 350px;
+	width: 250px;
+	height: 370px;
 }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
@@ -26,9 +26,9 @@ img {
 	<jsp:include page="/WEB-INF/views/Header.jsp" />
 
 	<h1>내가 메인이다</h1>
-
-
-	<div style="display: flex;">
+<div style="width:100%">
+	<div style="max-width: 1500px; margin-left: 270px;">
+	<div style="display: flex; flex-wrap: wrap;">
 		<c:forEach var="row" items="${fileList}" varStatus="status">
 			<c:set var="movieDto" value="${movieList[status.index]}" />
 			<div style="margin: 10px;" onclick="movePageMovieDtail(${movieDto.movieNo});">
@@ -42,6 +42,8 @@ img {
 			</div>
 		</c:forEach>
 	</div>
+</div>	
+</div>
 	<jsp:include page="../Tail.jsp" />
 
 </body>

@@ -145,23 +145,7 @@ th {
 			</tr>		
 		</c:if>
 	</table>
-	
-<c:choose>
-			<c:when test="${empty fileList}">
-					첨부파일이 없습니다.<br>			
-			</c:when>
-		
-			<c:otherwise>
-				<c:forEach var="row" items="${fileList}" varStatus="obj">
-<!-- 					<input type="button" value="이미지" name="file"> -->
-<%-- 					${row.ORIGINAL_FILE_NAME}(${row.FILE_SIZE}kb)<br> --%>
-					<img alt="image not found" src="<c:url value='/img/${row.STORED_FILE_NAME}'/>">
-					<a href="#this" id="delete_${obj.index}">삭제</a><br>
-<!-- 					<br> -->
-				</c:forEach>
-			</c:otherwise>
-		</c:choose>
-	
+
 	<!-- jsp:include는 forward처럼 데이터를 유지시킨다 -->
 	<jsp:include page="/WEB-INF/views/common/Paging.jsp"/>
 	

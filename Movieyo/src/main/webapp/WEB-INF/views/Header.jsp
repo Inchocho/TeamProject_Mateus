@@ -60,6 +60,10 @@ body {
 	function logout() {
 		location.href = '../user/logout.do';
 	}
+	
+	function movePageMainFnc() {
+		location.href = '/Movieyo/movie/main.do';
+	}
 </script>
 </head>
 <div class="headerDiv">

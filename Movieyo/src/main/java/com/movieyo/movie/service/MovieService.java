@@ -17,12 +17,13 @@ public interface MovieService {
 
 	public Map<String, Object> movieSelectOne(int movieNo);
 
-	public void movieUpdateOne(MovieDto movieDto, MultipartHttpServletRequest mulRequest) throws Exception;
+	public int movieUpdateOne(MovieDto movieDto, MultipartHttpServletRequest multipart, int fileIdx) throws Exception;
 
 	public void movieDeleteOne(int movieNo);
 
 	public List<Integer> movieNoSelect();
 
 	public Map<String, Object> moviefileOne(int movieNo2);
+
 
 }

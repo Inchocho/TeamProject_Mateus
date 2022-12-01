@@ -87,13 +87,16 @@
 		, MOVIE_DIRECTOR, MOVIE_RUNTIME, MOVIE_GRADE, MOVIE_PRICE, MOVIE_CREDATE, GENRE_NAME, MOVIE_STORY
 		FROM MVY_MOVIE
 		WHERE MOVIE_NO = #{movieNo}
+		ORDER BY MOVIE_NO ASC
 	</select>	
 	
-	<select id="fileselectList" parameterType="int" resultType="map">
-		SELECT IDX, ORIGINAL_FILE_NAME, STORED_FILE_NAME,
-		ROUND(FILE_SIZE/1024, 1) AS FILE_SIZE
-		FROM MVY_MOVIE_PHOTO
-		WHERE PARENT_SEQ = #{movieNo}
+	<select id="fileselectList" parameterType="int" resultType="map">		
+		SELECT PARENT_SEQ, B.MOVIE_NO, IDX, ORIGINAL_FILE_NAME, STORED_FILE_NAME, B.MOVIE_TITLE,
+			ROUND(FILE_SIZE/1024, 1) AS FILE_SIZE
+			FROM MVY_MOVIE_PHOTO A, MVY_MOVIE B				
+        WHERE B.MOVIE_NO = A.PARENT_SEQ
+        AND PARENT_SEQ = #{movieNo}
+        ORDER BY PARENT_SEQ ASC		
 	</select>
 	
 	<update id="movieUpdateOne" parameterType="movieDto">
@@ -124,16 +127,17 @@
 	<select id="movieNoSelect" resultType="int">
 		SELECT MOVIE_NO
 		FROM MVY_MOVIE
+		ORDER BY MOVIE_NO ASC
 	</select>
 	
 	<select id="fileSelectStoredFileName" parameterType="int" resultType="map">
 		SELECT IDX, STORED_FILE_NAME
-		FROM TB_FILE
+		FROM MVY_MOVIE_PHOTO
 		WHERE PARENT_SEQ = #{parentSeq}
 	</select>
 	
 	<delete id="fileDelete" parameterType="int">
-		DELETE FROM TB_FILE
+		DELETE FROM MVY_MOVIE_PHOTO
 		WHERE PARENT_SEQ = #{parentSeq}
 	</delete>
 	

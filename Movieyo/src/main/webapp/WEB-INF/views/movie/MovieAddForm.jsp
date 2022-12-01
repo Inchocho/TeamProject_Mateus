@@ -12,31 +12,32 @@
 a {
 	display: none;
 	color: red;
+	
 }
-/* .file input[type="file"] {  /* 파일 필드 숨기기 */
-/*   position: absolute; */
-/*   width: 1px; */
-/*   height: 1px; */
-/*   padding: 0; */
-/*   margin: -1px; */
-/*   overflow: hidden; */
-/*   clip:rect(0,0,0,0); */
-/*   border: 0; */
-/* } */
+ .file input[type="file"] {  /* 파일 필드 숨기기 */
+   position: absolute; 
+   width: 1px; 
+   height: 1px; 
+   padding: 0; 
+   margin: -1px; 
+   overflow: hidden; 
+   clip:rect(0,0,0,0); 
+   border: 0; 
+ } 
 
-/* .file label { */
-/*   display: inline-block; */
-/*   padding: .5em .75em; */
-/*   color: #999; */
-/*   font-size: inherit; */
-/*   line-height: normal; */
-/*   vertical-align: middle; */
-/*   background-color: black; */
-/*   cursor: pointer; */
-/*   border: 1px solid #ebebeb; */
-/*   border-bottom-color: #e2e2e2; */
-/*   border-radius: .25em; */
-/* } */
+ .file label { 
+   display: inline-block; 
+   padding: .5em .75em; 
+   color: #999; 
+   font-size: inherit; 
+   line-height: normal; 
+   vertical-align: middle; 
+   background-color: black; 
+   cursor: pointer; 
+   border: 1px solid #ebebeb; 
+   border-bottom-color: #e2e2e2; 
+   border-radius: .25em; 
+ } 
 
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -57,49 +58,47 @@ a {
 		
 		
 		
-		$('#submitBtn').click(function () {
+// 		$('#submitBtn').click(function () {
 			
-// 			영화제목
-			var movieTitle = $('#movieTitle').val();
-			if (movieTitle == "") {
-				$('#movieTitleText').css('display', 'block');
-			}else {
-				$('#movieTitleText').css('display', 'none');
-			}
+// // 			영화제목
+// 			var movieTitle = $('#movieTitle').val();
+// 			if (movieTitle == "") {
+// 				$('#movieTitleText').css('display', 'block');
+// 			}else {
+// 				$('#movieTitleText').css('display', 'none');
+// 			}
 			
-// 			제작연도
-			var prdtYear = $('#prdtYear').val().length;
-			alert(prdtYear);
+// // 			제작연도
+// 			var prdtYear = $('#prdtYear').val().length;
+// 			alert(prdtYear);
 			
-			if (prdtYear == 0) {
-				$('#prdtYearText').css('display', 'block');
-			}else if (prdtYear > 4 || prdtYear < 4) {
-				$('#prdtYearText').css('display', 'block');
-				$('#prdtYearText').html('년도 4자리만 입력해주세요');
-			}else if (prdtYear == 4) {
-				$('#prdtYearText').css('display', 'none');
-			}
+// 			if (prdtYear == 0) {
+// 				$('#prdtYearText').css('display', 'block');
+// 			}else if (prdtYear > 4 || prdtYear < 4) {
+// 				$('#prdtYearText').css('display', 'block');
+// 				$('#prdtYearText').html('년도 4자리만 입력해주세요');
+// 			}else if (prdtYear == 4) {
+// 				$('#prdtYearText').css('display', 'none');
+// 			}
 			
-// 			국가
-			var nation = $('#nation').val();
+// // 			국가
+// 			var nation = $('#nation').val();
 			
-			if (nation == "") {
-				$('#nationText').css('display', 'block');
-			}else {
-				$('#nationText').css('display', 'none');
-			}
+// 			if (nation == "") {
+// 				$('#nationText').css('display', 'block');
+// 			}else {
+// 				$('#nationText').css('display', 'none');
+// 			}
 			
+// // 			상영시간
+// 			var runtime = $('#runtime').val();
+// 			var numChk = /[0-9]/;
 			
+// 			if (runtime != numChk) {
+// 				$('#runtimeText').css('display', 'block');								
+// 			}
 			
-// 			상영시간
-			var runtime = $('#runtime').val();
-			var numChk = /[0-9]/;
-			
-			if (runtime != numChk) {
-				$('#runtimeText').css('display', 'block');								
-			}
-			
-		});
+// 		});
 	});
 	
 	
@@ -150,7 +149,7 @@ a {
 		<textarea name="movieStory" style="width: 400px; height: 400px;"></textarea><br>
 		등록자: <input type="text" name="registrant" value="${userDto.userName}" readonly="readonly"><br>
 		
-		<input type="button" value='등록' id='submitBtn'>
+		<input type="submit" value='등록' id='submitBtn'>
 		<input type="button" value="취소">				
 	</form>
 </body>

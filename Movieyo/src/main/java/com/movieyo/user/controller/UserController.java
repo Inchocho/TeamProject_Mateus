@@ -317,12 +317,12 @@ public class UserController {
 		
 		}
 		
-		@RequestMapping(value = "/UserFindpw.do", method = RequestMethod.GET)
-		public void UserFindpwGET() throws Exception{
-		
+		@RequestMapping(value = "/user/UserFindpw.do", method = RequestMethod.GET)
+		public String UserFindpwGET() throws Exception{
+			return "user/UserFindpw";
 		}
 
-		@RequestMapping(value = "/UserFindpw.do", method = RequestMethod.POST)
+		@RequestMapping(value = "/user/UserFindpw.do", method = RequestMethod.POST)
 		public void UserFindpwPOST(@ModelAttribute UserDto userDto, HttpServletResponse response) throws Exception{
 			userService.userFindPw(response, userDto);
 		}

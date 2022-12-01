@@ -184,12 +184,13 @@ public class MovieController {
 		
 		@RequestMapping(value = "/movie/updateCtr.do", method = RequestMethod.POST)
 		public String movieUpdateCtr(HttpSession session,
-				MultipartHttpServletRequest mulRequest,
+				MultipartHttpServletRequest multipart, @RequestParam(value= "fileIex", defaultValue = "-1")
+				   int fileIdx,
 				MovieDto movieDto, Model model)  {
 		    logger.info("Welcome movieController movieUpdateCtr!" + movieDto);
 		      
 		    try {
-				movieService.movieUpdateOne(movieDto,mulRequest);
+				movieService.movieUpdateOne(movieDto,multipart,fileIdx);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -230,7 +231,8 @@ public class MovieController {
 			for (int i = 0; i < movieNo.size(); i++) {
 				int movieNo2 = Integer.parseInt(String.valueOf(movieNo.get(i))); 
 
-				Map<String, Object> map = movieService.moviefileOne(movieNo2);				
+				Map<String, Object> map = movieService.moviefileOne(movieNo2);		
+				
 				List<Map<String, Object>> listlist = (List<Map<String, Object>>) map.get("fileList");
 				fileList.add(listlist);
 			}

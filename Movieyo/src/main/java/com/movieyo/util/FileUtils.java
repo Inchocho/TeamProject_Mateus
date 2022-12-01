@@ -17,10 +17,10 @@ public class FileUtils {
 	private static final String filePath = "C:\\upload";
 	
 	public List<Map<String, Object>> parseInsertFileInfo(int parentSeq
-		, MultipartHttpServletRequest multipartHttpServletRequest) 
+		, MultipartHttpServletRequest multipart) 
 			throws Exception{
 		
-		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
+		Iterator<String> iterator = multipart.getFileNames();
 		MultipartFile multipartFile = null;
 		// intro.txt -> 
 		
@@ -41,7 +41,7 @@ public class FileUtils {
 		
 		while(iterator.hasNext()) {
 			multipartFile 
-				= multipartHttpServletRequest.getFile(iterator.next());
+				= multipart.getFile(iterator.next());
 			
 			if(multipartFile.isEmpty() == false) {
 				originalFileName = multipartFile.getOriginalFilename();
