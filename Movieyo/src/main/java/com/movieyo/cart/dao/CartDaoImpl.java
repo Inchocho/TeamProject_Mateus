@@ -10,12 +10,15 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.movieyo.cart.dto.CartDto;
+
 @Repository
 public class CartDaoImpl implements CartDao{
 	
 	@Autowired
 	SqlSessionTemplate sqlSession;
 	
+	String mappingName;
 	//mapper의 namespace를 함수로 생성해서 사용하자
 	String name(String inputStr) {
 		String resultN = "com.movieyo.cart." + inputStr;
@@ -46,7 +49,9 @@ public class CartDaoImpl implements CartDao{
 		map.put("end", end);
 		map.put("userNo", userNo);
 		
-		return sqlSession.selectList(name("selectList"), map);
+		mappingName = "selectList";
+		
+		return sqlSession.selectList(name(mappingName), map);
 	}
 
 	@Override
@@ -57,7 +62,18 @@ public class CartDaoImpl implements CartDao{
 		map.put("userNo", userNo);
 		map.put("movieNo", movieNo);
 		
-		return sqlSession.selectOne(name("cartExist"), map);
+		mappingName = "cartExist";
+		
+		return sqlSession.selectOne(name(mappingName), map);
+	}
+
+	@Override
+	public void cartInsertOne(CartDto cartDto) {
+		// TODO Auto-generated method stub
+
+		mappingName = "cartInsertOne";
+		
+		sqlSession.insert(name(mappingName), cartDto);
 	}
 
 }

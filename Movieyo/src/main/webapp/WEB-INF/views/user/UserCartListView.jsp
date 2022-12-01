@@ -140,12 +140,10 @@ th {
 		</tr>
 		<c:if test="${not empty cartList}">
 		<c:forEach var="cart" items="${cartList}">
-		<!-- cartDto = [cartNo, userNo, movieNo, inCartDate] -->
-		<!-- map// cart.cartNo,userNo,inCartDate / cart.movie -->
 		<tr>
 			<td id="tdMtitle${cart.cartNo}">${cart.movieTitle}</td>
 			<td id="cartPsel${cart.cartNo}">${cart.moviePrice}</td>
-			<td><fmt:formatDate pattern="yyyy-mm-dd" value="${cart.inCartDate}"/></td>
+			<td><fmt:formatDate pattern="YYYY-MM-dd" value="${cart.inCartDate}"/></td>
 			<td><input type="checkbox" id="cartSelCN${cart.cartNo}" value="${cart.cartNo}"></td>
 		</tr>
 		</c:forEach>
@@ -171,7 +169,7 @@ th {
 	</div></div>
 	</form>
 
-	<jsp:include page="/WEB-INF/views/common/Paging.jsp"/>
+	<jsp:include page="/WEB-INF/views/common/CartPaging.jsp"/>
 	
 	<form action="./list.do" id="pagingForm" method="post">
 		<input type="hidden" id="curPage" name="curPage"
@@ -184,19 +182,19 @@ th {
 		<select name="searchOption">
 			<c:choose>
 				<c:when test="${searchMap.searchOption == 'all'}">
-					<option value="all"<c:if test="${searchMap.searchOption eq 'all'}">selected</c:if>>제목 + 담은날짜</option>
+					<option value="all"<c:if test="${searchMap.searchOption eq 'all'}">selected</c:if>>제목 + 담은날짜(월/일)</option>
 					<option value="MOVIE_TITLE">제목</option>					
-					<option value="CART_INCARTDATE">담은날짜</option>
+					<option value="CART_INCARTDATE">담은날짜(월/일)</option>
 				</c:when>
 				<c:when test="${searchMap.searchOption == 'MOVIE_TITLE'}">
-					<option value="all">제목 + 담은날짜</option>
+					<option value="all">제목 + 담은날짜(월/일)</option>
 					<option value="MOVIE_TITLE"<c:if test="${searchMap.searchOption eq 'MOVIE_TITLE'}">selected</c:if>>제목</option>
-					<option value="CART_INCARTDATE">담은날짜</option>
+					<option value="CART_INCARTDATE">담은날짜(월/일)</option>
 				</c:when>				
 				<c:when test="${searchMap.searchOption == 'CART_INCARTDATE'}">
-					<option value="all">감독+제목</option>
+					<option value="all">제목 + 담은날짜(월/일)</option>
 					<option value="MOVIE_TITLE">제목</option>					
-					<option value="CART_INCARTDATE"<c:if test="${searchMap.searchOption eq 'MOVIE_DIRECTOR'}">selected</c:if>>담은날짜</option>
+					<option value="CART_INCARTDATE"<c:if test="${searchMap.searchOption eq 'CART_INCARTDATE'}">selected</c:if>>담은날짜(월/일)</option>
 				</c:when>				
 			</c:choose>
 		</select>
@@ -302,10 +300,12 @@ buyCartSelBtn.addEventListener("click", function(e) {
 $('#allck').change(function() {
 	if ($(this).is(':checked')) {
 		$("input[id^='cartSelCN']").prop('checked',true);
+		$("input[id^='cartSelCN']").attr("class", "selCartMovie");
 		count = countAll;
 		sumPrice = sumPriceAll;
 	}else {
 		$("input[id^='cartSelCN']").prop('checked',false);
+		$("input[id^='cartSelCN']").removeAttr("class");
 		count = 0;
 		sumPrice = 0;
 	}

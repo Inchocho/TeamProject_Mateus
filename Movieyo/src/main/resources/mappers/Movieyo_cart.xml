@@ -48,8 +48,7 @@
 	
 	<!-- 장바구니 추가 -->
 	<insert id="cartInsertOne" parameterType="com.movieyo.cart.dto.CartDto"
-	useGeneratedKeys="true" keyProperty="cartNo">
-		
+	 useGeneratedKeys="true" keyProperty="cartNo">
 		<selectKey keyProperty="cartNo" resultType="int" order="BEFORE">
 			SELECT MVY_CART_NO_SEQ.NEXTVAL FROM DUAL
 		</selectKey>

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.movieyo.cart.dao.CartDao;
+import com.movieyo.cart.dto.CartDto;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -35,6 +36,16 @@ public class CartServiceImpl implements CartService {
 	public int cartExistOne(int userNo, int movieNo) {
 		// TODO Auto-generated method stub
 		return cartDao.cartExistOne(userNo,movieNo);
+	}
+
+	@Override
+	public void cartInsertOne(int userNo, int movieNo) {
+		// TODO Auto-generated method stub
+		CartDto cartDto = new CartDto();
+		cartDto.setUserNo(userNo);
+		cartDto.setMovieNo(movieNo);
+		
+		cartDao.cartInsertOne(cartDto);
 	}
 
 	

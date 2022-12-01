@@ -36,7 +36,9 @@ public class CartController {
 	
 	@Autowired
 	private CartService cartService;
+	@Autowired
 	private MovieService movieService;
+	@Autowired
 	private BuyService buyService;
 	
 	//
@@ -89,7 +91,7 @@ public class CartController {
 			int moviePrice = Integer.parseInt(String.valueOf(cartDBList.get(i).get("MOVIE_PRICE")));
 			int cartNo = Integer.parseInt(String.valueOf(cartDBList.get(i).get("CART_NO")));			
 			Date inCartDate = (Date)cartDBList.get(i).get("CART_INCARTDATE");
-			
+			System.out.println(inCartDate +" "+ i + "번");
 			cart.put("movieNo", movieNo);
 			cart.put("moviePrice", moviePrice);
 			cart.put("movieTitle", movieTitle);
@@ -106,16 +108,22 @@ public class CartController {
 		return "user/UserCartListView";
 	}	
 
-	@RequestMapping(value = "/cart/addCart", method = RequestMethod.GET)
-	public String buyAdd(Model model, HttpSession session) {
-		
+	@RequestMapping(value = "/cart/addCart.do", method = {RequestMethod.GET, RequestMethod.POST})
+	public String cartAdd(int movieNo, Model model
+			, @RequestParam(defaultValue = "1") int curPage
+			, @RequestParam(defaultValue = "all")String searchOption
+			, @RequestParam(defaultValue = "")String keyword
+			, HttpSession session) {
+		logger.debug("Welcome CartController movieOne!{}" , movieNo);
+		//로그인한 유저번호 찾기
 		UserDto userDto = (UserDto)session.getAttribute("userDto");
+		int userNo = userDto.getUserNo();
 		
-		model.addAttribute(userDto);
-		
-		logger.trace("Welcome CartController cartAdd 구매폼으로 이동!!!");
-		
-		return "user/UserCartListView";
+		//장바구니에 선택한 영화 담기
+		cartService.cartInsertOne(userNo,movieNo);
+				
+		String url = "redirect:/movie/detail.do?movieNo=" + movieNo;
+		return url;
 	}
 	
 //	@RequestMapping(value = "/cart", method = RequestMethod.POST)

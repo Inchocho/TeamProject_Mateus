@@ -12,6 +12,8 @@ public interface CartService {
 
 	int cartExistOne(int userNo, int movieNo);
 
+	void cartInsertOne(int userNo, int movieNo);
+
   
 
 }

@@ -74,7 +74,7 @@ img{
 <%-- 	<jsp:include page="/WEB-INF/views/PopUp/BuyMoviePop.jsp"></jsp:include> --%>
 		</c:if>
 		<c:if test="${cartCheck eq 0}">
-		<input type="button" value="장바구니" onclick="inCartMoviePopFnc();">
+		<input type="button" value="장바구니" onclick="inCartSubmitFnc();">
 <%-- 	<jsp:include page="/WEB-INF/views/PopUp/InCartMoviePop.jsp"></jsp:include> --%>
 		</c:if>
 	</c:if>
@@ -82,11 +82,19 @@ img{
 </body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
-function buyMovieFnc() {
+function buyMoviePopFnc() {
 	
 }
-function inCartMovieFnc() {
+function buySubmitFnc() {
 	
 }
+function inCartMoviePopFnc() {
+	
+}
+function inCartSubmitFnc() {
+	$('#detailForm').attr('action','/Movieyo/cart/addCart.do');
+	$('#detailForm').submit();
+}
+
 </script>
 </html>
