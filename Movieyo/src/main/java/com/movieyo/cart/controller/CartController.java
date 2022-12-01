@@ -65,7 +65,7 @@ public class CartController {
 		int start = paging.getPageBegin();
 		int end = paging.getPageEnd();		
 
-		List<Map<String, Object>> cartList = cartService.selectList(searchOption, keyword, start, end, userNo);
+		List<Map<String, Object>> cartDBList = cartService.selectList(searchOption, keyword, start, end, userNo);
 		
 		Map<String, Object> pagingMap = new HashMap<String, Object>();
 		
@@ -80,15 +80,15 @@ public class CartController {
 		
 		logger.info("curPage: {}", curPage);
 		logger.info("curBlock: {}", paging.getCurBlock());			
-		
-		Map<String, Object> cart = new HashMap<String, Object>();
-		for (int i = 0; i < cartList.size(); i++) {
+		List<Map<String, Object>> cartList = new ArrayList<Map<String,Object>>();
+		for (int i = 0; i < cartDBList.size(); i++) {
+			Map<String, Object> cart = new HashMap<String, Object>();
 			
-			int movieNo = Integer.parseInt(String.valueOf(cartList.get(i).get("MOVIE_NO")));
-			String movieTitle = (String)cartList.get(i).get("MOVIE_TITLE");
-			int moviePrice = Integer.parseInt(String.valueOf(cartList.get(i).get("MOVIE_PRICE")));
-			int cartNo = Integer.parseInt(String.valueOf(cartList.get(i).get("CART_NO")));			
-			Date inCartDate = (Date)cartList.get(i).get("CATR_INCARTDATE");
+			int movieNo = Integer.parseInt(String.valueOf(cartDBList.get(i).get("MOVIE_NO")));
+			String movieTitle = (String)cartDBList.get(i).get("MOVIE_TITLE");
+			int moviePrice = Integer.parseInt(String.valueOf(cartDBList.get(i).get("MOVIE_PRICE")));
+			int cartNo = Integer.parseInt(String.valueOf(cartDBList.get(i).get("CART_NO")));			
+			Date inCartDate = (Date)cartDBList.get(i).get("CART_INCARTDATE");
 			
 			cart.put("movieNo", movieNo);
 			cart.put("moviePrice", moviePrice);
@@ -96,7 +96,7 @@ public class CartController {
 			cart.put("inCartDate", inCartDate);		
 			cart.put("cartNo", cartNo);
 			
-			cartList.add(i,cart);
+			cartList.add(cart);
 		}
 		
 		model.addAttribute("cartList", cartList);

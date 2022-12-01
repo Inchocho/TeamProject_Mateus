@@ -139,14 +139,14 @@ th {
 			<th>영화제목</th><th>가격(원)</th><th>담은날짜</th><th>선택</th>
 		</tr>
 		<c:if test="${not empty cartList}">
-		<c:forEach var="i" items="${cartList}">
+		<c:forEach var="cart" items="${cartList}">
 		<!-- cartDto = [cartNo, userNo, movieNo, inCartDate] -->
 		<!-- map// cart.cartNo,userNo,inCartDate / cart.movie -->
 		<tr>
-			<td id="tdMtitle${cartList.i.cart.cartNo}">${cartList.i.cart.movieTitle}</td>
-			<td id="cartPsel${cartList.i.cart.cartNo}">${cartList.i.cart.moviePrice}</td>
-			<td>${cartList.i.cart.inCartDate}</td>
-			<td><input type="checkbox" id="cartSelCN${cartList.i.cart.cartNo}" value="${cartList.i.cart.cartNo}"></td>
+			<td id="tdMtitle${cart.cartNo}">${cart.movieTitle}</td>
+			<td id="cartPsel${cart.cartNo}">${cart.moviePrice}</td>
+			<td><fmt:formatDate pattern="yyyy-mm-dd" value="${cart.inCartDate}"/></td>
+			<td><input type="checkbox" id="cartSelCN${cart.cartNo}" value="${cart.cartNo}"></td>
 		</tr>
 		</c:forEach>
 	
