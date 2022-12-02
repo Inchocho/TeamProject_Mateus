@@ -38,7 +38,7 @@ public class BoardDaoImpl implements BoardDao {
 	}
 	//게시물 조회
 	@Override
-	public List<BoardDto> boardSelectList(String searchOption, String keyword, int start, int end) {
+	public List<Map<String, Object>> boardSelectList(String searchOption, String keyword, int start, int end) {
 		// TODO Auto-generated method stub
 		Map<String, Object> map = new HashMap<String, Object>();
 		
@@ -64,11 +64,7 @@ public class BoardDaoImpl implements BoardDao {
 		return sqlSession.update(namespace + "boardUpdateOne", boardDto);
 	}
 	// 조회수
-	@Override
-	public void boardViewCount(int boardNo) {
-		// TODO Auto-generated method stub
-		sqlSession.update(namespace + "boardViewCount",boardNo);
-	}
+	
 
 	@Override
 	public int boardRemoveOne(int boardNo) throws Exception {
@@ -83,33 +79,8 @@ public class BoardDaoImpl implements BoardDao {
 		
 	}
 
-//	@Override
-//	public int boardUpdate(BoardDto boardDto) {
-//		// TODO Auto-generated method stub
-//		return sqlSession.update(namespace + "memberUpdateOne", boardDto);
-//	}
 
-	@Override
-	public void updateBoard(BoardDto boardDto) {
-		// TODO Auto-generated method stub
-		Map<String,Object> map = new HashMap<String, Object>();
-		
-		String boardTitle = boardDto.getBoardTitle();
-		String boardContent = boardDto.getBoardContent();
-		int boardNo = boardDto.getBoardNo();
-		
-		map.put("boardTitle", boardTitle);
-		map.put("boardContent", boardContent);
-		map.put("boardNo", boardNo);
-		
-		sqlSession.update(namespace + "updateBoard", boardDto);
-	}
-
-	@Override
-	public void boardDeleteOne(int boardNo) {
-		// TODO Auto-generated method stub
-		sqlSession.delete(namespace + "boardDeleteOne", boardNo);
-	}
+	
 
 	
 

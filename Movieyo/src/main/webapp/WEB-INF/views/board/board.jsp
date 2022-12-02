@@ -6,88 +6,104 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>movieyo</title>
+  <title>게시글 작성</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <style type="text/css">
-   .container {
-      width : 70%;
-      
+  	.writing-header{
+  	margin-left: 600px;
+  	}
+   	.container{
+   	margin-left: 250px;
+   	}
+    .TexaAre {
+    width: 600px;
+    padding: 5px;
+	background: #f8f8f8;
+    border: 1px solid #e9e8e8;
+    resize: none;
+    outline-color: #e6e6e6;
     }
-    textarea {
-      background: #f8f8f8;
-      border: 1px solid #e9e8e8;
-      resize: none;
-      
-      outline-color: #e6e6e6;
-    }
-   
+   .frm{
+   margin-left:400px;
+   width: 700px;
+   height: 1000px;
+   }
+   .BTitle{
+    width: 600px;
+  	padding: 5px;
+   }
+   #Ti{
+   text-align: 
+   }
   </style>
  
 </head>
 <body>
 	<jsp:include page="../Header.jsp" />
-	<jsp:include page="../UserMyPageSideMenu.jsp"></jsp:include>
-<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 
-<div class="container">
-  <h2 class="writing-header">게시판</h2>
+
+<div class="container" >
+  <h1 class="writing-header">게시글 작성</h1>
   <form id="form" class="frm" action="./addCtr.do" method="post">
-  <select name="boardHead" id="head">
-  	<option value="free">자유게시판</option>
-  	<option value="question">Q&A</option>
-  </select><br>
-	<input type="text" name='userNo' value='${userDto.userNo}'>
-	<input type="hidden" name="boardNo" value='00'><br>
-    제목<br><input name="boardTitle" type="text" value="${boardDto.boardTitle}" placeholder="제목을 입력해 주세요."><br>
+ 
+	<div>
+	<input type="hidden" name="boardNo" value='00'>
+	<input type="hidden" name='userNo' value='${userDto.userNo}'>
+	<select name="boardHead" id="head">
+  		<option value="공지사항">공지사항</option>
+  		<option value="문의사항">문의사항</option>
+  	</select><br>
+	<label for="boardNo" id="Ti" >제목</label>&nbsp;<br><input type="text" class="BTitle" name="boardTitle" style="" value="${boardDto.boardTitle}" placeholder="제목을 입력해 주세요."/><br>
     	
-    내용입력<br><textarea rows="20" cols="100" name="boardContent"  placeholder="내용을 입력하세요."></textarea><br>
-    
-      <button type="submit" id="writeNewBtn" class="btn-write">글쓰기</button>
-      <button type="button" id="modifyBtn" class="btn-modify">수정</button>
-      <button type="button" id="removeBtn" class="btn-remove">삭제</button>
+    <label for="boardContent" id="Con">글내용</label>&nbsp;<br>
+   			 			<textarea name="boardContent" class="TexaAre" rows="40" cols="100"  placeholder="내용을 입력해 주세요." >${boardDto.boardContent}</textarea>
+    <br>
+    </div>
+      <button type="submit" id="writeNewBtn" class="btn-write">글쓰기</button>&nbsp;
+      <button type="button" id="listBtn" class="btn-list">목록으로</button>&nbsp;
+      <button type="button" id="cancelBtn" class="btn-modify">작성취소</button>
+      
 
-    <button type="button" id="listBtn" class="btn-list">목록</button>
   </form>
 </div>
 <script>
-  $(document).ready(function(){
-    let formCheck = function() {
-      let form = document.getElementById("form");
-      if(form.title.value=="") {
-        alert("제목을 입력해 주세요.");
-        form.title.focus();
-        return false;
-      }
-      if(form.content.value=="") {
-        alert("내용을 입력해 주세요.");
-        form.content.focus();
-        return false;
-      }
-      return true;
-    }
+
     
-//     $("#writeNewBtn").on("click", function(){
-//       location.href="<c:url value='/board/add.do'/>";
-//     });
+    $("#writeNewBtn").bind("click", function(e){
+    	var boardTitle = $("#boardTitle").val();
+    	var boardContent = $("#boardContent").val();
+    	if(boardTitle == ""){
+	    	e.preventDefault();
+    		  	alert("제목을 입력해주세요");
+    			$("#boardTitle").focus();
+    		  }else if(boardContent == ""){
+	    	e.preventDefault();
+    		  	alert("내용을 입력해주세요");
+    			$("#boardContent").focus();
+    			
+    		  }
+    });
     
-    $("#writeBtn").on("click", function(){
+    $("#writeBtn").on("click", function(e){
       let form = $("#form");
+      e.preventDefault();
       form.attr("action", "<c:url value='/board/boardList.do'/>");
       form.attr("method", "post");
+      
       if(formCheck())
-        form.submit();
-    });
+          form.submit();
+     	 });
+      
+    
     $("#listBtn").on("click", function(){
         location.href="<c:url value='/board/boardList.do'/>?page=${page}&pageSize=${pageSize}";
       });
-    $("#removeBtn").on("click", function(){
-       let form = $("#form");
-       form.attr("action", "<c:url value='/board/remove.do'/>?page=${page}&pageSize=${pageSize}");
-       form.attr("method", "post");
-       form.submit();
+    $("#cancelBtn").on("click", function(){
+        location.href="<c:url value='/board/add.do'/>";
       });
+   
     
-  });
+ 
 </script>
 <jsp:include page="../Tail.jsp" />
 </body>

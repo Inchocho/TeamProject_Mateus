@@ -12,13 +12,14 @@ public class BoardDto {
 	private Date boardCredate;
 	private Date boardModdate;
 	private int boardCount;
+	private String userName;
 	
 	public BoardDto() {
 		super();
 	}
 
 	public BoardDto(int boardNo, int userNo, String boardHead, String boardTitle, String boardContent,
-			Date boardCredate, Date boardModdate, int boardCount) {
+			Date boardCredate, Date boardModdate, int boardCount, String userName) {
 		super();
 		this.boardNo = boardNo;
 		this.userNo = userNo;
@@ -28,6 +29,7 @@ public class BoardDto {
 		this.boardCredate = boardCredate;
 		this.boardModdate = boardModdate;
 		this.boardCount = boardCount;
+		this.userName = userName;
 	}
 
 	public int getBoardNo() {
@@ -94,14 +96,20 @@ public class BoardDto {
 		this.boardCount = boardCount;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardDto [boardNo=" + boardNo + ", userNo=" + userNo + ", boardHead=" + boardHead + ", boardTitle="
 				+ boardTitle + ", boardContent=" + boardContent + ", boardCredate=" + boardCredate + ", boardModdate="
-				+ boardModdate + ", boardCount=" + boardCount + "]";
+				+ boardModdate + ", boardCount=" + boardCount + ", userName=" + userName + "]";
 	}
 	
-
-
-}
 	
+	}

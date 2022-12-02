@@ -1,11 +1,16 @@
 package com.movieyo.board.controller;
 
+import java.security.Provider.Service;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.Session;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.movieyo.board.dto.BoardDto;
 import com.movieyo.board.service.BoardService;
@@ -67,7 +73,7 @@ public class BoardController {
 		int start = boardPaging.getPageBegin();
 		int end = boardPaging.getPageEnd();
 
-		List<BoardDto> boardList = boardService.boardSelectList(searchOption, keyword, start, end);
+		List<Map<String, Object>> boardList = boardService.boardSelectList(searchOption, keyword, start, end);
 
 		// sql 페이징 쿼리실행결과 + 토탈카운트를 담아서 멤버리스트와 같이 모델에 담아준다
 		// map을 활용하면 다양한 데이터를 쉽게 객체를 만들 수 있다
@@ -93,14 +99,13 @@ public class BoardController {
 		return "board/boardList";
 	}
 
-	// 게시글 상세 화면으로
+	// 게시글 화면으로
 	@RequestMapping(value = "/board/one.do", method = RequestMethod.GET)
-	public String boardOne(int boardNo, int curPage, String searchOption, String keyword, Model model) {
+	public String boardOne(int boardNo, @RequestParam(defaultValue = "1") int curPage, String searchOption, String keyword, Model model) {
 //		logger.info("Welcome boardOne! enter - {}" + no);
+//		int boardNo = Integer.parseInt(boardNoS);
 
-		System.out.println("상세보기 1");
-
-		Map<String, Object> map = boardService.boardSelectOne(boardNo);
+		Map<String, Object> map = boardService.boardSelectOne(boardNo);	
 
 		BoardDto boardDto = (BoardDto) map.get("boardDto");
 		List<Map<String, Object>> fileList = (List<Map<String, Object>>) map.get("fileList");
@@ -120,8 +125,8 @@ public class BoardController {
 	}
 
 	
-
-	@RequestMapping(value = "/board/update.do")
+	
+	@RequestMapping(value = "/board/update.do", method = RequestMethod.GET)
 	public String boardUpdate(int boardNo, Model model, @RequestParam(defaultValue = "1") int curPage,
 			@RequestParam(defaultValue = "all") String searchOption, @RequestParam(defaultValue = "") String keyword) {
 
@@ -141,41 +146,45 @@ public class BoardController {
 
 		return "board/boardUpdateForm";
 	}
-
+	//	게시글 수정 화면으로
 	@RequestMapping(value = "/board/updateCtr.do", method = RequestMethod.POST)
-	public String boardUpdateCtr(HttpSession session, BoardDto boardDto, Model model) {
-		// email.password 네임값을 가져옴(@RequestMapping의 힘)
-
-		boardService.boardUpdateOne(boardDto);
-
-		return "redirect:/board/list.do";
+	public String boardUpdateCtr(HttpSession session,
+			BoardDto boardDto, Model model, String boardWriter)  {
+	                     // email.password 네임값을 가져옴(@RequestMapping의 힘)
+	    try {
+			boardService.boardUpdateOne(boardDto);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    model.addAttribute("boardWriter", boardWriter);  
+	    return "board/boardUpdateForm";
 	}
-
+	//게시글 삭제
 	@RequestMapping(value = "/board/deleteCtr.do", method = RequestMethod.GET)
-	public String boardDelete(int boardNo, HttpSession session, Model model) {
+	public String boardDelete(int boardNo) throws Exception {
 
-		boardService.boardDeleteOne(boardNo);
+		boardService.boardRemoveOne(boardNo);
 
-		return "redirect:/board/list.do";
+		return "redirect:/board/boardList.do";
+		
+	}
+	
+	//	게시물 선택삭제
+	@ResponseBody
+	@RequestMapping(value = "/board/listDeleteCtr.do", method = RequestMethod.POST)
+	public String selectDelete(@RequestParam(value="checkBoxArr[]") List<Integer> checkBoxArr
+			, HttpSession session) throws Exception{
+		System.out.println("asdf "+checkBoxArr);
+		
+		for (int checkObj : checkBoxArr) {
+			boardService.boardRemoveOne(checkObj);
+		}
+		
+		return "redierct:/board/boardList.do";
 	}
 
 
 
-	// 회원수정 화면으로
-	@RequestMapping(value = "board/updateBoard.do", method = RequestMethod.GET)
-	public String updateBoard(BoardDto boardDto) throws Exception {
-
-//		 	BoardDto boardDto = new BoardDto();
-
-		System.out.println(boardDto);
-//		 	boardDto.setBoardTitle(boardTitle);
-//			boardDto.setBoardContent(boardContent);
-//			boardDto.setBoardNo(boardNo);
-
-//			System.out.println("제목" + boardTitle + "내용" + boardContent + "게시판번호" + boardNo);
-
-		boardService.updateBoard(boardDto);
-		return "board/boardUpdateForm";
-	}
 
 }

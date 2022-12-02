@@ -13,13 +13,15 @@
 		<result column="BOARD_CREDATE" property="boardCredate"/>
 		<result column="BOARD_MODDATE" property="boardModdate"/>
 		<result column="BOARD_COUNT" property="boardCount"/>
+		<result column="USER_NAME" property="userName"/>
+		
 	</resultMap>
 	
 	<sql id="search">
 		<choose>
 			<when test="searchOption == 'all'">
 				WHERE BOARD_NO LIKE '%'||#{keyword}||'%'
-				OR BOARD_TITLE LIKE '%'||#{keyword}||'%'
+				OR BOARD_TITLE LIKE '	%'||#{keyword}||'%'
 			</when>
 			<otherwise>
 				WHERE ${searchOption} LIKE '%'||#{keyword}||'%'
@@ -28,11 +30,8 @@
 	</sql>
 
 
-<!-- 게시글 삭제 -->
-	 <delete id="delete" parameterType="map">
-        DELETE FROM MVY_BOARD 
-        WHERE BOARD_NO = #{boardNo}
-    </delete>
+
+
     
 <!-- 	게시글 추가 -->
     <insert id="boardInsertOne" parameterType="boardDto" useGeneratedKeys="true" keyProperty="boardNo">
@@ -46,17 +45,18 @@
             (#{boardNo}, #{userNo}, #{boardHead}, #{boardTitle}, #{boardContent}, SYSDATE, SYSDATE)
     </insert>
 <!--  게시글 리스트 -->
-    <select id="boardSelectList" parameterType="map" resultMap="boardResultMap">
-		SELECT BOARD_NO, USER_NO, BOARD_HEAD, BOARD_TITLE, BOARD_CONTENT, BOARD_CREDATE, BOARD_MODDATE, BOARD_COUNT
+    <select id="boardSelectList" parameterType="map" resultType="map">
+		SELECT BOARD_NO, USER_NO, BOARD_HEAD, BOARD_TITLE, BOARD_CONTENT, BOARD_CREDATE, BOARD_MODDATE, BOARD_COUNT, USER_NAME
 		   FROM (
 		        SELECT ROWNUM RNUM, BOARD_NO, USER_NO, BOARD_HEAD, BOARD_TITLE
-				, BOARD_CONTENT, BOARD_CREDATE, BOARD_MODDATE, BOARD_COUNT
+				, BOARD_CONTENT, BOARD_CREDATE, BOARD_MODDATE, BOARD_COUNT, USER_NAME
 		        FROM (
-	                SELECT ROWNUM RNUM, BOARD_NO, USER_NO, BOARD_HEAD, BOARD_TITLE
-				, BOARD_CONTENT, BOARD_CREDATE, BOARD_MODDATE, BOARD_COUNT
-	         	   	   FROM MVY_BOARD	
+	                SELECT ROWNUM RNUM, MB.BOARD_NO, MB.USER_NO, MB.BOARD_HEAD, MB.BOARD_TITLE
+				, MB.BOARD_CONTENT, MB.BOARD_CREDATE, MB.BOARD_MODDATE, MB.BOARD_COUNT, MU.USER_NAME
+	         	   	   FROM MVY_BOARD MB INNER JOIN MVY_USER MU	
+                       ON  MB.USER_NO = MU.USER_NO	
 	         	   	   <include refid="search"></include>
-			           ORDER BY BOARD_NO DESC) B
+			           ORDER BY MB.BOARD_NO DESC) B
       				) BD
 		WHERE BD.RNUM BETWEEN #{start} AND #{end}
 	</select>
@@ -64,12 +64,12 @@
     <!-- 	게시글 총갯수 -->
 	<select id="boardSelectTotalCount" resultType="java.lang.Integer" parameterType="map">
 		SELECT COUNT(*)
-		FROM MVY_board
+		FROM MVY_BOARD
 		<include refid="search"></include>
 	</select>
 	<!-- 	게시글 전체 선택 -->
 	<select id="selectAll" resultType="BoardDto">
-        SELECT BOARD_NO, BOARD_title, BOARD_content, BOARD_, BOARD_CREDATE, BOARD_COUNT
+        SELECT BOARD_NO, BOARD_HEAD, BOARD_TITLE, BOARD_CONTENT, BOARD_CREDATE, BOARD_COUNT
         FROM MVY_BOARD
         ORDER BY BOARD_CREDATE DESC, BOARD_NO DESC
 	</select>
@@ -81,29 +81,32 @@
     	SET BOARD_COUNT = BOARD_COUNT + 1
     	WHERE BOARD_NO = #{boardNo}
     </update>
-    
-	<select id="boardSelectOne" parameterType="int" 
+	
+	<!--     게시물 선택 -->
+	<select id="boardSelectOne" parameterType="map" 
 		resultMap="boardResultMap">
-		SELECT *  
-		FROM MVY_BOARD
-		WHERE BOARD_NO = #{boardNo} 
+		SELECT MB.*, MU.USER_NAME
+		FROM MVY_BOARD MB, MVY_USER MU
+		WHERE MB.USER_NO = MU.USER_NO
+		AND MB.BOARD_NO = #{boardNo} 
 	</select>
-<!-- 	게시물 수정 -->
-	<update id="updateBoard" parameterType="map">
-        UPDATE MVY_BOARD
-        SET   BOARD_TITLE = #{boardTitle}, BOARD_CONTENT = #{boardContent}, BOARD_CREDATE = SYSDATE
-        WHERE BOARD_NO = #{boardNo}
-    </update>
 
-<!-- 	<update id="updateBoard" parameterType="boardDto"> -->
-<!-- 		UPDATE MVY_BOARD -->
-<!-- 		<set> -->
-<!-- 			<if test="boardNo != ''">BOARD_NO = #{boardNo},</if> -->
-<!-- 			<if test="boardTitle != ''">BOARD_TITLE = #{boardTitle},</if>  -->
-<!-- 			<if test="boardContent	 != ''">BOARD_CONTENT = #{boardContent},</if> -->
-<!-- 			MOD_DATE = SYSDATE -->
-<!-- 		</set> -->
-<!-- 		WHERE BOARD_NO = #{boardNo} -->
-<!-- 	</update> -->
+	<!-- 	게시물 수정 -->
+
+	<update id="boardUpdateOne" parameterType="boardDto">
+		UPDATE MVY_BOARD
+		<set>
+			<if test="boardTitle != ''">BOARD_TITLE = #{boardTitle},</if> 
+			<if test="boardContent	 != ''">BOARD_CONTENT = #{boardContent},</if>
+			BOARD_MODDATE = SYSDATE
+		</set>	
+		WHERE BOARD_NO = #{boardNo}
+	</update>
+	
+    <!-- 게시글 삭제 -->
+    <delete id="boardRemoveOne" parameterType="int">
+		DELETE FROM MVY_BOARD
+		WHERE BOARD_NO = #{boardNo}
+	</delete>
 	
 </mapper>

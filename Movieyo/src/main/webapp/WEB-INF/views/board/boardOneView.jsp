@@ -6,7 +6,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>게시글</title>
+<title>게시판</title>
+<style type="text/css">
+	textarea {
+		width:600px;
+		height:600px;
+		margin-left :10px;
+		resize: none;
+		background: #f8f8f8;
+	}
+	#boardTab{
+		width: 700px;
+		height: 700px;
+	}
+	table, tr, td, th { 
+	border: 1px solid black; 
+	} 
+	#boardOneT{
+		margin-left: 800px;
+	}
+	#frm{
+		border-collapse: collapse;
+		border: 1px solid #e9e8e8;;
+		margin-left: 500px;
+	}
+	.boardsize{
+		border: 1px solid black;
+　　	}
+	#num{
+		margin-left: 10px;	
+	}
+	
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
 <script type="text/javascript">
@@ -29,7 +60,7 @@
 	$(document).ready(function() {
 		$("#edit").on("click", function(){
 			var frm = $("#frm")[0];
-			frm.action = "updateBoard.do";
+			frm.action = "updateCtr.do";
 			frm.submit();
 		});
 	});
@@ -40,23 +71,41 @@
 <body>
 
 	<jsp:include page="../Header.jsp" />
-	<h1>게시글</h1>
+	<h1 id="boardOneT">게시글</h1>
 	
 	
-	<form action='./boardList.do' id="frm" method='post'>
-		글번호: <input type="text" name="boardNo" value="${boardDto.boardNo}" readonly="readonly"><br>
+<form id="frm" action='./updateCtr.do' method='post'>
 	
-		글제목: <input type='text' name='boardTitle' 
-			value="${boardDto.boardTitle}" readonly="readonly"><br>
-			
-		글내용
-   		<textarea name="boardContent" rows="20" placeholder=" 내용을 입력해 주세요." ${mode=="new" ? "" : "readonly='readonly'"}>${boardDto.boardContent}
-   		</textarea><br>
-		등록일 :	<input type="text" name="creDate" value="${boardDto.boardCredate}" readonly="readonly"> <br>
-		<input type='submit' value='123'>
-		<input type='button' value='수정' id="edit" >
-		<input type="button" value="목록" onclick="moveFnc();">
-		<input type="button" value="삭제" onclick="deleteFnc(${boardDto.boardNo});">					
+		<table id="boardTab">
+			<tbody class="boardsize">
+				<tr>
+					<td id="num">
+					<label for="boardNo">글번호</label>&nbsp;<input type="text" name="boardNo" style="" value="${boardDto.boardNo}" readonly="readonly"/><br>
+					</td>
+				</tr>
+				<tr>
+					<td id="writer">
+					<label for="boardWriter">작성자</label>&nbsp;<input type="text" name="boardWriter" value="${boardDto.userName}" readonly="readonly"/><br>
+					</td>
+				</tr>
+				<tr >
+					<td id="title">
+					<label for="boardTitle">글제목</label>&nbsp;<input type='text' name='boardTitle' value="${boardDto.boardTitle}" readonly="readonly"/><br>
+					</td>
+				</tr>	
+				<tr>
+					<td id="content">
+   			<label for="boardContent">글내용</label>&nbsp;<br>
+   			 			<textarea name="boardContent" rows="20" cols="40" placeholder=" 내용을 입력해 주세요." readonly="readonly">${boardDto.boardContent}</textarea>
+   					</td>
+				</tr>
+			</tbody>	
+   		</table>
+   		
+		<input type='button' style="margin-left: 260px;" value='게시물수정'  id="edit">
+		<input type="button" style="margin-left: 10px;" value="목록" onclick="moveFnc()">
+		<input type="hidden" name="modDate" value="${boardDto.boardModdate}"> <br>
+		<input type="hidden" name="creDate" value="${boardDto.boardCredate}"> <br>
 	</form>
 	
 	<jsp:include page="../Tail.jsp" />

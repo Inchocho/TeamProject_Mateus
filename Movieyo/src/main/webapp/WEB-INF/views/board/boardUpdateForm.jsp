@@ -7,35 +7,98 @@
 <html>
 <head>
 <title>게시글 상세내용</title>
+<style type="text/css">
+	textarea {
+		width:600px;
+		height:600px;
+		margin-left :10px;
+		resize: none;
+		background: #f8f8f8;
+	}
+	table, tr, td, th {
+		border: 1px solid black;
+		}
+	#boardTab{
+		width: 700px;
+		height: 700px;
+		}
+			
+	#boardTwoT{
+		margin-left: 800px;
+		}	
+	#from2{
+		border-collapse: collapse;
+		border: 1px solid #e9e8e8;;
+		margin-left: 500px;
+	}
+	.boardsize2 tr td{
+		border: 1px solid black;
+　　	}
+	#num{
+		margin-left: 10px;	
+	}	
+		
+</style>
 
+<script type="text/javascript">
+	function moveFnc(){
+		var url = "./boardList.do?";
+		location.href = url;
+	}
+	 function pageMoveDeleteFnc(boardNo){
+	      var url = "./deleteCtr.do?boardNo=" + boardNo;
+	      location.href = url;
+	}
 
-
+	
+	
+</script>
 	
 
 
-</script>
+
 
 </head>
 	
 <body>
 
 	<jsp:include page="../Header.jsp" />
-	<h1>게시글</h1>
+	<h1 id="boardTwoT">게시글수정</h1>
 	
 	
-	<form id="frm" action='./updateBoard.do' method='post'>
-		글번호: <input type="text" name="boardNo" value="${boardDto.boardNo}" readonly="readonly"><br>
-		글제목: <input type='text' name='boardTitle' 
-			value="${boardDto.boardTitle}"><br>
-			
-		글내용
-   		<textarea name="boardContent" rows="20" placeholder=" 내용을 입력해 주세요.">${boardDto.boardContent}
-   		</textarea><br>
-		등록일 :	<input type="hidden" name="creDate" value="${boardDto.boardCredate}" readonly="readonly"> <br>
-		<input type="text" name="modDate" value="${boardDto.boardModdate}"> <br>
-		<input type='button' id="edit" value='수정' >
-		<input type="button" value="목록" onclick="moveFnc()">
-		<input type="button" value="삭제" onclick="deleteFnc(${boardDto.boardNo});">					
+	<form id="from2" action='./updateCtr.do' method='post'>
+	
+		<table id="boardTab" >
+			<tbody class="boardsize2">
+				<tr>
+					<td>
+					<label for="boardNo">글번호</label>&nbsp;<input type="text" name="boardNo" value="${boardDto.boardNo}" readonly="readonly"/><br>
+					</td>
+				</tr>
+				<tr>
+					<td id="writer">
+					<label for="boardWriter">작성자</label>&nbsp;<input type="text" name="boardWriter" value="${boardWriter}" readonly="readonly"/><br>
+					</td>
+				</tr>
+				<tr>
+					<td>
+					<label for="boardTitle">글제목</label>&nbsp;<input type='text' name='boardTitle' value="${boardDto.boardTitle}"/><br>
+					</td>
+				</tr>	
+				<tr>
+					<td>
+   			<label for="boardContent">글내용</label>&nbsp;<br>
+   			<textarea name="boardContent" rows="20" cols="30" placeholder=" 내용을 입력해 주세요.">${boardDto.boardContent}</textarea>
+   					</td>
+				</tr>
+			</tbody>	
+   		</table>
+   		
+		<input type='submit' style="margin-left: 260px;" value='수정' >
+		<input type="button" style="margin-left: 10px;" value="목록" onclick="moveFnc()">
+		<input type="button" style="margin-left: 10px;" value="삭제" onclick="pageMoveDeleteFnc(${boardDto.boardNo});">					
+		<input type="hidden" name="modDate" value="${boardDto.boardModdate}"> <br>
+		<input type="hidden" name="creDate" value="${boardDto.boardCredate}"> <br>
 	</form>
 	
 	<jsp:include page="../Tail.jsp" />
