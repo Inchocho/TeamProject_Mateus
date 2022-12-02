@@ -114,7 +114,7 @@ body {
 			<li class="searchBox">
 			<input type="button" value="검색"><input type="search" value="" placeholder="영화를 검색해보세요">
 			</li>
-			<li style="color: white; padding-right: 20px; min-width: 200px;">
+			<li style="color: white; padding-right: 20px; min-width: 320px;">
 			<c:if test="${userDto.userAdmin eq 1}">${adminLabel}</c:if>${userDto.nickname} 님　
 				<input type="button" value="내정보" onclick="myInfo();" class="header_btn">
 				<input type="button" value="로그아웃" onclick="logout();" class="header_btn">

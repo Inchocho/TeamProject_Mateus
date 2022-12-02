@@ -45,7 +45,7 @@
       </div>
   </div>
 </div>
-
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
 function cancelbuyFnc() {
 	htmlTag.classList.toggle('popup_focus');

@@ -24,6 +24,7 @@ import com.movieyo.buy.service.BuyService;
 import com.movieyo.cart.service.CartService;
 import com.movieyo.movie.dto.MovieDto;
 import com.movieyo.movie.service.MovieService;
+import com.movieyo.refund.service.RefundService;
 import com.movieyo.user.dto.UserDto;
 import com.movieyo.user.service.UserService;
 import com.movieyo.util.CartPaging;
@@ -41,6 +42,8 @@ public class CartController {
 	private UserService userService;
 	@Autowired
 	private BuyService buyService;
+	@Autowired
+	private RefundService refundService; 
 	
 	//
 	
@@ -144,25 +147,52 @@ public class CartController {
 		logger.debug("Welcome CartController buyCart! cart: {}", cartNo);
 		UserDto userDto = (UserDto) session.getAttribute("userDto");
 		int userNo = userDto.getUserNo();
-		
-		for (int i = 0; i < movieNo.length; i++) {
-			BuyDto buyDto = new BuyDto(userNo,movieNo[i]);
-			//구매성공체크(환불 재구매시)					
-			int buyStatusCheck =  buyService.buyStatusCheck(userNo, movieNo[i]);
-				if(buyStatusCheck != 0) {
-					buyService.buyStatusUpdate(userNo, movieNo[i]);
-				}else {
-					
-				int buySuccess = 0;					
-				buySuccess = buyService.buyInsertOne(buyDto);
+		int userCash = userDto.getUserCash();
+		if (userCash >= sumPrice) {	//장바구니 합계보다 유저캐시가 많을때 수행
+			for (int i = 0; i < movieNo.length; i++) {
+				BuyDto buyDto = new BuyDto(userNo,movieNo[i]);
+				//구매성공체크(환불 재구매시)					
+				cartService.deleteCart(cartNo[i]);
 				
-				if(buySuccess != 0) {
-					//구매가 성공했으면 유저의 캐쉬를 영화가격만큼 감소
+				//구매성공(케이스1 환불한 영화 다시 재구매)	
+				int buyStatusCheck = 0;
+				buyStatusCheck = buyService.buyStatusCheck(userNo, movieNo[i]);
+				if(buyStatusCheck != 0) {
+					//환불한물건 업데이트처리(구매 케이스 1)
+
+					//구매내역에 상태가 있는지 확인
+					buyService.buyStatusUpdate(userNo, movieNo[i]);
 					userService.userBuyMovie(userNo, sumPrice);
+					
+					//구매시 장바구니에 들어있는지 확인하여
+					//장바구니에 들어있는게 확인되면 장바구니 번호를 조회해서 해당 번호를 삭제							
+
+					//환불내역(환불처리완료됨)에서 삭제처리함 
+					int refundNo = 0;
+					refundNo = buyService.selectRefundNo(userNo, movieNo[i]);
+					refundService.refundDelete(refundNo);							
+				}else {
+				//구매케이스2 아예 처음 구매함
+					int buySuccess = 0;					
+					buySuccess = buyService.buyInsertOne(buyDto);
+					
+					if(buySuccess != 0) {
+	
+						//구매가 성공했으면 유저의 캐쉬를 영화가격만큼 감소
+						userService.userBuyMovie(userNo, sumPrice);
+					}
 				}
 			}
+		String url = "redirect:/cart/list.do";
+		return url;
+		}else {
+			String url = "alert/BuyCartFail";
+			return url;
 		}
-
+	}
+	@RequestMapping(value = "/cart/alert.do", method = {RequestMethod.GET, RequestMethod.POST})
+	public String alert(Model model, HttpSession session) {
+		
 		String url = "redirect:/cart/list.do";
 		return url;
 	}

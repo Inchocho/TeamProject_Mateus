@@ -23,13 +23,13 @@
       <!--팝업 버튼 영역-->
       <div class="popup_btn">
           <a id="inCartBtn" href="#" onclick="inCartSubmitFnc();" class="">담기</a> 
-          <a href="#" onclick="cancelbuyFnc();" class="cancel">닫기</a>
+          <a href="#" onclick="cancelcartFnc();" class="cancel">닫기</a>
       </div>
   </div>
 </div>
-
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
-function cancelbuyFnc() {
+function cancelcartFnc() {
 	htmlTag.classList.toggle('popup_focus');
 	var popup_layer_incartmovie = document.getElementById("popup_layer_incartmovie");
 	popup_layer_incartmovie.style.visibility = "hidden";
