@@ -257,6 +257,7 @@ buyCartSelBtn.addEventListener("click", function(e) {
 		htmlStr = checkedFir.parent().siblings(findMtitle).text();
 		$('#selMovieTitleFir').html(htmlStr);
 		
+		htmlTag.classList.toggle('popup_focus');
 		popup_layer_cartbuy.style.visibility = "visible";
 	}
 });
@@ -286,6 +287,7 @@ delCartSelBtn.addEventListener("click", function(e) {
 		
 		$('#cartdel_cont_ul').html(htmlStr);
 		
+		htmlTag.classList.toggle('popup_focus');
 		popup_layer_cartdel.style.visibility = "visible";
 	}
 });

@@ -18,6 +18,7 @@
 /*오픈시 doc*/
 .popup_focus{
     overflow: hidden !important;
+    margin-right: 17px;
 }
 /*추가*/
 .popup_box .popup_btn a.delCart{background-color: #fd7d40;}
@@ -52,8 +53,10 @@
 </div>
 
 <script type="text/javascript">
+var htmlTag = document.getElementsByTagName("html").item(0);
 //캔슬버튼 popup_layer 아이디 변경시 바꿔줘야함
 function canceldelFnc() {
+	htmlTag.classList.toggle('popup_focus');
 	var popup_layer_cartdel = document.getElementById("popup_layer_cartdel");
 	popup_layer_cartdel.style.visibility = "hidden";
 }

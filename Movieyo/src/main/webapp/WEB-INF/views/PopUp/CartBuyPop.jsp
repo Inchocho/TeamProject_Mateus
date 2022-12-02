@@ -48,6 +48,7 @@
 
 <script type="text/javascript">
 function cancelbuyFnc() {
+	htmlTag.classList.toggle('popup_focus');
 	var popup_layer_cartbuy = document.getElementById("popup_layer_cartbuy");
 	popup_layer_cartbuy.style.visibility = "hidden";
 }

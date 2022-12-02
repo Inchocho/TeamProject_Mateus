@@ -71,30 +71,32 @@ img{
 	<c:if test="${userDto.userAdmin eq 0}">
 		<c:if test="${buyCheck eq 0}">
 		<input type="button" value='구매' onclick="buyMoviePopFnc();" class="body_btn_css">
-<%-- 	<jsp:include page="/WEB-INF/views/PopUp/BuyMoviePop.jsp"></jsp:include> --%>
 		</c:if>
 	<c:choose>
 		<c:when test="${cartCheck eq 0}">
 		<input type="button" value="장바구니 담기" onclick="inCartSubmitFnc();" class="body_btn_css">
-<%-- 	<jsp:include page="/WEB-INF/views/PopUp/InCartMoviePop.jsp"></jsp:include> --%>
 		</c:when>
 		<c:when test="${cartCheck eq 1}">
 		<input type="button" value="장바구니로 이동" onclick="pageMoveCartFnc();" class="body_btn_css">
 		</c:when>
 	</c:choose>
 	</c:if>
+<%-- 	<jsp:include page="/WEB-INF/views/PopUp/BuyMoviePop.jsp"></jsp:include> --%>
+<%-- 	<jsp:include page="/WEB-INF/views/PopUp/InCartMoviePop.jsp"></jsp:include> --%>
 	<jsp:include page="../Tail.jsp" />
 </body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
 function buyMoviePopFnc() {
-	
+// 	htmlTag.classList.toggle('popup_focus');
+// 	popup_layer_buymovie.style.visibility = "visible";
 }
 function buySubmitFnc() {
 	
 }
 function inCartMoviePopFnc() {
-	
+// 	htmlTag.classList.toggle('popup_focus');
+// 	popup_layer_incart.style.visibility = "visible";
 }
 function inCartSubmitFnc() {
 	$('#detailForm').attr('action','/Movieyo/cart/addCart.do');

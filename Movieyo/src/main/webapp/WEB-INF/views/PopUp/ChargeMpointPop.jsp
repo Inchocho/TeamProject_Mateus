@@ -18,11 +18,12 @@
 /*오픈시 doc*/
 .popup_focus{
     overflow: hidden !important;
+    margin-right: 17px;
 }
 </style>
 </head>
 
-<div id="popup_layer" style="visibility: hidden;">
+<div id="popup_layer" style="visibility:hidden; ">
   <div class="popup_box">
       <!--팝업 컨텐츠 영역-->
       <div class="popup_cont">
@@ -37,8 +38,10 @@
   </div>
 </div>
 <script type="text/javascript">
+var popup_layer = document.getElementById("popup_layer");
+var htmlTag = document.getElementsByTagName("html").item(0);
 function cancelFnc() {
-	var popup_layer = document.getElementById("popup_layer");
+	htmlTag.classList.toggle('popup_focus');
 	popup_layer.style.visibility = "hidden";
 }
 </script>

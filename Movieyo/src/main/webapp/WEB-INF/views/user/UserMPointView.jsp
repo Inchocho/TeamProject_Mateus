@@ -205,7 +205,6 @@ table {
 	
 //	충전버튼 눌렀을때 충전값 있으면 모달창
 	var chargeTryBtn = document.getElementById("chargeTryBtn");
-	var popup_layerObj = document.getElementById("popup_layer");
 	
 	chargeTryBtn.addEventListener("click", function(e) {
 		var chargePriceCheck = document.getElementById("chargePriceCheck");
@@ -216,6 +215,7 @@ table {
 			e.preventDefault();
 			alert("충전금액이 입력되지 않았습니다.")
 		}else{
+			htmlTag.classList.toggle('popup_focus');;
 			popup_layer.style.visibility = "visible";
 		}
 	});
