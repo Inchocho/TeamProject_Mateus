@@ -101,17 +101,17 @@ public class MovieServiceImpl implements MovieService{
 
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public int movieUpdateOne(MovieDto movieDto, MultipartHttpServletRequest multipart, int fileIdx) throws Exception {
+	public int movieUpdateOne(MovieDto movieDto, MultipartHttpServletRequest multipartHttpServletRequest, int fileIdx) throws Exception {
 		// TODO Auto-generated method stub
 		int resultNum = 0;
 		
+		try {
 			resultNum = movieDao.movieUpdateOne(movieDto);
 			
 			int parentSeq = movieDto.getMovieNo();
 			Map<String, Object> tempFileMap = movieDao.fileSelectStoredFileName(parentSeq);
 			
-			List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(parentSeq, multipart);
-			
+			List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(parentSeq, multipartHttpServletRequest);
 			
 			if (list.isEmpty() == false) {
 				if (tempFileMap != null) {
@@ -134,6 +134,9 @@ public class MovieServiceImpl implements MovieService{
 					fileUtils.parseUpdateFileInfo(tempFileMap);
 				}
 			}
+		} catch (Exception e) {
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
 		
 	
 	return resultNum;

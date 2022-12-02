@@ -23,6 +23,7 @@ import com.movieyo.cart.service.CartService;
 import com.movieyo.movie.dto.MovieDto;
 import com.movieyo.movie.service.MovieService;
 import com.movieyo.user.dto.UserDto;
+import com.movieyo.util.MovieMainPaging;
 import com.movieyo.util.Paging;
 
 @Controller
@@ -240,7 +241,7 @@ public class MovieController {
 			model.addAttribute("fileList", fileList);
 			logger.info("totalCount: {}", totalCount);
 //			
-			Paging moviePaging = new Paging(totalCount, curPage);
+			MovieMainPaging moviePaging = new MovieMainPaging(totalCount, curPage);
 //			
 			int start = moviePaging.getPageBegin();
 			int end = moviePaging.getPageEnd();
