@@ -143,76 +143,101 @@ th {
 		<input type="hidden" value="${userDto.userNo}">
 	<table>
 		<tr>
-			<th>영화제목</th>
-			<th>가격(원)</th>
-			<th>구매일</th>
-			<th>신청일</th>
-			<th>상태</th>
-			<c:if test="${userDto.userAdmin == 1}">	<!-- 관리자가 유저환불내역을 허가함 -->
-			<th>환불번호</th>
-			<th>유저번호</th>	
-			<th>유저닉네임</th>
-			<th>환불허가</th>
-			</c:if>
+			<c:choose>
+				<c:when test="${userDto.userAdmin == 1}">
+					<th>회원번호</th>
+					<th>회원이름</th>
+					<th>영화이름</th>
+					<th>영화가격</th>
+					<th>구매날짜</th>
+					<th>신청날짜</th>			
+					<th>수락버튼</th>
+					<th>환불상태</th>		
+				</c:when>
+				<c:when test="${userDto.userAdmin == 0}">
+					<th>영화제목</th>
+					<th>영화가격</th>
+					<th>구매날짜</th>
+					<th>신청날짜</th>
+					<th>환불상태</th>
+				</c:when>				
+			</c:choose>			
 		</tr>
 		<c:if test="${not empty refundListMap}">
 		<c:forEach var="refundMap" items="${refundListMap}">
-		<tr>
-			<td>
-				${refundMap.movieTitle}
-			</td>
-			<td>
-				${refundMap.moviePrice}
-			</td>			
-			<td>
-				<fmt:formatDate pattern="yyyy-MM-dd" 
-					value = "${refundMap.buyDate}" />
-			</td>			
-			<td>
-				<fmt:formatDate pattern="yyyy-MM-dd" 
-				value="${refundMap.refundDate}"/>
-			</td>
-			<td>
-				${refundMap.refundStatus}
-			</td>					
-		<c:if test="${userDto.userAdmin == 1}">	<!-- 관리자가 유저환불내역을 허가함 -->
-			<td>
-				${refundMap.refundNo}
-			</td>
-			<td>
-				${refundMap.refundUserNo}
-			</td>				
-			<td>
-				${refundMap.refundUserNickname}
-			</td>		
-				<td>			
-					<c:choose>
-						<c:when test="${refundChk !=  1}">				
-							<input id='rBtnYes' type='submit' value='수락'>
-							<input id='rBtnNo' type='submit' value='거절'>			
-						</c:when>
-						<c:otherwise>
-							<input type="text" value="환불완료됨" readonly="readonly">
-						</c:otherwise>
-					</c:choose>
-					<input type="hidden" name="refundNo" value="${refundMap.refundNo}">
-					<input type="hidden" name="buyNo" value="${refundMap.buyNo}">
-					<input type='hidden' name='movieNo' value="${refundMap.movieNo}">
-					<input type='hidden' name='userNo' value="${refundMap.refundUserNo}">
-					<input type="hidden" name="moviePrice" value="${refundMap.moviePrice}">
-					<input type="hidden" id="refundCurPage" name="curPage" value="">
-					<input type="hidden" name="keyword" value="${searchMap.keyword}">
-					<input type="hidden" name="searchOption" value="${searchMap.searchOption}">
-					<input type="hidden" name="admit" value='1'>
-				</td>
-			</c:if>	
-		</tr>			
+			<tr>
+				<c:choose>
+					<c:when test="${userDto.userAdmin == 1}">
+						<td>
+							<input type='text' value='${refundMap.refundUserNo}'>
+						</td>
+						<td>
+							<input type='text' value='${refundMap.refundUserName}'>
+						</td>
+						<td>
+							<input type='text' value='${refundMap.movieTitle}'>
+						</td>
+						<td>
+							<input type='text' value='${refundMap.moviePrice}'>
+						</td>
+						<td>
+							<input type='text' value='<fmt:formatDate pattern="yyyy-MM-dd" 
+								value="${refundMap.refundDate}"/>'>
+						</td>
+						<td>
+							<input type='text' value='<fmt:formatDate pattern="yyyy-MM-dd" 
+								value="${refundMap.buyDate}"/>'>
+						</td>
+						<td>
+							<c:choose>
+								<c:when test="${refundChk !=  1}">				
+									<input id='rBtnYes' type='submit' value='수락'>
+									<input id='rBtnNo' type='submit' value='거절'>			
+								</c:when>
+								<c:otherwise>
+									<input type="text" value="환불완료됨" readonly="readonly">
+								</c:otherwise>
+							</c:choose>
+							<input type="hidden" name="refundNo" value="${refundMap.refundNo}">
+							<input type="hidden" name="buyNo" value="${refundMap.buyNo}">
+							<input type='hidden' name='movieNo' value="${refundMap.movieNo}">
+							<input type='hidden' name='userNo' value="${refundMap.refundUserNo}">
+							<input type="hidden" name="moviePrice" value="${refundMap.moviePrice}">
+							<input type="hidden" id="refundCurPage" name="curPage" value="">
+							<input type="hidden" name="keyword" value="${searchMap.keyword}">
+							<input type="hidden" name="searchOption" value="${searchMap.searchOption}">
+							<input type="hidden" name="admit" value='1'>						
+						</td>
+						<td>
+							${refundMap.refundStatus}
+						</td>						
+					</c:when>
+					<c:when test="${userDto.userAdmin == 0}">
+						<td>
+							${refundMap.movieTitle}
+						</td>
+						<td>
+							${refundMap.moviePrice}
+						</td>
+						<td>
+							<fmt:formatDate pattern="yyyy-MM-dd" 
+								value = "${refundMap.buyDate}" />
+						</td>	
+						<td>
+							<fmt:formatDate pattern="yyyy-MM-dd" 
+								value="${refundMap.refundDate}"/>
+						</td>
+						<td>
+							${refundMap.refundStatus}
+						</td>						
+					</c:when>			
+				</c:choose>	
+			</tr>	
 		</c:forEach>
-	
 		</c:if>
 		<c:if test="${empty refundListMap}">
 			<tr>
-				<td colspan="9" id="tdId">환불내역이 없습니다</td>
+				<td colspan="8" id="tdId">환불내역이 없습니다</td>
 			</tr>		
 		</c:if>
 	</table>
@@ -271,6 +296,13 @@ th {
 </body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
+
+$(function(){
+	var refundStatusStr = $('#refundStatus').val();
+	if(refundStatusStr == '환불완료됨'){
+		$('#rBtnYes').prop("type", "text");	
+	}
+});
 
 // //선택항목,합계 보여주기
 // var htmlStr = $('#cartSelCount').val();

@@ -82,6 +82,23 @@
 		FROM MVY_BUY
 		WHERE USER_NO = #{userNo}
 		AND MOVIE_NO = #{movieNo}
+        AND BUY_STATUS != '환불처리완료'	
 	</select>
+	
+	<!-- 구매상태 조회-->
+	<select id="buyStatusCheck" parameterType='map' resultType="java.lang.Integer">
+		SELECT COUNT(BUY_NO)
+		FROM MVY_BUY
+		WHERE USER_NO = #{userNo}
+		AND MOVIE_NO = #{movieNo}
+        AND BUY_STATUS = '환불처리완료'		
+	</select>
+	
+	<!-- 구매상태 환불인 경우 업데이트 -->
+	<update id="buyStatusUpdate" parameterType='map'>
+		UPDATE MVY_BUY
+		SET BUY_STATUS = '보유중'
+		WHERE MOVIE_NO = #{movieNo}
+	</update>
 	
 </mapper>

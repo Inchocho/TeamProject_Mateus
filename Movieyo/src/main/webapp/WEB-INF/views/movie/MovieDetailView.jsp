@@ -93,7 +93,7 @@ function buyMoviePopFnc() {
 	popup_layer_buymovie.style.visibility = "visible";
 }
 function buySubmitFnc() {
-	$('#detailForm').attr('action','/Movieyo/buy/addBuy.do');
+	$('#detailForm').attr('action','/Movieyo/buy/addCtr.do');
 	$('#detailForm').submit();
 }
 function inCartMoviePopFnc() {

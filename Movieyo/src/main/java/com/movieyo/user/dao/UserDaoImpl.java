@@ -17,6 +17,7 @@ public class UserDaoImpl implements UserDao{
 	SqlSessionTemplate sqlSession;
 	
 //	String namespace = "com.movieyo.user";
+	String namespace = "com.movieyo.user.";
 	
 	@Override
 	public UserDto userExist(String email, String password) {
@@ -26,49 +27,49 @@ public class UserDaoImpl implements UserDao{
 		paramMap.put("email", email);
 		paramMap.put("password", password);
  
-		return sqlSession.selectOne("com.movieyo.user.userExist", paramMap);
+		return sqlSession.selectOne(namespace + "userExist", paramMap);
 	}
 
 	@Override
 	public int userInsertOne(UserDto userDto) {
 		// TODO Auto-generated method stub
-		return sqlSession.insert("com.movieyo.user.userInsertOne", userDto);
+		return sqlSession.insert(namespace + "userInsertOne", userDto);
 	}
 
 	@Override
 	public UserDto userSelectOne(int userNo) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("com.movieyo.user.userSelectOne", userNo);
+		return sqlSession.selectOne(namespace + "userSelectOne", userNo);
 	}
 
 	@Override
 	public int userUpdateOne(UserDto userDto) {
 		// TODO Auto-generated method stub
-		return sqlSession.update("com.movieyo.user.userUpdateOne", userDto);
+		return sqlSession.update(namespace + "userUpdateOne", userDto);
 	}
 
 	@Override
 	public int passwordUpdate(UserDto userDto) {
 		// TODO Auto-generated method stub
-		return sqlSession.update("com.movieyo.user.passwordUpdate", userDto);
+		return sqlSession.update(namespace + "passwordUpdate", userDto);
 	}
 
 	@Override
 	public void userDeleteOne(int userNo) {
 		// TODO Auto-generated method stub
-		sqlSession.delete("com.movieyo.user.userDeleteOne", userNo);
+		sqlSession.delete(namespace + "userDeleteOne", userNo);
 	}
 	
 	@Override
 	public int updatePw(UserDto userDto) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.update("com.movieyo.user.updatePw", userDto);
+		return sqlSession.update(namespace + "updatePw", userDto);
 	}
 
 	@Override
 	public UserDto readMember(String email) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("com.movieyo.user.readMember", email);
+		return sqlSession.selectOne(namespace + "readMember", email);
 	}
 
 	@Override
@@ -79,7 +80,7 @@ public class UserDaoImpl implements UserDao{
 		map.put("searchOption", searchOption);
 		map.put("keyword", keyword);
 		
-		return sqlSession.selectOne("com.movieyo.user.userSelectTotalCount", map);
+		return sqlSession.selectOne(namespace + "userSelectTotalCount", map);
 	}
 
 	@Override
@@ -92,7 +93,7 @@ public class UserDaoImpl implements UserDao{
 		map.put("end", end);
 		map.put("searchOption", searchOption);
 		
-		return sqlSession.selectList("com.movieyo.user.userSelectList", map);
+		return sqlSession.selectList(namespace + "userSelectList", map);
 	}
 
 	@Override
@@ -117,9 +118,27 @@ public class UserDaoImpl implements UserDao{
 		map.put("userCash", afterMpoint);
 		map.put("userNo", userNo);
 		
-		sqlSession.update("com.movieyo.user.updateCash",map);
+		sqlSession.update(namespace + "updateCash", map);
 		
 		return userDto;
+	}
+
+	@Override
+	public int userBuyMovie(int userNo, int moviePrice) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("userNo", userNo);
+		map.put("moviePrice", moviePrice);
+		
+		return sqlSession.update(namespace + "userBuyMovie", map);
+	}
+
+	@Override
+	public int userCurrentCash(int userNo) {
+		// TODO Auto-generated method stub
+		
+		return sqlSession.selectOne(namespace + "userCurrentCash", userNo);
 	}
 
 	

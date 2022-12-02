@@ -35,9 +35,9 @@ public class BuyServiceImpl implements BuyService {
 	}
 
 	@Override
-	public void buyInsertOne(BuyDto buyDto) {
+	public int buyInsertOne(BuyDto buyDto) {
 		// TODO Auto-generated method stub
-		buyDao.buyInsertOne(buyDto);
+		return buyDao.buyInsertOne(buyDto);
 	}
 
 	@Override
@@ -46,5 +46,16 @@ public class BuyServiceImpl implements BuyService {
 		return buyDao.buyExistOne(userNo, movieNo);
 	}
 
+	@Override
+	public int buyStatusCheck(int movieNo) {
+		// TODO Auto-generated method stub
+		return buyDao.buyStatusCheck(movieNo);
+	}
+
+	@Override
+	public void buyStatusUpdate(int movieNo) {
+		// TODO Auto-generated method stub
+		buyDao.buyStatusUpdate(movieNo);
+	}
 	
 }

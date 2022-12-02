@@ -11,8 +11,11 @@ public interface BuyService {
 
 	public List<Map<String, Object>> buySelectList(String searchOption, String keyword, int start, int end, int userNo, int userAdmin);
 
-	public void buyInsertOne(BuyDto buyDto);
+	public int buyInsertOne(BuyDto buyDto);
 
 	public int buyExistOne(int userNo, int movieNo);
 
+	public int buyStatusCheck(int movieNo);
+	
+	public void buyStatusUpdate(int movieNo);
 }

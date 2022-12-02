@@ -113,4 +113,16 @@
 		WHERE MV.RNUM BETWEEN #{start} AND #{end}
 	</select>	
 
+	<update id="userBuyMovie" parameterType="map">
+		UPDATE MVY_USER
+        SET USER_CASH = USER_CASH - #{moviePrice}
+        WHERE USER_NO = #{userNo}	
+	</update>
+	
+	<select id='userCurrentCash' parameterType="int" resultType='java.lang.Integer'>
+		SELECT USER_CASH
+		FROM MVY_USER
+		WHERE USER_NO = #{userNo}
+	</select>
+	
 </mapper>

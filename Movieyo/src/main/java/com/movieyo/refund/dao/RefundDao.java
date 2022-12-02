@@ -28,4 +28,6 @@ public interface RefundDao {
 	public List<UserDto> checkGenre(int userNo);
 
 	public String genreName(int genreNo);
+
+		
 }

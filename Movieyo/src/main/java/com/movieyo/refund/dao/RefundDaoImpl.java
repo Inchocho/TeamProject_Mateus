@@ -128,4 +128,5 @@ public class RefundDaoImpl implements RefundDao{
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(namespace + "genreName", genreNo);
 	}
+
 }

@@ -23,6 +23,7 @@ import com.movieyo.buy.dto.BuyDto;
 import com.movieyo.buy.service.BuyService;
 import com.movieyo.movie.dto.MovieDto;
 import com.movieyo.user.dto.UserDto;
+import com.movieyo.user.service.UserService;
 import com.movieyo.util.Paging;
 
 @Controller
@@ -33,6 +34,9 @@ public class BuyController {
 	
 	@Autowired
 	private BuyService buyService;
+	
+	@Autowired
+	private UserService userService;
 	
 	// 세션을 받아옴 --> userAdmin 정보를 사용해서 관리자 전용 쿼리를 실행
 	@RequestMapping(value = "/buy/list.do"
@@ -115,11 +119,10 @@ public class BuyController {
 		
 		return "buy/BuyListView";
 	}	
-
-
 	
-	@RequestMapping(value = "/buy/addCtr.do", method = RequestMethod.POST)
-	public String buyAddCtr(BuyDto buyDto, Model model, int userNo, int movieNo) {
+	@RequestMapping(value = "/buy/addCtr.do", method = RequestMethod.GET)
+	public String buyAddCtr(BuyDto buyDto, Model model, int userNo, int movieNo, int price
+			, HttpSession session) {
 		logger.trace("Welcome BuyController buyAddCtr 구매내역 추가!!! " 
 			+ buyDto);
 		
@@ -131,8 +134,35 @@ public class BuyController {
 			if(isCheck != 0) {	
 				System.out.println("이미 존재하는 영화");
 				viewUrl =  "redirect:../buy/list.do?userNo=" +  userNo;
-			}else {				
-				buyService.buyInsertOne(buyDto);
+			}else {	
+				System.out.println("유저 캐쉬 체크");
+				int currentCash = userService.userCurrentCash(userNo);
+				
+				if(currentCash < price) {
+					System.out.println("돈이 부족해");
+					viewUrl =  "redirect:../user/userMpoint.do";
+					
+					return viewUrl;
+				
+				}else{
+					//구매성공체크(환불 재구매시)					
+					int buyStatusCheck =  buyService.buyStatusCheck(movieNo);
+					System.out.println(buyStatusCheck + "구매상태 체크");
+						if(buyStatusCheck != 0) {
+							buyService.buyStatusUpdate(movieNo);
+						}else {
+							
+						int buySuccess = 0;					
+						buySuccess = buyService.buyInsertOne(buyDto);
+						
+						if(buySuccess != 0) {
+							//구매가 성공했으면 유저의 캐쉬를 영화가격만큼 감소
+							userService.userBuyMovie(userNo, price);
+						}
+					}
+					
+				}
+				
 				viewUrl =  "redirect:../buy/list.do?userNo=" +  userNo;
 			}
 			

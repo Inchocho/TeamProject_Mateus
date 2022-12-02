@@ -161,31 +161,44 @@ public class UserServiceImpl implements UserService{
 					}
 				}
 
-				@Override
-				public int userSelectTotalCount(String searchOption, String keyword) {
-					// TODO Auto-generated method stub
-					return userDao.userSelectTotalCount(searchOption, keyword);
-				}
+		@Override
+		public int userSelectTotalCount(String searchOption, String keyword) {
+			// TODO Auto-generated method stub
+			return userDao.userSelectTotalCount(searchOption, keyword);
+		}
 
-				@Override
-				public List<UserDto> userSelectList(String searchOption, String keyword, int start, int end) {
-					// TODO Auto-generated method stub
-					return userDao.userSelectList(searchOption, keyword, start, end);
-				}
+		@Override
+		public List<UserDto> userSelectList(String searchOption, String keyword, int start, int end) {
+			// TODO Auto-generated method stub
+			return userDao.userSelectList(searchOption, keyword, start, end);
+		}
 
-				@Override
-				public void userGenre(int checkNum, int userNo) {
-					// TODO Auto-generated method stub
-					userDao.userGenre(checkNum, userNo);
-				}
+		@Override
+		public void userGenre(int checkNum, int userNo) {
+			// TODO Auto-generated method stub
+			userDao.userGenre(checkNum, userNo);
+		}
 
-				@Override
-				public UserDto chargeMpointCtr(UserDto userDto, int afterMpoint) {
-					// TODO Auto-generated method stub
-					UserDto userDtoNew= userDao.chargeMpointCtr(userDto,afterMpoint);
-					
-					return userDtoNew;
-				}
+		@Override
+		public UserDto chargeMpointCtr(UserDto userDto, int afterMpoint) {
+			// TODO Auto-generated method stub
+			UserDto userDtoNew= userDao.chargeMpointCtr(userDto,afterMpoint);
+			
+			return userDtoNew;
+		}
+
+		@Override
+		public int userBuyMovie(int userNo, int moviePrice) {
+			// TODO Auto-generated method stub
+			
+			return userDao.userBuyMovie(userNo, moviePrice);
+		}
+
+		@Override
+		public int userCurrentCash(int userNo) {
+			// TODO Auto-generated method stub
+			return userDao.userCurrentCash(userNo);
+		}
 
 				
 				

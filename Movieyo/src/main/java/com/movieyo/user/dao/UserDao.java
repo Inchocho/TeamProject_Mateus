@@ -29,6 +29,10 @@ public interface UserDao {
 	public void userGenre(int checkNum, int userNo);
 
 	public UserDto chargeMpointCtr(UserDto userDto, int afterMpoint);
+
+	public int userBuyMovie(int userNo, int moviePrice);
+
+	public int userCurrentCash(int userNo);
 	
 	
 }

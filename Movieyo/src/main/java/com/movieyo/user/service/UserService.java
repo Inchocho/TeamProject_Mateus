@@ -37,10 +37,12 @@ public interface UserService {
 
 	public UserDto chargeMpointCtr(UserDto userDto, int afterMpoint);
 
-
+	//유저 영화구매시 캐쉬 업데이트
+	public int userBuyMovie(int userNo, int moviePrice);
 	
+	//유저 현재 캐쉬 조회
+	public int userCurrentCash(int userNo);
 		
-		
-	}
+}
 
 

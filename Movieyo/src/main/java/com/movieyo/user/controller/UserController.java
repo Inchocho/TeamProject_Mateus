@@ -329,6 +329,15 @@ public class UserController {
 		
 		@RequestMapping(value = "/user/userMpoint.do", method = {RequestMethod.GET, RequestMethod.POST})
 		public String userMpoint(HttpSession session, Model model) throws Exception{
+			UserDto userDto = (UserDto) session.getAttribute("userDto");
+			
+			int userNo = userDto.getUserNo();
+			
+			Map<String, Object> map = userService.userSelectOne(userNo);
+			UserDto userDtoChange = (UserDto)map.get("userDto");
+			
+			session.removeAttribute("userDto");
+			session.setAttribute("userDto", userDtoChange);
 			
 			return "user/UserMPointView";
 		}
