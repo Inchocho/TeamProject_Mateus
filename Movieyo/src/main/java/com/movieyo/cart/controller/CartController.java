@@ -190,11 +190,4 @@ public class CartController {
 			return url;
 		}
 	}
-	@RequestMapping(value = "/cart/alert.do", method = {RequestMethod.GET, RequestMethod.POST})
-	public String alert(Model model, HttpSession session) {
-		
-		String url = "redirect:/cart/list.do";
-		return url;
-	}
-
 }
