@@ -4,7 +4,7 @@
 
 <head>
 <style type="text/css">
-#popup_layer_cartdel {position:fixed;top:0;left:0;z-index: 10000; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.56); overflow: hidden scroll;} 
+#popup_layer_buymovie {position:fixed;top:0;left:0;z-index: 10000; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.56); overflow: hidden scroll;} 
 /*팝업 박스*/
 .popup_box{position: relative;top:50%;left:50%; width:550px;transform:translate(-50%, -50%);z-index:1002;box-sizing:border-box;background:#252526;}
 /*컨텐츠 영역*/
@@ -20,11 +20,20 @@
     overflow: hidden !important;
     margin-right: 17px;
 }
-/*추가*/
-.popup_box .popup_btn a.delCart{background-color: #fd7d40;}
+/*  */
 .popup_box .popup_cont .pop_cont_cont ul{
 	list-style-position: inside;
 	text-align: left;
+}
+.popup_box .popup_cont .pop_cont_cont{
+	margin: 0 120px 0 120px;
+}
+#popViewUserCash{
+	text-decoration: underline;
+	
+}
+.pop_cont_Mpoint a{
+	color: #F08080;
 }
 .popup_box .popup_cont .pop_cont_cont{
 	margin: 0 100px;
@@ -33,30 +42,33 @@
 </style>
 </head>
 
-<div id="popup_layer_cartdel" style="visibility: hidden;">
+<div id="popup_layer_buymovie" style="visibility: hidden;">
   <div class="popup_box">
       <!--팝업 컨텐츠 영역-->
       <div class="popup_cont">
-          <h2 id="" class="pop_cont_title">장바구니에서 `제외` 하시겠습니까?</h2>
+          <h2 id="" class="pop_cont_title">구매 하시겠습니까?</h2>
           <div id="" class="pop_cont_cont">
-          	<ul id="cartdel_cont_ul">
-
+          	<ul>
+          		<li>${movieDto.movieTitle}</li>
+          		<li>${movieDto.price} 원</li>
             </ul>
+          </div>
+          <div class="pop_cont_Mpoint">
+          	보유Mpoint: <a id="popViewUserCash" href="/Movieyo/user/userMpoint.do">${userDto.userCash}</a> 원
           </div>
       </div>
       <!--팝업 버튼 영역-->
       <div class="popup_btn">
-          <a id="delBtn" href="#" class="delCart">네</a> 
-          <a href="#" onclick="canceldelFnc();" class="cancel">아니오</a>
+          <a id="buyBtn" onclick="buySubmitFnc();" class="">구매</a> 
+          <a href="#" onclick="cancelbuyFnc();" class="cancel">닫기</a>
       </div>
   </div>
 </div>
 
 <script type="text/javascript">
-//캔슬버튼 popup_layer 아이디 변경시 바꿔줘야함
-function canceldelFnc() {
+function cancelbuyFnc() {
 	htmlTag.classList.toggle('popup_focus');
-	var popup_layer_cartdel = document.getElementById("popup_layer_cartdel");
-	popup_layer_cartdel.style.visibility = "hidden";
+	var popup_layer_buymovie = document.getElementById("popup_layer_buymovie");
+	popup_layer_buymovie.style.visibility = "hidden";
 }
 </script>

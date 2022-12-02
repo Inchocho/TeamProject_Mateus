@@ -95,6 +95,8 @@ body {
 	function movePageMainFnc() {
 		location.href = '/Movieyo/movie/main.do';
 	}
+	
+	var htmlTag = document.getElementsByTagName("html").item(0);
 </script>
 </head>
 <div class="headerDiv">

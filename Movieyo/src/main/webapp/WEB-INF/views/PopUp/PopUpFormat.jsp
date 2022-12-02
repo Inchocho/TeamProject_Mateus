@@ -39,10 +39,9 @@
 </div>
 
 <script type="text/javascript">
-var popup_layer = document.getElementById("popup_layer");
-var htmlTag = document.getElementsByTagName("html").item(0);
 function cancelFnc() {
 	htmlTag.classList.toggle('popup_focus');
+	var popup_layer = document.getElementById("popup_layer");
 	popup_layer.style.visibility = "hidden";
 }
 </script>

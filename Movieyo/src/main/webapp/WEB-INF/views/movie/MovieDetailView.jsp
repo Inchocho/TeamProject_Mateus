@@ -26,7 +26,7 @@ img{
 <body>
 
 	<jsp:include page="../Header.jsp" />
-	<h1>영화관리</h1>
+	<h1>영화상세</h1>
 		<c:choose>
 			<c:when test="${empty fileList}">
 					첨부파일이 없습니다.<br>			
@@ -45,6 +45,7 @@ img{
 	<form id="detailForm">
 	<input type="hidden" name="userNo" value="${userDto.userNo}">
 	<input type="hidden" name="movieNo" value="${movieDto.movieNo}">
+	<input type="hidden" name="userCash" value="${userDto.userCash}">
 	
 		영화제목: <input type='text' name='movieTitle' 
 			value='${movieDto.movieTitle}' readonly="readonly"><br>
@@ -74,29 +75,30 @@ img{
 		</c:if>
 	<c:choose>
 		<c:when test="${cartCheck eq 0}">
-		<input type="button" value="장바구니 담기" onclick="inCartSubmitFnc();" class="body_btn_css">
+		<input type="button" value="장바구니 담기" onclick="inCartMoviePopFnc();" class="body_btn_css">
 		</c:when>
 		<c:when test="${cartCheck eq 1}">
 		<input type="button" value="장바구니로 이동" onclick="pageMoveCartFnc();" class="body_btn_css">
 		</c:when>
 	</c:choose>
 	</c:if>
-<%-- 	<jsp:include page="/WEB-INF/views/PopUp/BuyMoviePop.jsp"></jsp:include> --%>
-<%-- 	<jsp:include page="/WEB-INF/views/PopUp/InCartMoviePop.jsp"></jsp:include> --%>
+	<jsp:include page="/WEB-INF/views/PopUp/BuyMoviePop.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/PopUp/InCartMoviePop.jsp"></jsp:include>
 	<jsp:include page="../Tail.jsp" />
 </body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
 function buyMoviePopFnc() {
-// 	htmlTag.classList.toggle('popup_focus');
-// 	popup_layer_buymovie.style.visibility = "visible";
+	htmlTag.classList.toggle('popup_focus');
+	popup_layer_buymovie.style.visibility = "visible";
 }
 function buySubmitFnc() {
-	
+	$('#detailForm').attr('action','/Movieyo/buy/addBuy.do');
+	$('#detailForm').submit();
 }
 function inCartMoviePopFnc() {
-// 	htmlTag.classList.toggle('popup_focus');
-// 	popup_layer_incart.style.visibility = "visible";
+	htmlTag.classList.toggle('popup_focus');
+	popup_layer_incartmovie.style.visibility = "visible";
 }
 function inCartSubmitFnc() {
 	$('#detailForm').attr('action','/Movieyo/cart/addCart.do');
