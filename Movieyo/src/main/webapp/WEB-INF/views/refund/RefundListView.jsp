@@ -244,11 +244,11 @@ th {
 	
 	</form>
 
-	<jsp:include page="/WEB-INF/views/common/Paging.jsp"/>
+	<jsp:include page="/WEB-INF/views/common/CommonPaging.jsp"/>
 	
 	<form action="./list.do" id="pagingForm" method="post">
 		<input type="hidden" id="curPage" name="curPage"
-			value="${pagingMap.moviePaging.curPage}">	
+			value="${pagingMap.commonPaging.curPage}">	
 		<input type="hidden"  name="userNo" value="${userDto.userNo}">			
 		<input type="hidden"  name="keyword" value="${searchMap.keyword}">
 		<input type="hidden"  name="searchOption" value="${searchMap.searchOption}">

@@ -21,6 +21,7 @@ import com.movieyo.buy.service.BuyService;
 import com.movieyo.refund.dto.RefundDto;
 import com.movieyo.refund.service.RefundService;
 import com.movieyo.user.dto.UserDto;
+import com.movieyo.util.CommonPaging;
 import com.movieyo.util.Paging;
 
 @Controller
@@ -59,7 +60,7 @@ public class RefundController {
 		
 		logger.info("totalCount: {}", totalCount);
 		
-		Paging refundPaging = new Paging(totalCount, curPage);		
+		CommonPaging refundPaging = new CommonPaging(totalCount, curPage);		
 		
 		int start = refundPaging.getPageBegin();
 		int end = refundPaging.getPageEnd();
@@ -75,7 +76,7 @@ public class RefundController {
 		
 		//Map에다가 totalCount, memberPaging을 key로해서 담고
 		pagingMap.put("totalCount", totalCount);
-		pagingMap.put("moviePaging", refundPaging);
+		pagingMap.put("commonPaging", refundPaging);
 		
 		Map<String, Object> searchMap = 
 				new HashMap<String, Object>();
