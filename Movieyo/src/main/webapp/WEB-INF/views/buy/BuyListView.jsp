@@ -71,11 +71,12 @@
 	margin-left: 30px;
 }
 .contContainer{
-    width: 600px;
+    width: 1600px;
     margin: 10px 0 0 30px;
 }
 .contContainer table{
-	width: 600px;
+	width: 1600px;
+	height: 400px;
 	text-align: center;
 }
   
@@ -139,7 +140,6 @@ th {
 	</div>
 		
 	<div class="contContainer">
-	<form id="refundAddFrom" action="../refund/addRefund.do" method="GET">
 		<input type="hidden" value="${userDto.userNo}">
 	<table>
 		<tr>
@@ -159,7 +159,7 @@ th {
 		
 		<c:if test="${not empty buyListMap}">
 		
-		<c:forEach var="buyMap" items="${buyListMap}">
+		<c:forEach var="buyMap" items="${buyListMap}" varStatus="varStatus">
 		<tr>
 			<td>
 				${buyMap.movieTitle}
@@ -181,12 +181,14 @@ th {
 			</c:if>				
 			<c:if test='${userDto.userAdmin != 1}'>
 				<td>
-					<input type="submit" name='refundSubmitBtn' id='refundSubmit' value="환불하기">					
-					<input type="hidden" name="buyNo" value="${buyMap.buyNo}">
-					<input type='hidden' name='userNo' value="${buyMap.buyUserNo}">
-					<input type="hidden" id="buyCurPage" name="curPage" value="">
-					<input type="hidden" name="keyword" value="${searchMap.keyword}">
-					<input type="hidden" name="searchOption" value="${searchMap.searchOption}">
+					<form id="refundAddFrom${varStatus.index}" action="../refund/addRefund.do" method="GET">				
+						<input type="submit" name='refundSubmitBtn' id='refundSubmit' value="환불하기">					
+						<input type="hidden" name="buyNo" value="${buyMap.buyNo}">
+						<input type='hidden' name='userNo' value="${buyMap.buyUserNo}">
+						<input type="hidden" id="buyCurPage" name="curPage" value="">
+						<input type="hidden" name="keyword" value="${searchMap.keyword}">
+						<input type="hidden" name="searchOption" value="${searchMap.searchOption}">
+					</form>					
 				</td>	
 			</c:if>	
 		</tr>			
@@ -199,8 +201,6 @@ th {
 			</tr>		
 		</c:if>
 	</table>
-	
-	</form>
 
 	<jsp:include page="/WEB-INF/views/common/Paging.jsp"/>
 	

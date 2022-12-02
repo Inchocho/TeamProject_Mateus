@@ -78,7 +78,8 @@
 			<include refid="refundListSearch"></include>                                            
 			) M                                       
 			<include refid="search"></include>) RF             
-			WHERE RF.RNUM BETWEEN #{start} AND #{end}   				            	 		       
+			WHERE RF.RNUM BETWEEN #{start} AND #{end}
+			ORDER BY REFUND_DATE ASC   				            	 		       
 	</select>
 	
 	<!-- 환불내역 추가 -->

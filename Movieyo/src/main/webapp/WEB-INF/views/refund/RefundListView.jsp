@@ -71,12 +71,12 @@
 	margin-left: 30px;
 }
 .contContainer{
-    width: 600px;
+    width: 1600px;
     margin: 10px 0 0 30px;
 }
 .contContainer table{
-	width: 1500px;
-	height: 500px;
+	width: 1600px;
+	height: 400px;
 	text-align: center;
 }
   
@@ -152,7 +152,7 @@ th {
 					<th>영화가격</th>
 					<th>구매날짜</th>
 					<th>신청날짜</th>			
-					<th>수락버튼</th>
+					<th>관리자확인</th>
 					<th>환불상태</th>		
 				</c:when>
 				<c:when test="${userDto.userAdmin == 0}">
