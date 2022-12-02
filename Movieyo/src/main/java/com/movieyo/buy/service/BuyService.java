@@ -15,7 +15,9 @@ public interface BuyService {
 
 	public int buyExistOne(int userNo, int movieNo);
 
-	public int buyStatusCheck(int movieNo);
+	public int buyStatusCheck(int userNo, int movieNo);
 	
-	public void buyStatusUpdate(int movieNo);
+	public void buyStatusUpdate(int userNo, int movieNo);
+
+	public int selectRefundNo(int userNo, int movieNo);
 }

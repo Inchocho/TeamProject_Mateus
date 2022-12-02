@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.movieyo.buy.service.BuyService;
 import com.movieyo.refund.dto.RefundDto;
 import com.movieyo.refund.service.RefundService;
 import com.movieyo.user.dto.UserDto;
@@ -30,6 +31,9 @@ public class RefundController {
 	
 	@Autowired
 	private RefundService refundService;
+	
+	@Autowired
+	private BuyService buyService;
 	
 	//로그인 세션값 필요 (파라미터 HttpSession session 추가필요)
 	@RequestMapping(value = "/refund/list.do"

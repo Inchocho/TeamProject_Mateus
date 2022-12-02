@@ -98,7 +98,17 @@
 	<update id="buyStatusUpdate" parameterType='map'>
 		UPDATE MVY_BUY
 		SET BUY_STATUS = '보유중'
-		WHERE MOVIE_NO = #{movieNo}
+		WHERE USER_NO = #{userNo}
+		AND MOVIE_NO = #{movieNo}
 	</update>
 	
+	<select id="selectRefundNo" parameterType="map" resultType="java.lang.Integer">
+        SELECT REFUND_NO
+        FROM MVY_REFUND A
+           , MVY_BUY B
+        WHERE A.USER_NO = B.USER_NO
+        AND B.USER_NO = #{userNo}
+        AND B.BUY_STATUS = '보유중'
+        AND B.MOVIE_NO = #{movieNo}
+	</select>
 </mapper>

@@ -95,5 +95,11 @@ public class RefundServiceImpl implements RefundService {
 		return refundDao.genreName(genreNo);
 	}
 
+	@Override
+	public void refundDelete(int refundNo) {
+		// TODO Auto-generated method stub
+		refundDao.refundDelete(refundNo);
+	}
+
 
 }

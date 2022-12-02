@@ -29,5 +29,7 @@ public interface RefundDao {
 
 	public String genreName(int genreNo);
 
+	public void refundDelete(int refundNo);
+
 		
 }

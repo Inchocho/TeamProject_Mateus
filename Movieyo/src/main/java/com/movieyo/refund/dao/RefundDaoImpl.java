@@ -129,4 +129,12 @@ public class RefundDaoImpl implements RefundDao{
 		return sqlSession.selectOne(namespace + "genreName", genreNo);
 	}
 
+
+	@Override
+	public void refundDelete(int refundNo) {
+		// TODO Auto-generated method stub
+		
+		sqlSession.delete(namespace + "refundDelete", refundNo);
+	}
+
 }

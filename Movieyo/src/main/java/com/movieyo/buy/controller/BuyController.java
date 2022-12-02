@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.movieyo.buy.dto.BuyDto;
 import com.movieyo.buy.service.BuyService;
 import com.movieyo.movie.dto.MovieDto;
+import com.movieyo.refund.service.RefundService;
 import com.movieyo.user.dto.UserDto;
 import com.movieyo.user.service.UserService;
 import com.movieyo.util.Paging;
@@ -37,6 +38,9 @@ public class BuyController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private RefundService refundService;
 	
 	// 세션을 받아옴 --> userAdmin 정보를 사용해서 관리자 전용 쿼리를 실행
 	@RequestMapping(value = "/buy/list.do"
@@ -146,12 +150,18 @@ public class BuyController {
 				
 				}else{
 					//구매성공체크(환불 재구매시)					
-					int buyStatusCheck =  buyService.buyStatusCheck(movieNo);
+					int buyStatusCheck = 0;
+						buyStatusCheck = buyService.buyStatusCheck(userNo, movieNo);
 					System.out.println(buyStatusCheck + "구매상태 체크");
 						if(buyStatusCheck != 0) {
-							buyService.buyStatusUpdate(movieNo);
+							buyService.buyStatusUpdate(userNo, movieNo);
+							userService.userBuyMovie(userNo, price);
+							//환불내역(환불처리완료됨)에서 삭제처리함 
+							int refundNo = 0;
+							refundNo = buyService.selectRefundNo(userNo, movieNo);
+							refundService.refundDelete(refundNo);							
 						}else {
-							
+							System.out.println("여기 왜탄거임?");
 						int buySuccess = 0;					
 						buySuccess = buyService.buyInsertOne(buyDto);
 						

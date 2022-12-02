@@ -140,7 +140,13 @@
      	SELECT GENRE_NAME
      	FROM GENRE
      	WHERE GENRE_NO = #{genreNo}
-     </select>
+     </select>         
      
+	<!-- 환불한 상품 재구매시 환불신청 내역에서 삭제 -->
+	<update id="refundDelete" parameterType='int'>
+		DELETE 
+		FROM MVY_REFUND 
+		WHERE REFUND_NO = #{refundNo}
+	</update>     
 	
 </mapper>

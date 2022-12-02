@@ -28,5 +28,8 @@ public interface RefundService {
 	public List<UserDto> checkGenre(int userNo);
 	
 	public String genreName(int genreNo);
+	
+	//12월 2일 환불처리후 다시 구매시 환불내역에서 상태 변경
+	public void refundDelete(int refundNo);
 
 }

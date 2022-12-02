@@ -68,15 +68,33 @@ public class BuyDaoImpl implements BuyDao{
 	
 	
 	@Override
-	public int buyStatusCheck(int movieNo) {
+	public int buyStatusCheck(int userNo, int movieNo) {
 		
-		return sqlSession.selectOne(namespace + "buyStatusCheck", movieNo);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userNo", userNo);
+		map.put("movieNo", movieNo);
+		
+		return sqlSession.selectOne(namespace + "buyStatusCheck", map);
 	}
 	
 	@Override
-	public void buyStatusUpdate(int movieNo) {
+	public void buyStatusUpdate(int userNo, int movieNo) {
 		
-		sqlSession.selectOne(namespace + "buyStatusUpdate", movieNo);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userNo", userNo);
+		map.put("movieNo", movieNo);
+		
+		sqlSession.selectOne(namespace + "buyStatusUpdate", map);
+	}
+
+	@Override
+	public int selectRefundNo(int userNo, int movieNo) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("userNo", userNo);
+		map.put("movieNo", movieNo);
+		
+		return sqlSession.selectOne(namespace + "selectRefundNo", map);
 	}		
 
 }
