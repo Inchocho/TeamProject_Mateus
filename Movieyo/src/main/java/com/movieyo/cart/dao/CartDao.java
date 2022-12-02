@@ -13,6 +13,7 @@ public interface CartDao {
 	int cartExistOne(int userNo, int movieNo);
 	void cartInsertOne(CartDto cartDto);
 	void deleteCart(int cartNo);
+	int selectCartNo(int userNo, int movieNo);
 
 
 }

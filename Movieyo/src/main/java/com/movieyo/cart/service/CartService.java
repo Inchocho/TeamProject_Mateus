@@ -16,6 +16,7 @@ public interface CartService {
 
 	void deleteCart(int cartNo);
 
+	public int selectCartNo(int userNo, int movieNo);
   
 
 }

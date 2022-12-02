@@ -117,6 +117,11 @@ public class RefundController {
 			refundMap.put("refundUserNickname", refundUserNickname);
 			refundMap.put("userNo", userNo);
 			
+			if(refundStatus.equals("환불완료")) {
+				int admitDeny = 0;
+				refundMap.put("admitDeny", admitDeny);
+			}
+			
 			refundListMap.add(refundMap);			
 			
 		}
@@ -148,9 +153,18 @@ public class RefundController {
 	//관리자가 환불 버튼을 눌러주면 환불처리가 되고 유저 계좌에 영화가격만큼 돈이 올라감 
 	@RequestMapping(value = "/refund/updateRefund.do", method = RequestMethod.POST)
 	public String updateRefund(HttpSession session,			
-			RefundDto refundDto, Model model, int admit, int moviePrice)  {
+			RefundDto refundDto, Model model, int admit, int moviePrice
+			, @RequestParam(defaultValue = "1") int curPage
+			, @RequestParam(defaultValue = "all")String searchOption
+			, @RequestParam(defaultValue = "")String keyword)  {
 	                     // email.password 네임값을 가져옴(@RequestMapping의 힘)
+		
 	    logger.info("Welcome refundController updateRefund!" + refundDto);
+	    
+		Map<String, Object> searchMap = new HashMap<String, Object>();
+		searchMap.put("searchOption", searchOption);
+		searchMap.put("keyword", keyword);
+		searchMap.put("curPage", curPage);
 	    
 	    int refundUserNo = refundDto.getUserNo();	    
 	    int buyNo = refundDto.getBuyNo();
@@ -161,6 +175,10 @@ public class RefundController {
 			refundChk = refundService.updateRefund(refundDto, admit);
 			
 			System.out.println(refundChk + "환불처리 됬는지 확인용");
+			
+			if(refundChk != 0) {
+				refundChk = 1;
+			}
 			
 			if(refundChk != 0) {				
 				refundService.updateCash(refundUserNo, moviePrice);
@@ -176,8 +194,10 @@ public class RefundController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	    
+		model.addAttribute("searchMap", searchMap);
 	      	    
-	    return "redirect:./list.do";
+		return "redirect:./list.do";
 	}	
 	
 }

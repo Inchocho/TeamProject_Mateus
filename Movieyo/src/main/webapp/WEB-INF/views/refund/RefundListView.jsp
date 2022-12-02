@@ -75,7 +75,8 @@
     margin: 10px 0 0 30px;
 }
 .contContainer table{
-	width: 600px;
+	width: 1500px;
+	height: 500px;
 	text-align: center;
 }
   
@@ -139,12 +140,12 @@ th {
 	</div>
 		
 	<div class="contContainer">
-	<form id="refundAdmit${status.index}" action="../refund/updateRefund.do" method="POST">
 		<input type="hidden" value="${userDto.userNo}">
 	<table>
 		<tr>
 			<c:choose>
 				<c:when test="${userDto.userAdmin == 1}">
+					<th>환불번호</th>
 					<th>회원번호</th>
 					<th>회원이름</th>
 					<th>영화이름</th>
@@ -164,49 +165,55 @@ th {
 			</c:choose>			
 		</tr>
 		<c:if test="${not empty refundListMap}">
-		<c:forEach var="refundMap" items="${refundListMap}">
+		<c:forEach var="refundMap" items="${refundListMap}" varStatus="varStatus">
 			<tr>
 				<c:choose>
 					<c:when test="${userDto.userAdmin == 1}">
 						<td>
-							<input type='text' value='${refundMap.refundUserNo}'>
+							${refundMap.refundNo}
 						</td>
 						<td>
-							<input type='text' value='${refundMap.refundUserName}'>
+							${refundMap.refundUserNo}
 						</td>
 						<td>
-							<input type='text' value='${refundMap.movieTitle}'>
+							${refundMap.refundUserName}
 						</td>
 						<td>
-							<input type='text' value='${refundMap.moviePrice}'>
+							${refundMap.movieTitle}
 						</td>
 						<td>
-							<input type='text' value='<fmt:formatDate pattern="yyyy-MM-dd" 
-								value="${refundMap.refundDate}"/>'>
+							${refundMap.moviePrice}
 						</td>
 						<td>
-							<input type='text' value='<fmt:formatDate pattern="yyyy-MM-dd" 
-								value="${refundMap.buyDate}"/>'>
+							<fmt:formatDate pattern="yyyy-MM-dd" 
+								value="${refundMap.refundDate}"/>
 						</td>
 						<td>
+							<fmt:formatDate pattern="yyyy-MM-dd" 
+								value="${refundMap.buyDate}"/>
+						</td>
+						<td>
+							<form id="refundAdmit${varStatus.index}" action="../refund/updateRefund.do" method="POST">
+								<input type="hidden" name="refundNo" value="${refundMap.refundNo}">
+								<input type="hidden" name="buyNo" value="${refundMap.buyNo}">
+								<input type='hidden' name='movieNo' value="${refundMap.movieNo}">
+								<input type='hidden' name='userNo' value="${refundMap.refundUserNo}">
+								<input type="hidden" name="moviePrice" value="${refundMap.moviePrice}">
+								<input type="hidden" id="refundCurPage" name="curPage" value="">
+								<input type="hidden" name="keyword" value="${searchMap.keyword}">
+								<input type="hidden" name="searchOption" value="${searchMap.searchOption}">							
+								<input type="hidden" name="admit" value='1'>
+								<input type='hidden' name='submitCheck' value='${varStatus.index}'>
 							<c:choose>
-								<c:when test="${refundChk !=  1}">				
+								<c:when test="${refundMap.admitDeny != 0}">				
 									<input id='rBtnYes' type='submit' value='수락'>
-									<input id='rBtnNo' type='submit' value='거절'>			
+									<input id='rBtnNo' type='submit' value='거절'>	
 								</c:when>
 								<c:otherwise>
-									<input type="text" value="환불완료됨" readonly="readonly">
+									환불완료
 								</c:otherwise>
-							</c:choose>
-							<input type="hidden" name="refundNo" value="${refundMap.refundNo}">
-							<input type="hidden" name="buyNo" value="${refundMap.buyNo}">
-							<input type='hidden' name='movieNo' value="${refundMap.movieNo}">
-							<input type='hidden' name='userNo' value="${refundMap.refundUserNo}">
-							<input type="hidden" name="moviePrice" value="${refundMap.moviePrice}">
-							<input type="hidden" id="refundCurPage" name="curPage" value="">
-							<input type="hidden" name="keyword" value="${searchMap.keyword}">
-							<input type="hidden" name="searchOption" value="${searchMap.searchOption}">
-							<input type="hidden" name="admit" value='1'>						
+							</c:choose>														
+							</form>						
 						</td>
 						<td>
 							${refundMap.refundStatus}
@@ -237,12 +244,12 @@ th {
 		</c:if>
 		<c:if test="${empty refundListMap}">
 			<tr>
-				<td colspan="8" id="tdId">환불내역이 없습니다</td>
+				<td colspan="9" id="tdId">환불내역이 없습니다</td>
 			</tr>		
 		</c:if>
 	</table>
 	
-	</form>
+	
 
 	<jsp:include page="/WEB-INF/views/common/CommonPaging.jsp"/>
 	
@@ -298,6 +305,7 @@ th {
 <script type="text/javascript">
 
 $(function(){
+	
 	var refundStatusStr = $('#refundStatus').val();
 	if(refundStatusStr == '환불완료됨'){
 		$('#rBtnYes').prop("type", "text");	

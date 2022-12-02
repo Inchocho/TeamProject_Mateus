@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.movieyo.buy.dto.BuyDto;
 import com.movieyo.buy.service.BuyService;
+import com.movieyo.cart.service.CartService;
 import com.movieyo.movie.dto.MovieDto;
 import com.movieyo.refund.service.RefundService;
 import com.movieyo.user.dto.UserDto;
@@ -41,6 +42,9 @@ public class BuyController {
 	
 	@Autowired
 	private RefundService refundService;
+	
+	@Autowired
+	private CartService cartService; 
 	
 	// 세션을 받아옴 --> userAdmin 정보를 사용해서 관리자 전용 쿼리를 실행
 	@RequestMapping(value = "/buy/list.do"
@@ -149,23 +153,37 @@ public class BuyController {
 					return viewUrl;
 				
 				}else{
-					//구매성공체크(환불 재구매시)					
+					//구매성공
+					
+					int cartNo = cartService.selectCartNo(userNo, movieNo);
+					
+					cartService.deleteCart(cartNo);
+					
+					//구매성공(케이스1 환불한 영화 다시 재구매)	
 					int buyStatusCheck = 0;
 						buyStatusCheck = buyService.buyStatusCheck(userNo, movieNo);
 					System.out.println(buyStatusCheck + "구매상태 체크");
 						if(buyStatusCheck != 0) {
+							//환불한물건 업데이트처리(구매 케이스 1)
+
+							//구매내역에 상태가 있는지 확인
 							buyService.buyStatusUpdate(userNo, movieNo);
 							userService.userBuyMovie(userNo, price);
+							
+							//구매시 장바구니에 들어있는지 확인하여
+							//장바구니에 들어있는게 확인되면 장바구니 번호를 조회해서 해당 번호를 삭제							
+
 							//환불내역(환불처리완료됨)에서 삭제처리함 
 							int refundNo = 0;
 							refundNo = buyService.selectRefundNo(userNo, movieNo);
 							refundService.refundDelete(refundNo);							
 						}else {
-							System.out.println("여기 왜탄거임?");
+						//구매케이스2 아예 처음 구매함
 						int buySuccess = 0;					
 						buySuccess = buyService.buyInsertOne(buyDto);
 						
 						if(buySuccess != 0) {
+
 							//구매가 성공했으면 유저의 캐쉬를 영화가격만큼 감소
 							userService.userBuyMovie(userNo, price);
 						}

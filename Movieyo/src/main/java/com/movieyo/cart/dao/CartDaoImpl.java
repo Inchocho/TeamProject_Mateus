@@ -84,4 +84,18 @@ public class CartDaoImpl implements CartDao{
 		sqlSession.insert(name(mappingName), cartNo);
 	}
 
+	@Override
+	public int selectCartNo(int userNo, int movieNo) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("userNo", userNo);
+		map.put("movieNo", movieNo);
+		
+		mappingName = "selectCartNo";
+		
+		return sqlSession.selectOne(name(mappingName), map);
+		
+	}
+
 }
