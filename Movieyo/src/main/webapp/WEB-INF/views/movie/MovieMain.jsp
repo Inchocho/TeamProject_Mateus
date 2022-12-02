@@ -27,7 +27,7 @@ img {
 
 	<h1>내가 메인이다</h1>
 <div style="width:100%">
-	<div style="width: 1500px; margin-left: 100px;">
+	<div style="width: 1500px; margin-left: 250px;">
 	<div style="display: flex; flex-wrap: wrap;">
 		<c:forEach var="row" items="${fileList}" varStatus="status">
 			<c:set var="movieDto" value="${movieList[status.index]}" />

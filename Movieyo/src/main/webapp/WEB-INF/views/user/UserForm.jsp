@@ -34,7 +34,7 @@
 
 <body>
 
-	<jsp:include page="../Header.jsp" />
+<%-- 	<jsp:include page="../Header.jsp" /> --%>
 	<h1>무비요</h1>
 	<h4>회원가입</h4>
 

@@ -25,28 +25,54 @@
 		var emailInp = $('#emailInp').val();
 		
 		if (emailInp.match(emailC)) {
-				$('#emailText').css('display','none');
+			$('#emailText').css('display','none');
 		}else {
 	// 		alert('asd');
+			$('#emailText').html('정확하지 않은 이메일형식입니다.');
 			$('#emailText').css('display','block');
 		}
 	
 	});
 	//이메일 키업 끝
+	
 		$('#pwInp').keyup(function () {
 			var pwInp = $('#pwInp').val();	
 				if (pwInp.match(pwC)) {
 						$('#passwordText').css('display','none');
 				}else {
+					$('#passwordText').html('비밀번호는 영문, 숫자 중 2개를 조합하여<br>최소 8자리 이상이여야 합니다.');
 					$('#passwordText').css('display','block');
 				}	
 			});
+	//비밀번호 키업 끝
+	
+	
+	
+	
+	
+	$('.btn_login').click(function () {
+		var submit = true;
+		
+		if ($('#emailInp').val() == "") {
+			$('#emailText').html('이메일을 입력해주세요.');
+			submit = false;
+		}else {
+			$('#emailText').css('display','none');
+		}
+		
+		if ($('#pwInp').val() == "") {
+			$('#passwordText').html('비밀번호를 입력해주세요.');
+			submit = false;
+		}else {
+			$('#passwordText').css('display','none');
+		}
+		
+		return submit;
+	});
+	//서브밋 클릭 끝
 	
 	});
-
-
-
-
+	//함수레디 끝
 
 
 
@@ -58,7 +84,7 @@ a{
 }
 
 #emailText, #passwordText {
-	display: none;
+/* 	display: none; */
 	color: red;
 /* 	height: 1px; */
 }
@@ -134,14 +160,16 @@ a{
 			<input type="text" name="email" id="emailInp" placeholder="이메일" class="input"><br>
 			</div>
 			<div style="height: 20px;" class="TextDiv">	
-				<a id="emailText">정확하지 않은 이메일형식입니다.</a>
+				<a id="emailText"></a>
 			</div>
 			<div>	
 			<input type="password" name="password" id="pwInp" placeholder="비밀번호" class="input"><br>
 			</div>
 			<div style="height: 20px;" class="TextDiv">
-				<a id="passwordText">비밀번호는 영문, 숫자 중 2개를 조합하여<br>
-				 최소 8자리 이상이여야 합니다.</a>
+				<a id="passwordText">
+<!-- 				비밀번호는 영문, 숫자 중 2개를 조합하여<br> -->
+<!-- 				 최소 8자리 이상이여야 합니다. -->
+				 </a>
 			</div>
 				</div>
 					<input type="submit" value="로그인" class="btn_login">

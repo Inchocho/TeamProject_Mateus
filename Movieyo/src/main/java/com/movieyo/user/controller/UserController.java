@@ -65,7 +65,7 @@ public class UserController {
 //			viewUrl =  "redirect:../user/one.do?userNo=" +  userDto.getUserNo();
 			viewUrl = "redirect:../movie/main.do";
 		}else {
-			viewUrl = "redirect:/auth/login.do";
+			viewUrl = "/auth/LoginFail";
 //			viewUrl = "<script>alert('이메일틀림');location.href='./login.do'</script>";
 		}
 		
