@@ -25,6 +25,7 @@ import com.movieyo.cart.service.CartService;
 import com.movieyo.movie.dto.MovieDto;
 import com.movieyo.movie.service.MovieService;
 import com.movieyo.user.dto.UserDto;
+import com.movieyo.user.service.UserService;
 import com.movieyo.util.CartPaging;
 import com.movieyo.util.Paging;
 
@@ -37,7 +38,7 @@ public class CartController {
 	@Autowired
 	private CartService cartService;
 	@Autowired
-	private MovieService movieService;
+	private UserService userService;
 	@Autowired
 	private BuyService buyService;
 	
@@ -133,6 +134,35 @@ public class CartController {
 			cartService.deleteCart(cartNo[i]);
 		}
 				
+		String url = "redirect:/cart/list.do";
+		return url;
+	}
+	
+	@RequestMapping(value = "/cart/buyCart.do", method = {RequestMethod.GET, RequestMethod.POST})
+	public String buyCart(int[] movieNo,int[] cartNo, int sumPrice, Model model, HttpSession session) {
+		logger.debug("Welcome CartController buyCart! movie: {}", movieNo);
+		logger.debug("Welcome CartController buyCart! cart: {}", cartNo);
+		UserDto userDto = (UserDto) session.getAttribute("userDto");
+		int userNo = userDto.getUserNo();
+		
+		for (int i = 0; i < movieNo.length; i++) {
+			BuyDto buyDto = new BuyDto(userNo,movieNo[i]);
+			//구매성공체크(환불 재구매시)					
+			int buyStatusCheck =  buyService.buyStatusCheck(userNo, movieNo[i]);
+				if(buyStatusCheck != 0) {
+					buyService.buyStatusUpdate(userNo, movieNo[i]);
+				}else {
+					
+				int buySuccess = 0;					
+				buySuccess = buyService.buyInsertOne(buyDto);
+				
+				if(buySuccess != 0) {
+					//구매가 성공했으면 유저의 캐쉬를 영화가격만큼 감소
+					userService.userBuyMovie(userNo, sumPrice);
+				}
+			}
+		}
+
 		String url = "redirect:/cart/list.do";
 		return url;
 	}

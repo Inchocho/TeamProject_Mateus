@@ -14,7 +14,11 @@ img{
  height: 360px;
 
 }
-
+#alreadyBuy{
+	background-color: rgba(135, 206, 235, 0.3);
+	cursor: default;
+	width: 400px;
+}
 </style>
 
 <script type="text/javascript">
@@ -72,15 +76,18 @@ img{
 	<c:if test="${userDto.userAdmin eq 0}">
 		<c:if test="${buyCheck eq 0}">
 		<input type="button" value='구매' onclick="buyMoviePopFnc();" class="body_btn_css">
-		</c:if>
-	<c:choose>
+		<c:choose>
 		<c:when test="${cartCheck eq 0}">
 		<input type="button" value="장바구니 담기" onclick="inCartMoviePopFnc();" class="body_btn_css">
 		</c:when>
 		<c:when test="${cartCheck eq 1}">
 		<input type="button" value="장바구니로 이동" onclick="pageMoveCartFnc();" class="body_btn_css">
 		</c:when>
-	</c:choose>
+		</c:choose>
+		</c:if>
+		<c:if test="${buyCheck eq 1}">
+		<input type="button" value='이미구매하신 영화입니다' class="body_btn_css" id="alreadyBuy">
+		</c:if>
 	</c:if>
 	<jsp:include page="/WEB-INF/views/PopUp/BuyMoviePop.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/PopUp/InCartMoviePop.jsp"></jsp:include>

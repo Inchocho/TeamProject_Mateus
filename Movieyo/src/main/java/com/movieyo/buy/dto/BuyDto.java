@@ -26,6 +26,12 @@ public class BuyDto {
 		this.buyStatus = buyStatus;
 	}
 
+	public BuyDto(int movieNo, int userNo) {
+		super();
+		this.movieNo = movieNo;
+		this.userNo = userNo;
+	}
+
 	public int getBuyNo() {
 		return buyNo;
 	}

@@ -158,11 +158,12 @@ th {
 			</tr>		
 		</c:if>
 	</table>
-	<div style="display: flex; flex-direction: row-reverse;"><div class="cartSelectInfo">
+	<div style="display: flex; flex-direction: row-reverse;">
+	  <div class="cartSelectInfo">
 		<div class="csiCkBox">
 			<div class="csiCkBoxView">
 			<input type="hidden" id="cartSelCount" value="0">
-			<input type="hidden" id="cartSelPrice" value="0">
+			<input type="hidden" id="cartSelPrice" name="sumPrice" value="0">
 			<span>선택한항목:　<span id="cartSelCountView"></span><span style="float: right;">　개</span></span>
 			<span>가격합계:　<span id="cartSelPriceView"></span><span style="float: right;">　원</span></span></div>
 			<div>전체선택<input type="checkbox" id="allck"></div>
@@ -264,8 +265,8 @@ buyCartSelBtn.addEventListener("click", function(e) {
 	//선택항목 구매 submit
 	var buyBtn = document.getElementById("buyBtn");
 	buyBtn.addEventListener("click", function(e) {
-		$('#cartSelectForm').attr("action", "cart/cartBuy.do");
-		$('#cartSelectForm').submit();
+		$("#cartSelectForm").attr("action", "/Movieyo/cart/buyCart.do");
+		$("#cartSelectForm").submit();
 	});
 //선택항목 제외하기 모달창띄우기
 var delCartSelBtn = document.getElementById("delCartSelBtn");
