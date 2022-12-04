@@ -154,10 +154,15 @@ public class BuyController {
 				
 				}else{
 					//구매성공
-					
-					int cartNo = cartService.selectCartNo(userNo, movieNo);
-					
+					int cartNo = 0;
+					try {
+					cartNo = cartService.selectCartNo(userNo, movieNo);
+						
 					cartService.deleteCart(cartNo);
+					} catch (NullPointerException nullEx) {
+						// TODO: handle exception
+						System.out.println("카트에없는 항목구매");
+					}
 					
 					//구매성공(케이스1 환불한 영화 다시 재구매)	
 					int buyStatusCheck = 0;

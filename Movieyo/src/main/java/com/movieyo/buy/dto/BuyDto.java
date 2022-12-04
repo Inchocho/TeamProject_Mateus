@@ -26,10 +26,10 @@ public class BuyDto {
 		this.buyStatus = buyStatus;
 	}
 
-	public BuyDto(int movieNo, int userNo) {
+	public BuyDto(int userNo, int movieNo) {
 		super();
-		this.movieNo = movieNo;
 		this.userNo = userNo;
+		this.movieNo = movieNo;
 	}
 
 	public int getBuyNo() {

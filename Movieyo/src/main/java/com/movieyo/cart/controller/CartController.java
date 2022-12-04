@@ -148,44 +148,45 @@ public class CartController {
 		UserDto userDto = (UserDto) session.getAttribute("userDto");
 		int userNo = userDto.getUserNo();
 		int userCash = userDto.getUserCash();
+		
 		if (userCash >= sumPrice) {	//장바구니 합계보다 유저캐시가 많을때 수행
 			for (int i = 0; i < movieNo.length; i++) {
-				BuyDto buyDto = new BuyDto(userNo,movieNo[i]);
 				//구매성공체크(환불 재구매시)					
-				cartService.deleteCart(cartNo[i]);
-				
-				//구매성공(케이스1 환불한 영화 다시 재구매)	
 				int buyStatusCheck = 0;
 				buyStatusCheck = buyService.buyStatusCheck(userNo, movieNo[i]);
+				//구매성공(케이스1 환불한 영화 다시 재구매)	
 				if(buyStatusCheck != 0) {
 					//환불한물건 업데이트처리(구매 케이스 1)
+					buyService.buyStatusUpdate(userNo, movieNo[i]);
 
 					//구매내역에 상태가 있는지 확인
-					buyService.buyStatusUpdate(userNo, movieNo[i]);
-					userService.userBuyMovie(userNo, sumPrice);
 					
-					//구매시 장바구니에 들어있는지 확인하여
-					//장바구니에 들어있는게 확인되면 장바구니 번호를 조회해서 해당 번호를 삭제							
-
 					//환불내역(환불처리완료됨)에서 삭제처리함 
 					int refundNo = 0;
 					refundNo = buyService.selectRefundNo(userNo, movieNo[i]);
 					refundService.refundDelete(refundNo);							
 				}else {
 				//구매케이스2 아예 처음 구매함
-					int buySuccess = 0;					
-					buySuccess = buyService.buyInsertOne(buyDto);
-					
-					if(buySuccess != 0) {
-	
-						//구매가 성공했으면 유저의 캐쉬를 영화가격만큼 감소
-						userService.userBuyMovie(userNo, sumPrice);
-					}
+					BuyDto buyDto = new BuyDto(userNo,movieNo[i]);
+					buyService.buyInsertOne(buyDto);
 				}
+				
+				//구매실행 카트에서 제외
+				cartService.deleteCart(cartNo[i]);
+
 			}
+		//구매가 성공했으면 유저의 캐쉬를 영화가격만큼 감소
+		userService.userBuyMovie(userNo, sumPrice);
+		
+		//변화한 유저정보 세션유저정보에 반영
+		Map<String, Object> map = userService.userSelectOne(userNo);
+		UserDto userDtoBought = (UserDto) map.get("userDto");
+		session.removeAttribute("userDto");
+		session.setAttribute("userDto", userDtoBought);
+		
 		String url = "redirect:/cart/list.do";
 		return url;
-		}else {
+		}else {		//유저포인트가 부족하면 경고페이지
 			String url = "alert/BuyCartFail";
 			return url;
 		}

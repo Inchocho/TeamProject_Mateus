@@ -4,7 +4,7 @@
 <html>
 <head>
 <script type="text/javascript">
-var conF = confirm("　　　　　　　Mpoint 잔액이 부족합니다.\n　　　　　　　Mpay로 이동하시겠습니까?\n　　　　　　　확인▶Mpay　취소▶장바구니");
+var conF = confirm("　　　　　　　Mpoint 잔액이 부족합니다.\n　　　　　　　Mpay로 이동하시겠습니까?\n　　　　　　　확인▶Mpay");
 if (conF == true) {
 	location.href = '/Movieyo/user/userMpoint.do';
 }else{

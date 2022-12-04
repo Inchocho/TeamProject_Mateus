@@ -110,5 +110,6 @@
         AND B.USER_NO = #{userNo}
         AND B.BUY_STATUS = '보유중'
         AND B.MOVIE_NO = #{movieNo}
+        AND A.BUY_NO = B.BUY_NO
 	</select>
 </mapper>
