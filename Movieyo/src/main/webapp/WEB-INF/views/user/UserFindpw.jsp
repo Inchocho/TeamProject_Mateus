@@ -45,13 +45,34 @@
   color: #212529;
   text-decoration: none;
 }
+#movieyo{
+	color: #ff81ab;
+	font-weight: bold;
+	font-style: oblique;
+/* 	width: 150px; */
+	margin: 0px;
+	display: block;
+    font-size: 45px;
+	text-decoration: none;
+}
+
+.btn_css {
+	width:116px;
+	height: 50px;
+	background: #201919;
+	color: #ff81ab;
+	font-size: 20px;
+	border-radius: 8px;
+	margin: 10px;
+}	
 </style>
 <title>비밀번호 찾기</title>
 </head>
 <body>
 	<div class="w3-content w3-container w3-margin-top">
-		<div class="w3-container w3-card-4 w3-auto" style="width: 382px;height: 456.3px;">
+		<div class="w3-container w3-card-4 w3-auto" style="width: 382px;height: 550px; border-radius: 80px / 40px; margin-top: 200px;">
 			<div class="w3-center w3-large w3-margin-top">
+				<h1 id="movieyo">무비요</h1>
 				<h2>비밀번호 재설정</h2> <br>
 				<hr style="border: 1px solid silver;">
 				<h3>비밀번호를 잊으셨나요?</h3>
@@ -65,8 +86,8 @@
 					<input class="w3-input" type="text" id="email" name="email" placeholder="회원가입한 이메일주소를 입력하세요" required>
 				</p>
 				<p class="w3-center">
-					<button type="button" id="findBtn" class="w3-button w3-hover-white w3-ripple w3-margin-top w3-round mybtn">찾기</button>
-					<button type="button" onclick="history.go(-1);" class="w3-button w3-hover-white w3-ripple w3-margin-top w3-round mybtn">로그인으로</button>
+					<button type="button" id="findBtn" class="btn_css">찾기</button>
+					<button type="button" onclick="history.go(-1);" class="btn_css">로그인으로</button>
 				</p>
 			</div>
 		</div>
