@@ -18,7 +18,7 @@
 
 	$(function () {
 		var emailC = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-		var pwC = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+		var pwC = /^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/;
 		
 		$('#emailInp').keyup(function () {
 		
@@ -40,7 +40,7 @@
 				if (pwInp.match(pwC)) {
 						$('#passwordText').css('display','none');
 				}else {
-					$('#passwordText').html('비밀번호는 영문, 숫자 중 2개를 조합하여<br>최소 8자리 이상이여야 합니다.');
+					$('#passwordText').html('비밀번호는 영문, 숫자, 특수문자 3개를 조합하여<br>최소 8자리 이상이여야 합니다.');
 					$('#passwordText').css('display','block');
 				}	
 			});
@@ -73,7 +73,7 @@
 // 			$('#passwordText').html('비밀번호를 입력해주세요.');
 // 			submit = false;
 // 		}else if (!password.match(pwC)) {
-// 			$('#passwordText').html('비밀번호는 영문, 숫자 중 2개를 조합하여<br>최소 8자리 이상이여야 합니다.');
+// 			$('#passwordText').html('비밀번호는 영문, 숫자, 특수문자 3개를 조합하여<br>최소 8자리 이상이여야 합니다.');
 // 			$('#passwordText').css('display','block');
 // 			submit = false;
 // 		}else {

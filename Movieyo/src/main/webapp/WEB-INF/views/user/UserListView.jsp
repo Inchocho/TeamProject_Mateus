@@ -18,6 +18,12 @@ table, tr, td, th {
 table {
 	border-collapse: collapse;
 }
+#conDiv{
+margin: auto;
+width: 600px;
+text-align: center;
+}
+
 </style>
 
 <script type="text/javascript">
@@ -29,32 +35,9 @@ table {
 <body>
 
 	<jsp:include page="/WEB-INF/views/Header.jsp" />
+	<div id="conDiv">
+
 	<h1>회원관리</h1>
-
-
-	<form action="./list.do" method="post">
-		<select name="searchOption">
-			<c:choose>
-				<c:when test="${searchMap.searchOption == 'all'}">
-					<option value="all" selected="selected">이름+이메일</option>
-					<option value="name">이름</option>
-					<option value="email">이메일</option>
-				</c:when>
-				<c:when test="${searchMap.searchOption == 'name'}">
-					<option value="all">이름+이메일</option>
-					<option value="name" selected="selected">이름</option>
-					<option value="email">이메일</option>
-				</c:when>
-				<c:when test="${searchMap.searchOption == 'email'}">
-					<option value="all">이름+이메일</option>
-					<option value="name">이름</option>
-					<option value="email" selected="selected">이메일</option>
-				</c:when>
-			</c:choose>
-		</select> <input type="text" name="keyword" value="${searchMap.keyword}"
-			placeholder="회원이름 검색"> <input type="submit" value="검색">
-
-	</form>
 
 
 	<table>
@@ -71,8 +54,8 @@ table {
 		<c:choose>
 			<c:when test="${empty userList}">
 				<tr>
-					<td colspan="5"
-						style="width: 500px; height: 400px; font-weight: bold; text-align: center;">
+					<td colspan="7"
+						style="width: 600px; height: 400px; font-weight: bold; text-align: center;">
 						회원이 존재하지 않습니다</td>
 				</tr>
 			</c:when>
@@ -102,6 +85,30 @@ table {
 
 	</table>
 
+	<form action="./list.do" method="post">
+		<select name="searchOption">
+			<c:choose>
+				<c:when test="${searchMap.searchOption == 'all'}">
+					<option value="all" selected="selected">이름+이메일</option>
+					<option value="name">이름</option>
+					<option value="email">이메일</option>
+				</c:when>
+				<c:when test="${searchMap.searchOption == 'name'}">
+					<option value="all">이름+이메일</option>
+					<option value="name" selected="selected">이름</option>
+					<option value="email">이메일</option>
+				</c:when>
+				<c:when test="${searchMap.searchOption == 'email'}">
+					<option value="all">이름+이메일</option>
+					<option value="name">이름</option>
+					<option value="email" selected="selected">이메일</option>
+				</c:when>
+			</c:choose>
+		</select> <input type="text" name="keyword" value="${searchMap.keyword}"
+			placeholder="회원이름 검색"> <input type="submit" value="검색">
+
+	</form>
+</div>
 	<jsp:include page="/WEB-INF/views/common/Paging.jsp" />
 
 	<form action="./list.do" id="pagingForm" method="post">
