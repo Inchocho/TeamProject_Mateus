@@ -116,7 +116,7 @@ img{
 				$('#movieTitleText').css('display', 'none');
 			}
 
-			// 			제작연도
+			// 		제작연도
 			var prdtYear = $('#prdtYear').val().length;
 
 			if (prdtYear == 0) {
