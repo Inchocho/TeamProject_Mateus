@@ -36,11 +36,17 @@ body {
 }
 .searchBox{
 	margin: 0 auto 0 auto;
-	min-width: 220px;
+	min-width: 250px;
+	display: flex;
+}
+.searchBox form{
 	display: flex;
 }
 .searchBox input{
 	height: 50px;
+	border: 1px solid snow;
+    color: #ff81ab;
+    font-size: 16px;
 }
 .header_btn{
 	height: 70px;
@@ -69,33 +75,35 @@ body {
 
 <script type="text/javascript">
 	function movieAdd() {
-		location.href = '../movie/addMovie.do';
+		location.href = '/Movieyo/movie/addMovie.do';
 	}
 
 	function movieList() {
-		location.href = '../movie/list.do';
+		location.href = '/Movieyo/movie/list.do';
 	}
 	
 	function myInfo() {
-		location.href = '../user/one.do?userNo=' + ${userDto.userNo};
+		location.href = '/Movieyo/user/one.do?userNo=' + ${userDto.userNo};
 	}
 	
 	function refund(){
-		location.href = '../refund/list.do?userNo=' + ${userDto.userNo};
+		location.href = '/Movieyo/refund/list.do?userNo=' + ${userDto.userNo};
 	}
 	
 	function userList() {
-		location.href = '../user/list.do';
+		location.href = '/Movieyo/user/list.do';
 	}
 	
 	function logout() {
-		location.href = '../user/logout.do';
+		location.href = '/Movieyo/user/logout.do';
 	}
 	
 	function movePageMainFnc() {
 		location.href = '/Movieyo/movie/main.do';
 	}
-	
+	function moveBoardFnc() {
+		location.href = '/Movieyo/board/boardList.do';
+	}
 	var htmlTag = document.getElementsByTagName("html").item(0);
 </script>
 </head>
@@ -110,11 +118,11 @@ body {
 				<input type="button" value="추천작품" onclick="movePageMainFnc();" class="header_btn">
 				</c:if>
 			</li>
-			<li style="margin-left: 50px; "><input type="button" value="게시판" class="header_btn"></li>
+			<li style="margin-left: 50px; "><input type="button" value="게시판" class="header_btn" onclick="moveBoardFnc();"></li>
 			<li class="searchBox">
 			<form action="/Movieyo/movie/main.do" method="post">
-				<input type="submit" value="검색">
-				<input type="search" name="keyword" value="${searchMap.keyword}" placeholder="영화를 검색해보세요">
+				<input type="submit" value="검색" class="header_btn">
+				<input type="search" name="keyword" value="${searchMap.keyword}" placeholder="영화를 검색해보세요" style="color: black;">
 				<input type="hidden" name="searchOption" value="MOVIE_TITLE">				
 			</form>
 			</li>
