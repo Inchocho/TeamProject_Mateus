@@ -30,15 +30,15 @@
 		});
 // 		이메일 키업 끝
 
-
-		var pwC = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+			
+		var pwC = /^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/;
 // 		비밀번호 키업 시작
 		$('#password').keyup(function () {
 			var pwInp = $('#password').val();	
 				if (pwInp.match(pwC)) {
 						$('#passwordText').css('display','none');
 				}else {
-					$('#passwordText').html('비밀번호는 영문, 숫자 중 2개를 조합하여<br>최소 8자리 이상이여야 합니다.');
+					$('#passwordText').html('비밀번호는 영문, 숫자, 특수문자 중 3개를 조합하여<br>최소 8자리 이상이여야 합니다.');
 					$('#passwordText').css('display','block');
 				}	
 			});
@@ -114,8 +114,9 @@
 					$('#passwordText').css('display','block');
 					submit = false;
 				}else if (!password.match(pwC)) {
-					$('#passwordText').html('비밀번호는 영문, 숫자 중 2개를 조합하여<br>최소 8자리 이상이여야 합니다.');
+					$('#passwordText').html('비밀번호는 영문, 숫자, 특수문자 중 3개를 조합하여<br>최소 8자리 이상이여야 합니다.');
 					$('#passwordText').css('display','block');
+					submit = false;
 				}
 				else {
 					$('#passwordText').css('display','none');
