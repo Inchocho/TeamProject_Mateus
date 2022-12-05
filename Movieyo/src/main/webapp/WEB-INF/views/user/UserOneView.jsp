@@ -7,7 +7,48 @@
 <html>
 <head>
 <title>회원정보 상세조회</title>
+<style type="text/css">
+table, tr, td, th {
+	border: 1px solid black;
+}
 
+table {
+	border-collapse: collapse;
+}
+
+#tdId {
+	width: 500px;
+	height: 500px;
+	text-align: center;
+	font-weight: bolder;
+}
+
+.curPageDiv {
+	margin: 0px;
+	text-align: center;
+}
+
+.titleContainer {
+	border-bottom: 2px solid #252525;
+	margin: 3px 3px 3px 0px;
+}
+
+.contContainer {
+	width: 600px;
+	padding: 10px 0 0 30px;
+	margin: auto;
+}
+
+#ul li {
+	list-style-type: none;
+	float: left;
+	margin-left: 10px;
+}
+
+th {
+	background-color: gray;
+}
+</style>
 
 <script type="text/javascript">
 	
@@ -29,6 +70,8 @@
 
 	<jsp:include page="../Header.jsp" />
 	<jsp:include page="../UserMyPageSideMenu.jsp"></jsp:include>
+<div class="curPageDiv">
+<div class="titleContainer">
 	<c:choose>
 		<c:when test='${adminCheck == 0 || userDto2.userAdmin == 1}'>	
 			<h1>내정보</h1>
@@ -37,6 +80,9 @@
 			<h1>${userDto2.nickname}님의 회원정보</h1>
 		</c:otherwise>
 	</c:choose>
+</div>
+		
+<div class="contContainer">
 	<form action='./update.do' method='get'>
 		<input type="hidden" name="adminCheck" value='${adminCheck}'>
 		<input type="hidden" name='userNo' value='${userDto2.userNo}'>
@@ -76,6 +122,7 @@
 		<input type="hidden" name="gender" value="${userDto2.gender}">		
 		<input type='hidden' name='userAdmin' value="${userDto2.userAdmin}">
 	</form>
+</div></div>
 	<jsp:include page="../Tail.jsp" />
 </body>
 </html>

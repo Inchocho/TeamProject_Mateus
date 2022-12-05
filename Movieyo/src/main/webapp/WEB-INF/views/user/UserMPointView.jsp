@@ -12,8 +12,9 @@
 
 <style type="text/css">
 .userMpayContainer{
-	text-align: center;
 	min-width: 600px;
+	text-align: center;
+
 }
 .mpayAttribute{
 	color: #F08080;
@@ -36,7 +37,7 @@ table {
 	height: 100px;
 	font-weight: bold;
 }
-#userMpointView{
+#userMpointView, #afterMpointView{
 	font-size: 36px;
 	font-weight: bold;
 }
@@ -75,6 +76,48 @@ table {
     font-weight: 800;
     width: 250px;
 }
+table, tr, td, th{
+	border:1px solid black; 
+}
+
+table {
+	border-collapse: collapse;
+}
+#tdId{
+	width: 500px;
+	height: 500px;
+	text-align: center;
+	font-weight: bolder;
+}
+.curPageDiv{
+	margin: 0px 0px 0px 200px;
+	text-align: center;
+}
+.titleContainer{
+	border-bottom: 2px solid #252525;
+	margin: 3px 3px 3px 0px;
+}
+
+.contContainer{
+    width: 600px;
+    padding: 10px 0 0 30px;
+    margin: auto;
+}
+
+
+#ul li {
+  list-style-type: none;
+  float: left;
+  margin-left: 10px;
+  }
+ 
+th {
+	background-color: gray;
+}
+#chargeInputDiv{
+	height: 400px;
+	justify-content: space-between;
+}
 </style>
 </head>
 	
@@ -83,7 +126,11 @@ table {
 <jsp:include page="/WEB-INF/views/Header.jsp" />
 <jsp:include page="/WEB-INF/views/UserMyPageSideMenu.jsp"></jsp:include>
 <div class="userMpayContainer">
-	<h1>Mpay</h1>
+	<div class="curPageDiv">
+	<div class="titleContainer">
+		<h1>Mpay</h1>
+	</div>
+	<div class="contContainer">
 	<div class="userMpointDiv">
 		<h2 class="mpayAttribute">Movieyo Point</h2>
 		<table>
@@ -93,7 +140,7 @@ table {
 			</tr>
 		</table>
 	</div>
-	<div class="userMpointDiv">
+	<div class="userMpointDiv" id="chargeInputDiv">
 		<h2 class="mpayAttribute" style="margin-right: 410px;">충전</h2>
 		<!-- 포인트 충전시 afterMpoint 보내기 -->
 	<form action="chargeMpointCtr.do" method="get" id="chargeForm">
@@ -118,9 +165,8 @@ table {
 				<td class="userMpointTd" id="afterMpointView"></td>
 			</tr>
 		</table>
-	</div>
 		<input id="chargeTryBtn" type="button" value="충전하기" class="body_btn_css" style="width: 450px;">
-</div>
+</div></div></div></div>
 <jsp:include page="/WEB-INF/views/PopUp/ChargeMpointPop.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/views/Tail.jsp" />
 </body>

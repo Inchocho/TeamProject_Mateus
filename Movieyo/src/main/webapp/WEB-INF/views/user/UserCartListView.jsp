@@ -25,19 +25,20 @@ table {
 	font-weight: bolder;
 }
 .curPageDiv{
-	margin-left: 200px;
+	margin: 0px 0px 0px 200px;
+	text-align: center;
 }
 .titleContainer{
 	border-bottom: 2px solid #252525;
 	margin: 3px 3px 3px 0px;
 }
-.titleContainer h1{
-	margin-left: 30px;
-}
+
 .contContainer{
     width: 600px;
-    margin: 10px 0 0 30px;
+    padding: 10px 0 0 30px;
+    margin: auto;
 }
+
 .contContainer table{
 	width: 600px;
 	text-align: center;

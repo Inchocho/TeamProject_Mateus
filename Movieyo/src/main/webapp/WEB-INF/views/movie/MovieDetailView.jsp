@@ -6,60 +6,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>영화관리</title>
-
+<title>무비요 : ${movieDto.movieTitle}</title>
 <style type="text/css">
-img{
- width: 250px;
- height: 360px;
-
+img {
+	width: 250px;
+	height: 360px;
 }
-#alreadyBuy{
-	background-color: rgba(135, 206, 235, 0.3);
-	cursor: default;
-	width: 400px;
-}
-table, tr, td, th{
-	border:1px solid black; 
+table, tr, td, th {
+	border: 1px solid black;
 }
 
 table {
 	border-collapse: collapse;
 }
-#tdId{
+
+#tdId {
 	width: 500px;
 	height: 500px;
 	text-align: center;
 	font-weight: bolder;
 }
-.curPageDiv{
-	margin: 20px 150px;
+
+.curPageDiv {
+	margin: 0px;
+	text-align: center;
 }
-.titleContainer{
+
+.titleContainer {
 	border-bottom: 2px solid #252525;
 	margin: 3px 3px 3px 0px;
 }
-.titleContainer h1{
-	margin-left: 30px;
-}
-.contContainer{
-    width: 600px;
-    margin: 10px 0 0 30px;
-}
-.contContainer table{
+
+.contContainer {
 	width: 600px;
-	text-align: center;
+	padding: 10px 0 0 30px;
+	margin: auto;
 }
-  
+
 #ul li {
-  list-style-type: none;
-  float: left;
-  margin-left: 10px;
-  }
- 
+	list-style-type: none;
+	float: left;
+	margin-left: 10px;
+}
+
 th {
 	background-color: gray;
-} 
+}
+
+#alreadyBuy {
+	background-color: rgba(135, 206, 235, 0.3);
+	cursor: default;
+	width: 400px;
+}
+
+#backBtn {
+	z-index: 10;
+	position: absolute;
+	width: 60px;
+	height: 40px;
+	font-size: 30px;
+	margin-top: 23px;
+}
 </style>
 
 <script type="text/javascript">
@@ -69,10 +76,10 @@ th {
 </head>
 	
 <body>
-
+	<p>빨강색</p>
 	<jsp:include page="../Header.jsp" />
+<input type="button" class="body_btn_css" id="backBtn" value="←" onclick="movePageMainFnc();"">
 <div class="curPageDiv">
-	
 <div class="titleContainer">
 	<h1>영화상세</h1>
 </div>

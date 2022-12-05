@@ -1,0 +1,41 @@
+@charset "UTF-8";
+table, tr, td, th {
+	border: 1px solid black;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+#tdId {
+	width: 500px;
+	height: 500px;
+	text-align: center;
+	font-weight: bolder;
+}
+
+.curPageDiv {
+	margin: 0px;
+	text-align: center;
+}
+
+.titleContainer {
+	border-bottom: 2px solid #252525;
+	margin: 3px 3px 3px 0px;
+}
+
+.contContainer {
+	width: 600px;
+	padding: 10px 0 0 30px;
+	margin: auto;
+}
+
+#ul li {
+	list-style-type: none;
+	float: left;
+	margin-left: 10px;
+}
+
+th {
+	background-color: gray;
+}

@@ -103,11 +103,11 @@ body {
 		<ul class="ulFlexBox">
 			<li style="display: flex; align-items: center;">
 				<a id="mainLogo" href="#" onclick="movePageMainFnc();">무비요</a>
-				<input type="button" value="순위" class="header_btn">
-				<input type="button" value="작품전체" class="header_btn">
+				<input type="button" value="순위" onclick="movePageMainFnc();" class="header_btn">
+				<input type="button" value="작품전체" onclick="movePageMainFnc();" class="header_btn">
 				<!-- 유저로그인시 -->
 				<c:if test="${userDto.userAdmin ne 1}">
-				<input type="button" value="추천작품" class="header_btn">
+				<input type="button" value="추천작품" onclick="movePageMainFnc();" class="header_btn">
 				</c:if>
 			</li>
 			<li style="margin-left: 50px; "><input type="button" value="게시판" class="header_btn"></li>
