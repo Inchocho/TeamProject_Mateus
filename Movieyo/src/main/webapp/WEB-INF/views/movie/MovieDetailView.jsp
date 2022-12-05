@@ -27,22 +27,21 @@ table {
 	font-weight: bolder;
 }
 
-.curPageDiv {
+.curPageDiv{
 	margin: 0px;
 	text-align: center;
+	min-width: 600px;
 }
-
-.titleContainer {
+.titleContainer{
 	border-bottom: 2px solid #252525;
 	margin: 3px 3px 3px 0px;
 }
 
-.contContainer {
-	width: 600px;
-	padding: 10px 0 0 30px;
-	margin: auto;
+.contContainer{
+    width: 600px;
+    padding: 10px 0 0 30px;
+    margin: auto;
 }
-
 #ul li {
 	list-style-type: none;
 	float: left;
