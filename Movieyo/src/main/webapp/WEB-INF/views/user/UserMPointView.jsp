@@ -76,13 +76,7 @@ table {
     font-weight: 800;
     width: 250px;
 }
-table, tr, td, th{
-	border:1px solid black; 
-}
 
-table {
-	border-collapse: collapse;
-}
 #tdId{
 	width: 500px;
 	height: 500px;

@@ -129,8 +129,13 @@ public class BuyController {
 		}
 		
 		int totalMoney = buyService.totalMoney();
-		int refundMoney = buyService.refundMoney();
-		
+		int refundMoney = 0;
+		try {
+		refundMoney = buyService.refundMoney();
+		} catch (NullPointerException nullEx) {
+			// TODO: handle exception
+			System.out.println("환불내역없음");
+		}
 		model.addAttribute("refundMoney", refundMoney);
 		model.addAttribute("totalMoney", totalMoney);
 		model.addAttribute("buyListMap", buyListMap);
