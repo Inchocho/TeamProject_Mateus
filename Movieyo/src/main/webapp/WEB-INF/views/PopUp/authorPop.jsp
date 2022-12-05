@@ -24,7 +24,7 @@
 				alert("비밀번호를 확인해주세요");
 			}else {
 				alert("회원탈퇴가 처리되었습니다.");
-				opener.frmMother.action = "./deleteCtr.do?userNo=" + ${userNo};
+				opener.frmMother.action = "./deleteCtr.do?userNo=" + ${userDto2.userNo};
 				opener.frmMother.passwordChk.value = changePw.value;
 				opener.frmMother.submit();
 				self.close();
@@ -47,9 +47,9 @@
 </head>
 <body>
 	<h1>회원탈퇴</h1>
-	${userDto.nickname}님 정말로 탈퇴하시겠습니까?<br>
+	${userDto2.nickname}님 정말로 탈퇴하시겠습니까?<br>
 	
-	<input type="hidden" value="${userDto.password}" id="password"><br>
+	<input type="hidden" value="${userDto2.password}" id="password"><br>
 	<input type="text" value="" placeholder="비밀번호:" id="changePw"><br>
 	<input type="text" value="" placeholder="비밀번호 확인:" id="changePwC"><br>
 	<input type="button" onclick="sendIt();" value="삭제">

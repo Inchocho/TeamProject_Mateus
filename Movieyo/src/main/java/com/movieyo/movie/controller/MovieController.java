@@ -224,7 +224,7 @@ public class MovieController {
 			
 			int totalCount = movieService.movieSelectTotalCount(searchOption, keyword);
 			
-			List<Integer> movieNo = movieService.movieNoSelect();
+			List<Integer> movieNo = movieService.movieNoSelect(searchOption, keyword);
 			
 			
 			List<List<Map<String,Object>>> fileList = new ArrayList<List<Map<String,Object>>>();

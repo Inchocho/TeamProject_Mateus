@@ -11,10 +11,11 @@
 <title>구매내역관리</title>
 
 <style type="text/css">
-	table, tr, td, th{
-		border:1px solid black; 
-		min-width: 224px;
+	tr, td, th{
+		min-width: 230px;
 		display: flex;
+		font-size: 16px;
+		text-align: center;		
 	}
 	
 	table {
@@ -161,7 +162,7 @@ function movieDetail(index) {
 	<div class="contContainer">
 		<input type="hidden" value="${userDto.userNo}">
 	<table>
-		<tr>
+		<tr style="min-height: 50px; border: 1px solid black;">
 			<th>영화제목</th>
 			<th>가격</th>
 			<th>구매일</th>
@@ -179,7 +180,7 @@ function movieDetail(index) {
 		<c:if test="${not empty buyListMap}">
 		
 		<c:forEach var="buyMap" items="${buyListMap}" varStatus="varStatus">
-		<tr>
+		<tr style="min-height: 50px; border: 1px solid black;">
 			<td>
 				${buyMap.movieTitle}
 			</td>

@@ -21,7 +21,7 @@ public interface MovieService {
 
 	public void movieDeleteOne(int movieNo);
 
-	public List<Integer> movieNoSelect();
+	public List<Integer> movieNoSelect(String searchOption, String keyword);
 
 	public Map<String, Object> moviefileOne(int movieNo2);
 

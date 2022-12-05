@@ -11,10 +11,11 @@
 <title>환불내역관리</title>
 
 <style type="text/css">
-	table, tr, td, th{
-		border:1px solid black; 		
-		min-width: 173.5px;
+	tr, td, th{
+		min-width: 176px;
 		display: flex;
+		font-size: 16px;
+		text-align: center;
 	}
 	
 	table {
@@ -143,7 +144,7 @@ th {
 	<div class="contContainer">
 		<input type="hidden" value="${userDto.userNo}">
 	<table>
-		<tr>
+		<tr style="min-height: 50px; border: 1px solid black;">
 			<c:choose>
 				<c:when test="${userDto.userAdmin == 1}">
 					<th>환불번호</th>
@@ -167,10 +168,10 @@ th {
 		</tr>
 		<c:if test="${not empty refundListMap}">
 		<c:forEach var="refundMap" items="${refundListMap}" varStatus="varStatus">
-			<tr>
+			<tr style="border: 1px solid black;">
 				<c:choose>
 					<c:when test="${userDto.userAdmin == 1}">
-						<td>
+						<td style="min-height: 50px;">
 							${refundMap.refundNo}
 						</td>
 						<td>

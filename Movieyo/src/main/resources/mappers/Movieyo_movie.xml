@@ -124,9 +124,10 @@
 		WHERE MOVIE_NO = #{movieNo}
 	</delete>
 	
-	<select id="movieNoSelect" resultType="int">
+	<select id="movieNoSelect" resultType="int" parameterType="map">
 		SELECT MOVIE_NO
 		FROM MVY_MOVIE
+		<include refid="search"></include>
 		ORDER BY MOVIE_NO ASC
 	</select>
 	

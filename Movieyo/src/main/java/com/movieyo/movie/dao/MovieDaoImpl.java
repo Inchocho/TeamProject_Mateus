@@ -81,8 +81,14 @@ public class MovieDaoImpl implements MovieDao{
 	}
 
 	@Override
-	public List<Integer> movieNoSelect() {
-		return sqlSession.selectList(namespace + "movieNoSelect");
+	public List<Integer> movieNoSelect(String searchOption, String keyword) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+		
+		return sqlSession.selectList(namespace + "movieNoSelect", map);
 		
 	}
 
