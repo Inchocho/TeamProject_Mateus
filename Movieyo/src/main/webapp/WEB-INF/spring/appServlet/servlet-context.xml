@@ -16,8 +16,7 @@
 	<context:component-scan base-package="com.movieyo"/>
 
 	<mvc:annotation-driven/>
-
-
+	
 	<mvc:resources location="/WEB-INF/resources" 
 		mapping="/resources/**"/>
 

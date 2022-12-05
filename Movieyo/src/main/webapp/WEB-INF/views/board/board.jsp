@@ -9,7 +9,7 @@
   <title>게시글 작성</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <style type="text/css">
-  	.writing-header{
+	.writing-header{
   	margin-left: 600px;
   	}
    	.container{
@@ -32,9 +32,48 @@
     width: 600px;
   	padding: 5px;
    }
-   #Ti{
-   text-align: 
+  
+   .btn-write{
+    width: 140px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    margin: 20px;
+    height: 55px;
+    text-align:center;
+    border: none;
+    background-size: 300% 100%;
+
+    border-radius: 50px;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
    }
+   .btn-write:hover {
+    background-position: 100% 0;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+	}
+	.btn-write::focus {
+    outline: none;
+	}
+	.btn-write.color-1 {
+    background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
+    box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+    }
+    .btn-write.color-2 {
+    background-image: linear-gradient(to right, #f5ce62, #e43603, #fa7199, #e85a19);
+    box-shadow: 0 4px 15px 0 rgba(229, 66, 10, 0.75);
+    }
+    .btn-write.color-3 {
+        background-image: linear-gradient(to right, #ed6ea0, #ec8c69, #f7186a , #FBB03B);
+    box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);
+}
+    
   </style>
  
 </head>
@@ -53,15 +92,15 @@
   		<option value="공지사항">공지사항</option>
   		<option value="문의사항">문의사항</option>
   	</select><br>
-	<label for="boardNo" id="Ti" >제목</label>&nbsp;<br><input type="text" class="BTitle" name="boardTitle" style="" value="${boardDto.boardTitle}" placeholder="제목을 입력해 주세요."/><br>
+	<label for="boardNo" id="Ti" >제목</label>&nbsp;<br><input type="text" class="BTitle" id="boardTitle" style="" value="${boardDto.boardTitle}" /><br>
     	
-    <label for="boardContent" id="Con">글내용</label>&nbsp;<br>
-   			 			<textarea name="boardContent" class="TexaAre" rows="40" cols="100"  placeholder="내용을 입력해 주세요." >${boardDto.boardContent}</textarea>
+    <label for="boardContent" id="Con">글내용</label>&nbsp;&nbsp;<br>
+   			 			<textarea id="boardContent" class="TexaAre" rows="40" cols="100" >${boardDto.boardContent}</textarea>
     <br>
     </div>
-      <button type="submit" id="writeNewBtn" class="btn-write">글쓰기</button>&nbsp;
-      <button type="button" id="listBtn" class="btn-list">목록으로</button>&nbsp;
-      <button type="button" id="cancelBtn" class="btn-modify">작성취소</button>
+      <button type="submit" id="writeNewBtn" class="btn-write color-1">작성하기</button>&nbsp;
+      <button type="button" id="listBtn" class="btn-write color-2">목록으로</button>&nbsp;
+      <button type="button" id="cancelBtn" class="btn-write color-3">작성취소</button>
       
 
   </form>
@@ -102,7 +141,15 @@
         location.href="<c:url value='/board/add.do'/>";
       });
    
-    
+    $(document).ready(function() {
+        $('.BTitle').on('keyup', function() {
+      
+            if($(this).val().length > 14) {
+                $(this).val($(this).val().substring(0, 14));
+            
+            }
+        });
+    });
  
 </script>
 <jsp:include page="../Tail.jsp" />

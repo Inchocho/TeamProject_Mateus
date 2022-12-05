@@ -68,10 +68,10 @@ public class BoardController {
 
 		int totalCount = boardService.boardSelectTotalCount(searchOption, keyword);
 
-		Paging boardPaging = new Paging(totalCount, curPage);
+		Paging commonPaging = new Paging(totalCount, curPage);
 
-		int start = boardPaging.getPageBegin();
-		int end = boardPaging.getPageEnd();
+		int start = commonPaging.getPageBegin();
+		int end = commonPaging.getPageEnd();
 
 		List<Map<String, Object>> boardList = boardService.boardSelectList(searchOption, keyword, start, end);
 
@@ -82,7 +82,7 @@ public class BoardController {
 
 		// Map에다가 totalCount, memberPaging을 key로해서 담고
 		pagingMap.put("totalCount", totalCount);
-		pagingMap.put("boardPaging", boardPaging);
+		pagingMap.put("commonPaging", commonPaging);
 
 		Map<String, Object> searchMap = new HashMap<String, Object>();
 
@@ -108,7 +108,6 @@ public class BoardController {
 		Map<String, Object> map = boardService.boardSelectOne(boardNo);	
 
 		BoardDto boardDto = (BoardDto) map.get("boardDto");
-		List<Map<String, Object>> fileList = (List<Map<String, Object>>) map.get("fileList");
 
 		boardService.boardCountUp(boardNo);
 
@@ -118,7 +117,6 @@ public class BoardController {
 		prevMap.put("keyword", keyword);
 
 		model.addAttribute("boardDto", boardDto);
-		model.addAttribute("fileList", fileList);
 		model.addAttribute("prevMap", prevMap);
 
 		return "board/boardOneView";
@@ -138,10 +136,10 @@ public class BoardController {
 		searchMap.put("keyword", keyword);
 		searchMap.put("curPage", curPage);
 
-		List<Map<String, Object>> fileList = (List<Map<String, Object>>) map.get("fileList");
+//		List<Map<String, Object>> fileList = (List<Map<String, Object>>) map.get("fileList");
 
 		model.addAttribute("boardDto", boardDto);
-		model.addAttribute("fileList", fileList);
+//		model.addAttribute("fileList", fileList);
 		model.addAttribute("searchMap", searchMap);
 
 		return "board/boardUpdateForm";
