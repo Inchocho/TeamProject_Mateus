@@ -151,9 +151,9 @@ public class MovieServiceImpl implements MovieService{
 	}
 
 	@Override
-	public List<Integer> movieNoSelect() {
+	public List<Integer> movieNoSelect(String searchOption, String keyword) {
 		// TODO Auto-generated method stub
-		return movieDao.movieNoSelect();
+		return movieDao.movieNoSelect(searchOption, keyword);
 	}
 
 	@Override

@@ -66,6 +66,13 @@ th {
 	font-size: 30px;
 	margin-top: 23px;
 }
+.detailFormDiv, .detailForm_top, .detailForm_bottom{
+	display: flex;
+	text-align: left;
+}
+.detailFormDiv, .detailForm_bottom{
+	flex-direction: column;
+}
 </style>
 
 <script type="text/javascript">
@@ -75,7 +82,6 @@ th {
 </head>
 	
 <body>
-	<p>빨강색</p>
 	<jsp:include page="../Header.jsp" />
 <input type="button" class="body_btn_css" id="backBtn" value="←" onclick="movePageMainFnc();"">
 <div class="curPageDiv">
@@ -84,23 +90,10 @@ th {
 </div>
 		
 <div class="contContainer">
-	<div></div>
-		<c:choose>
-			<c:when test="${empty fileList}">
-					첨부파일이 없습니다.<br>			
-			</c:when>
-		
-			<c:otherwise>
-				<c:forEach var="row" items="${fileList}">
-<!-- 					<input type="button" value="이미지" name="file"> -->
-<%-- 					${row.ORIGINAL_FILE_NAME}(${row.FILE_SIZE}kb)<br> --%>
-					<img alt="image not found" src="<c:url value='/image/${row.STORED_FILE_NAME}'/>">
-					<br>
-				</c:forEach>
-			</c:otherwise>
-		</c:choose>
-	
 	<form id="detailForm">
+	<div class="detailFormDiv">
+	<div class="detailForm_top">
+	<div class="cont_movieInfo">
 	<input type="hidden" name="userNo" value="${userDto.userNo}">
 	<input type="hidden" name="movieNo" value="${movieDto.movieNo}">
 	<input type="hidden" name="userCash" value="${userDto.userCash}">
@@ -120,13 +113,29 @@ th {
 		가격 :	<input type="text" name="price" value="${movieDto.price}" readonly="readonly"> <br>
 		등록일 :	<fmt:formatDate pattern="yyyy-MM-dd"
 								value="${movieDto.creDate}"/> <br>
-		영화내용<br>
+	</div>
+		<div class="cont_moviePoster">
+		<c:choose>
+			<c:when test="${empty fileList}">
+					첨부파일이 없습니다.<br>			
+			</c:when>
+		
+			<c:otherwise>
+				<c:forEach var="row" items="${fileList}">
+					<img alt="image not found" src="<c:url value='/image/${row.STORED_FILE_NAME}'/>">
+					<br>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>
+	</div></div>
+	<div class="detailForm_bottom">
+		내용
 		<textarea name="movieStory" style="width: 800px; height: 400px;" readonly="readonly">${movieDto.movieStory}</textarea>
-		<br>
-		<c:if test="${userDto.userAdmin eq 1}">
-			<input type="button" value='수정' onclick="moveMovieUD();" class="body_btn_css">
-		</c:if>
+	</div></div>
 	</form>
+	<c:if test="${userDto.userAdmin eq 1}">
+		<input type="button" value='수정' onclick="moveMovieUD();" class="body_btn_css">
+	</c:if>
 	<c:if test="${userDto.userAdmin eq 0}">
 		<c:if test="${buyCheck eq 0}">
 		<input type="button" value='구매' onclick="buyMoviePopFnc();" class="body_btn_css">

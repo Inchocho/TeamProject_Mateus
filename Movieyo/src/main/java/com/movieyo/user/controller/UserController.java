@@ -299,10 +299,18 @@ public class UserController {
 		public String userDelete(int userNo, HttpSession session, Model model) {
 			logger.info("Welcome userController userDeleteCtr! " + userNo);
 			
+		     UserDto userDto =
+		               (UserDto)session.getAttribute("userDto");
+			
+			int sessionUserNo = userDto.getUserNo();
+			
 			userService.userDeleteOne(userNo);
 			
-			session.invalidate();
-			
+			if(userNo == sessionUserNo) {
+				session.invalidate();
+			}else {
+				return "redirect:/user/list.do";
+			}
 
 			
 			return "redirect:/auth/login.do";
@@ -311,7 +319,12 @@ public class UserController {
 		@GetMapping("/user/authorPop.do")
 		public String authorPopGET(int userNo, Model model) throws Exception{
 			
-			logger.info("authorPopGET.......");
+			Map<String, Object> map = userService.userSelectOne(userNo);
+			UserDto userDto = (UserDto)map.get("userDto");
+			
+			logger.info("authorPopGET.......",userDto);
+			
+			model.addAttribute("userDto2", userDto);
 			model.addAttribute("userNo", userNo);
 			return "PopUp/authorPop";
 		

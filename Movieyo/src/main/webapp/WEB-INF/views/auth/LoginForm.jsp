@@ -18,7 +18,7 @@
 
 	$(function () {
 		var emailC = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-		var pwC = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+		var pwC = /^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/;
 		
 		$('#emailInp').keyup(function () {
 		
@@ -33,42 +33,55 @@
 		}
 	
 	});
-	//이메일 키업 끝
-	
+		//이메일 키업 끝
+
 		$('#pwInp').keyup(function () {
 			var pwInp = $('#pwInp').val();	
 				if (pwInp.match(pwC)) {
 						$('#passwordText').css('display','none');
 				}else {
-					$('#passwordText').html('비밀번호는 영문, 숫자 중 2개를 조합하여<br>최소 8자리 이상이여야 합니다.');
+					$('#passwordText').html('비밀번호는 영문, 숫자, 특수문자 3개를 조합하여<br>최소 8자리 이상이여야 합니다.');
 					$('#passwordText').css('display','block');
 				}	
 			});
-	//비밀번호 키업 끝
+		//비밀번호 키업 끝
 	
 	
 	
 	
 	
-	$('.btn_login').click(function () {
-		var submit = true;
+// 	$('.btn_login').click(function () {
+// 		var submit = true;
 		
-		if ($('#emailInp').val() == "") {
-			$('#emailText').html('이메일을 입력해주세요.');
-			submit = false;
-		}else {
-			$('#emailText').css('display','none');
-		}
+// 			var email = $('#emailInp').val()
+// 		if (email == "") {
+// 			$('#emailText').html('이메일을 입력해주세요.');
+// 			submit = false;
+// 		}else if (!email.match(emailC)) {
+// 			$('#emailText').html('정확하지 않은 이메일형식입니다.');
+// 			$('#emailText').css('display','block');
+// 			submit = false;
+// 		}else {
+// 			$('#emailText').css('display','none');
+// 		}
 		
-		if ($('#pwInp').val() == "") {
-			$('#passwordText').html('비밀번호를 입력해주세요.');
-			submit = false;
-		}else {
-			$('#passwordText').css('display','none');
-		}
 		
-		return submit;
-	});
+		
+// 		var password = $('#pwInp').val();
+		
+// 		if (password == "") {
+// 			$('#passwordText').html('비밀번호를 입력해주세요.');
+// 			submit = false;
+// 		}else if (!password.match(pwC)) {
+// 			$('#passwordText').html('비밀번호는 영문, 숫자, 특수문자 3개를 조합하여<br>최소 8자리 이상이여야 합니다.');
+// 			$('#passwordText').css('display','block');
+// 			submit = false;
+// 		}else {
+// 			$('#passwordText').css('display','none');
+// 		}
+		
+// 		return submit;
+// 	});
 	//서브밋 클릭 끝
 	
 	});
@@ -111,20 +124,22 @@ a{
 	font-size: 15px;
 	font-weight: bold;
 	line-height: 49px;
-	border: 2px solid #201919;
+	border: 0;
 	border-radius: 4px;
-    border-style: outset;
-}
-.btn_login:hover, .add_btn:hover {
-	background-color: rgba(135, 206, 235, 0.3);
 	cursor: pointer;
+	font-size: 20px;
+	
 }
+
+
+
 #movieyo{
+	margin-top:20px;
 	color: #ff81ab;
 	font-weight: bold;
 	font-style: oblique;
 /* 	width: 150px; */
-	margin: 0px;
+/* 	margin: 0px; */
 	display: block;
     font-size: 45px;
 	text-decoration: none;
@@ -145,11 +160,22 @@ a{
 /* 	font-size: 15px; */
 }
 
+.container{
+ width: 400px;
+ text-align: center;
+ margin: auto;
+ margin-top: 200px;
+ border: 1px solid #e3e3e3;
+ height: 580px;
+ border-radius: 80px / 40px;
+ box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 19%);
+}
+
 </style>
 </head>
 
 <body>
-	<div style="width: 400px; text-align: center; margin: auto; margin-top: 200px;">
+	<div class="container">
 		<div>
 		<h1 id="movieyo">무비요</h1>
 		</div>

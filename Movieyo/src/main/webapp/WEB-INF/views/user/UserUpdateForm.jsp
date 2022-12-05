@@ -58,7 +58,9 @@
 <%-- 		</c:if> --%>
 
       	<br>
-   			유저권한: <input type="text" value="${userDto2.userAdmin}" name='userAdmin'>
+      		<c:if test="${userDto.userAdmin == 1}">
+   				유저권한: <input type="text" value="${userDto2.userAdmin}" name='userAdmin'>
+   			</c:if>
       	<br>
       	
 		<input type='submit' value='저장하기'>
