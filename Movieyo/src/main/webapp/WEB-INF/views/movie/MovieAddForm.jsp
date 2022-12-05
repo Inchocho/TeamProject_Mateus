@@ -21,23 +21,22 @@
 }
 
 .file label {
-	display: inline-block;
-	padding: .5em .75em;
-	color: #ff81ab;
-	background: #201919;
-	font-size: inherit;
-	line-height: normal;
-	vertical-align: middle;
-	cursor: pointer;
-	border: 1px solid #ebebeb;
-	border-bottom-color: #e2e2e2;
-	border-radius: .25em;
-	margin-top: 10px;	
+    padding: 1px 6px;
+    border-width: 2px;
+    border-style: outset;
+    border-color: buttonborder;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-
+.file{
+	display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
 .select {
-	height: 35px;
-	margin-top: 12px;
+	height: 30px;
+	margin: 15px 0px;
 	border: solid 1px #bfbfbf;
 	border-radius: 4px;
 	background: #fff;
@@ -47,41 +46,60 @@
 	width: 300px;
 	height: 30px;
 	position: relative;
-	/* 	margin: 0 0 10px 0;  */
-	/* 	padding: 10px 50px 10px 21px;  */
-	margin-top: 12px;
+	margin: 15px 0px;
 	border: solid 1px #bfbfbf;
 	border-radius: 4px;
 	background: #fff;
 }
-
+.textarea{
+	width: 873px; height: 300px;
+	margin: 5px;
+}
 .p {
 	height: 30px;
-}
-
-.errorM {
-	height: 30px;
-	/* 	margin-top: 12px; */
+	margin-right: 50px;
 }
 
 .errorM {
 	display:none;
-/* 	height: 30px; */
 	color: red;
-	/* 	margin-top: 12px; */
+	height: 30px;
+	margin: 15px 0px;
 }
 
-.btn_css {
-	height: 50px;
-	background: #201919;
-	color: #ff81ab;
-	font-size: 20px;
-	border-radius: 8px;
-	margin: 10px;
-}
 img{
-		width: 250px;
+	width: 250px;
 	height: 370px;
+}
+.curPageDiv{
+	margin: 0px;
+	text-align: center;
+	min-width: 892px;
+}
+.titleContainer{
+	border-bottom: 2px solid #252525;
+	margin: 3px 3px 3px 0px;
+}
+
+.contContainer{
+    width: 892px;
+    padding: 10px 0 0 30px;
+    margin: auto;
+}
+.detailFormDiv{
+    border: 1px solid black;
+}
+.detailFormDiv, .detailForm_top, .detailForm_bottom{
+	display: flex;
+	text-align: left;
+}
+.detailFormDiv, .detailForm_bottom{
+	flex-direction: column;
+}
+.btn_area{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
 </style>
 <script
@@ -201,14 +219,26 @@ function setImageFromFile(input, expression) {
 </head>
 <body>
 	<jsp:include page="../Header.jsp" />
-	<div>
-		<div style="width: 895px; margin-left: 450px; border: 1px solid black;">
+	<div class="curPageDiv">
+	<div class="titleContainer">
+		<h1>영화등록</h1>
+	</div>
+	<div class="contContainer">
 			<form action="./addCtr.do" method="post" id='submitForm'
 				class="addForm" enctype="multipart/form-data">
-				<h1>영화등록</h1>
-				<div style="">
-					<div style="width: 70px; float: left; border: 1px solid black; height: 465px;">
+			<div class="detailFormDiv">
+				<div style="" class="detailForm_top">
+					<div class="file">
+						<img src="" id="preview"/>
+						<label for="file" id="file_label" class="body_btn_css">영화사진등록</label>
+						<input type='file' name='file' id="file">
+					</div>
+					<div style="width: 750px;">
+						<div style="display:flex; height: 45px;">
 						<p class="p">영화제목</p>
+						<input type="text" name='movieTitle' id='movieTitle' class="input">
+						<p class="errorM" id="movieTitleText">영화제목을 입력해주세요.</p>
+						</div>
 						<p class="p">제작연도</p>
 						<p class="p">국가</p>
 						<p class="p">감독</p>
@@ -218,14 +248,6 @@ function setImageFromFile(input, expression) {
 						<p class="p">상영등급</p>
 						<p class="p">가격</p>
 						<p class="p">등록자</p>
-					</div>
-
-					<div style="width: 800px; float: left; border: 1px solid black; padding-left: 20px;">
-						<img src="" id="preview" style="float: right;"/>
-						<div style="display:flex; height: 45px;">
-						<input type="text" name='movieTitle' id='movieTitle' class="input"><br>
-						<p class="errorM" id="movieTitleText">영화제목을 입력해주세요.</p>
-						</div>
 						<div style="display:flex; height: 45px">
 						<input type="text" name='prdtYear' id='prdtYear' class="input"><br>
 						<p class="errorM" id="prdtYearText">년도를 입력해주세요.</p>
@@ -283,32 +305,21 @@ function setImageFromFile(input, expression) {
 						<div style="display:flex; height: 50px">
 						<input type="text" name="registrant"
 							value="${userDto.userName}" readonly="readonly" class="input">
-							<div class="file" style="margin-left: 300px;">
-							<label for="file">영화사진등록</label>
-							<input type='file' name='file' id="file">
-						</div>
 						</div>
 						
 					</div>
-						
-						
-						
-
-					<!-- 		 <input type="number" step="1000" name='price' id='price' min="1000" max="10000"><br> -->
-					<!-- 			<a id="priceText">가격을 입력해주세요</a> -->
 				</div>
-					<div style="width: 892px; float: left; border: 1px solid black;">
-						영화내용 <br>
-						<textarea name="movieStory" style="width: 886px; height: 300px;"
-							class="textarea"></textarea>
-						<br>
-						<div style="float: right;">
-				<input type="submit" value='등록' id='submitBtn' class="btn_css">
-						<input type="button" value="취소" class="btn_css">
+					<div class="detailForm_bottom" style="width: 891px;">
+						영화내용
+						<textarea name="movieStory"	class="textarea"></textarea>
+						
+						<div class="btn_area">
+						<input type="submit" value='등록' id='submitBtn' class="body_btn_css">
+						<input type="button" value="취소" class="body_btn_css">
 						</div>
-					</div>
+					</div></div>
 			</form>
 		</div>
-	</div>
+		</div>
 </body>
 </html>
