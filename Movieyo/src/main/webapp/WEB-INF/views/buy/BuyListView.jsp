@@ -118,7 +118,26 @@ th {
     color: #fff;
 }
 </style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
+<script type="text/javascript">
 
+$(function(){
+	
+});
+
+$('')
+
+function movieDetail() {
+	let movieNo = $("#movieNo").val();
+	
+	alert(movieNo);
+	
+	location.href = "/Movieyo/movie/detail.do?movieNo=" + movieNo;
+}
+
+
+
+</script>
 </head>
 
 <body>
@@ -153,7 +172,7 @@ th {
 				<th>구매번호</th>			
 			</c:if>			
 			<c:if test='${userDto.userAdmin != 1}'>
-				<th>환불</th>
+				<th>환불신청</th>
 			</c:if>
 		</tr>	
 		
@@ -181,10 +200,18 @@ th {
 			</c:if>				
 			<c:if test='${userDto.userAdmin != 1}'>
 				<td>
-					<form id="refundAddFrom${varStatus.index}" action="../refund/addRefund.do" method="GET">				
-						<input type="submit" name='refundSubmitBtn' id='refundSubmit' value="환불하기">					
+					<form id="refundAddFrom${varStatus.index}" action="../refund/addRefund.do" method="GET">
+							<c:choose>
+								<c:when test="${buyMap.requestDeny != 0}">
+									<input type="submit" name='refundSubmitBtn' id='refundSubmit' value="환불하기">					
+								</c:when>
+								<c:otherwise>
+									<input type="button" onclick='movieDetail();' value='구매하러 가기'>
+								</c:otherwise>
+							</c:choose>											
 						<input type="hidden" name="buyNo" value="${buyMap.buyNo}">
 						<input type='hidden' name='userNo' value="${buyMap.buyUserNo}">
+						<input type='hidden' name='movieNo' value="${buyMap.movieNo}" id='movieNo'>
 						<input type="hidden" id="buyCurPage" name="curPage" value="">
 						<input type="hidden" name="keyword" value="${searchMap.keyword}">
 						<input type="hidden" name="searchOption" value="${searchMap.searchOption}">
@@ -252,137 +279,4 @@ th {
 	<jsp:include page="/WEB-INF/views/Tail.jsp"/>
 	
 </body>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
-<script type="text/javascript">
-
-// //선택항목,합계 보여주기
-// var htmlStr = $('#cartSelCount').val();
-// $('#cartSelCountView').html(htmlStr);
-// 	htmlStr = $('#cartSelPrice').val();
-// 	htmlStr = comma(htmlStr);
-// $('#cartSelPriceView').html(htmlStr);
-// 	//다른작업시 넣을 Fnc
-// 	function selViewRefresh() {
-// 		var htmlStr = $('#cartSelCount').val();
-// 		$('#cartSelCountView').html(htmlStr);
-// 			htmlStr = $('#cartSelPrice').val();
-// 			htmlStr = comma(htmlStr);
-// 		$('#cartSelPriceView').html(htmlStr);
-// 	};
-
-// //선택항목구매하기 모달창띄우기
-// var buyCartSelBtn = document.getElementById("buyCartSelBtn");
-// var popup_layerObj = document.getElementById("popup_layer");
-
-// buyCartSelBtn.addEventListener("click", function(e) {
-// 	var cartSelCount = document.getElementById("cartSelCount");
-// 	if (cartSelCount.value == 0) {
-// 		e.preventDefault();
-// 		alert("선택하신항목이 없습니다.")
-// 	}else{
-// 		var htmlStr = "";
-// 		htmlStr = $('#cartSelCount').val() -1;
-// 		$('#selCountMinOne').html(htmlStr);
-		
-// 		htmlStr = $('#cartSelPrice').val();
-// 		htmlStr = comma(htmlStr);
-// 		$('#selPrice').html(htmlStr);
-		
-// 		htmlStr = $('#popViewUserCash').text();
-// 		htmlStr = comma(htmlStr);
-// 		$('#popViewUserCash').html(htmlStr);
-// 		//
-// 		var checkedFir = $('.selCartMovie').first();
-// 		var findMtitle = "#tdMtitle" + checkedFir.val();
-// 		htmlStr = checkedFir.parent().siblings(findMtitle).text();
-// 		$('#selMovieTitleFir').html(htmlStr);
-		
-// 		popup_layer.style.visibility = "visible";
-// 	}
-// });
-// 	//선택항목 구매 submit
-// 	var buyBtn = document.getElementById("buyBtn");
-// 	buyBtn.addEventListener("click", function(e) {
-// 		$('#buyCartSelectForm').attr("action", "cart/cartBuy.do");
-// 		$('#buyCartSelectForm').submit();
-// 	});
-	
-// //선택항목 제외
-// 	var delCartSelBtn = document.getElementById("delCartSelBtn");
-// 	delCartSelBtn.addEventListener("click", function(e) {
-// 		//cartList중 세션userNo 의 cartDto 제거 후 redirect:장바구니
-// 		$("input[id^='cartSelCN']").attr("name", "movieNo");
-// // 		$('#buyCartSelectForm').attr("action", "cart/cartDelete.do");
-// // 		$('#buyCartSelectForm').submit();
-// 	});
-	
-// //체크박스 선택
-// 	var count = 0;
-// 	var sumPrice = 0;
-	
-// 	$("input[id^='cartSelCN']").bind('change', function(){
-// 		if ($(this).is(':checked')) {
-// 			$(this).attr("class", "selCartMovie");
-// 			sumPrice += parseInt($(this).parent().siblings("td[id^='cartPsel']").text());
-// 			count++;
-// 		}else{
-// 			$(this).removeAttr("class");
-// 			sumPrice -= parseInt($(this).parent().siblings("td[id^='cartPsel']").text());
-// 			count--;
-// 		}
-// 		$('#cartSelCount').val(count);
-// 		$('#cartSelPrice').val(sumPrice);
-// 		selViewRefresh();
-// 	});
-// //체크박스 전체선택
-// 	var countAll = $("input[id^='cartSelCN']").length;
-// 	var sumPriceAll =0;
-// 	$("td[id^='cartPsel']").each(function() {
-// 		sumPriceAll += parseInt($(this).text());
-// 	});
-	
-// $('#allck').change(function() {
-// 	if ($(this).is(':checked')) {
-// 		$("input[id^='cartSelCN']").prop('checked',true);
-// 		$("input[id^='cartSelCN']").attr("class", "selCartMovie");
-// 		count = countAll;
-// 		sumPrice = sumPriceAll;
-// 	}else {
-// 		$("input[id^='cartSelCN']").prop('checked',false);
-// 		$("input[id^='cartSelCN']").removeAttr("class");
-// 		count = 0;
-// 		sumPrice = 0;
-// 	}
-// 	$('#cartSelCount').val(count);
-// 	$('#cartSelPrice').val(sumPrice);
-// 	selViewRefresh();
-// });
-
-
-
-// // 숫자 콤마 포멧터
-// 	function comma(str) {
-//         str = String(str);
-//         return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-//     }
-
-//     function uncomma(str) {
-//         str = String(str);
-//         return str.replace(/[^\d]+/g, '');
-//     } 
-    
-//     function inputNumberFormat(obj) {
-//         obj.value = comma(uncomma(obj.value));
-//     }
-    
-//     function inputOnlyNumberFormat(obj) {
-//         obj.value = onlynumber(uncomma(obj.value));
-//     }
-    
-//     function onlynumber(str) {
-// 	    str = String(str);
-// 	    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1');
-// 	}
-
-</script>
 </html>

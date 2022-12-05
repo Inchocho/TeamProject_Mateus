@@ -201,13 +201,13 @@ th {
 								<input type="hidden" name="moviePrice" value="${refundMap.moviePrice}">
 								<input type="hidden" id="refundCurPage" name="curPage" value="">
 								<input type="hidden" name="keyword" value="${searchMap.keyword}">
-								<input type="hidden" name="searchOption" value="${searchMap.searchOption}">							
-								<input type="hidden" name="admit" value='1'>
+								<input type="hidden" name="searchOption" value="${searchMap.searchOption}">															
 								<input type='hidden' name='submitCheck' value='${varStatus.index}'>
 							<c:choose>
 								<c:when test="${refundMap.admitDeny != 0}">				
 									<input id='rBtnYes' type='submit' value='수락'>
 									<input id='rBtnNo' type='submit' value='거절'>	
+									<input type="hidden" name="admit" value=''>
 								</c:when>
 								<c:otherwise>
 									환불완료
@@ -305,141 +305,12 @@ th {
 <script type="text/javascript">
 
 $(function(){
-	
-	var refundStatusStr = $('#refundStatus').val();
-	if(refundStatusStr == '환불완료됨'){
-		$('#rBtnYes').prop("type", "text");	
-	}
-});
+	$('#rBtnYes').on('click', function(e){
+		e.preventDefault();
+		$('#admit').val();
+	});
+}
 
-// //선택항목,합계 보여주기
-// var htmlStr = $('#cartSelCount').val();
-// $('#cartSelCountView').html(htmlStr);
-// 	htmlStr = $('#cartSelPrice').val();
-// 	htmlStr = comma(htmlStr);
-// $('#cartSelPriceView').html(htmlStr);
-// 	//다른작업시 넣을 Fnc
-// 	function selViewRefresh() {
-// 		var htmlStr = $('#cartSelCount').val();
-// 		$('#cartSelCountView').html(htmlStr);
-// 			htmlStr = $('#cartSelPrice').val();
-// 			htmlStr = comma(htmlStr);
-// 		$('#cartSelPriceView').html(htmlStr);
-// 	};
-
-// //선택항목구매하기 모달창띄우기
-// var buyCartSelBtn = document.getElementById("buyCartSelBtn");
-// var popup_layerObj = document.getElementById("popup_layer");
-
-// buyCartSelBtn.addEventListener("click", function(e) {
-// 	var cartSelCount = document.getElementById("cartSelCount");
-// 	if (cartSelCount.value == 0) {
-// 		e.preventDefault();
-// 		alert("선택하신항목이 없습니다.")
-// 	}else{
-// 		var htmlStr = "";
-// 		htmlStr = $('#cartSelCount').val() -1;
-// 		$('#selCountMinOne').html(htmlStr);
-		
-// 		htmlStr = $('#cartSelPrice').val();
-// 		htmlStr = comma(htmlStr);
-// 		$('#selPrice').html(htmlStr);
-		
-// 		htmlStr = $('#popViewUserCash').text();
-// 		htmlStr = comma(htmlStr);
-// 		$('#popViewUserCash').html(htmlStr);
-// 		//
-// 		var checkedFir = $('.selCartMovie').first();
-// 		var findMtitle = "#tdMtitle" + checkedFir.val();
-// 		htmlStr = checkedFir.parent().siblings(findMtitle).text();
-// 		$('#selMovieTitleFir').html(htmlStr);
-		
-// 		popup_layer.style.visibility = "visible";
-// 	}
-// });
-// 	//선택항목 구매 submit
-// 	var buyBtn = document.getElementById("buyBtn");
-// 	buyBtn.addEventListener("click", function(e) {
-// 		$('#buyCartSelectForm').attr("action", "cart/cartBuy.do");
-// 		$('#buyCartSelectForm').submit();
-// 	});
-	
-// //선택항목 제외
-// 	var delCartSelBtn = document.getElementById("delCartSelBtn");
-// 	delCartSelBtn.addEventListener("click", function(e) {
-// 		//cartList중 세션userNo 의 cartDto 제거 후 redirect:장바구니
-// 		$("input[id^='cartSelCN']").attr("name", "movieNo");
-// // 		$('#buyCartSelectForm').attr("action", "cart/cartDelete.do");
-// // 		$('#buyCartSelectForm').submit();
-// 	});
-	
-// //체크박스 선택
-// 	var count = 0;
-// 	var sumPrice = 0;
-	
-// 	$("input[id^='cartSelCN']").bind('change', function(){
-// 		if ($(this).is(':checked')) {
-// 			$(this).attr("class", "selCartMovie");
-// 			sumPrice += parseInt($(this).parent().siblings("td[id^='cartPsel']").text());
-// 			count++;
-// 		}else{
-// 			$(this).removeAttr("class");
-// 			sumPrice -= parseInt($(this).parent().siblings("td[id^='cartPsel']").text());
-// 			count--;
-// 		}
-// 		$('#cartSelCount').val(count);
-// 		$('#cartSelPrice').val(sumPrice);
-// 		selViewRefresh();
-// 	});
-// //체크박스 전체선택
-// 	var countAll = $("input[id^='cartSelCN']").length;
-// 	var sumPriceAll =0;
-// 	$("td[id^='cartPsel']").each(function() {
-// 		sumPriceAll += parseInt($(this).text());
-// 	});
-	
-// $('#allck').change(function() {
-// 	if ($(this).is(':checked')) {
-// 		$("input[id^='cartSelCN']").prop('checked',true);
-// 		$("input[id^='cartSelCN']").attr("class", "selCartMovie");
-// 		count = countAll;
-// 		sumPrice = sumPriceAll;
-// 	}else {
-// 		$("input[id^='cartSelCN']").prop('checked',false);
-// 		$("input[id^='cartSelCN']").removeAttr("class");
-// 		count = 0;
-// 		sumPrice = 0;
-// 	}
-// 	$('#cartSelCount').val(count);
-// 	$('#cartSelPrice').val(sumPrice);
-// 	selViewRefresh();
-// });
-
-
-
-// // 숫자 콤마 포멧터
-// 	function comma(str) {
-//         str = String(str);
-//         return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-//     }
-
-//     function uncomma(str) {
-//         str = String(str);
-//         return str.replace(/[^\d]+/g, '');
-//     } 
-    
-//     function inputNumberFormat(obj) {
-//         obj.value = comma(uncomma(obj.value));
-//     }
-    
-//     function inputOnlyNumberFormat(obj) {
-//         obj.value = onlynumber(uncomma(obj.value));
-//     }
-    
-//     function onlynumber(str) {
-// 	    str = String(str);
-// 	    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g,'$1');
-// 	}
 
 </script>
 </html>

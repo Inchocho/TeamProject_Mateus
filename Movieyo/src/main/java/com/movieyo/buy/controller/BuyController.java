@@ -106,6 +106,7 @@ public class BuyController {
 			String movieTitle = (String)listMap.get(i).get("MOVIE_TITLE");
 			String buyStatus = (String)listMap.get(i).get("BUY_STATUS");
 			Date buyDate = (Date)listMap.get(i).get("BUY_DATE");
+			int movieNo = Integer.parseInt(String.valueOf(listMap.get(i).get("MOVIE_NO")));
 			int buyUserNo = Integer.parseInt(String.valueOf(listMap.get(i).get("USER_NO")));
 			
 			buyMap.put("moviePrice", moviePrice);
@@ -116,6 +117,12 @@ public class BuyController {
 			buyMap.put("buyNo", buyNo);
 			buyMap.put("buyUserNo", buyUserNo);
 			buyMap.put("userNo", userNo);
+			buyMap.put("movieNo", movieNo);
+			
+			if(buyStatus.equals("환불처리완료")) {
+				int requestDeny = 0;
+				buyMap.put("requestDeny", requestDeny);
+			}			
 			
 			buyListMap.add(buyMap);			
 			
