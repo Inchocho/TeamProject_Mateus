@@ -267,16 +267,17 @@ function setImageFromFile(input, expression) {
 						</div>
 						<div style="display:flex; height: 50px">
 						<select name="price" id="price" class="select">
-							<option value="1000">1000p</option>
-							<option value="2000">2000p</option>
-							<option value="3000">3000p</option>
-							<option value="4000">4000p</option>
-							<option value="5000" selected>5000p</option>
-							<option value="6000">6000p</option>
-							<option value="7000">7000p</option>
-							<option value="8000">8000p</option>
-							<option value="9000">9000p</option>
-							<option value="10000">10000p</option>
+							<option value="5000">5000원</option>
+							<option value="6000">6000원</option>
+							<option value="7000">7000원</option>
+							<option value="8000">8000원</option>
+							<option value="9000">9000원</option>
+							<option value="10000" selected>10000원</option>
+							<option value="11000">11000원</option>
+							<option value="12000">12000원</option>
+							<option value="13000">13000원</option>
+							<option value="14000">14000원</option>
+							<option value="15000">15000원</option>
 						</select>
 						</div>
 						<div style="display:flex; height: 50px">

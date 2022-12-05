@@ -117,7 +117,7 @@ public class RefundController {
 			refundMap.put("refundUserNickname", refundUserNickname);
 			refundMap.put("userNo", userNo);
 			
-			if(refundStatus.equals("환불완료")) {
+			if(refundStatus.equals("환불완료") || refundStatus.equals("환불불가")) {
 				int admitDeny = 0;
 				refundMap.put("admitDeny", admitDeny);
 			}
@@ -141,6 +141,8 @@ public class RefundController {
 			System.out.println(chk + "와와와와");
 			if(chk == 0) {
 				System.out.println("여기탔니?");
+				//환불버튼 누르면 구매상태를 환불신청중으로 변경
+				buyService.refundRequestUpdate(buyNo);
 				refundService.refundInsertOne(buyNo, userNo);
 			}else {
 				System.out.println("이프문 타는지 확인 + 구매내역에서 환불신청시 안탔으면 타는 로그");
@@ -153,13 +155,19 @@ public class RefundController {
 	//관리자가 환불 버튼을 눌러주면 환불처리가 되고 유저 계좌에 영화가격만큼 돈이 올라감 
 	@RequestMapping(value = "/refund/updateRefund.do", method = RequestMethod.POST)
 	public String updateRefund(HttpSession session,			
-			RefundDto refundDto, Model model, int admit, int moviePrice
+			RefundDto refundDto, Model model, String admit, int moviePrice
 			, @RequestParam(defaultValue = "1") int curPage
 			, @RequestParam(defaultValue = "all")String searchOption
 			, @RequestParam(defaultValue = "")String keyword)  {
 	                     // email.password 네임값을 가져옴(@RequestMapping의 힘)
 		
 	    logger.info("Welcome refundController updateRefund!" + refundDto);
+	    
+	    UserDto sessionDto = (UserDto)session.getAttribute("userDto");
+	    
+	    int userAdmin = sessionDto.getUserAdmin();
+	    
+	    System.out.println(admit + "체크 뭐로 받았나 확인");
 	    
 		Map<String, Object> searchMap = new HashMap<String, Object>();
 		searchMap.put("searchOption", searchOption);
@@ -170,26 +178,38 @@ public class RefundController {
 	    int buyNo = refundDto.getBuyNo();
 	    
 	    try {
-	    	//int admit -> 예(1),아니오(0) --> 일단 1만 받음			
-	    	int refundChk = 0;
-			refundChk = refundService.updateRefund(refundDto, admit);
-			
-			System.out.println(refundChk + "환불처리 됬는지 확인용");
-			
-			if(refundChk != 0) {
-				refundChk = 1;
-			}
-			
-			if(refundChk != 0) {				
-				refundService.updateCash(refundUserNo, moviePrice);
-				model.addAttribute("refundChk", refundChk);
+	    	//int admit -> 예(1),아니오(0) --> 일단 1만 받음		
+	    	if(admit.equals("0")) {
+	    		
+	    		//환불거절 처리 선택시 다시 목록으로 돌아감
+	    		System.out.println("환불거절 처리 되었습니다");
+	    		refundService.updateRefund(refundDto, admit);
+	    		buyService.refundRequestDeny(buyNo);
+	    			    		
+	    		return "redirect:./list.do";
+	    		
+	    	}else {
+		    	int refundChk = 0;
+				refundChk = refundService.updateRefund(refundDto, admit);
 				
-				int updateCash = refundService.checkCash(refundUserNo);
-				System.out.println("해당 유저 환불받은 후 잔여캐쉬" + updateCash);
+				System.out.println(refundChk + "환불처리 됬는지 확인용");
 				
-				refundService.updateBuy(buyNo);				
+				if(refundChk != 0) {
+					refundChk = 1;
+				}
 				
-			}
+				if(refundChk != 0) {				
+					refundService.updateCash(refundUserNo, moviePrice);
+					model.addAttribute("refundChk", refundChk);
+					
+					int updateCash = refundService.checkCash(refundUserNo);
+					System.out.println("해당 유저 환불받은 후 잔여캐쉬" + updateCash);
+					
+					refundService.updateBuy(buyNo);				
+					
+				}	
+	    	}
+	    	
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

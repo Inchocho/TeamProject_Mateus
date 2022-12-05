@@ -95,6 +95,30 @@ public class BuyDaoImpl implements BuyDao{
 		map.put("movieNo", movieNo);
 		
 		return sqlSession.selectOne(namespace + "selectRefundNo", map);
+	}
+
+	@Override
+	public void refundRequestUpdate(int buyNo) {
+		// TODO Auto-generated method stub
+		sqlSession.update(namespace + "refundRequestUpdate", buyNo);
+	}
+
+	@Override
+	public void refundRequestDeny(int buyNo) {
+		// TODO Auto-generated method stub
+		sqlSession.update(namespace + "refundRequestDeny", buyNo);
+	}
+
+	@Override
+	public int totalMoney() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace + "totalMoney");
+	}
+
+	@Override
+	public int refundMoney() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace + "refundMoney");
 	}		
 
 }

@@ -20,4 +20,12 @@ public interface BuyService {
 	public void buyStatusUpdate(int userNo, int movieNo);
 
 	public int selectRefundNo(int userNo, int movieNo);
+
+	public void refundRequestUpdate(int buyNo);
+
+	public void refundRequestDeny(int buyNo);
+
+	public int totalMoney();
+
+	public int refundMoney();
 }

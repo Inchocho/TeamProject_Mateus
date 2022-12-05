@@ -63,5 +63,29 @@ public class BuyServiceImpl implements BuyService {
 		// TODO Auto-generated method stub
 		return buyDao.selectRefundNo(userNo, movieNo);
 	}
+
+	@Override
+	public void refundRequestUpdate(int buyNo) {
+		// TODO Auto-generated method stub
+		buyDao.refundRequestUpdate(buyNo);
+	}
+
+	@Override
+	public void refundRequestDeny(int buyNo) {
+		// TODO Auto-generated method stub
+		buyDao.refundRequestDeny(buyNo);
+	}
+
+	@Override
+	public int totalMoney() {
+		// TODO Auto-generated method stub
+		return buyDao.totalMoney();
+	}
+
+	@Override
+	public int refundMoney() {
+		// TODO Auto-generated method stub
+		return buyDao.refundMoney();
+	}
 	
 }

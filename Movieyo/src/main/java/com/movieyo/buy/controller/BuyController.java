@@ -128,6 +128,11 @@ public class BuyController {
 			
 		}
 		
+		int totalMoney = buyService.totalMoney();
+		int refundMoney = buyService.refundMoney();
+		
+		model.addAttribute("refundMoney", refundMoney);
+		model.addAttribute("totalMoney", totalMoney);
 		model.addAttribute("buyListMap", buyListMap);
 		model.addAttribute("pagingMap", pagingMap);
 		model.addAttribute("searchMap", searchMap);		

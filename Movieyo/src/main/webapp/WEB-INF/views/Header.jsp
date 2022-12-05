@@ -112,7 +112,11 @@ body {
 			</li>
 			<li style="margin-left: 50px; "><input type="button" value="게시판" class="header_btn"></li>
 			<li class="searchBox">
-			<input type="button" value="검색"><input type="search" value="" placeholder="영화를 검색해보세요">
+			<form action="/Movieyo/movie/main.do" method="post">
+				<input type="submit" value="검색">
+				<input type="search" name="keyword" value="${searchMap.keyword}" placeholder="영화를 검색해보세요">
+				<input type="hidden" name="searchOption" value="MOVIE_TITLE">				
+			</form>
 			</li>
 			<li style="color: white; padding-right: 20px; min-width: 320px;">
 			<c:if test="${userDto.userAdmin eq 1}">${adminLabel}</c:if>${userDto.nickname} 님　

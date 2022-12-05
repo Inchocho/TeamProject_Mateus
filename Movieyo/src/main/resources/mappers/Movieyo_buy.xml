@@ -102,6 +102,21 @@
 		AND MOVIE_NO = #{movieNo}
 	</update>
 	
+	<!-- 환불신청시 환불신청창 업데이트 -->
+	<update id="refundRequestUpdate" parameterType='int'>
+		UPDATE MVY_BUY
+		SET BUY_STATUS = '환불신청중'
+		WHERE BUY_NO = #{buyNo}
+	</update>
+		
+	<!-- 환불신청시 환불신청 거절됨 -->
+	<update id="refundRequestDeny" parameterType='int'>
+		UPDATE MVY_BUY
+		SET BUY_STATUS = '환불불가'
+		WHERE BUY_NO = #{buyNo}
+	</update>
+
+	
 	<select id="selectRefundNo" parameterType="map" resultType="java.lang.Integer">
         SELECT REFUND_NO
         FROM MVY_REFUND A
@@ -112,4 +127,21 @@
         AND B.MOVIE_NO = #{movieNo}
         AND A.BUY_NO = B.BUY_NO
 	</select>
+	
+	<select id='totalMoney' resultType="java.lang.Integer">
+		SELECT SUM(A.MOVIE_PRICE)
+		FROM MVY_MOVIE A, 
+		     MVY_BUY B
+		WHERE B.MOVIE_NO = A.MOVIE_NO
+		AND B.BUY_STATUS = '보유중'
+	</select>
+	
+	<select id='refundMoney' resultType="java.lang.Integer">
+		SELECT SUM(A.MOVIE_PRICE)
+		FROM MVY_MOVIE A, 
+		     MVY_BUY B
+		WHERE B.MOVIE_NO = A.MOVIE_NO		
+		AND B.BUY_STATUS = '환불처리완료'
+	</select>	
+	
 </mapper>

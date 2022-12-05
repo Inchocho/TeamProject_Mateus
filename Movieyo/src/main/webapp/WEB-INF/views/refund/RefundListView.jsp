@@ -12,7 +12,9 @@
 
 <style type="text/css">
 	table, tr, td, th{
-		border:1px solid black; 
+		border:1px solid black; 		
+		min-width: 173.5px;
+		display: flex;
 	}
 	
 	table {
@@ -76,7 +78,6 @@
 }
 .contContainer table{
 	width: 1600px;
-	height: 400px;
 	text-align: center;
 }
   
@@ -193,8 +194,8 @@ th {
 								value="${refundMap.buyDate}"/>
 						</td>
 						<td>
-							<form id="refundAdmit${varStatus.index}" action="../refund/updateRefund.do" method="POST">
-								<input type="hidden" name="refundNo" value="${refundMap.refundNo}">
+							<form id="refundAdmit${varStatus.index}" action="/Movieyo/refund/updateRefund.do" method="POST">
+								<input type="hidden" id="refundNo" name="refundNo" value="${refundMap.refundNo}">
 								<input type="hidden" name="buyNo" value="${refundMap.buyNo}">
 								<input type='hidden' name='movieNo' value="${refundMap.movieNo}">
 								<input type='hidden' name='userNo' value="${refundMap.refundUserNo}">
@@ -202,12 +203,12 @@ th {
 								<input type="hidden" id="refundCurPage" name="curPage" value="">
 								<input type="hidden" name="keyword" value="${searchMap.keyword}">
 								<input type="hidden" name="searchOption" value="${searchMap.searchOption}">															
-								<input type='hidden' name='submitCheck' value='${varStatus.index}'>
+								<input type='hidden' name='submitCheck${varStatus.index}' id='submitCheck' value='${varStatus.index}'>
+								<input type="hidden" id="admit${varStatus.index}" name="admit" value=''>
 							<c:choose>
 								<c:when test="${refundMap.admitDeny != 0}">				
-									<input id='rBtnYes' type='submit' value='수락'>
-									<input id='rBtnNo' type='submit' value='거절'>	
-									<input type="hidden" name="admit" value=''>
+									<input id='rBtnYes' type='button'  onclick="refundOk(submitCheck${varStatus.index});" value='수락'>
+									<input id='rBtnNo' type='button' onclick="refundDeny(submitCheck${varStatus.index});" value='거절'>	
 								</c:when>
 								<c:otherwise>
 									환불완료
@@ -248,8 +249,6 @@ th {
 			</tr>		
 		</c:if>
 	</table>
-	
-	
 
 	<jsp:include page="/WEB-INF/views/common/CommonPaging.jsp"/>
 	
@@ -304,13 +303,25 @@ th {
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
 
-$(function(){
-	$('#rBtnYes').on('click', function(e){
-		e.preventDefault();
-		$('#admit').val();
-	});
+function refundOk(index){
+	let admitIndex = '#admit' + index.value;
+	$(admitIndex).attr('value', 1);	
+	let refundOk = '#refundAdmit' + index.value;
+	$(refundOk).attr('action','/Movieyo/refund/updateRefund.do');
+	$(refundOk).submit();
 }
 
+function refundDeny(index){
+	let admitIndex = '#admit' + index.value;
+	$(admitIndex).attr('value', 0);
+	let refundDeny = '#refundAdmit' + index.value;
+	$(refundDeny).attr('action','/Movieyo/refund/updateRefund.do');
+	$(refundDeny).submit();
+}
+
+$(function(){
+	
+});
 
 </script>
 </html>

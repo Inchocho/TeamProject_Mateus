@@ -13,6 +13,8 @@
 <style type="text/css">
 	table, tr, td, th{
 		border:1px solid black; 
+		min-width: 224px;
+		display: flex;
 	}
 	
 	table {
@@ -76,7 +78,6 @@
 }
 .contContainer table{
 	width: 1600px;
-	height: 400px;
 	text-align: center;
 }
   
@@ -121,20 +122,10 @@ th {
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
 
-$(function(){
+function movieDetail(index) {
 	
-});
-
-$('')
-
-function movieDetail() {
-	let movieNo = $("#movieNo").val();
-	
-	alert(movieNo);
-	
-	location.href = "/Movieyo/movie/detail.do?movieNo=" + movieNo;
+	location.href = "/Movieyo/movie/detail.do?movieNo=" + index.value;
 }
-
 
 
 </script>
@@ -145,12 +136,21 @@ function movieDetail() {
 	<jsp:include page="/WEB-INF/views/Header.jsp"/>
 	</header>
 	<jsp:include page="/WEB-INF/views/UserMyPageSideMenu.jsp"></jsp:include>
+		
+	<!-- 관리자의 경우 수입 총액을 보여줌 -->
+
+	
 	<div class="curPageDiv">
 	
 	<div class="titleContainer">
 		<c:choose>
 			<c:when test='${userDto.userAdmin == 1}'>
-				<h1>관리자 구매내역 관리</h1>
+				<h1>관리자 구매내역 관리
+					<c:if test='${userDto.userAdmin == 1}'>
+						<span style='float:right; margin-right:100px;'>총매출액 : ${totalMoney}원</span>
+						<span style='float:right; margin-right:100px;'>환불금액 : ${refundMoney}원</span>
+					</c:if>		
+				</h1>
 			</c:when>
 			<c:otherwise>
 				<h1>구매내역</h1>
@@ -202,16 +202,23 @@ function movieDetail() {
 				<td>
 					<form id="refundAddFrom${varStatus.index}" action="../refund/addRefund.do" method="GET">
 							<c:choose>
+								<c:when test="${buyMap.buyStatus eq '환불신청중'}">
+									환불신청중
+								</c:when>
+								<c:when test="${buyMap.buyStatus eq '환불불가'}">
+									<a href='#'>문의하러가기</a>
+								</c:when>								
 								<c:when test="${buyMap.requestDeny != 0}">
 									<input type="submit" name='refundSubmitBtn' id='refundSubmit' value="환불하기">					
 								</c:when>
 								<c:otherwise>
-									<input type="button" onclick='movieDetail();' value='구매하러 가기'>
+									<input type="button" onclick='movieDetail(movieNo${varStatus.index});' value='구매하러 가기'>
 								</c:otherwise>
-							</c:choose>											
+							</c:choose>
+						<input type="hidden" name="buyCheck" value="${varStatus.index}">		
 						<input type="hidden" name="buyNo" value="${buyMap.buyNo}">
 						<input type='hidden' name='userNo' value="${buyMap.buyUserNo}">
-						<input type='hidden' name='movieNo' value="${buyMap.movieNo}" id='movieNo'>
+						<input type='hidden' id='movieNo${varStatus.index}' name='movieNo${varStatus.index}' value="${buyMap.movieNo}">
 						<input type="hidden" id="buyCurPage" name="curPage" value="">
 						<input type="hidden" name="keyword" value="${searchMap.keyword}">
 						<input type="hidden" name="searchOption" value="${searchMap.searchOption}">
@@ -246,25 +253,33 @@ function movieDetail() {
 					<option value="all"<c:if test="${searchMap.searchOption eq 'all'}">selected</c:if>>전체</option>
 					<option value="MOVIE_TITLE">영화제목</option>
 					<option value="BUY_STATUS">환불상태</option>
-					<option value="USER_NICKNAME">구매자</option>					
+					<c:if test="${userDto.userAdmin == 1}">
+						<option value="USER_NICKNAME">구매자</option>
+					</c:if>					
 				</c:when>
 				<c:when test="${searchMap.searchOption == 'MOVIE_TITLE'}">
 					<option value="all">전체</option>
 					<option value="MOVIE_TITLE"<c:if test="${searchMap.searchOption eq 'MOVIE_TITLE'}">selected</c:if>>영화제목</option>
 					<option value="BUY_STATUS">환불상태</option>		
-					<option value="USER_NICKNAME">구매자</option>								
+					<c:if test="${userDto.userAdmin == 1}">
+						<option value="USER_NICKNAME">구매자</option>
+					</c:if>								
 				</c:when>				
 				<c:when test="${searchMap.searchOption == 'BUY_STATUS'}">
 					<option value="all">전체</option>
 					<option value="MOVIE_TITLE">영화제목</option>					
 					<option value="BUY_STATUS"<c:if test="${searchMap.searchOption eq 'BUY_STATUS'}">selected</c:if>>환불상태</option>
-					<option value="USER_NICKNAME">구매자</option>
+					<c:if test="${userDto.userAdmin == 1}">
+						<option value="USER_NICKNAME">구매자</option>
+					</c:if>						
 				</c:when>
 				<c:when test="${searchMap.searchOption == 'USER_NICKNAME'}">
 					<option value="all">전체</option>
 					<option value="MOVIE_TITLE">영화제목</option>
-					<option value="BUY_STATUS">환불상태</option>					
-					<option value="USER_NICKNAME"<c:if test="${searchMap.searchOption eq 'USER_NICKNAME'}">selected</c:if>>구매자</option>
+					<option value="BUY_STATUS">환불상태</option>	
+					<c:if test="${userDto.userAdmin == 1}">				
+						<option value="USER_NICKNAME"<c:if test="${searchMap.searchOption eq 'USER_NICKNAME'}">selected</c:if>>구매자</option>
+					</c:if>						
 				</c:when>	
 			</c:choose>
 		</select>

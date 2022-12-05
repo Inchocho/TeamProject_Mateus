@@ -47,7 +47,7 @@ public class RefundServiceImpl implements RefundService {
 	}
 
 	@Override
-	public int updateRefund(RefundDto refundDto, int admit) {
+	public int updateRefund(RefundDto refundDto, String admit) {
 		// TODO Auto-generated method stub
 		//admit 0 -> 환불불가 admit 1 -> 환불
 		

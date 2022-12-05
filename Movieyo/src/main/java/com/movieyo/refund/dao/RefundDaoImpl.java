@@ -72,7 +72,7 @@ public class RefundDaoImpl implements RefundDao{
 
 
 	@Override
-	public int updateRefund(RefundDto refundDto, int admit) {
+	public int updateRefund(RefundDto refundDto, String admit) {
 		// TODO Auto-generated method stub
 		
 		Map<String, Object> map = new HashMap<String, Object>();
