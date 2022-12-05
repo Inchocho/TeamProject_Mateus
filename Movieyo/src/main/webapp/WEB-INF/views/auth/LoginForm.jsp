@@ -111,11 +111,14 @@ a{
 	font-size: 15px;
 	font-weight: bold;
 	line-height: 49px;
-	border: 0;
+	border: 2px solid #201919;
 	border-radius: 4px;
+    border-style: outset;
+}
+.btn_login:hover, .add_btn:hover {
+	background-color: rgba(135, 206, 235, 0.3);
 	cursor: pointer;
 }
-
 #movieyo{
 	color: #ff81ab;
 	font-weight: bold;

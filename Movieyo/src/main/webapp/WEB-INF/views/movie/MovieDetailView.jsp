@@ -19,6 +19,47 @@ img{
 	cursor: default;
 	width: 400px;
 }
+table, tr, td, th{
+	border:1px solid black; 
+}
+
+table {
+	border-collapse: collapse;
+}
+#tdId{
+	width: 500px;
+	height: 500px;
+	text-align: center;
+	font-weight: bolder;
+}
+.curPageDiv{
+	margin: 20px 150px;
+}
+.titleContainer{
+	border-bottom: 2px solid #252525;
+	margin: 3px 3px 3px 0px;
+}
+.titleContainer h1{
+	margin-left: 30px;
+}
+.contContainer{
+    width: 600px;
+    margin: 10px 0 0 30px;
+}
+.contContainer table{
+	width: 600px;
+	text-align: center;
+}
+  
+#ul li {
+  list-style-type: none;
+  float: left;
+  margin-left: 10px;
+  }
+ 
+th {
+	background-color: gray;
+} 
 </style>
 
 <script type="text/javascript">
@@ -30,7 +71,14 @@ img{
 <body>
 
 	<jsp:include page="../Header.jsp" />
+<div class="curPageDiv">
+	
+<div class="titleContainer">
 	<h1>영화상세</h1>
+</div>
+		
+<div class="contContainer">
+	<div></div>
 		<c:choose>
 			<c:when test="${empty fileList}">
 					첨부파일이 없습니다.<br>			
@@ -89,6 +137,7 @@ img{
 		<input type="button" value='이미구매하신 영화입니다' class="body_btn_css" id="alreadyBuy">
 		</c:if>
 	</c:if>
+</div></div>
 	<jsp:include page="/WEB-INF/views/PopUp/BuyMoviePop.jsp"></jsp:include>
 	<jsp:include page="/WEB-INF/views/PopUp/InCartMoviePop.jsp"></jsp:include>
 	<jsp:include page="../Tail.jsp" />
