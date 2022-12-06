@@ -40,7 +40,7 @@ th {
 }
 
 #backBtn {
-	z-index: 10;
+	z-index: 2;
 	position: absolute;
 	width: 60px;
 	height: 40px;

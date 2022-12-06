@@ -2,16 +2,31 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <head>
+<c:if test="${userDto.userAdmin eq 1}">
+<style type="text/css">
+.header_container{
+	position: relative;
+	padding-bottom: 162px;
+}
+</style>
+</c:if>
+<c:if test="${userDto.userAdmin eq 0}">
+<style type="text/css">
+.header_container{
+	position: relative;
+	padding-bottom: 81px;
+}
+</style>
+</c:if>
 <style type="text/css">
 body {
 	margin: 0px;
 }
-.header_container{
-	position: relative;
-}
 .header_fix{
 	position: fixed;
-	width: 100%;
+	width: -webkit-fill-available;;
+	top: 0px;
+	z-index: 30;
 }
 .headerDiv{
 	background-color: #201919;
@@ -55,6 +70,14 @@ body {
     color: #ff81ab;
     font-size: 16px;
 }
+.user_info_box{
+	color: white;
+    padding-right: 20px;
+    min-width: 320px;
+    align-items: center;
+    display: flex;
+    justify-content: flex-end;
+}
 .header_btn{
 	height: 70px;
     background: inherit;
@@ -79,7 +102,7 @@ body {
 	cursor: pointer;
 }
 </style>
-
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
 	function movieAdd() {
 		location.href = '/Movieyo/movie/addMovie.do';
@@ -112,6 +135,9 @@ body {
 		location.href = '/Movieyo/board/boardList.do';
 	}
 	var htmlTag = document.getElementsByTagName("html").item(0);
+	$(window).scroll(function() {
+		$('.header_fix').css('left',0-$(this).scrollLeft());
+	});
 </script>
 </head>
 <div class="header_container">
@@ -135,7 +161,7 @@ body {
 			<input type="hidden" name="searchOption" value="MOVIE_TITLE">				
 		</form>
 		</li>
-		<li style="color: white; padding-right: 20px; min-width: 320px;">
+		<li class="user_info_box">
 		<c:if test="${userDto.userAdmin eq 1}">${adminLabel}</c:if>${userDto.nickname} 님　
 			<input type="button" value="내정보" onclick="myInfo();" class="header_btn">
 			<input type="button" value="로그아웃" onclick="logout();" class="header_btn">

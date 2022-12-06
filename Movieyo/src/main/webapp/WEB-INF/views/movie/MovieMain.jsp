@@ -18,6 +18,62 @@ html:lang(ko) {
     font-family: RobotoInCjk, "Noto Sans KR", "Apple SD Gothic Neo", "Nanum Gothic", "Malgun Gothic", sans-serif;
 }
 
+.titleContainer{
+	width: 1350px;
+    margin: 0px auto;
+}
+.contContainer{
+	width: 1350px;
+    margin: 0px auto;
+}
+.con_curList{
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    margin: 0px;
+}
+.con_movieList{
+    list-style: none;
+	display: flex;
+    flex-wrap: nowrap;
+    margin: 0px;
+    padding: 0px;
+    transform: translateX(0px);
+    transition: 500ms;
+}
+.con_movie{
+	margin: 10px;
+}
+.con_movie:hover{
+	opacity: 0.3;
+	cursor: pointer;
+}
+.con_btn_area{
+	display: flex;
+    position: absolute;
+    top: 0px;
+    z-index: 2;
+    align-items: center;
+    width: 30px;
+    height: 400px;
+}
+.con_btn{
+	z-index: 3;
+	position: absolute;
+	width: 35px;
+	height: 35px;
+	font-size: 25px;
+    background: #201919;
+    color: #ff81ab;
+    border-radius: 8px;
+}
+.con_btn:hover {
+	background-color: rgba(135, 206, 235, 0.6);
+	cursor: pointer;
+}
+.con_btn_hide{
+	visibility: hidden;
+}
 .title{
 font-size: 16px;
 font-weight: 800;
@@ -35,32 +91,82 @@ font-weight: 400;
 		var url = "./detail.do?movieNo=" + movieNo;
 		location.href = url;
 	}
+	function translateX(num) {
+		
+		var rslt = "translateX(" + num + "px)";
+		return rslt;
+	}
+	function movieList_prevBtn_fnc(listIdx) {
+		var movieListId = "#con_movieList_" + listIdx;
+		var inXStr = $(movieListId).css("transform").replace(/[^0-9\-,]/g,'').split(',')[4];
+		var inX = parseInt(inXStr);
+		if (inX >= -5400) {
+			var nextBtnId = "#nextBtn_" + listIdx;
+			$(nextBtnId).attr("class", "con_btn");
+		}
+		var prevX = (inX+1350);
+		$(movieListId).css("transform", translateX(prevX));
+		if (prevX >= 0) {
+			var prevBtnId = "#prevBtn_" + listIdx;
+			$(prevBtnId).attr("class", "con_btn_hide");
+		}
+		
+	}
+	function movieList_nextBtn_fnc(listIdx) {
+		var movieListId = "#con_movieList_" + listIdx;
+		var inXStr = $(movieListId).css("transform").replace(/[^0-9\-,]/g,'').split(',')[4];
+		var inX = parseInt(inXStr);
+		if (inX >= 0) {
+			var prevBtnId = "#prevBtn_" + listIdx;
+			$(prevBtnId).attr("class", "con_btn");
+		}
+		var nextX = (inX-1350);
+		$(movieListId).css("transform", translateX(nextX));
+		if (nextX <= -5400) {
+			var nextBtnId = "#nextBtn_" + listIdx;
+			$(nextBtnId).attr("class", "con_btn_hide");
+		}
+		
+		
+	}
 </script>
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/Header.jsp" />
 
-	<h1>내가 메인이다</h1>
-<div style="width:100%">
-	<div style="width: 1500px; margin-left: 270px;">
-	<div style="display: flex; flex-wrap: wrap;">
-		<c:forEach var="row" items="${fileList}" varStatus="status">
-			<c:set var="movieDto" value="${movieList[status.index]}" />
-			<div style="margin: 10px;" onclick="movePageMovieDtail(${movieDto.movieNo});">
-				<div>
-					<img alt="image not found"
-						src="<c:url value='/image/${row.get(0).STORED_FILE_NAME}'/>">
-				</div>
-				<div>
-					 <a class="title">${movieDto.movieTitle}</a><br>
-					 <a class="info"><fmt:formatDate pattern="yyyy"
-								value="${movieDto.prdtYear}"/> ・ ${movieDto.nation}</a><br>
-					 <a class="info">${movieDto.genreName}</a>
-				</div>
-			</div>
-		</c:forEach>
+<div style="width:100%" class="curPageDiv">
+<div class="movie_list_container">
+	<div class="titleContainer">
+		<h1>내가 메인이다</h1>
 	</div>
-</div>	
+	<div class="contContainer">
+		<div class="con_curList">
+			<ul class="con_movieList" id="con_movieList_1">
+			<c:forEach var="row" items="${fileList}" varStatus="status">
+			<c:set var="movieDto" value="${movieList[status.index]}" />
+				<li class="con_movie" onclick="movePageMovieDtail(${movieDto.movieNo});">
+					<div>
+						<img alt="image not found"
+							src="<c:url value='/image/${row.get(0).STORED_FILE_NAME}'/>">
+					</div>
+					<div>
+						 <a class="title">${movieDto.movieTitle}</a><br>
+						 <a class="info"><fmt:formatDate pattern="yyyy"
+									value="${movieDto.prdtYear}"/> ・ ${movieDto.nation}</a><br>
+						 <a class="info">${movieDto.genreName}</a>
+					</div>
+				</li>
+			</c:forEach>
+			</ul>
+			<div class="con_btn_area">
+				<button class="con_btn_hide" id="prevBtn_1" onclick="movieList_prevBtn_fnc(1);">⫷</button>
+			</div>
+			<div class="con_btn_area" style="margin-left: 1315px;">
+				<button class="con_btn" id="nextBtn_1" onclick="movieList_nextBtn_fnc(1);">⫸</button>
+			</div>
+		</div>
+	</div>
+</div>
 </div>
 	<jsp:include page="../Tail.jsp" />
 
