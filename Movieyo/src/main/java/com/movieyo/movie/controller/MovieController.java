@@ -185,7 +185,7 @@ public class MovieController {
 		
 		@RequestMapping(value = "/movie/updateCtr.do", method = RequestMethod.POST)
 		public String movieUpdateCtr(HttpSession session,
-				MultipartHttpServletRequest multipart, @RequestParam(value= "fileIdx", defaultValue = "1")
+				MultipartHttpServletRequest multipart, @RequestParam(value= "fileIdx", defaultValue = "-1")
 				   int fileIdx,
 				MovieDto movieDto, Model model)  {
 		    logger.info("Welcome movieController movieUpdateCtr!" + movieDto);

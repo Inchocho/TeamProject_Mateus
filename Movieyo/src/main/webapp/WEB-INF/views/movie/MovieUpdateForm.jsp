@@ -320,10 +320,10 @@ img {
 						<div class="file">
 							<c:forEach var="row" items="${fileList}" varStatus="obj">
 								<img alt="image not found" src="<c:url value='/image/${row.STORED_FILE_NAME}'/>">
-								<label for="file" class="body_btn_css">사진변경</label>
-								<input type='file' name='file' id="file">
 <%--  								<a href="#this" id="delete_${obj.index}" class="deleteC">사진삭제</a>  --%>
 							</c:forEach>
+							<label for="file" class="body_btn_css">사진변경</label>
+							<input type='file' name='file' id="file">
 						</div>
 						<input type="hidden" name="movieNo" value="${movieDto.movieNo}">
 						<div style="width: 750px;">

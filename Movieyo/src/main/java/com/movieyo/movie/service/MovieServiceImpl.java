@@ -101,52 +101,106 @@ public class MovieServiceImpl implements MovieService{
 
 	@Transactional(rollbackFor = Exception.class)
 	@Override
-	public int movieUpdateOne(MovieDto movieDto, MultipartHttpServletRequest multipartHttpServletRequest, int fileIdx) throws Exception {
+	public int movieUpdateOne(MovieDto movieDto,
+			MultipartHttpServletRequest multipartHttpServletRequest, int fileIdx) throws Exception {
 		// TODO Auto-generated method stub
 		int resultNum = 0;
 		
+		System.out.println(resultNum + "1번과정");
+		resultNum = movieDao.movieUpdateOne(movieDto);
+		
+		System.out.println(resultNum + "2번과정");
+		int movieNo = movieDto.getMovieNo();
+		
+		// 파일 확인 로직 추가
+		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
+		MultipartFile multipartFile = null;
+		
+		while(iterator.hasNext()) {
+			
+			multipartFile = multipartHttpServletRequest.getFile(iterator.next());
+			
+			if(multipartFile.isEmpty() == false) {
+				log.debug("----file----");
+				
+				log.debug("name : {} ", multipartFile.getName());
+				log.debug("fileName : {} ", multipartFile.getOriginalFilename());
+				log.debug("size : {} ", multipartFile.getSize());
+				
+				log.debug("----file end----");
+			}
+		}
+		
 		try {
-			resultNum = movieDao.movieUpdateOne(movieDto);
-			
-			
 			int parentSeq = movieDto.getMovieNo();
-			//해당번호에 맞는 저장된 파일명이 tempFileMap에 담김
-			Map<String, Object> tempFileMap = movieDao.fileSelectStoredFileName(parentSeq);
 			
-			movieDao.fileDelete(parentSeq);
+			System.out.println(parentSeq + "3번과정");
+
+			List<Map<String, Object>> list 
+			= fileUtils.parseInsertFileInfo(parentSeq, multipartHttpServletRequest);
 			
-			List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(parentSeq, multipartHttpServletRequest);
+			System.out.println(list + "4번과정 LIST");
 			
-			System.out.println(tempFileMap);
+			//imgMap에 값이 들어온다 -> 해당 영화번호에 사진이 있다는것을 의미
+			Map<String, Object> imgMap = movieDao.fileSelectOne(parentSeq);
+			System.out.println(imgMap + "5번과정 imgMap");
 			
-			if (list.isEmpty() == false) {
-				System.out.println("여기를 타니? --- 1");
-				System.out.println(list + "널인지 확인");
-				System.out.println(tempFileMap + "널인지 확인");
-				//해당번호에 셀렉트된 파일이 있으면?
-				if (tempFileMap != null) {
-					System.out.println("여기를 타니? --- 2");
-					
-					//파일을 지움 <-- 여기서 무조건 파일이 지워짐					
+			//fileIdx - 기존 파일인덱스, fileIdx2 새로만든 인덱스
+			int fileIdx2 = 0;
+			
+			//해당 영화에 사진이 있으면? 
+			if(imgMap != null) {
+				//fileIdx2에 해당영화의 인덱스를 담아둠
+				fileIdx2 = Integer.parseInt(String.valueOf(imgMap.get("IDX")));
+				
+				System.out.println("6번과정 fileIdx" + fileIdx);
+				System.out.println("7번과정 fileIdx2" + fileIdx2);
+				
+				if(fileIdx2 != fileIdx) {
+//					fileUtils.parseUpdateFileInfo(imgMap);
+					System.out.println("8번과정 파일 인덱스 값이 다를때");
 //					movieDao.fileDelete(parentSeq);
 					
-					//삭제만 처리하고 변경은 막기위해 예외처리
-//					throw new Exception();
-					
-					//기존의 파일이 존재하는데 새로운 파일로 변경하는 경우
-					fileUtils.parseUpdateFileInfo(tempFileMap);
+					for(Map<String, Object> map : list) {
+						movieDao.insertFile(map);
+					}
+
 				}
-				
-				for (Map<String, Object> map : list) {
+			}else {
+				//해당 영화에 사진이 없으면?
+				System.out.println("9번과정 왜안타냐?");
+				for(Map<String, Object> map : list) {
+					System.out.println(map);
+					System.out.println("뭐냐이거?");
 					movieDao.insertFile(map);
 				}
-			}else if(fileIdx == -1){
-				//영화번호에 해당하는 업로드된 파일(물리적인 파일명)이 있는경우
-				if (tempFileMap != null) {
-					movieDao.fileDelete(parentSeq);
-					fileUtils.parseUpdateFileInfo(tempFileMap);
-				}
+					
 			}
+			
+//			//해당번호에 맞는 저장된 파일명이 tempFileMap에 담김
+//			Map<String, Object> tempFileMap 
+//				= movieDao.fileSelectStoredFileName(parentSeq);
+//			
+//			movieDao.fileDelete(parentSeq);
+//			
+//			
+//			System.out.println(tempFileMap);
+//			
+//			if (list.isEmpty() == false) {
+//				if (tempFileMap != null) {
+//					movieDao.fileDelete(parentSeq);
+//					fileUtils.parseUpdateFileInfo(tempFileMap);
+//				}
+//				
+//				for (Map<String, Object> map : list) {
+//					movieDao.insertFile(map);
+//				}
+//			}else if(fileIdx == -1){
+//				if (tempFileMap != null) {
+//					movieDao.fileDelete(parentSeq);
+//					fileUtils.parseUpdateFileInfo(tempFileMap);
+//				}
+//			}
 		} catch (Exception e) {
 			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 		}
@@ -154,7 +208,7 @@ public class MovieServiceImpl implements MovieService{
 	
 	return resultNum;
 		
-			}
+	}
 
 	@Override
 	public void movieDeleteOne(int movieNo) {

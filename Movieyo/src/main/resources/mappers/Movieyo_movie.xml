@@ -151,4 +151,11 @@
         AND B.USER_NO = #{userNo}	
 	</select>	
 	
+	<select id="fileSelectOne" parameterType="int" resultType="map">
+		SELECT IDX, PARENT_SEQ, ORIGINAL_FILE_NAME, STORED_FILE_NAME, FILE_SIZE, CRE_DATE
+		FROM
+		MVY_MOVIE_PHOTO
+		WHERE PARENT_SEQ = #{fileIdx}
+	</select>
+	
 </mapper>
