@@ -19,25 +19,29 @@
 	
 </script>
 
+<style type="text/css">
+
+
+</style>
 </head>
 	
 <body>
 
 	<jsp:include page="../Header.jsp" />
-	
+	<div class="titleContainer">
 	<h1>회원정보 수정</h1>
+	</div>
 	<form action='./updateCtr.do' method='post' 
 		enctype="multipart/form-data">
 		<input type='hidden' name='adminCheck' value='${adminCheck}'>
 		<input type="hidden" name='userNo' value='${userDto2.userNo}'>
-		이름: <input type='text' name='userName' id='memberName'
-			value='${userDto2.userName}'><br>
+		이름: <input type='text' name='userName' id='memberName' value='${userDto2.userName}'><br>
 		
-		가입일: <input type="text" name='userCreateDate' value='<fmt:formatDate value="${userDto2.userCreateDate}" 
+		가입일: <input type="text" name='userCreateDate' readonly="readonly" value='<fmt:formatDate value="${userDto2.userCreateDate}" 
 			pattern="yyyy-MM-dd hh:mm"/>'>
 		<br>
 		
-		생년월일: <input type="text" name='userBirth' value='<fmt:formatDate value="${userDto2.userBirth}" 
+		생년월일: <input type="text" name='userBirth' readonly="readonly" value='<fmt:formatDate value="${userDto2.userBirth}" 
 			pattern="yyyy-MM-dd hh:mm"/>'>
 		<br>		
 			
@@ -57,11 +61,10 @@
 <!-- 			<input type="checkbox" name="gender" value="여" onclick="return false;" checked="checked">여 <br> -->
 <%-- 		</c:if> --%>
 
-      	<br>
       		<c:if test="${userDto.userAdmin == 1}">
-   				유저권한: <input type="text" value="${userDto2.userAdmin}" name='userAdmin'>
+   				유저권한<input type="text" value="${userDto2.userAdmin}" name='userAdmin'>
    			</c:if>
-      	<br>
+   			<br>
       	
 		<input type='submit' value='저장하기'>
 	
