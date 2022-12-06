@@ -13,17 +13,22 @@
 <style type="text/css">
 table, tr, td, th {
 	border: 1px solid black;
+	table-layout: fixed;
 }
-
+#hideTr{
+	width: 200px;	
+}
+table td{
+	width: 200px;	
+	height: 50px;
+}
 table {
-	
-	table-layout:pixed;
 	border-collapse: collapse;
-	width: 1500px;
-	height: 600px;
+	width: 90%;
+	height: 100%;
 	margin: auto;
     border: 1px solid #e9e8e8;
-    resize: none;
+    table-layout: fixed;
     padding: 8px;
     outline-color: #e6e6e6;
     text-align: center;
@@ -31,40 +36,104 @@ table {
 .bodyCl{
 	background-color: #ffffff;
 }
-boardCredate{
+.boardCredate{
  border-collapse: col
 }
-#searchFrm{
-	margin-left: 200px;
+#searchOptionSel{
+	background-color : #00ff7f;
+ 	text-align:center;
+	margin-left:600px;
+	width: 200px;
+  	padding: 10px;
 }
 .bddiv{	
  
-}
-#boardWrt{
-	margin-left: 1570px;
-	text-decoration: none;
-   	color:black;
-    padding:10px 20px 10px 20px;
-   	display:inline-block;
-   	border-radius: 10px;
 }
 #boardM{
 	margin:auto;
 	padding: 20px;
 	
 }
-.selectDel{
-	margin-left: 1600px;
+#tableT{
+ background-color: 	#F8DFE6;
 }
-.searchCl{
 
+.bdSearch{
+	background-color : #D8F6CE;
+	width: 300px;
+  	padding: 10px;
 }
-.write{
+.write_btn{
+    width: 100px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #000000;
+    cursor: pointer;
+    margin: 5px;
+    height: 55px;
+    text-align:center;
+    border: none;
+    background-size: 300% 100%;
+    border-radius: 50px;
+    transition: all .4s ease-in-out;
+   }
+   .write_btn:hover {
+    background-position: 100% 0;
+    transition: all .4s ease-in-out;
+	}
+	.write_btn::focus {
+    outline: none;
+	}
+	.write_btn.color {
+    background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
+    box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+    }
+    .write_btn.color2 {
+    background-image: linear-gradient(to right, #fc6076, #ff9a44, #ef9d43, #e75516);
+    box-shadow: 0 4px 15px 0 rgba(252, 104, 110, 0.75);
+}
+	.write_btn.color3 {
+    background-image: linear-gradient(to right, #009245, #FCEE21, #00A8C5, #D9E021);
+    box-shadow: 0 4px 15px 0 rgba(83, 176, 57, 0.75);
+}
+	#ckBox{
+	    accent-color:#F1948A;
+		width: 30px;
+		height: 40px;
+	}
+	#selChk{
+		accent-color:#F1948A;
+	}
+	.boardHead{
+		width: 50px;
+		height: 40px;
+	}
+	.boardNo{
+		width: 40px;
+		height: 40px;
+	}
+	.boardTitle{
+		width: 250px;
+		height: 40px;
+	}
+	.boardWriter{
+		width: 50px;
+		height: 40px;
+	}
+	.boardContent{
+		width: 650px;
+		height: 40px;
+	}
+	.boardCredate{
+		width: 70px;
+		height: 40px;
+	}
+	.boardCount{
+		width: 50px;
+		height: 40px;
+	}
 	
-}
-#searchOptionSel{
-
-}
+	
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -153,14 +222,16 @@ boardCredate{
 	<h1 id="boardM" style="padding-left: 900px;">게시판</h1>
 
 	<div class="bddiv">
+	<button class="write_btn color2" style="margin-left: 1590px;" id="delete" onclick="selectDelete();" value="${boardDto.BOARD_NO}">선택삭제 </button>
+	<button type="button" class="write_btn color" onclick="location.href='./add.do'">글쓰기</button><br>
 	<table>
-		<tr>
-			<th>
+		<tr id="tableT">
+			<th id="ckBox">
 			<input type="checkbox" name="checkAll"  id="allCheckBox" />
 			</th>
 			<th class="boardHead">말머리</th>
-			<th class="boardNo">게시글번호</th>
-			<th class="boardTitle">글제목</th>
+			<th class="boardNo">번호</th>
+			<th class="boardTitle">제목</th>
 			<th class="boardContent">게시글내용</th>
 			<th class="boardWriter">작성자</th>
 			<th class="boardCredate">등록일</th>
@@ -177,7 +248,7 @@ boardCredate{
 			</c:when>
 			<c:otherwise>
 				<c:forEach var="boardDto" items="${boardList}">
-					<tr>
+					<tr id="hideTr">
 						<td><input name="chk" type="checkbox"  id="selChk" value="${boardDto.BOARD_NO}"/></td>
 						<td>${boardDto.BOARD_HEAD}</td>
 						<td>${boardDto.BOARD_NO}</td>
@@ -234,23 +305,23 @@ boardCredate{
 			</c:choose>
 		</select>
 	
-		<input type="text"  name="keyword" value="${searchMap.keyword}" placeholder="검색">
-		<input type="submit" value="검색">
-		<button class="selectDelete_btn" style="margin-left: 1000px;" id="delete" onclick="selectDelete();" value="${boardDto.BOARD_NO}">선택삭제 </button>
-			<a href="./add.do" class="write" style="margin-left: 10px; text-decoration: none; " >글쓰기</a>
+		<input type="text"  name="keyword" class="bdSearch" value="${searchMap.keyword}" placeholder="검색" >
+		<input type="submit" class="write_btn color3" value="검색">
 		</div>
 	</form>
+<!-- 			<a href="./add.do" class="" style="margin-left: 10px; text-decoration: none; " >글쓰기</a> -->
+		
 		
 
 
 	<!-- jsp:include는 forward처럼 데이터를 유지시킨다 -->
-	<jsp:include page="/WEB-INF/views/common/Paging.jsp"/>
+	<jsp:include page="/WEB-INF/views/common/CommonPaging.jsp"/>
 
 	<form action="./boardList.do" id="pagingForm" method="post">
 		<input type="hidden" id="curPage" name="curPage"
-			value="${pagingMap.boardPaging.curPage}"> <input
-			type="hidden" name="keyword" value="${searchMap.keyword}"> <input
-			type="hidden" name="searchOption" value="${searchMap.searchOption}">
+			value="${pagingMap.CommonPaging.curPage}"> 
+			<input type="hidden" name="keyword" value="${searchMap.keyword}"> 
+			<input type="hidden" name="searchOption" value="${searchMap.searchOption}">
 	</form>
 
 	<jsp:include page="../Tail.jsp" />

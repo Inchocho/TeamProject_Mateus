@@ -129,8 +129,13 @@ public class BuyController {
 		}
 		
 		int totalMoney = buyService.totalMoney();
-		int refundMoney = buyService.refundMoney();
-		
+		int refundMoney = 0;
+		try {
+		refundMoney = buyService.refundMoney();
+		} catch (NullPointerException nullEx) {
+			// TODO: handle exception
+			System.out.println("환불내역없음");
+		}
 		model.addAttribute("refundMoney", refundMoney);
 		model.addAttribute("totalMoney", totalMoney);
 		model.addAttribute("buyListMap", buyListMap);
@@ -196,16 +201,20 @@ public class BuyController {
 							refundService.refundDelete(refundNo);							
 						}else {
 						//구매케이스2 아예 처음 구매함
-						int buySuccess = 0;					
-						buySuccess = buyService.buyInsertOne(buyDto);
-						
-						if(buySuccess != 0) {
-
-							//구매가 성공했으면 유저의 캐쉬를 영화가격만큼 감소
-							userService.userBuyMovie(userNo, price);
+							int buySuccess = 0;					
+							buySuccess = buyService.buyInsertOne(buyDto);
+							
+							if(buySuccess != 0) {
+	
+								//구매가 성공했으면 유저의 캐쉬를 영화가격만큼 감소
+								userService.userBuyMovie(userNo, price);
+							}
 						}
-					}
-					
+						Map<String, Object> map =  userService.userSelectOne(userNo);
+						UserDto userDto = (UserDto) map.get("userDto");
+						
+						session.removeAttribute("userDto");
+						session.setAttribute("userDto", userDto);
 				}
 				
 				viewUrl =  "redirect:../buy/list.do?userNo=" +  userNo;

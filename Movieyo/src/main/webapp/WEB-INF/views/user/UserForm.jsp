@@ -38,7 +38,7 @@
 				if (pwInp.match(pwC)) {
 						$('#passwordText').css('display','none');
 				}else {
-					$('#passwordText').html('비밀번호는 영문, 숫자, 특수문자 중 3개를 조합하여<br>최소 8자리 이상이여야 합니다.');
+					$('#passwordText').html('비밀번호는 영문, 숫자, 특수문자 3개를 조합하여<br>최소 8자리 이상이여야 합니다.');
 					$('#passwordText').css('display','block');
 				}	
 			});
@@ -114,7 +114,7 @@
 					$('#passwordText').css('display','block');
 					submit = false;
 				}else if (!password.match(pwC)) {
-					$('#passwordText').html('비밀번호는 영문, 숫자, 특수문자 중 3개를 조합하여<br>최소 8자리 이상이여야 합니다.');
+					$('#passwordText').html('비밀번호는 영문, 숫자, 특수문자 3개를 조합하여<br>최소 8자리 이상이여야 합니다.');
 					$('#passwordText').css('display','block');
 					submit = false;
 				}
@@ -180,13 +180,6 @@
 	});
 // 	레디 끝	
 
-
-	
-		
-		
-
-
-	
 	function pageMoveListFnc() {
 		location.href = '../auth/login.do';
 	}
@@ -336,7 +329,7 @@ box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 19%);
 		<p id="nickNameText" class="errorText">닉네임을 입력해주세요.</p>
 		
 		<p>생년월일</p>
-		<input type="date" name="userBirth"  min="1920-01-01" max="2022-12-05" class="input" value="1993-08-07">
+		<input type="date" name="userBirth"  min="1920-01-01" max="2022-12-05" class="input" value="2000-01-01">
 		
 		
 		<p>성별</p>

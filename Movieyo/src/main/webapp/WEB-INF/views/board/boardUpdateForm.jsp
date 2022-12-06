@@ -6,17 +6,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>게시글 상세내용</title>
+<title>게시글 수정</title>
 <style type="text/css">
 	textarea {
-		width:600px;
-		height:600px;
+		width:700px;
+		height:700px;
 		margin-left :10px;
 		resize: none;
-		background: #f8f8f8;
-	}
+		}
 	table, tr, td, th {
-		border: 1px solid black;
+		border: 2px solid black;
 		}
 	#boardTab{
 		width: 700px;
@@ -24,19 +23,63 @@
 		}
 			
 	#boardTwoT{
+		
 		margin-left: 800px;
 		}	
-	#from2{
+	#fromT{
 		border-collapse: collapse;
-		border: 1px solid #e9e8e8;;
-		margin-left: 500px;
+		border: 1px solid #e9e8e8;
+		margin-left: 550px;
 	}
-	.boardsize2 tr td{
-		border: 1px solid black;
-　　	}
+	.boardsize2 input{
+		width: 400px;
+	}
 	#num{
 		margin-left: 10px;	
+	}
+	#buctt{
+		font-size:20px;
 	}	
+	.btn-click{
+    width: 150px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    margin: 20px;
+    height: 55px;
+    text-align:center;
+    border: none;
+    background-size: 300% 100%;
+
+    border-radius: 50px;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+   }
+   .btn-click:hover {
+    background-position: 100% 0;
+    moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+	}
+	.btn-click::focus {
+    outline: none;
+	}
+	.btn-click.color1 {
+    background-image: linear-gradient(to right, #25aae1, #40e495, #30dd8a, #2bb673);
+    box-shadow: 0 4px 15px 0 rgba(49, 196, 190, 0.75);
+    }
+    .btn-click.color2 {
+    background-image: linear-gradient(to right, #f5ce62, #e43603, #fa7199, #e85a19);
+    box-shadow: 0 4px 15px 0 rgba(229, 66, 10, 0.75);
+    }
+    .btn-click.color3 {
+        background-image: linear-gradient(to right, #ed6ea0, #ec8c69, #f7186a , #FBB03B);
+    box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);
+}
 		
 </style>
 
@@ -63,16 +106,16 @@
 <body>
 
 	<jsp:include page="../Header.jsp" />
-	<h1 id="boardTwoT">게시글수정</h1>
+	<h1 id="boardTwoT">게시글 수정</h1>
 	
 	
-	<form id="from2" action='./updateCtr.do' method='post'>
+	<form id="fromT" action='./updateCtr.do' method='post'>
 	
 		<table id="boardTab" >
 			<tbody class="boardsize2">
 				<tr>
 					<td>
-					<label for="boardNo">글번호</label>&nbsp;<input type="text" name="boardNo" value="${boardDto.boardNo}" readonly="readonly"/><br>
+					<label for="boardNo">글번호</label>&nbsp;<input type="text"  name="boardNo" value="${boardDto.boardNo}" readonly="readonly"/><br>
 					</td>
 				</tr>
 				<tr>
@@ -87,16 +130,16 @@
 				</tr>	
 				<tr>
 					<td>
-   			<label for="boardContent">글내용</label>&nbsp;<br>
+<!--    			<label for="boardContent" id="buctt">글내용</label>&nbsp;<br> -->
    			<textarea name="boardContent" rows="20" cols="30" placeholder=" 내용을 입력해 주세요.">${boardDto.boardContent}</textarea>
    					</td>
 				</tr>
 			</tbody>	
    		</table>
    		
-		<input type='submit' style="margin-left: 260px;" value='수정' >
-		<input type="button" style="margin-left: 10px;" value="목록" onclick="moveFnc()">
-		<input type="button" style="margin-left: 10px;" value="삭제" onclick="pageMoveDeleteFnc(${boardDto.boardNo});">					
+		<input type='submit' style="margin-left: 100px;" class="btn-click color1" value='수정' >
+		<input type="button" style="margin-left: 10px;" class="btn-click color2" value="목록" onclick="moveFnc()">
+		<input type="button" style="margin-left: 10px;" class="btn-click color3" value="삭제" onclick="pageMoveDeleteFnc(${boardDto.boardNo});">					
 		<input type="hidden" name="modDate" value="${boardDto.boardModdate}"> <br>
 		<input type="hidden" name="creDate" value="${boardDto.boardCredate}"> <br>
 	</form>
