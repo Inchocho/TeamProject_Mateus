@@ -103,5 +103,11 @@ public class MovieDaoImpl implements MovieDao{
 		// TODO Auto-generated method stub
 		return sqlSession.delete(namespace + "fileDelete", parentSeq);
 	}
-	
+
+	@Override
+	public List<Map<String, Object>> genreSelect(int userNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(namespace + "genreSelect", userNo);
+	}
+
 }

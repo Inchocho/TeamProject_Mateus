@@ -256,6 +256,7 @@ img {
 </div>
 </div>
 </form>
+<input type="text" name="likeGenre" value="${likeGenre}">
 
 </div></div>
 	<jsp:include page="/WEB-INF/views/PopUp/BuyMoviePop.jsp"></jsp:include>

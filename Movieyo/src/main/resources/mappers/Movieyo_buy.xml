@@ -58,10 +58,11 @@
 				WHERE A.USER_NO = B.USER_NO
 				AND B.MOVIE_NO = C.MOVIE_NO
 				<include refid="buyListSearch"></include>
+				ORDER BY B.BUY_NO ASC
 				) M 
 				<include refid="search"></include>
 				) BUY
-		WHERE BUY.RNUM BETWEEN #{start} AND #{end}
+		WHERE BUY.RNUM BETWEEN #{start} AND #{end}		
 	</select>	
 	
 	<!-- 구매내역 추가 -->

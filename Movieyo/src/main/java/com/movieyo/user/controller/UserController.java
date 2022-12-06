@@ -1,5 +1,6 @@
 package com.movieyo.user.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.movieyo.movie.dto.MovieDto;
+import com.movieyo.movie.service.MovieService;
 import com.movieyo.user.dto.UserDto;
 import com.movieyo.user.service.UserService;
 import com.movieyo.util.Paging;
@@ -34,6 +36,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private MovieService movieService;
 	
 	@RequestMapping(value="/auth/login.do", method = RequestMethod.GET)
 	public String login(HttpSession session, Model model) {
@@ -170,6 +175,19 @@ public class UserController {
 		
 		Map<String, Object> map = userService.userSelectOne(userNo);
 		UserDto userDto = (UserDto)map.get("userDto");
+		
+		//유저 선호장르
+		List<Map<String, Object>> genreList = movieService.genreSelect(userNo);
+		
+		String likeGenre = "";
+
+		for(int i = 0; i < genreList.size(); i++) {
+			likeGenre += (String)genreList.get(i).get("GENRE_NAME")+ ", ";			
+		}
+		
+		likeGenre = likeGenre.substring(0, likeGenre.length() - 2);
+		
+		model.addAttribute("likeGenre", likeGenre);
 		
 		System.out.println(userDto.getNickname() + "현재 유저의 닉네임");
 		System.out.println(userDto.getUserAdmin() + "현재 유저정보 관리자체크");

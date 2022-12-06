@@ -143,5 +143,12 @@
 		WHERE PARENT_SEQ = #{parentSeq}
 	</delete>
 	
+	<select id="genreSelect" parameterType="int" resultType="map">
+        SELECT A.GENRE_NAME
+        FROM GENRE A, GENRE_USER B, MVY_USER C
+        WHERE A.GENRE_NO = B.GENRE_NO
+        AND B.USER_NO =  C.USER_NO
+        AND B.USER_NO = #{userNo}	
+	</select>	
 	
 </mapper>

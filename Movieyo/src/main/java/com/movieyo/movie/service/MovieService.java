@@ -24,6 +24,7 @@ public interface MovieService {
 	public List<Integer> movieNoSelect(String searchOption, String keyword);
 
 	public Map<String, Object> moviefileOne(int movieNo2);
-
+	
+	public List<Map<String,Object>> genreSelect(int userNo);
 
 }

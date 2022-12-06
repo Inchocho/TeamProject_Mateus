@@ -108,15 +108,27 @@ public class MovieServiceImpl implements MovieService{
 		try {
 			resultNum = movieDao.movieUpdateOne(movieDto);
 			
+			
 			int parentSeq = movieDto.getMovieNo();
+			//해당번호에 맞는 저장된 파일명이 tempFileMap에 담김
 			Map<String, Object> tempFileMap = movieDao.fileSelectStoredFileName(parentSeq);
+			
+			movieDao.fileDelete(parentSeq);
 			
 			List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(parentSeq, multipartHttpServletRequest);
 			
+			System.out.println(tempFileMap);
+			
 			if (list.isEmpty() == false) {
+				System.out.println("여기를 타니? --- 1");
+				System.out.println(list + "널인지 확인");
+				System.out.println(tempFileMap + "널인지 확인");
+				//해당번호에 셀렉트된 파일이 있으면?
 				if (tempFileMap != null) {
+					System.out.println("여기를 타니? --- 2");
 					
-					movieDao.fileDelete(parentSeq);
+					//파일을 지움 <-- 여기서 무조건 파일이 지워짐					
+//					movieDao.fileDelete(parentSeq);
 					
 					//삭제만 처리하고 변경은 막기위해 예외처리
 //					throw new Exception();
@@ -129,6 +141,7 @@ public class MovieServiceImpl implements MovieService{
 					movieDao.insertFile(map);
 				}
 			}else if(fileIdx == -1){
+				//영화번호에 해당하는 업로드된 파일(물리적인 파일명)이 있는경우
 				if (tempFileMap != null) {
 					movieDao.fileDelete(parentSeq);
 					fileUtils.parseUpdateFileInfo(tempFileMap);
@@ -166,6 +179,12 @@ public class MovieServiceImpl implements MovieService{
 		resultMap.put("fileList", fileList);
 		
 		return resultMap;
+	}
+
+	@Override
+	public List<Map<String, Object>> genreSelect(int userNo) {
+		// TODO Auto-generated method stub
+		return movieDao.genreSelect(userNo);
 	}
 
 	

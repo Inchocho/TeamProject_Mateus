@@ -31,4 +31,6 @@ public interface MovieDao {
 
 	public int fileDelete(int parentSeq);
 
+	public List<Map<String, Object>> genreSelect(int userNo);
+	
 }

@@ -55,7 +55,7 @@
             WHERE A.MOVIE_NO = B.MOVIE_NO            
             AND B.BUY_NO = C.BUY_NO
             <include refid="refundListSearch"></include>
-            ) M		
+            ORDER BY C.REFUND_NO ASC) M		
             <include refid="search"></include>
 	</select>	
 	

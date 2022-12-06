@@ -158,7 +158,7 @@ public class MovieController {
 			return "movie/MovieOneView";
 		}
 		
-		@RequestMapping(value="/movie/update.do", method = RequestMethod.POST)
+		@RequestMapping(value="/movie/update.do", method = {RequestMethod.GET, RequestMethod.POST})
 		public String movieUpdate(int movieNo, Model model
 				, @RequestParam(defaultValue = "1") int curPage
 				, @RequestParam(defaultValue = "all")String searchOption
@@ -185,7 +185,7 @@ public class MovieController {
 		
 		@RequestMapping(value = "/movie/updateCtr.do", method = RequestMethod.POST)
 		public String movieUpdateCtr(HttpSession session,
-				MultipartHttpServletRequest multipart, @RequestParam(value= "fileIex", defaultValue = "-1")
+				MultipartHttpServletRequest multipart, @RequestParam(value= "fileIdx", defaultValue = "1")
 				   int fileIdx,
 				MovieDto movieDto, Model model)  {
 		    logger.info("Welcome movieController movieUpdateCtr!" + movieDto);
