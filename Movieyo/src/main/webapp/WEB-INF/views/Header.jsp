@@ -6,6 +6,13 @@
 body {
 	margin: 0px;
 }
+.header_container{
+	position: relative;
+}
+.header_fix{
+	position: fixed;
+	width: 100%;
+}
 .headerDiv{
 	background-color: #201919;
 	height: 80px;
@@ -107,52 +114,55 @@ body {
 	var htmlTag = document.getElementsByTagName("html").item(0);
 </script>
 </head>
+<div class="header_container">
+<div class="header_fix">
 <div class="headerDiv">
-		<ul class="ulFlexBox">
-			<li style="display: flex; align-items: center;">
-				<a id="mainLogo" href="#" onclick="movePageMainFnc();">무비요</a>
-				<input type="button" value="순위" onclick="movePageMainFnc();" class="header_btn">
-				<input type="button" value="작품전체" onclick="movePageMainFnc();" class="header_btn">
-				<!-- 유저로그인시 -->
-				<c:if test="${userDto.userAdmin ne 1}">
-				<input type="button" value="추천작품" onclick="movePageMainFnc();" class="header_btn">
-				</c:if>
-			</li>
-			<li style="margin-left: 50px; "><input type="button" value="게시판" class="header_btn" onclick="moveBoardFnc();"></li>
-			<li class="searchBox">
-			<form action="/Movieyo/movie/main.do" method="post">
-				<input type="submit" value="검색" class="header_btn">
-				<input type="search" name="keyword" value="${searchMap.keyword}" placeholder="영화를 검색해보세요" style="color: black;">
-				<input type="hidden" name="searchOption" value="MOVIE_TITLE">				
-			</form>
-			</li>
-			<li style="color: white; padding-right: 20px; min-width: 320px;">
-			<c:if test="${userDto.userAdmin eq 1}">${adminLabel}</c:if>${userDto.nickname} 님　
-				<input type="button" value="내정보" onclick="myInfo();" class="header_btn">
-				<input type="button" value="로그아웃" onclick="logout();" class="header_btn">
-			</li>
-		</ul>
-	</div>
-	<!-- 관리자로그인시 -->
-	<c:if test="${userDto.userAdmin eq 1}">
-		
-		<div class="headerDiv">
-			<ul class="ulFlexBox" id="adminHeaderUl">
-				<li>
-					<input type="button" value="영화등록" onclick="movieAdd();" class="header_btn">
-				</li>
-				<li>
-					<input type="button" value="영화관리" onclick="movieList();" class="header_btn">
-				</li>
-				<li>
-					<input type="button" value="회원관리" onclick="userList();" class="header_btn">
-				</li>
-				<li>
-					<input type="button" value="환불관리" onclick="refund();" class="header_btn">
-				</li>
-				<li style="padding-right: 20px;">
-					<input type="button" value="게시판관리" class="header_btn">
-				</li>
-			</ul>
-		</div>
-	</c:if>
+	<ul class="ulFlexBox">
+		<li style="display: flex; align-items: center;">
+			<a id="mainLogo" href="#" onclick="movePageMainFnc();">무비요</a>
+			<input type="button" value="순위" onclick="movePageMainFnc();" class="header_btn">
+			<input type="button" value="작품전체" onclick="movePageMainFnc();" class="header_btn">
+			<!-- 유저로그인시 -->
+			<c:if test="${userDto.userAdmin ne 1}">
+			<input type="button" value="추천작품" onclick="movePageMainFnc();" class="header_btn">
+			</c:if>
+		</li>
+		<li style="margin-left: 50px; "><input type="button" value="게시판" class="header_btn" onclick="moveBoardFnc();"></li>
+		<li class="searchBox">
+		<form action="/Movieyo/movie/main.do" method="post">
+			<input type="submit" value="검색" class="header_btn">
+			<input type="search" name="keyword" value="${searchMap.keyword}" placeholder="영화를 검색해보세요" style="color: black;">
+			<input type="hidden" name="searchOption" value="MOVIE_TITLE">				
+		</form>
+		</li>
+		<li style="color: white; padding-right: 20px; min-width: 320px;">
+		<c:if test="${userDto.userAdmin eq 1}">${adminLabel}</c:if>${userDto.nickname} 님　
+			<input type="button" value="내정보" onclick="myInfo();" class="header_btn">
+			<input type="button" value="로그아웃" onclick="logout();" class="header_btn">
+		</li>
+	</ul>
+</div>
+<!-- 관리자로그인시 -->
+<c:if test="${userDto.userAdmin eq 1}">
+<div class="headerDiv">
+	<ul class="ulFlexBox" id="adminHeaderUl">
+		<li>
+			<input type="button" value="영화등록" onclick="movieAdd();" class="header_btn">
+		</li>
+		<li>
+			<input type="button" value="영화관리" onclick="movieList();" class="header_btn">
+		</li>
+		<li>
+			<input type="button" value="회원관리" onclick="userList();" class="header_btn">
+		</li>
+		<li>
+			<input type="button" value="환불관리" onclick="refund();" class="header_btn">
+		</li>
+		<li style="padding-right: 20px;">
+			<input type="button" value="게시판관리" class="header_btn">
+		</li>
+	</ul>
+</div>
+</c:if>
+</div>
+</div>

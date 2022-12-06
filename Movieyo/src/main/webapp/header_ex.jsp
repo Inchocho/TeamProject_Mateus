@@ -10,82 +10,167 @@
 body {
 	margin: 0px;
 }
+.header_fix{
+	position: fixed;
+	width: 100%;
+}
+
 .headerDiv{
-	background-color: black;
-	height: 40px;
+	background-color: #201919;
+	height: 80px;
+	border-bottom: 1px solid snow;
 }
 .ulFlexBox {
 	display: flex;
 	list-style: none;
 	padding: 5px;
 	align-items: center;
-	min-width: 800px;
+	min-width: 1000px;
 	margin: 0px;
+	background-color: inherit;
+	height: 70px;
 }
 #adminHeaderUl{
 	justify-content: flex-end;
 }
 #mainLogo{
-	color: #F08080;
+	color: #ff81ab;
 	font-weight: bold;
 	font-style: oblique;
-	width: 100px;
+	width: 150px;
 	margin: 0px;
 	display: block;
-    font-size: 1.5em;
+    font-size: 45px;
 	text-decoration: none;
 }
 .searchBox{
 	margin: 0 auto 0 auto;
+	min-width: 250px;
+	display: flex;
+}
+.searchBox form{
+	display: flex;
+}
+.searchBox input{
+	height: 50px;
+	border: 1px solid snow;
+    color: #ff81ab;
+    font-size: 16px;
+}
+.header_btn{
+	height: 70px;
+    background: inherit;
+    color: snow;
+    font-size: 20px;
+    border: none;
+}
+.header_btn:hover {
+	background-color: rgba(135, 206, 235, 0.3);
+	cursor: pointer;
+}
+.body_btn_css{
+	height: 50px;
+    background: #201919;
+    color: #ff81ab;
+    font-size: 20px;
+    border-radius: 8px;
+    margin: 10px;
+}
+.body_btn_css:hover {
+	background-color: rgba(135, 206, 235, 0.3);
+	cursor: pointer;
 }
 </style>
+
+<script type="text/javascript">
+	function movieAdd() {
+		location.href = '/Movieyo/movie/addMovie.do';
+	}
+
+	function movieList() {
+		location.href = '/Movieyo/movie/list.do';
+	}
+	
+	function myInfo() {
+		location.href = '/Movieyo/user/one.do?userNo=' + ${userDto.userNo};
+	}
+	
+	function refund(){
+		location.href = '/Movieyo/refund/list.do?userNo=' + ${userDto.userNo};
+	}
+	
+	function userList() {
+		location.href = '/Movieyo/user/list.do';
+	}
+	
+	function logout() {
+		location.href = '/Movieyo/user/logout.do';
+	}
+	
+	function movePageMainFnc() {
+		location.href = '/Movieyo/movie/main.do';
+	}
+	function moveBoardFnc() {
+		location.href = '/Movieyo/board/boardList.do';
+	}
+	var htmlTag = document.getElementsByTagName("html").item(0);
+</script>
 </head>
 <body>
-	<div class="headerDiv">
+<div class="header_fix">
+<div class="headerDiv">
 		<ul class="ulFlexBox">
 			<li style="display: flex; align-items: center;">
 				<a id="mainLogo" href="#" onclick="movePageMainFnc();">무비요</a>
-				<input type="button" value="순위">
-				<input type="button" value="작품전체">
-				<!-- 유저로그인시  [test = "${user.admin ne 1}"(?)]-->
-				<c:if test="true">
-				<input type="button" value="추천작품">
+				<input type="button" value="순위" onclick="movePageMainFnc();" class="header_btn">
+				<input type="button" value="작품전체" onclick="movePageMainFnc();" class="header_btn">
+				<!-- 유저로그인시 -->
+				<c:if test="${userDto.userAdmin ne 1}">
+				<input type="button" value="추천작품" onclick="movePageMainFnc();" class="header_btn">
 				</c:if>
 			</li>
-			<li style="margin-left: 50px; "><input type="button" value="게시판"></li>
+			<li style="margin-left: 50px; "><input type="button" value="게시판" class="header_btn" onclick="moveBoardFnc();"></li>
 			<li class="searchBox">
-			<input type="button" value="검색"><input type="search" value="" placeholder="영화를 검색해보세요">
+			<form action="/Movieyo/movie/main.do" method="post">
+				<input type="submit" value="검색" class="header_btn">
+				<input type="search" name="keyword" value="${searchMap.keyword}" placeholder="영화를 검색해보세요" style="color: black;">
+				<input type="hidden" name="searchOption" value="MOVIE_TITLE">				
+			</form>
 			</li>
-			<li style="color: white; padding-right: 20px;">${userDto.nickname} 님　
-				<input type="button" value="내정보">
-				<input type="button" value="로그아웃">
+			<li style="color: white; padding-right: 20px; min-width: 320px;">
+			<c:if test="${userDto.userAdmin eq 1}">${adminLabel}</c:if>${userDto.nickname} 님　
+				<input type="button" value="내정보" onclick="myInfo();" class="header_btn">
+				<input type="button" value="로그아웃" onclick="logout();" class="header_btn">
 			</li>
 		</ul>
 	</div>
-	<!-- 관리자로그인시 [test = "${user.admin eq 1}"(?)]-->
-	<c:if test="true">
-		<div style="background-color: black; height: 15px;">
-			<hr	style="display: inline-flex; color: white; align-content: flex-start; width: -webkit-fill-available;">
-		</div>
+	<!-- 관리자로그인시 -->
+	<c:if test="${userDto.userAdmin eq 1}">
+		
 		<div class="headerDiv">
 			<ul class="ulFlexBox" id="adminHeaderUl">
 				<li>
-					<input type="button" value="영화등록">
+					<input type="button" value="영화등록" onclick="movieAdd();" class="header_btn">
 				</li>
 				<li>
-					<input type="button" value="영화관리">
+					<input type="button" value="영화관리" onclick="movieList();" class="header_btn">
 				</li>
 				<li>
-					<input type="button" value="회원관리">
+					<input type="button" value="회원관리" onclick="userList();" class="header_btn">
 				</li>
 				<li>
-					<input type="button" value="환불관리">
+					<input type="button" value="환불관리" onclick="refund();" class="header_btn">
 				</li>
 				<li style="padding-right: 20px;">
-					<input type="button" value="게시판관리">
+					<input type="button" value="게시판관리" class="header_btn">
 				</li>
 			</ul>
 		</div>
 	</c:if>
+</div>
+<div style="height: 300px; width: 10px; background-color: red;"></div>
+<div style="height: 300px; width: 10px; background-color: blue;"></div>
+<div style="height: 300px; width: 10px; background-color: orange;"></div>
+<div style="height: 300px; width: 10px; background-color: skyblue;"></div>
 </body>
 </html>
