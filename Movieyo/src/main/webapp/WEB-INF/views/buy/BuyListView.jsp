@@ -11,74 +11,33 @@
 <title>구매내역관리</title>
 
 <style type="text/css">
-	tr, td, th{
-		min-width: 230px;
-		display: flex;
-		font-size: 16px;
-		text-align: center;		
-	}
-	
-	table {
+table,tr, td, th{
+		border: 1px solid black;
+}
+td{
+	height: 50px;
+}
+table {
 		border-collapse: collapse;
-	}
-	#tdId{
-	width: 500px;
-	height: 500px;
-	text-align: center;
-	font-weight: bolder;
-	}
-	
-	#myform fieldset{
-    display: inline-block;
-    direction: rtl;
-    border:0;
-}
-#myform fieldset legend{
-    text-align: right;
-}
-#myform input[type=radio]{
-    display: none;
-}
-#myform label{
-    font-size: 3em;
-    color: transparent;
-    text-shadow: 0 0 0 #f0f0f0;
-}
-#myform label:hover{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-}
-#myform label:hover ~ label{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-}
-#myform input[type=radio]:checked ~ label{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-}
-#reviewContents {
-    width: 100%;
-    height: 150px;
-    padding: 10px;
-    box-sizing: border-box;
-    border: solid 1.5px #D3D3D3;
-    border-radius: 5px;
-    font-size: 16px;
-    resize: none;
 }
 .curPageDiv{
-	margin-left: 200px;
+	margin: 0px 0px 0px 200px;
+	text-align: center;
+	min-width: 600px;
 }
 .titleContainer{
 	border-bottom: 2px solid #252525;
 	margin: 3px 3px 3px 0px;
 }
-.titleContainer h1{
-	margin-left: 30px;
-}
+
 .contContainer{
-    width: 1600px;
-    margin: 10px 0 0 30px;
+    width: 800px;
+    padding: 10px 0 0 30px;
+    margin: auto;
+    font-size: 20px;
 }
 .contContainer table{
-	width: 1600px;
+	width: 800px;
 	text-align: center;
 }
   
@@ -90,34 +49,36 @@
  
 th {
 	background-color: gray;
-} 
-.cartSelectInfo, .csiCkBox, .csiCkBoxView{
+}
+.buy_btn_css{
+	height: 30px;
+	font-size: 15px;
+    background: #201919;
+    color: #ff81ab;
+    border-radius: 8px;
+    margin: 10px;
+}
+.buy_btn_css:hover {
+	background-color: rgba(135, 206, 235, 0.3);
+	cursor: pointer;
+}
+.title_con{
+	width: 800px;
 	display: flex;
-}
-.cartSelectInfo{
-	flex-direction: column;
-	align-items: center;
-}
-.csiCkBox{
-	align-items: center;
-	width: 250px;
 	justify-content: space-between;
+	align-items: center;
+	margin: auto;
 }
-.csiCkBoxView{
-	flex-direction: column;
+.title_con_sales{
+	font-size: 18px;
+	align-self: flex-end;
 }
-
-#buyCartSelBtn{
-	width: 250px;
-    background-color: #02ace0;
-    border: 1px solid black;
-    color: #fff;
+.title_con_sales span span{
+	font-weight: bold;
 }
-#delCartSelBtn{
-	width: 250px;
-    background-color: #fd7d40;
-    border: 1px solid black;
-    color: #fff;
+.salesView{
+	border-right: 2px dotted;
+    padding-right: 10px;
 }
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
@@ -128,6 +89,22 @@ function movieDetail(index) {
 	location.href = "/Movieyo/movie/detail.do?movieNo=" + index.value;
 }
 
+function comma(str) {
+    str = String(str);
+    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+}
+
+$(document).ready(function() {
+	var salesMoney = $('#salesMoney').val();
+	var refundMoney = $('#refundMoney').val();
+	var htmlStr = "";
+	
+	htmlStr = comma(salesMoney);
+	$('#salesMoneyView').html(htmlStr);
+	
+	htmlStr = comma(refundMoney);
+	$('#refundMoneyView').html(htmlStr);
+});
 
 </script>
 </head>
@@ -135,34 +112,44 @@ function movieDetail(index) {
 <body>
 	<header>
 	<jsp:include page="/WEB-INF/views/Header.jsp"/>
+
 	</header>
 	<jsp:include page="/WEB-INF/views/UserMyPageSideMenu.jsp"></jsp:include>
 		
 	<!-- 관리자의 경우 수입 총액을 보여줌 -->
 
-	
+
 	<div class="curPageDiv">
 	
 	<div class="titleContainer">
+		<div class="title_con">
 		<c:choose>
-			<c:when test='${userDto.userAdmin == 1}'>
-				<h1>관리자 구매내역 관리
-					<c:if test='${userDto.userAdmin == 1}'>
-						<span style='float:right; margin-right:100px;'>총매출액 : ${totalMoney}원</span>
-						<span style='float:right; margin-right:100px;'>환불금액 : ${refundMoney}원</span>
-					</c:if>		
-				</h1>
-			</c:when>
-			<c:otherwise>
-				<h1>구매내역</h1>
-			</c:otherwise>
+		<c:when test='${userDto.userAdmin == 1}'>
+			<div class="title_con_title">
+				<h1>관리자 구매내역 관리</h1>
+			</div>
+			<c:if test='${userDto.userAdmin == 1}'>
+			<div class="title_con_sales">
+			<input type="hidden" id="refundMoney" value="${refundMoney}">
+			<input type="hidden" id="salesMoney" value="${totalMoney}">
+				<span class="salesView">환불금액: <span id="refundMoneyView"></span> 원</span>
+				<span>총매출액: <span id="salesMoneyView"></span> 원</span>
+			</div>
+			</c:if>		
+		</c:when>
+		<c:otherwise>
+		<div class="title_con_title">
+			<h1>구매내역</h1>
+		</div>
+		</c:otherwise>
 		</c:choose>
+		</div>
 	</div>
 		
 	<div class="contContainer">
 		<input type="hidden" value="${userDto.userNo}">
 	<table>
-		<tr style="min-height: 50px; border: 1px solid black;">
+		<tr>
 			<th>영화제목</th>
 			<th>가격</th>
 			<th>구매일</th>
@@ -180,7 +167,7 @@ function movieDetail(index) {
 		<c:if test="${not empty buyListMap}">
 		
 		<c:forEach var="buyMap" items="${buyListMap}" varStatus="varStatus">
-		<tr style="min-height: 50px; border: 1px solid black;">
+		<tr>
 			<td>
 				${buyMap.movieTitle}
 			</td>
@@ -210,10 +197,10 @@ function movieDetail(index) {
 									<a href='#'>문의하러가기</a>
 								</c:when>								
 								<c:when test="${buyMap.requestDeny != 0}">
-									<input type="submit" name='refundSubmitBtn' id='refundSubmit' value="환불하기">					
+									<input type="submit" name='refundSubmitBtn' id='refundSubmit' value="환불하기" class="buy_btn_css">					
 								</c:when>
 								<c:otherwise>
-									<input type="button" onclick='movieDetail(movieNo${varStatus.index});' value='구매하러 가기'>
+									<input type="button" onclick='movieDetail(movieNo${varStatus.index});' value='구매하러 가기' class="buy_btn_css">
 								</c:otherwise>
 							</c:choose>
 						<input type="hidden" name="buyCheck" value="${varStatus.index}">		

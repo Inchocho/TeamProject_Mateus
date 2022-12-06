@@ -11,77 +11,45 @@
 <title>환불내역관리</title>
 
 <style type="text/css">
-	tr, td, th{
-		min-width: 176px;
-		display: flex;
-		font-size: 16px;
-		text-align: center;
-	}
-	
-	table {
+table,tr, td, th{
+		border: 1px solid black;
+}
+td{
+	height: 50px;
+}
+table {
 		border-collapse: collapse;
-	}
-	#tdId{
-	width: 500px;
-	height: 500px;
-	text-align: center;
-	font-weight: bolder;
-	}
-	
-	#myform fieldset{
-    display: inline-block;
-    direction: rtl;
-    border:0;
-}
-#myform fieldset legend{
-    text-align: right;
-}
-#myform input[type=radio]{
-    display: none;
-}
-#myform label{
-    font-size: 3em;
-    color: transparent;
-    text-shadow: 0 0 0 #f0f0f0;
-}
-#myform label:hover{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-}
-#myform label:hover ~ label{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-}
-#myform input[type=radio]:checked ~ label{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-}
-#reviewContents {
-    width: 100%;
-    height: 150px;
-    padding: 10px;
-    box-sizing: border-box;
-    border: solid 1.5px #D3D3D3;
-    border-radius: 5px;
-    font-size: 16px;
-    resize: none;
 }
 .curPageDiv{
-	margin-left: 200px;
+	margin: 0px 0px 0px 200px;
+	text-align: center;
+	min-width: 600px;
 }
 .titleContainer{
 	border-bottom: 2px solid #252525;
 	margin: 3px 3px 3px 0px;
 }
-.titleContainer h1{
-	margin-left: 30px;
+.title_con{
+	width: 1000px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: auto;
+}
+.title_con_title{
+	margin-left: 20px;
 }
 .contContainer{
-    width: 1600px;
-    margin: 10px 0 0 30px;
+    width: 1000px;
+    padding: 10px 0 0 30px;
+    margin: auto;
+    font-size: 20px;
 }
 .contContainer table{
-	width: 1600px;
+	width: 1000px;
 	text-align: center;
 }
-  
+ 
 #ul li {
   list-style-type: none;
   float: left;
@@ -90,34 +58,25 @@
  
 th {
 	background-color: gray;
-} 
-.cartSelectInfo, .csiCkBox, .csiCkBoxView{
-	display: flex;
 }
-.cartSelectInfo{
-	flex-direction: column;
-	align-items: center;
+.refund_btn_css{
+	height: 45px;
+	font-size: 15px;
+	margin: 2px;
+	color: snow;
+	font-weight: bold;
+	border-radius: 8px;
 }
-.csiCkBox{
-	align-items: center;
-	width: 250px;
-	justify-content: space-between;
+#rBtnYes{
+	background-color: #57c6f3;
 }
-.csiCkBoxView{
-	flex-direction: column;
+#rBtnNo{
+	background-color: #f3426b;
 }
-
-#buyCartSelBtn{
-	width: 250px;
-    background-color: #02ace0;
-    border: 1px solid black;
-    color: #fff;
-}
-#delCartSelBtn{
-	width: 250px;
-    background-color: #fd7d40;
-    border: 1px solid black;
-    color: #fff;
+#rBtnYes:hover, #rBtnNo:hover {
+	background-color: rgba(0, 0, 0, 0.1);
+	color: black;
+	cursor: pointer;
 }
 </style>
 
@@ -131,20 +90,26 @@ th {
 	<div class="curPageDiv">
 	
 	<div class="titleContainer">
+		<div class="title_con">
 		<c:choose>
-			<c:when test='${userDto.userAdmin == 1}'>
+		<c:when test='${userDto.userAdmin == 1}'>
+			<div class="title_con_title">
 				<h1>관리자 회원 환불 관리</h1>
-			</c:when>
-			<c:otherwise>
+			</div>
+		</c:when>
+		<c:otherwise>
+			<div class="title_con_title">
 				<h1>환불내역</h1>
-			</c:otherwise>
+			</div>
+		</c:otherwise>
 		</c:choose>
+		</div>
 	</div>
 		
 	<div class="contContainer">
 		<input type="hidden" value="${userDto.userNo}">
 	<table>
-		<tr style="min-height: 50px; border: 1px solid black;">
+		<tr>
 			<c:choose>
 				<c:when test="${userDto.userAdmin == 1}">
 					<th>환불번호</th>
@@ -168,10 +133,10 @@ th {
 		</tr>
 		<c:if test="${not empty refundListMap}">
 		<c:forEach var="refundMap" items="${refundListMap}" varStatus="varStatus">
-			<tr style="border: 1px solid black;">
+			<tr>
 				<c:choose>
 					<c:when test="${userDto.userAdmin == 1}">
-						<td style="min-height: 50px;">
+						<td>
 							${refundMap.refundNo}
 						</td>
 						<td>
@@ -188,11 +153,11 @@ th {
 						</td>
 						<td>
 							<fmt:formatDate pattern="yyyy-MM-dd" 
-								value="${refundMap.refundDate}"/>
+								value="${refundMap.buyDate}"/>
 						</td>
 						<td>
 							<fmt:formatDate pattern="yyyy-MM-dd" 
-								value="${refundMap.buyDate}"/>
+								value="${refundMap.refundDate}"/>
 						</td>
 						<td>
 							<form id="refundAdmit${varStatus.index}" action="/Movieyo/refund/updateRefund.do" method="POST">
@@ -208,11 +173,11 @@ th {
 								<input type="hidden" id="admit${varStatus.index}" name="admit" value=''>
 							<c:choose>
 								<c:when test="${refundMap.admitDeny != 0}">				
-									<input id='rBtnYes' type='button'  onclick="refundOk(submitCheck${varStatus.index});" value='수락'>
-									<input id='rBtnNo' type='button' onclick="refundDeny(submitCheck${varStatus.index});" value='거절'>	
+									<input id='rBtnYes' class="refund_btn_css" type='button'  onclick="refundOk(submitCheck${varStatus.index});" value='수락'>
+									<input id='rBtnNo' class="refund_btn_css" type='button' onclick="refundDeny(submitCheck${varStatus.index});" value='거절'>	
 								</c:when>
 								<c:otherwise>
-									환불완료
+									처리완료
 								</c:otherwise>
 							</c:choose>														
 							</form>						

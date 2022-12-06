@@ -14,15 +14,11 @@
 table, tr, td, th{
 	border:1px solid black; 
 }
-
+td{
+	height: 50px;
+}
 table {
 	border-collapse: collapse;
-}
-#tdId{
-	width: 500px;
-	height: 500px;
-	text-align: center;
-	font-weight: bolder;
 }
 .curPageDiv{
 	margin: 0px 0px 0px 200px;
@@ -32,17 +28,20 @@ table {
 .titleContainer{
 	border-bottom: 2px solid #252525;
 	margin: 3px 3px 3px 0px;
-	padding-right: 400px;
+	padding-right: 600px;
+	min-width: 200px;
 }
-
+.title_con_title{
+	margin-left: 20px;
+}
 .contContainer{
-    width: 600px;
+	width: 800px;
     padding: 10px 0 0 30px;
     margin: auto;
+    font-size: 20px;
 }
-
 .contContainer table{
-	width: 600px;
+	width: 800px;
 	text-align: center;
 }
   
@@ -54,34 +53,51 @@ table {
  
 th {
 	background-color: gray;
-} 
+}
+.contContainer input[type="checkbox"]{
+	width: 20px;
+	height: 20px;
+}
 .cartSelectInfo, .csiCkBox, .csiCkBoxView{
 	display: flex;
 }
 .cartSelectInfo{
 	flex-direction: column;
 	align-items: center;
+	margin-top: 20px;
 }
 .csiCkBox{
 	align-items: center;
-	width: 250px;
+	width: 300px;
 	justify-content: space-between;
+	font-size: 16px;
 }
 .csiCkBoxView{
 	flex-direction: column;
+	text-align: left;
 }
-
+.btnArea{
+	width: 300px;
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: space-between;
+	margin-top: 10px;
+}
 #buyCartSelBtn{
-	width: 250px;
     background-color: #02ace0;
-    border: 1px solid black;
-    color: #fff;
 }
 #delCartSelBtn{
-	width: 250px;
     background-color: #fd7d40;
-    border: 1px solid black;
+}
+#buyCartSelBtn, #delCartSelBtn{
+	width: 130px;
+    border: 2px solid black;
     color: #fff;
+    margin: 0px;
+}
+#buyCartSelBtn:hover, #delCartSelBtn:hover{
+	background-color: rgba(135, 206, 235, 0.3);
+	color: #ff81ab;
 }
 </style>
 
@@ -133,10 +149,12 @@ th {
 			<input type="hidden" id="cartSelPrice" name="sumPrice" value="0">
 			<span>선택한항목:　<span id="cartSelCountView"></span><span style="float: right;">　개</span></span>
 			<span>가격합계:　<span id="cartSelPriceView"></span><span style="float: right;">　원</span></span></div>
-			<div>전체선택<input type="checkbox" id="allck"></div>
+			<div style="display: flex; align-items: center;">전체선택<input type="checkbox" id="allck"></div>
 		</div>
-		<div><input type="button" value="선택항목 구매하기" id="buyCartSelBtn"></div>
-		<div><input type="button" value="선택항목 장바구니에서 제외" id="delCartSelBtn"></div>
+		<div class="btnArea">
+			<input type="button" value="구매하기" id="buyCartSelBtn" class="body_btn_css">
+			<input type="button" value="제외하기" id="delCartSelBtn"  class="body_btn_css">
+		</div>
 	</div></div>
 	</form>
 
