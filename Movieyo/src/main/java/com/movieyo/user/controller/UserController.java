@@ -200,7 +200,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/user/update.do")
-	public String userUpdate(int userNo, Model model, int adminCheck) {
+	public String userUpdate(int userNo, Model model, int adminCheck, String likeGenre) {
 		logger.debug("Welcome userUpdate enter {}", userNo);
 	
 		System.out.println("유저 업데이트폼 진입전 세션의 관리자확인: " + adminCheck);
@@ -213,13 +213,15 @@ public class UserController {
 		
 		model.addAttribute("userDto2", userDto);
 		model.addAttribute("adminCheck", adminCheck);
+		model.addAttribute("likeGenre", likeGenre);
 		
 		return "user/UserUpdateForm";
 	}
 	
 	//수정시 바로바로 적용되게 바꾸기(세션?)
 		@RequestMapping(value = "/user/updateCtr.do", method = RequestMethod.POST)
-		   public String userUpdateCtr(HttpSession session, UserDto userDto, Model model, int adminCheck)  {
+		   public String userUpdateCtr(HttpSession session, UserDto userDto, Model model, int adminCheck,
+				   String likeGenre)  {
 		      logger.info("Welcome userController userUpdateCtr!" + userDto);
 		     UserDto sessionUserDto =
 		               (UserDto)session.getAttribute("userDto");
@@ -274,6 +276,7 @@ public class UserController {
 //		         session.removeAttribute("userDto");
 //		         session.setAttribute("sessionUserDto", sessionUserDto);
 		         
+		         model.addAttribute("likeGenre", likeGenre);
 		         model.addAttribute("userDto", sessionUserDto);
 		         model.addAttribute("userDto2", userDto);
 		         model.addAttribute("adminCheck", adminCheck);
@@ -282,35 +285,48 @@ public class UserController {
 		   }
 		
 		@RequestMapping(value = "/user/passwordUpdate.do", method = RequestMethod.GET)
-		public String userPasswordUpdate(Model model, UserDto userDto) {
+		public String userPasswordUpdate(Model model, UserDto userDto, String likeGenre) {
 			logger.debug("Welcome UserController userPasswordUpdate {}", userDto);
 			int no = userDto.getUserNo();
 			
+			int adminCheck = userDto.getUserAdmin();
+					
 			Map<String, Object> map = userService.userSelectOne(no);
 			UserDto userDto2 = (UserDto)map.get("userDto");
 			
 			model.addAttribute("userDto", userDto2);
+			model.addAttribute("likeGenre", likeGenre);
+			model.addAttribute("adminCheck", adminCheck);
 			
 			return "user/UserPasswordUpdate";
 		}
 		
 		@RequestMapping(value="/user/passwordUpdateCtr.do")
-		public String userPasswordUpdate(HttpSession session, UserDto userDto, Model model) {
+		public String userPasswordUpdate(HttpSession session, UserDto userDto, Model model,
+			 String passwordC, String likeGenre) {
 			logger.debug("Welcome userPasswordUpdate enter {}", userDto);
+			
 			int userNo = userDto.getUserNo();
+			int adminCheck = userDto.getUserAdmin();
 			
 			Map<String, Object> map = userService.userSelectOne(userNo);
 			UserDto userDto2 = (UserDto)map.get("userDto");
 			
-			 try {
-		    	  userService.passwordUpdate(userDto);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		      
-			 model.addAttribute("userDto2", userDto2);
+			String viewUrl = "";
 			
-			return "user/UserOneView";
+				if (userDto2.getPassword().equals(passwordC)) {
+					userService.passwordUpdate(userDto);
+					viewUrl = "user/UserOneView";
+				}else {
+					model.addAttribute("msg","비밀번호가 틀립니다.");
+					viewUrl = "user/UserPasswordUpdate";
+				}
+				
+			model.addAttribute("likeGenre", likeGenre);
+			model.addAttribute("userDto2", userDto2);
+			model.addAttribute("adminCheck", adminCheck);
+			
+			return viewUrl;
 		}
 		
 		@RequestMapping(value="/user/deleteCtr.do", method = RequestMethod.POST)
@@ -344,7 +360,7 @@ public class UserController {
 			
 			model.addAttribute("userDto2", userDto);
 			model.addAttribute("userNo", userNo);
-			return "PopUp/authorPop";
+			return "PopUp/deletePop";
 		
 		}
 		

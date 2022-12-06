@@ -6,7 +6,20 @@
 <meta charset="UTF-8">
 <title>회원탈퇴</title>
 <style>
+.body_btn_css{
+	height: 50px;
+    background: #201919;
+    color: #ff81ab;
+    font-size: 20px;
+    border-radius: 8px;
+    margin: 10px;
+}
 
+.titleContainer{
+	border-bottom: 2px solid #252525;
+	margin: 3px 3px 3px 0px;
+	padding-right: 400px;
+}
 </style>
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 
@@ -46,14 +59,27 @@
 </script>
 </head>
 <body>
+	<div class="titleContainer">
 	<h1>회원탈퇴</h1>
+	</div>
+	
 	${userDto2.nickname}님 정말로 탈퇴하시겠습니까?<br>
 	
-	<input type="hidden" value="${userDto2.password}" id="password"><br>
-	<input type="text" value="" placeholder="비밀번호:" id="changePw"><br>
-	<input type="text" value="" placeholder="비밀번호 확인:" id="changePwC"><br>
-	<input type="button" onclick="sendIt();" value="삭제">
-	<input type="button" value="취소" onclick="cancel();">
+<%-- 	<input type="hidden" value="${userDto2.password}" id="password"><br> --%>
+	<div style="width: 400px;">
+		<div class="userInfo">
+			<p class="p">비밀번호</p>
+			<input type="text" value="" id="changePw">
+		</div>
+		
+		<div class="userInfo">
+			<p class="p">비밀번호 확인</p>
+			<input type="text" value="" id="changePwC">
+		</div>
+	</div>
+	
+	<input type="button" onclick="sendIt();" value="삭제" class="body_btn_css">
+	<input type="button" value="취소" onclick="cancel();" class="body_btn_css">
 	
 </body>
 </html>

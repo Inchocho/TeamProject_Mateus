@@ -82,10 +82,14 @@ th {
 }
 </style>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
 	
 	function pwUpdate() {
-		location.href="./passwordUpdate.do?userNo=" + ${userDto2.userNo};
+		let likeGenre = $('#likeGenre').val();
+		
+		location.href="./passwordUpdate.do?userNo=" + ${userDto2.userNo} + "&likeGenre=" + likeGenre; 
+// 		+ "&likeGenre=" +${likeGenre}
 	}
 	function popUp() {
 		let popUrl = "/Movieyo/user/authorPop.do?userNo=" + ${userDto2.userNo};
@@ -121,6 +125,7 @@ th {
 	<div class="detailForm_top">
 		<input type="hidden" name="adminCheck" value='${adminCheck}'>
 		<input type="hidden" name='userNo' value='${userDto2.userNo}'>
+		<input type="hidden" id='likeGenre' name='likeGenre' value='${likeGenre}'>
 		<div style="width: 620px; margin-top: 13px;">
 			<div class="userInfo">
 				<p class="p">이름</p>
@@ -136,11 +141,15 @@ th {
 			</div>
 			<div class="userInfo">
 				<p class="p">닉네임</p>
-				<p class="p">${userDto2.nickname}</p>
+				<p class="p" style="width: 300px;">${userDto2.nickname}</p>
 			</div>
 			<div class="userInfo">
 				<p class="p">성별</p>
 				<p class="p">${userDto2.gender}</p>
+			</div>
+			<div class="userInfo">
+				<p class="p">선호장르</p>
+				<p class="p" style="width: 300px;">${likeGenre}</p>
 			</div>
 		</div>
 		</div>

@@ -30,6 +30,12 @@
     direction: rtl;
     border:0;
 }
+
+	.titleContainer{
+	border-bottom: 2px solid #252525;
+	margin: 3px 3px 3px 0px;
+	padding-right: 600px;
+}
 #myform fieldset legend{
     text-align: right;
 }
@@ -76,6 +82,12 @@
  
 th {
 	background-color: gray;
+}
+
+.curPageDiv {
+	margin: 0px;
+	text-align: center;
+	min-width: 892px;
 } 
 
 </style>
@@ -105,7 +117,10 @@ th {
 	<header>
 	<jsp:include page="/WEB-INF/views/Header.jsp"/>
 	</header>
-	<h1 style="height: 50px; padding-top: 50px; border: 1px solid gray;">영화관리</h1>
+	<div class="curPageDiv">
+	<div class="titleContainer">
+	<h1>영화관리</h1>
+	</div>
 	
 	<table>
 		<tr>
@@ -184,7 +199,7 @@ th {
 		<button type="button" onclick="movieAdd();">영화등록</button>
 	</form>
 		
-	
+	</div>
 	<jsp:include page="/WEB-INF/views/Tail.jsp"/>
 	
 </body>

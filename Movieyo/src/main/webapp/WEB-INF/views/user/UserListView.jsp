@@ -24,6 +24,17 @@ width: 600px;
 text-align: center;
 }
 
+.titleContainer{
+	border-bottom: 2px solid #252525;
+	margin: 3px 3px 3px 0px;
+	padding-right: 600px;
+}
+
+.curPageDiv {
+	margin: 0px;
+	text-align: center;
+	min-width: 892px;
+}
 </style>
 
 <script type="text/javascript">
@@ -35,11 +46,13 @@ text-align: center;
 <body>
 
 	<jsp:include page="/WEB-INF/views/Header.jsp" />
-	<div id="conDiv">
 
+	<div class="curPageDiv">
+	<div class="titleContainer">
 	<h1>회원관리</h1>
+	</div>
 
-
+	<div id="conDiv">
 	<table>
 		<tr>
 			<th>아이디</th>
@@ -119,7 +132,7 @@ text-align: center;
 	</form>
 
 	<jsp:include page="/WEB-INF/views/Tail.jsp" />
-
+</div>
 </body>
 
 </html>
