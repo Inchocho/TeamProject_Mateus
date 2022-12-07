@@ -3,203 +3,203 @@
 시퀀스 시작값을 변경해서 넣어야함 주의
 
 INSERT INTO MVY_USER 
-VALUES(505,'1','1','슈퍼계정1','1985-01-01',SYSDATE,'슈퍼계정1','남자',0,1);
+VALUES(MVY_USER_NO_SEQ.nextval,'1','1','슈퍼계정1','1985-01-01',SYSDATE,'슈퍼계정1','남자',0,1);
 INSERT INTO MVY_USER 
-VALUES(500,'ADMIN1@naver.com','anqldy!23','관리자A','1985-01-01',SYSDATE,'관리자A','남자',0,1);
+VALUES(MVY_USER_NO_SEQ.nextval,'ADMIN1@naver.com','anqldy!23','관리자A','1985-01-01',SYSDATE,'관리자A','남자',0,1);
 INSERT INTO MVY_USER 
-VALUES(501,'ADMIN2@naver.com','anqldy!23','관리자B','1987-01-01',SYSDATE,'관리자B','남자',0,1);
+VALUES(MVY_USER_NO_SEQ.nextval,'ADMIN2@naver.com','anqldy!23','관리자B','1987-01-01',SYSDATE,'관리자B','남자',0,1);
 INSERT INTO MVY_USER 
-VALUES(502,'ADMIN3@naver.com','anqldy!23','관리자C','1959-01-01',SYSDATE,'관리자C','여자',0,1);
+VALUES(MVY_USER_NO_SEQ.nextval,'ADMIN3@naver.com','anqldy!23','관리자C','1959-01-01',SYSDATE,'관리자C','여자',0,1);
 INSERT INTO MVY_USER 
-VALUES(503,'ADMIN4@naver.com','anqldy!23','관리자D','1964-01-01',SYSDATE,'관리자D','남자',0,1);
+VALUES(MVY_USER_NO_SEQ.nextval,'ADMIN4@naver.com','anqldy!23','관리자D','1964-01-01',SYSDATE,'관리자D','남자',0,1);
 
 
 INSERT INTO MVY_MOVIE
-VALUES(1,3,'코미디','타짜1','2006-01-01','한국','최동훈',139,'18',15000,'관리자A', SYSDATE, 0, '타짜1내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,3,'코미디','타짜1','2006-01-01','한국','최동훈',139,'18',15000,'관리자A', SYSDATE, 0, '타짜1내용');
 INSERT INTO MVY_MOVIE
-VALUES(2,3,'코미디','타짜2','2007-01-02','한국','최동훈',113,'18',15000,'관리자A', SYSDATE, 0, '타짜2내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,3,'코미디','타짜2','2007-01-02','한국','최동훈',113,'18',15000,'관리자A', SYSDATE, 0, '타짜2내용');
 INSERT INTO MVY_MOVIE
-VALUES(3,3,'코미디','타짜3','2008-02-02','한국','최동훈',124,'18',15000,'관리자A', SYSDATE, 0, '타짜3내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,3,'코미디','타짜3','2008-02-02','한국','최동훈',124,'18',15000,'관리자A', SYSDATE, 0, '타짜3내용');
 INSERT INTO MVY_MOVIE
-VALUES(4,6,'성인물(에로)','타짜4 여자타짜','2015-06-02','한국','성태기',98,'18',15000,'관리자A', SYSDATE, 0, '타짜4내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,6,'성인물(에로)','타짜4 여자타짜','2015-06-02','한국','성태기',98,'18',15000,'관리자A', SYSDATE, 0, '타짜4내용');
 INSERT INTO MVY_MOVIE
-VALUES(5,5,'범죄','타짜5 범타짜','2018-01-02','한국','김장훈',151,'18',15000,'관리자A', SYSDATE, 0, '타짜5내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,5,'범죄','타짜5 범타짜','2018-01-02','한국','김장훈',151,'18',15000,'관리자A', SYSDATE, 0, '타짜5내용');
 INSERT INTO MVY_MOVIE
-VALUES(6,11,'스릴러','타짜6 공기타짜','2021-01-02','한국','주환영',103,'18',15000,'관리자A', SYSDATE, 0, '타짜6내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,11,'스릴러','타짜6 공기타짜','2021-01-02','한국','주환영',103,'18',15000,'관리자A', SYSDATE, 0, '타짜6내용');
 INSERT INTO MVY_MOVIE
-VALUES(7,7,'SF','아이언맨1','2010-01-01','미국','토마스',115,'15',15000,'관리자A', SYSDATE, 0, '아이언맨1내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,7,'SF','아이언맨1','2010-01-01','미국','토마스',115,'15',15000,'관리자A', SYSDATE, 0, '아이언맨1내용');
 INSERT INTO MVY_MOVIE
-VALUES(8,7,'SF','아이언맨2','2013-01-01','미국','토마스',123,'15',15000,'관리자A', SYSDATE, 0, '아이언맨2내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,7,'SF','아이언맨2','2013-01-01','미국','토마스',123,'15',15000,'관리자A', SYSDATE, 0, '아이언맨2내용');
 INSERT INTO MVY_MOVIE
-VALUES(9,7,'SF','아이언맨3','2016-01-01','미국','토마스',109,'15',15000,'관리자A', SYSDATE, 0, '아이언맨3내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,7,'SF','아이언맨3','2016-01-01','미국','토마스',109,'15',15000,'관리자A', SYSDATE, 0, '아이언맨3내용');
 INSERT INTO MVY_MOVIE
-VALUES(10,5,'범죄','분노의질주1','2000-01-01','미국','제임스',113,'15',15000,'관리자A', SYSDATE, 0, '분노의질주1내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,5,'범죄','분노의질주1','2000-01-01','미국','제임스',113,'15',15000,'관리자A', SYSDATE, 0, '분노의질주1내용');
 INSERT INTO MVY_MOVIE
-VALUES(11,4,'다큐멘터리','분노의질주2','2002-01-01','미국','제임스',123,'15',15000,'관리자B', SYSDATE, 0, '분노의질주2내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,4,'다큐멘터리','분노의질주2','2002-01-01','미국','제임스',123,'15',15000,'관리자B', SYSDATE, 0, '분노의질주2내용');
 INSERT INTO MVY_MOVIE
-VALUES(12,5,'범죄','분노의질주3','2003-01-01','미국','제임스',133,'15',15000,'관리자B', SYSDATE, 0, '분노의질주3내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,5,'범죄','분노의질주3','2003-01-01','미국','제임스',133,'15',15000,'관리자B', SYSDATE, 0, '분노의질주3내용');
 INSERT INTO MVY_MOVIE
-VALUES(13,5,'범죄','분노의질주4','2005-01-01','미국','로튼',113,'15',15000,'관리자B', SYSDATE, 0, '분노의질주4내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,5,'범죄','분노의질주4','2005-01-01','미국','로튼',113,'15',15000,'관리자B', SYSDATE, 0, '분노의질주4내용');
 INSERT INTO MVY_MOVIE
-VALUES(14,5,'범죄','분노의질주5','2008-01-01','미국','로튼',113,'15',15000,'관리자B', SYSDATE, 0, '분노의질주5내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,5,'범죄','분노의질주5','2008-01-01','미국','로튼',113,'15',15000,'관리자B', SYSDATE, 0, '분노의질주5내용');
 INSERT INTO MVY_MOVIE
-VALUES(15,6,'성인물(에로)','분노의질주6','2011-01-01','바이슨','제임스',113,'15',15000,'관리자B', SYSDATE, 0, '분노의질주6내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,6,'성인물(에로)','분노의질주6','2011-01-01','바이슨','제임스',113,'15',15000,'관리자B', SYSDATE, 0, '분노의질주6내용');
 INSERT INTO MVY_MOVIE
-VALUES(16,5,'범죄','분노의질주7','2013-01-01','미국','바이슨',113,'15',15000,'관리자B', SYSDATE, 0, '분노의질주7내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,5,'범죄','분노의질주7','2013-01-01','미국','바이슨',113,'15',15000,'관리자B', SYSDATE, 0, '분노의질주7내용');
 INSERT INTO MVY_MOVIE
-VALUES(17,3,'코미디','분노의질주8','2015-01-01','미국','바이든',113,'15',15000,'관리자B', SYSDATE, 0, '분노의질주8내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,3,'코미디','분노의질주8','2015-01-01','미국','바이든',113,'15',15000,'관리자B', SYSDATE, 0, '분노의질주8내용');
 INSERT INTO MVY_MOVIE
-VALUES(18,5,'범죄','분노의질주9','2020-01-01','미국','스미스',113,'15',15000,'관리자B', SYSDATE, 0, '분노의질주9내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,5,'범죄','분노의질주9','2020-01-01','미국','스미스',113,'15',15000,'관리자B', SYSDATE, 0, '분노의질주9내용');
 INSERT INTO MVY_MOVIE
-VALUES(19,7,'SF','블랙팬서','2022-01-01','미국','제임스딘',123,'15',15000,'관리자B',SYSDATE,0,'블랙팬서의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,7,'SF','블랙팬서','2022-01-01','미국','제임스딘',123,'15',15000,'관리자B',SYSDATE,0,'블랙팬서의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(20,9,'어드벤처','탑건메버릭','2022-01-01','미국','구스타프',123,'15',15000,'관리자B',SYSDATE,0,'메버릭의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,9,'어드벤처','탑건메버릭','2022-01-01','미국','구스타프',123,'15',15000,'관리자B',SYSDATE,0,'메버릭의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(21,1,'애니메이션','원피스필름레드','2022-05-01','일본','시바사키',113,'12',15000,'관리자C',SYSDATE,0,'원피스의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,1,'애니메이션','원피스필름레드','2022-05-01','일본','시바사키',113,'12',15000,'관리자C',SYSDATE,0,'원피스의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(22,6,'성인물(에로)','착한형수1','2015-05-01','한국','김동우',103,'18',15000,'관리자C',SYSDATE,0,'착한형수1의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,6,'성인물(에로)','착한형수1','2015-05-01','한국','김동우',103,'18',15000,'관리자C',SYSDATE,0,'착한형수1의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(23,6,'성인물(에로)','착한형수2','2016-05-01','한국','김동우',98,'18',15000,'관리자C',SYSDATE,0,'착한형수2의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,6,'성인물(에로)','착한형수2','2016-05-01','한국','김동우',98,'18',15000,'관리자C',SYSDATE,0,'착한형수2의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(24,6,'성인물(에로)','착한형수3','2017-05-01','한국','김동우',87,'18',15000,'관리자C',SYSDATE,0,'착한형수3의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,6,'성인물(에로)','착한형수3','2017-05-01','한국','김동우',87,'18',15000,'관리자C',SYSDATE,0,'착한형수3의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(25,1,'애니메이션','아바타2','2022-05-01','미국','카메론',113,'12',15000,'관리자C',SYSDATE,0,'아바타2의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,1,'애니메이션','아바타2','2022-05-01','미국','카메론',113,'12',15000,'관리자C',SYSDATE,0,'아바타2의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(26,11,'스릴러','스크림1','1999-05-01','미국','레드넥',120,'18',15000,'관리자C',SYSDATE,0,'스크림1의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,11,'스릴러','스크림1','1999-05-01','미국','레드넥',120,'18',15000,'관리자C',SYSDATE,0,'스크림1의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(27,11,'스릴러','스크림2','2002-05-01','미국','레드넥',113,'18',15000,'관리자C',SYSDATE,0,'스크림2의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,11,'스릴러','스크림2','2002-05-01','미국','레드넥',113,'18',15000,'관리자C',SYSDATE,0,'스크림2의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(28,11,'스릴러','스크림3','2008-05-01','미국','레드넥',115,'18',15000,'관리자C',SYSDATE,0,'스크림3의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,11,'스릴러','스크림3','2008-05-01','미국','레드넥',115,'18',15000,'관리자C',SYSDATE,0,'스크림3의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(29,11,'스릴러','스크림4','2011-05-01','미국','레드넥',119,'18',15000,'관리자C',SYSDATE,0,'스크림4의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,11,'스릴러','스크림4','2011-05-01','미국','레드넥',119,'18',15000,'관리자C',SYSDATE,0,'스크림4의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(30,10,'공포(호러)','스크림5','2020-05-01','미국','레드넥',103,'18',15000,'관리자C',SYSDATE,0,'스크림5의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,10,'공포(호러)','스크림5','2020-05-01','미국','레드넥',103,'18',15000,'관리자C',SYSDATE,0,'스크림5의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(31,1,'애니메이션','미니언즈1','2015-05-01','미국','디즈니',115,'7',15000,'관리자C',SYSDATE,0,'미니언즈1의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,1,'애니메이션','미니언즈1','2015-05-01','미국','디즈니',115,'7',15000,'관리자C',SYSDATE,0,'미니언즈1의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(32,1,'애니메이션','미니언즈2','2022-05-01','미국','디즈니',121,'7',15000,'관리자C',SYSDATE,0,'미니언즈2의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,1,'애니메이션','미니언즈2','2022-05-01','미국','디즈니',121,'7',15000,'관리자C',SYSDATE,0,'미니언즈2의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(33,1,'애니메이션','미니언즈3','2022-05-01','미국','디즈니',109,'7',15000,'관리자C',SYSDATE,0,'미니언즈3의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,1,'애니메이션','미니언즈3','2022-05-01','미국','디즈니',109,'7',15000,'관리자C',SYSDATE,0,'미니언즈3의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(34,1,'애니메이션','미니언즈4','2022-05-01','미국','디즈니',113,'7',15000,'관리자C',SYSDATE,0,'미니언즈4의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,1,'애니메이션','미니언즈4','2022-05-01','미국','디즈니',113,'7',15000,'관리자C',SYSDATE,0,'미니언즈4의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(35,1,'애니메이션','미니언즈5','2022-05-01','미국','디즈니',109,'7',15000,'관리자C',SYSDATE,0,'미니언즈5의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,1,'애니메이션','미니언즈5','2022-05-01','미국','디즈니',109,'7',15000,'관리자C',SYSDATE,0,'미니언즈5의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(36,4,'다큐멘터리','야쿠자와가족','2021-05-01','일본','고레까와',131,'18',15000,'관리자C',SYSDATE,0,'미니언즈5의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,4,'다큐멘터리','야쿠자와가족','2021-05-01','일본','고레까와',131,'18',15000,'관리자C',SYSDATE,0,'미니언즈5의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(37,10,'공포(호러)','레지던트이블1','1999-05-01','미국','안데르센',115,'18',15000,'관리자D',SYSDATE,0,'레지던트이블1의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,10,'공포(호러)','레지던트이블1','1999-05-01','미국','안데르센',115,'18',15000,'관리자D',SYSDATE,0,'레지던트이블1의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(38,10,'공포(호러)','레지던트이블2','2003-05-01','미국','안데르센',109,'18',15000,'관리자D',SYSDATE,0,'레지던트이블2의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,10,'공포(호러)','레지던트이블2','2003-05-01','미국','안데르센',109,'18',15000,'관리자D',SYSDATE,0,'레지던트이블2의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(39,10,'공포(호러)','레지던트이블3','2010-05-01','미국','안데르센',103,'18',15000,'관리자D',SYSDATE,0,'레지던트이블3의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,10,'공포(호러)','레지던트이블3','2010-05-01','미국','안데르센',103,'18',15000,'관리자D',SYSDATE,0,'레지던트이블3의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(40,10,'공포(호러)','레지던트이블4','2011-05-01','미국','안데르센',121,'18',15000,'관리자D',SYSDATE,0,'레지던트이블4의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,10,'공포(호러)','레지던트이블4','2011-05-01','미국','안데르센',121,'18',15000,'관리자D',SYSDATE,0,'레지던트이블4의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(41,10,'공포(호러)','레지던트이블5','2013-05-01','미국','안데르센',115,'18',15000,'관리자D',SYSDATE,0,'레지던트이블5의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,10,'공포(호러)','레지던트이블5','2013-05-01','미국','안데르센',115,'18',15000,'관리자D',SYSDATE,0,'레지던트이블5의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(42,10,'공포(호러)','레지던트이블6','2015-05-01','미국','안데르센',99,'18',15000,'관리자D',SYSDATE,0,'레지던트이블6의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,10,'공포(호러)','레지던트이블6','2015-05-01','미국','안데르센',99,'18',15000,'관리자D',SYSDATE,0,'레지던트이블6의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(43,10,'공포(호러)','레지던트이블7','2017-05-01','미국','안데르센',105,'18',15000,'관리자D',SYSDATE,0,'레지던트이블7의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,10,'공포(호러)','레지던트이블7','2017-05-01','미국','안데르센',105,'18',15000,'관리자D',SYSDATE,0,'레지던트이블7의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(44,10,'공포(호러)','레지던트이블8','2020-05-01','미국','안데르센',133,'18',15000,'관리자D',SYSDATE,0,'레지던트이블8의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,10,'공포(호러)','레지던트이블8','2020-05-01','미국','안데르센',133,'18',15000,'관리자D',SYSDATE,0,'레지던트이블8의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(45,7,'SF','가디언즈오브갤럭시1','2015-01-01','미국','톰하디',130,'15',15000,'관리자D',SYSDATE,0,'가디언즈오브갤럭시1의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,7,'SF','가디언즈오브갤럭시1','2015-01-01','미국','톰하디',130,'15',15000,'관리자D',SYSDATE,0,'가디언즈오브갤럭시1의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(46,7,'SF','가디언즈오브갤럭시2','2017-01-01','미국','톰하디',115,'15',15000,'관리자D',SYSDATE,0,'가디언즈오브갤럭시2의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,7,'SF','가디언즈오브갤럭시2','2017-01-01','미국','톰하디',115,'15',15000,'관리자D',SYSDATE,0,'가디언즈오브갤럭시2의 내용');
 INSERT INTO MVY_MOVIE
-VALUES(47,7,'SF','가디언즈오브갤럭시3','2022-01-01','미국','톰하디',123,'15',15000,'관리자D',SYSDATE,0,'가디언즈오브갤럭시3의 내용');
+VALUES(MVY_MOVIE_NO_SEQ.nextval,7,'SF','가디언즈오브갤럭시3','2022-01-01','미국','톰하디',123,'15',15000,'관리자D',SYSDATE,0,'가디언즈오브갤럭시3의 내용');
 
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(1,1,'타짜1.jpg', '영화1.jpg', 50000, SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,1,'타짜1.jpg', '영화1.jpg', 50000, SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(2,2,'타짜2.jpg', '영화2.jpg', 50000, SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,2,'타짜2.jpg', '영화2.jpg', 50000, SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(3,3,'타짜3.jpg', '영화3.jpg', 50000, SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,3,'타짜3.jpg', '영화3.jpg', 50000, SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(4,4,'타짜4.jpg', '영화4.jpg', 50000, SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,4,'타짜4.jpg', '영화4.jpg', 50000, SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(5,5,'타짜5.jpg', '영화5.jpg', 50000, SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,5,'타짜5.jpg', '영화5.jpg', 50000, SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(6,6,'타짜6.jpg', '영화6.jpg', 50000, SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,6,'타짜6.jpg', '영화6.jpg', 50000, SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(7,7,'아이언맨1.jpg', '영화7.jpg', 50000, SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,7,'아이언맨1.jpg', '영화7.jpg', 50000, SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(8,8,'아이언맨2.jpg', '영화8.jpg', 50000, SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,8,'아이언맨2.jpg', '영화8.jpg', 50000, SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(9,9,'아이언맨3.jpg', '영화9.jpg', 50000, SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,9,'아이언맨3.jpg', '영화9.jpg', 50000, SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(10,10,'분노의질주1.jpg', '영화10.jpg', 50000, SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,10,'분노의질주1.jpg', '영화10.jpg', 50000, SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(11,11,'분노의질주2.jpg', '영화11.jpg', 50000, SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,11,'분노의질주2.jpg', '영화11.jpg', 50000, SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(12,12,'분노의질주3.jpg', '영화12.jpg', 50000, SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,12,'분노의질주3.jpg', '영화12.jpg', 50000, SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(13,13,'분노의질주4.jpg', '영화13.jpg', 50000, SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,13,'분노의질주4.jpg', '영화13.jpg', 50000, SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(14,14,'분노의질주5.jpg', '영화14.jpg', 50000, SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,14,'분노의질주5.jpg', '영화14.jpg', 50000, SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(15,15,'분노의질주6.jpg', '영화15.jpg', 50000, SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,15,'분노의질주6.jpg', '영화15.jpg', 50000, SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(16,16,'분노의질주7.jpg', '영화16.jpg', 50000, SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,16,'분노의질주7.jpg', '영화16.jpg', 50000, SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(17,17,'분노의질주8.jpg', '영화17.jpg', 50000, SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,17,'분노의질주8.jpg', '영화17.jpg', 50000, SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(18,18,'분노의질주9.jpg', '영화18.jpg', 50000, SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,18,'분노의질주9.jpg', '영화18.jpg', 50000, SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(19,19,'블랙팬서.jpg', '영화19.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,19,'블랙팬서.jpg', '영화19.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(20,20,'탑건.jpg', '영화20.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,20,'탑건.jpg', '영화20.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(21,21,'원피스필름레드.jpg', '영화21.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,21,'원피스필름레드.jpg', '영화21.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(22,22,'착한형수1.jpg', '영화22.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,22,'착한형수1.jpg', '영화22.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(23,23,'착한형수2.jpg', '영화23.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,23,'착한형수2.jpg', '영화23.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(24,24,'착한형수3.jpg', '영화24.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,24,'착한형수3.jpg', '영화24.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(25,25,'아바타2.jpg', '영화25.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,25,'아바타2.jpg', '영화25.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(26,26,'스크림1.jpg', '영화26.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,26,'스크림1.jpg', '영화26.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(27,27,'스크림2.jpg', '영화27.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,27,'스크림2.jpg', '영화27.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(28,28,'스크림3.jpg', '영화28.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,28,'스크림3.jpg', '영화28.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(29,29,'스크림4.jpg', '영화29.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,29,'스크림4.jpg', '영화29.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(30,30,'스크림5.jpg', '영화30.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,30,'스크림5.jpg', '영화30.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(31,31,'미니언즈1.jpg', '영화31.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,31,'미니언즈1.jpg', '영화31.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(32,32,'미니언즈2.jpg', '영화32.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,32,'미니언즈2.jpg', '영화32.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(33,33,'미니언즈3.jpg', '영화33.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,33,'미니언즈3.jpg', '영화33.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(34,34,'미니언즈4.jpg', '영화34.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,34,'미니언즈4.jpg', '영화34.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(35,35,'미니언즈5.jpg', '영화35.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,35,'미니언즈5.jpg', '영화35.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(36,36,'야쿠자와가족.jpg', '영화36.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,36,'야쿠자와가족.jpg', '영화36.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(37,37,'레지던트이블1.jpg', '영화37.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,37,'레지던트이블1.jpg', '영화37.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(38,38,'레지던트이블2.jpg', '영화38.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,38,'레지던트이블2.jpg', '영화38.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(39,39,'레지던트이블3.jpg', '영화39.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,39,'레지던트이블3.jpg', '영화39.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(40,40,'레지던트이블4.jpg', '영화40.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,40,'레지던트이블4.jpg', '영화40.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(41,41,'레지던트이블5.jpg', '영화41.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,41,'레지던트이블5.jpg', '영화41.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(42,42,'레지던트이블6.jpg', '영화42.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,42,'레지던트이블6.jpg', '영화42.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(43,43,'레지던트이블7.jpg', '영화43.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,43,'레지던트이블7.jpg', '영화43.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(44,44,'레지던트이블8.jpg', '영화44.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,44,'레지던트이블8.jpg', '영화44.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(45,45,'가오갤1.jpg', '영화45.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,45,'가오갤1.jpg', '영화45.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(46,46,'가오갤2.jpg', '영화46.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,46,'가오갤2.jpg', '영화46.jpg', 50000,SYSDATE);
 INSERT INTO MVY_MOVIE_PHOTO
-VALUES(47,47,'가오갤3.jpg', '영화47.jpg', 50000,SYSDATE);
+VALUES(MVY_MOVIE_PHOTO_SEQ.nextval,47,'가오갤3.jpg', '영화47.jpg', 50000,SYSDATE);
