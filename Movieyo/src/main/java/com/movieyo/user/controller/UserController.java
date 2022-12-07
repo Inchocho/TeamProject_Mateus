@@ -180,12 +180,19 @@ public class UserController {
 		List<Map<String, Object>> genreList = movieService.genreSelect(userNo);
 		
 		String likeGenre = "";
-
-		for(int i = 0; i < genreList.size(); i++) {
-			likeGenre += (String)genreList.get(i).get("GENRE_NAME")+ ", ";			
+		try {
+			
+			for(int i = 0; i < genreList.size(); i++) {
+				likeGenre += (String)genreList.get(i).get("GENRE_NAME")+ ", ";			
+			}
+			
+			if(likeGenre != "") {
+				likeGenre = likeGenre.substring(0, likeGenre.length() - 2);
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
-		
-		likeGenre = likeGenre.substring(0, likeGenre.length() - 2);
 		
 		model.addAttribute("likeGenre", likeGenre);
 		

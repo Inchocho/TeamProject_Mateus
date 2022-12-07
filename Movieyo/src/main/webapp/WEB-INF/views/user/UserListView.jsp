@@ -196,6 +196,5 @@ th {
 	</div>
 	</div>
 	<jsp:include page="/WEB-INF/views/Tail.jsp"/>
-	
 </body>
 </html>
