@@ -8,71 +8,38 @@
 <head>
 <meta charset="UTF-8">
 
-<title>영화목록</title>
+<title>영화목록관리</title>
 
 <style type="text/css">
-	table, tr, td, th{
-		border:1px solid black; 
-	}
-	
-	table {
-		border-collapse: collapse;
-	}
-	#tdId{
-	width: 500px;
-	height: 500px;
-	text-align: center;
-	font-weight: bolder;
-	}
-	
-	#myform fieldset{
-    display: inline-block;
-    direction: rtl;
-    border:0;
+table,tr, td, th{
+		border: 1px solid black;
 }
-
-	.titleContainer{
+td{
+	height: 50px;
+}
+table {
+		border-collapse: collapse;
+}
+.curPageDiv{
+	margin: 0px 0px 0px 200px;
+	text-align: center;
+	min-width: 600px;
+}
+.titleContainer{
 	border-bottom: 2px solid #252525;
 	margin: 3px 3px 3px 0px;
-	padding-right: 600px;
-}
-#myform fieldset legend{
-    text-align: right;
-}
-#myform input[type=radio]{
-    display: none;
-}
-#myform label{
-    font-size: 3em;
-    color: transparent;
-    text-shadow: 0 0 0 #f0f0f0;
-}
-#myform label:hover{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-}
-#myform label:hover ~ label{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-}
-#myform input[type=radio]:checked ~ label{
-    text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
-}
-#reviewContents {
-    width: 100%;
-    height: 150px;
-    padding: 10px;
-    box-sizing: border-box;
-    border: solid 1.5px #D3D3D3;
-    border-radius: 5px;
-    font-size: 16px;
-    resize: none;
 }
 
-/* header { */
-/*   position: fixed; */
-/*   top: 0; */
-/*   left: 0; */
-/*   right: 0; */
-/*   } */
+.contContainer{
+    width: 800px;
+    padding: 10px 0 0 30px;
+    margin: auto;
+    font-size: 20px;
+}
+.contContainer table{
+	width: 800px;
+	text-align: center;
+}
   
 #ul li {
   list-style-type: none;
@@ -83,53 +50,98 @@
 th {
 	background-color: gray;
 }
-
-.curPageDiv {
-	margin: 0px;
-	text-align: center;
-	min-width: 892px;
-} 
-
+.buy_btn_css{
+	height: 30px;
+	font-size: 15px;
+    background: #201919;
+    color: #ff81ab;
+    border-radius: 8px;
+    margin: 10px;
+}
+.buy_btn_css:hover {
+	background-color: rgba(135, 206, 235, 0.3);
+	cursor: pointer;
+}
+.title_con{
+	width: 800px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: auto;
+}
+.title_con_sales{
+	font-size: 18px;
+	align-self: flex-end;
+}
+.title_con_sales span span{
+	font-weight: bold;
+}
+.salesView{
+	border-right: 2px dotted;
+    padding-right: 10px;
+}
 </style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
-	function pageMoveMovieDetailFnc(index) {
-		var movieDatailCurPageObj = document.getElementById("movieDatailCurPage");
-		
-		movieDatailCurPageObj.value = document.getElementById("curPage").value;
-		
-		var formId = "movieDetailForm" + index;
-		
-		var movieDetailFormObj = document.getElementById(formId);
-		
-		movieDetailFormObj.submit();
-		
-	}
+
+function pageMoveMovieDetailFnc(index) {
+	var movieDatailCurPageObj = document.getElementById("movieDatailCurPage");
 	
-	function movieAdd() {
-		location.href = '../movie/addMovie.do'
-	}
+	movieDatailCurPageObj.value = document.getElementById("curPage").value;
+	
+	var formId = "movieDetailForm" + index;
+	
+	var movieDetailFormObj = document.getElementById(formId);
+	
+	movieDetailFormObj.submit();
+	
+}
+
+function movieAdd() {
+	location.href = '../movie/addMovie.do'
+}
+
 </script>
 </head>
 
 <body>
 	<header>
 	<jsp:include page="/WEB-INF/views/Header.jsp"/>
+
 	</header>
+	<jsp:include page="/WEB-INF/views/UserMyPageSideMenu.jsp"></jsp:include>
+		
+	<!-- 관리자의 경우 수입 총액을 보여줌 -->
+
 	<div class="curPageDiv">
-	<div class="titleContainer">
-	<h1>영화관리</h1>
-	</div>
 	
+	<div class="titleContainer">
+		<div class="title_con">
+			<div class="title_con_title">
+				<h1>관리자 영화목록 관리</h1>
+			</div>
+		</div>
+	</div>
+		
+	<div class="contContainer">
+		<input type="hidden" value="${userDto.userNo}">
 	<table>
 		<tr>
-			<th>번호</th><th>영화제목</th><th>장르</th><th>감독</th><th>작성자</th><th>등록일</th>
-		</tr>
+			<th>영화번호</th>
+			<th>영화제목</th>
+			<th>영화장르</th>
+			<th>영화감독</th>
+			<th>등록자</th>
+			<th>등록일</th>	
+		</tr>	
+		
 		<c:if test="${not empty movieList}">
+		
 		<c:forEach var="movieDto" items="${movieList}" varStatus="status">
 		<tr>
-			<td>${movieDto.movieNo}</td>
+			<td>
+				${movieDto.movieNo}
+			</td>
 			<td>
 				<form id="movieDetailForm${status.index}" action="./one.do" method="get">					
 					<a href="#" onclick="pageMoveMovieDetailFnc(${status.index});">
@@ -140,7 +152,7 @@ th {
 					<input type="hidden" name="keyword" value="${searchMap.keyword}">
 					<input type="hidden" name="searchOption" value="${searchMap.searchOption}">
 				</form>
-			</td>
+			</td>			
 			<td>${movieDto.genreName}</td>
 			<td>
 				${movieDto.director}
@@ -153,7 +165,9 @@ th {
 								value="${movieDto.creDate}" /></td>
 		</tr>
 		</c:forEach>
+	
 		</c:if>
+		
 		<c:if test="${empty movieList}">
 			<tr>
 				<td colspan="6" id="tdId">영화가 존재하지 않습니다</td>
@@ -170,8 +184,6 @@ th {
 		<input type="hidden"  name="keyword" value="${searchMap.keyword}">
 		<input type="hidden"  name="searchOption" value="${searchMap.searchOption}">
 	</form>
-	
-
 	
 	<form action="./list.do" method="post">
 		<select name="searchOption">
@@ -200,8 +212,8 @@ th {
 	</form>
 		
 	</div>
+	</div>
 	<jsp:include page="/WEB-INF/views/Tail.jsp"/>
 	
 </body>
-
 </html>

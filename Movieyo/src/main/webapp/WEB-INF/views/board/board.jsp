@@ -9,6 +9,7 @@
   <title>게시글 작성</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <style type="text/css">
+  
 	.writing-header{
   	margin-left: 600px;
   	}
@@ -73,14 +74,28 @@
         background-image: linear-gradient(to right, #ed6ea0, #ec8c69, #f7186a , #FBB03B);
     box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);
 }
-    
+.curPageDiv{
+	margin: 0px 0px 0px 30px;
+	text-align: center;
+	min-width: 1000px;
+}
+.titleContainer{
+	border-bottom: 2px solid #252525;
+	margin: 0px auto;
+	padding-right: 850px;
+}
+.contContainer{
+	width: 1000px;
+    margin: 40px auto 0px auto;
+    font-size: 20px;
+}   
   </style>
  
 </head>
 <body>
 	<jsp:include page="../Header.jsp" />
 
-
+<div class="curPageDiv"></div>
 <div class="container" >
   <h1 class="writing-header">게시글 작성</h1>
   <form id="form" class="frm" action="./addCtr.do" method="post">

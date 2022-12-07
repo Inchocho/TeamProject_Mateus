@@ -40,6 +40,7 @@ public class FileUtils {
 		}
 		
 		while(iterator.hasNext()) {
+			
 			multipartFile 
 				= multipart.getFile(iterator.next());
 			
@@ -47,7 +48,8 @@ public class FileUtils {
 				originalFileName = multipartFile.getOriginalFilename();
 				originalFileExtension = originalFileName.substring(
 					originalFileName.lastIndexOf("."));
-				storedFileName = CommonUtils.getRandomString() 
+				//기존방식 storedFileName = CommonUtils.getRandomString() + originalFileExtension; << 오류시 이거로
+				storedFileName = MovieNumbering.getMovieNo() 
 					+ originalFileExtension;
 				
 				

@@ -118,10 +118,10 @@ public class MovieServiceImpl implements MovieService{
 		// TODO Auto-generated method stub
 		int resultNum = 0;
 		
-		System.out.println(resultNum + "1번과정");
+		System.out.println(resultNum + "############1번과정#############");
 		resultNum = movieDao.movieUpdateOne(movieDto);
 		
-		System.out.println(resultNum + "2번과정");
+		System.out.println(resultNum + "#############2번과정##############");
 		int movieNo = movieDto.getMovieNo();
 		
 		// 파일 확인 로직 추가
@@ -129,6 +129,8 @@ public class MovieServiceImpl implements MovieService{
 		MultipartFile multipartFile = null;
 		
 		while(iterator.hasNext()) {
+			
+			System.out.println("새로들어온 파일이 있나요?");
 			
 			multipartFile = multipartHttpServletRequest.getFile(iterator.next());
 			
@@ -140,86 +142,45 @@ public class MovieServiceImpl implements MovieService{
 				log.debug("size : {} ", multipartFile.getSize());
 				
 				log.debug("----file end----");
-			}
-		}
-		
-		try {
-			int parentSeq = movieDto.getMovieNo();
-			
-			System.out.println(parentSeq + "3번과정");
-
-			List<Map<String, Object>> list 
-			= fileUtils.parseInsertFileInfo(parentSeq, multipartHttpServletRequest);
-			
-			System.out.println(list + "4번과정 LIST");
-			
-			//imgMap에 값이 들어온다 -> 해당 영화번호에 사진이 있다는것을 의미
-			Map<String, Object> imgMap = movieDao.fileSelectOne(parentSeq);
-			System.out.println(imgMap + "5번과정 imgMap");
-			
-			//fileIdx - 기존 파일인덱스, fileIdx2 새로만든 인덱스
-			int fileIdx2 = 0;
-			
-			//해당 영화에 사진이 있으면? 
-			if(imgMap != null) {
-				//fileIdx2에 해당영화의 인덱스를 담아둠
-				fileIdx2 = Integer.parseInt(String.valueOf(imgMap.get("IDX")));
 				
-				System.out.println("6번과정 fileIdx" + fileIdx);
-				System.out.println("7번과정 fileIdx2" + fileIdx2);
 				
-				if(fileIdx2 != fileIdx) {
-//					fileUtils.parseUpdateFileInfo(imgMap);
-					System.out.println("8번과정 파일 인덱스 값이 다를때");
-//					movieDao.fileDelete(parentSeq);
+				try {
+					int parentSeq = movieDto.getMovieNo();
 					
-					for(Map<String, Object> map : list) {
-						movieDao.insertFile(map);
+					List<Map<String, Object>> list 
+					= fileUtils.parseInsertFileInfo(parentSeq, multipartHttpServletRequest);
+					
+					//imgMap에 값이 들어온다 -> 해당 영화번호에 사진이 있다는것을 의미
+					Map<String, Object> imgMap = movieDao.fileSelectOne(parentSeq);
+					
+					//fileIdx - 기존 파일인덱스, fileIdx2 새로만든 인덱스
+					
+					//해당 영화에 사진이 있으면? 
+					if(imgMap != null) {
+						
+							fileUtils.parseUpdateFileInfo(imgMap);
+							movieDao.fileDelete(parentSeq);
+							
+							for(Map<String, Object> map : list) {
+								movieDao.insertFile(map);
+							}
+
+					}else {
+						//해당 영화에 사진이 없으면?
+						for(Map<String, Object> map : list) {
+							movieDao.insertFile(map);
+						}
+							
 					}
-
-				}
-			}else {
-				//해당 영화에 사진이 없으면?
-				System.out.println("9번과정 왜안타냐?");
-				for(Map<String, Object> map : list) {
-					System.out.println(map);
-					System.out.println("뭐냐이거?");
-					movieDao.insertFile(map);
-				}
 					
+				} catch (Exception e) {
+					TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+				}				
 			}
-			
-//			//해당번호에 맞는 저장된 파일명이 tempFileMap에 담김
-//			Map<String, Object> tempFileMap 
-//				= movieDao.fileSelectStoredFileName(parentSeq);
-//			
-//			movieDao.fileDelete(parentSeq);
-//			
-//			
-//			System.out.println(tempFileMap);
-//			
-//			if (list.isEmpty() == false) {
-//				if (tempFileMap != null) {
-//					movieDao.fileDelete(parentSeq);
-//					fileUtils.parseUpdateFileInfo(tempFileMap);
-//				}
-//				
-//				for (Map<String, Object> map : list) {
-//					movieDao.insertFile(map);
-//				}
-//			}else if(fileIdx == -1){
-//				if (tempFileMap != null) {
-//					movieDao.fileDelete(parentSeq);
-//					fileUtils.parseUpdateFileInfo(tempFileMap);
-//				}
-//			}
-		} catch (Exception e) {
-			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 		}
-		
 	
 	return resultNum;
-		
+	
 	}
 
 	@Override

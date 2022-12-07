@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>구매내역관리</title>
+<title>회원정보관리</title>
 
 <style type="text/css">
 table,tr, td, th{
@@ -94,9 +94,6 @@ th {
 	</header>
 	<jsp:include page="/WEB-INF/views/UserMyPageSideMenu.jsp"></jsp:include>
 		
-	<!-- 관리자의 경우 수입 총액을 보여줌 -->
-
-
 	<div class="curPageDiv">
 	
 	<div class="titleContainer">
@@ -146,7 +143,7 @@ th {
 			<td>
 				<form id='userDetailForm' action="./one.do" method="get">
 					<input type="hidden" name="userNo" value="${userDto.userNo}">
-					<input type="submit" value="상세">
+					<input class='body_userDetail_btn_css' type="submit" value="상세">
 				</form>
 			</td>
 		</tr>			
@@ -197,4 +194,7 @@ th {
 	</div>
 	<jsp:include page="/WEB-INF/views/Tail.jsp"/>
 </body>
+<style>
+
+</style>
 </html>
