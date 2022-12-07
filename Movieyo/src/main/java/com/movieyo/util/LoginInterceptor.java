@@ -17,10 +17,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
         
         HttpSession session = request.getSession();
         UserDto userDto = (UserDto) session.getAttribute("userDto");
- 
 
         if(userDto == null){
-            response.sendRedirect("/Movieyo/auth/login.do");
+        	
+            response.sendRedirect(request.getContextPath() + "/auth/login.do");
             return false;
         }
 
@@ -29,19 +29,17 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
     }
  
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-            ModelAndView modelAndView) throws Exception {
-        // TODO Auto-generated method stub
-        super.postHandle(request, response, handler, modelAndView);
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler
+    		, ModelAndView modelAndView) throws Exception {
+    	
     }
- 
+
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-            throws Exception {
-        // TODO Auto-generated method stub
-        super.afterCompletion(request, response, handler, ex);
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response
+    		, Object handler, Exception ex) throws Exception {
     }
- 
     
 }
+
+
  
