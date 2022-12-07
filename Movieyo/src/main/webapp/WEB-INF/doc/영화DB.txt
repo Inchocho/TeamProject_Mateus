@@ -1,6 +1,10 @@
-<!-- 관리자 계정 -->
-영화번호, 사진의 경우 1부터 넣었으므로
-시퀀스 시작값을 변경해서 넣어야함 주의
+
+-- server.xml에 <host> </host> 안에다가 추가해야 이미지가 보임(첨부한 폴더 이미지는 c:/upload경로에 넣어야함)
+-- <Context docBase="C://upload" path="/Movieyo/image" reloadable="true"/>
+
+--관리자계정
+--영화번호, 사진의 경우 1부터 넣었으므로
+--시퀀스 시작값을 변경해서 넣어야함 주의
 
 INSERT INTO MVY_USER 
 VALUES(MVY_USER_NO_SEQ.nextval,'1','1','슈퍼계정1','1985-01-01',SYSDATE,'슈퍼계정1','남자',0,1);
