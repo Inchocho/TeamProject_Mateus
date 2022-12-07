@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8" http-equiv="refresh" content="3; URL=/Movieyo/auth/login.do">
+<meta charset="UTF-8">
 
 <title>시스템 오류</title>
 
