@@ -53,7 +53,6 @@
 	border-radius: 4px;
 	background: #fff;
 }
-
 .textarea {
 	width: 858px;
 	height: 300px;

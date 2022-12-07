@@ -64,7 +64,6 @@
 	</div>
 	
 	${userDto2.nickname}님 정말로 탈퇴하시겠습니까?<br>
-	
 <%-- 	<input type="hidden" value="${userDto2.password}" id="password"><br> --%>
 	<div style="width: 400px;">
 		<div class="userInfo">

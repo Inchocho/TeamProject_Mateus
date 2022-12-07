@@ -87,7 +87,6 @@ th {
 	border-bottom: 1px dashed #d1d1d1;
 	margin: 2px 0px;
 }
-
 .p {
 	width: 100px;
 	height: 30px;
