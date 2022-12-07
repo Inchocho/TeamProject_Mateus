@@ -18,38 +18,22 @@
 	#boardTab{
 		width: 700px;
 		height: 700px;
+		text-align: left;
 	}
 	table, tr, td, th { 
 	border: 2px solid black; 
 	} 
-	#boardOneT{
-		margin-left: 800px;
-	}
 	#frm{
 		border-collapse: collapse;
 		border: 1px solid #e9e8e8;;
-		margin-left: 550px;
 	}
-	
-	#num{
-		
-	}
-	#writer{
-		
-	}
-	#title{
-		
-	}
-	#content{
-		
-	}
+
 	#bdCtt{
 	font-size:20px;
-	padding: 270px;
 	}
 	
 	.boardsize input{
-	width: 400px;
+	width: 640px;
 	border: 1px solid black;
 	}
 	.click-btn{
@@ -88,30 +72,37 @@
     background-image: linear-gradient(to right, #f5ce62, #e43603, #fa7199, #e85a19);
     box-shadow: 0 4px 15px 0 rgba(229, 66, 10, 0.75);
     }
+.curPageDiv{
+	margin: 0px 0px 0px 30px;
+	text-align: center;
+	min-width: 730px;
+}
+.titleContainer{
+	border-bottom: 2px solid #252525;
+	margin: 0px auto;
+}
+.contContainer{
+	width: 730px;
+    margin: 20px auto 0px auto;
+    font-size: 20px;
+}
+.titleContainer h1{
+	padding-right: 570px;
+	min-width: 180px;
+}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
 <script type="text/javascript">
-	function deleteFnc(BoardNo){
-		var url = "./deleteCtr.do?boardNo=" + boardNo;
-		location.href = url;
-	}
-	
 	function moveFnc(){
-		var url = "./boardList.do?";
-		location.href = url;
+		var url = "/Movieyo/board/boardList.do";
+		$("#frm").attr("action", url);
+		$("#frm").submit();
 	}
-	
-// 	function moveEditFnc(){
-// 		var url = "./updateBoard.do?boardNo=" + ${boardDto.boardNo}
-// 		+ "&boardTitle=" + ${boardDto.boardTitle} + "&boardContent="
-// 		+ ${boardDto.boardContent};
-// 		location.href = url;
-// 	}	
 	$(document).ready(function() {
 		$("#edit").on("click", function(){
 			var frm = $("#frm")[0];
-			frm.action = "updateCtr.do";
+			frm.action = "update.do";
 			frm.submit();
 		});
 	});
@@ -120,13 +111,13 @@
 </head>
 	
 <body>
-
-	<jsp:include page="../Header.jsp" />
-	<h1 id="boardOneT">게시글 상세</h1>
-	
-	
-<form id="frm" action='./updateCtr.do' method='post'>
-	
+<jsp:include page="../Header.jsp" />
+<div class="curPageDiv">
+<div class="titleContainer">
+	<h1>게시글 상세</h1>
+</div>
+<div class="contContainer">
+	<form id="frm" action='./update.do' method="get">
 		<table id="boardTab">
 			<tbody class="boardsize">
 				<tr>
@@ -136,7 +127,7 @@
 				</tr>
 				<tr>
 					<td id="writer">
-					<label for="boardWriter">작성자</label>&nbsp;<input type="text"   name="boardWriter" value="${boardDto.userName}" readonly="readonly"/><br>
+					<label for="boardWriter">작성자</label>&nbsp;<input type="text"   name="userName" value="${boardDto.userName}" readonly="readonly"/><br>
 					</td>
 				</tr>
 				<tr >
@@ -163,10 +154,14 @@
    		</c:when>
    		</c:choose>
 		<input type="button" style="margin-left: 10px;" class="click-btn color2" value="목록으로" onclick="moveFnc()">
-		<input type="hidden" name="modDate" value="${boardDto.boardModdate}"> <br>
-		<input type="hidden" name="creDate" value="${boardDto.boardCredate}"> <br>
+		<input type="hidden" name="modDate" value="${boardDto.boardModdate}">
+		<input type="hidden" name="creDate" value="${boardDto.boardCredate}">
+<input type="hidden" id="boardDetailCurPage" name="curPage" value="${prevMap.curPage}">
+<input type="hidden" name="keyword" value="${prevMap.keyword}">
+<input type="hidden" name="searchOption" value="${prevMap.searchOption}">
 	</form>
-	
+</div>
+</div>
 	<jsp:include page="../Tail.jsp" />
 </body>
 </html>

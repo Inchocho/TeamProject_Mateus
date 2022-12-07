@@ -180,14 +180,18 @@ table {
 <div class="contContainer">
 <div class="bddiv">
 	<div class="btn_area">
-		<button class="write_btn color2" style="" id="delete" onclick="selectDelete();" value="${boardDto.BOARD_NO}">선택삭제 </button>
+		<c:if test="${userDto.userAdmin eq 1}">
+		<button class="write_btn color2" style="" id="delete" onclick="selectDelete();">선택삭제 </button>
+		</c:if>
 		<button type="button" class="write_btn color" onclick="location.href='./add.do'">글쓰기</button><br>
 	</div>
 	<table>
 		<tr id="tableT">
+		<c:if test="${userDto.userAdmin eq 1}">
 			<th id="ckBox">
 			<input type="checkbox" name="checkAll"  id="allCheckBox" />
 			</th>
+		</c:if>
 			<th>말머리</th>
 			<th>번호</th>
 			<th style="width: 400px;">제목</th>
@@ -200,15 +204,17 @@ table {
 		<c:choose>
 			<c:when test="${empty boardList}">
 				<tr>
-					<td colspan="10"
-						style="width: 500px; height: 400px; font-weight: bold; text-align: center;">
+					<td colspan="7"
+						style="height: 400px; font-weight: bold; text-align: center;">
 						게시글이 존재하지 않습니다</td>
 				</tr>
 			</c:when>
 			<c:otherwise>
 				<c:forEach var="boardDto" items="${boardList}">
 					<tr id="hideTr">
+						<c:if test="${userDto.userAdmin eq 1}">
 						<td><input name="chk" type="checkbox"  id="selChk" value="${boardDto.BOARD_NO}"/></td>
+						</c:if>
 						<td>${boardDto.BOARD_HEAD}</td>
 						<td>${boardDto.BOARD_NO}</td>
 						<td>
@@ -217,10 +223,9 @@ table {
 									${boardDto.BOARD_TITLE} </a> 
 									<input type="hidden" name="boardNo" value="${boardDto.BOARD_NO}"> 
 									<input type="hidden" name="userName" value="${boardDto.USER_NAME}"> 
-									<input type="hidden" id="boardDetailCurPage" name="curPage" value="">
+									<input type="hidden" id="boardDetailCurPage" name="curPage" value="${pagingMap.commonPaging.curPage}">
 									<input type="hidden" name="keyword" value="${searchMap.keyword}">
-								<input type="hidden" name="searchOption"
-									value="${searchMap.searchOption}">
+									<input type="hidden" name="searchOption" value="${searchMap.searchOption}">
 							</form>
 						</td>
 						
@@ -270,7 +275,7 @@ table {
 
 	<form action="./boardList.do" id="pagingForm" method="post">
 		<input type="hidden" id="curPage" name="curPage"
-			value="${pagingMap.CommonPaging.curPage}"> 
+			value="${pagingMap.commonPaging.curPage}"> 
 			<input type="hidden" name="keyword" value="${searchMap.keyword}"> 
 			<input type="hidden" name="searchOption" value="${searchMap.searchOption}">
 	</form>

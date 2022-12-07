@@ -1,14 +1,10 @@
 package com.movieyo.board.controller;
 
 
-import java.lang.reflect.Member;
-import java.security.Provider.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.mail.Session;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -84,7 +80,7 @@ public class BoardController {
 		// Map에다가 totalCount, memberPaging을 key로해서 담고
 		pagingMap.put("totalCount", totalCount);
 		pagingMap.put("commonPaging", commonPaging);
-
+		
 		Map<String, Object> searchMap = new HashMap<String, Object>();
 
 		searchMap.put("searchOption", searchOption);
@@ -146,7 +142,7 @@ public class BoardController {
 	}
 
 	
-	
+//	게시글 수정 화면으로
 	@RequestMapping(value = "/board/update.do", method = RequestMethod.GET)
 	public String boardUpdate(int boardNo, Model model, @RequestParam(defaultValue = "1") int curPage,
 			@RequestParam(defaultValue = "all") String searchOption, @RequestParam(defaultValue = "") String keyword) {
@@ -154,32 +150,36 @@ public class BoardController {
 		Map<String, Object> map = boardService.boardSelectOne(boardNo);
 		BoardDto boardDto = (BoardDto) map.get("boardDto");
 
-		Map<String, Object> searchMap = new HashMap<String, Object>();
-		searchMap.put("searchOption", searchOption);
-		searchMap.put("keyword", keyword);
-		searchMap.put("curPage", curPage);
-
-//		List<Map<String, Object>> fileList = (List<Map<String, Object>>) map.get("fileList");
-
+		Map<String, Object> prevMap = new HashMap<>();
+		prevMap.put("curPage", curPage);
+		prevMap.put("searchOption", searchOption);
+		prevMap.put("keyword", keyword);
+		
 		model.addAttribute("boardDto", boardDto);
-//		model.addAttribute("fileList", fileList);
-		model.addAttribute("searchMap", searchMap);
-
+		model.addAttribute("prevMap", prevMap);
+		
 		return "board/boardUpdateForm";
 	}
-	//	게시글 수정 화면으로
+	//게시글 수정 수행
 	@RequestMapping(value = "/board/updateCtr.do", method = RequestMethod.POST)
 	public String boardUpdateCtr(HttpSession session,
-			BoardDto boardDto, Model model, String boardWriter)  {
-	                     // email.password 네임값을 가져옴(@RequestMapping의 힘)
+			BoardDto boardDto, Model model, @RequestParam(defaultValue = "1") int curPage,
+			@RequestParam(defaultValue = "all") String searchOption, @RequestParam(defaultValue = "") String keyword)  {
 	    try {
 			boardService.boardUpdateOne(boardDto);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    model.addAttribute("boardWriter", boardWriter);  
-	    return "board/boardUpdateForm";
+		Map<String, Object> prevMap = new HashMap<>();
+		prevMap.put("curPage", curPage);
+		prevMap.put("searchOption", searchOption);
+		prevMap.put("keyword", keyword);
+		
+		model.addAttribute("boardDto", boardDto);
+		model.addAttribute("prevMap", prevMap);
+	    //수정후 게시글 상세로
+	    return "board/boardOneView";
 	}
 	//게시글 삭제
 	@RequestMapping(value = "/board/deleteCtr.do", method = RequestMethod.GET)

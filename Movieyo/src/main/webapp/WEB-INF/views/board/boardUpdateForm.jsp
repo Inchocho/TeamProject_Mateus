@@ -20,18 +20,15 @@
 	#boardTab{
 		width: 700px;
 		height: 700px;
+		text-align: left;
 		}
 			
 	#boardTwoT{
 		color: #ff81ab;
-		margin-left: 800px;
 		}	
 	
-	#fromT{
-		margin-left: 550px;
-	}
 	.boardsize2 input{
-		width: 654px;
+		width: 640px;
 	}
 	#num{
 		margin-left: 10px;	
@@ -79,7 +76,24 @@
         background-image: linear-gradient(to right, #ed6ea0, #ec8c69, #f7186a , #FBB03B);
     box-shadow: 0 4px 15px 0 rgba(236, 116, 149, 0.75);
 }
-		
+.curPageDiv{
+	margin: 0px 0px 0px 30px;
+	text-align: center;
+	min-width: 730px;
+}
+.titleContainer{
+	border-bottom: 2px solid #252525;
+	margin: 0px auto;
+}
+.contContainer{
+	width: 730px;
+    margin: 20px auto 0px auto;
+    font-size: 20px;
+}
+.titleContainer h1{
+	padding-right: 570px;
+	min-width: 180px;
+}		
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -103,21 +117,15 @@
 	
 	
 </script>
-	
-
-
-
-
 </head>
-	
 <body>
-
-	<jsp:include page="../Header.jsp" />
-	<h1 id="boardTwoT">무비요 게시판</h1>
-	
-	
-	<form id="fromT" action='./updateCtr.do' method='post'>
-	
+<jsp:include page="../Header.jsp" />
+<div class="curPageDiv">
+<div class="titleContainer">
+	<h1 id="boardTwoT">게시글 수정</h1>
+</div>
+<div class="contContainer">
+	<form id="fromT" action='./updateCtr.do' method="post">
 		<table id="boardTab" >
 			<tbody class="boardsize2">
 				<tr>
@@ -127,7 +135,7 @@
 				</tr>
 				<tr>
 					<td id="writer">
-					<label for="boardWriter">작성자</label>&nbsp;<input type="text" name="boardWriter" value="${boardWriter}" readonly="readonly"/><br>
+					<label for="boardWriter">작성자</label>&nbsp;<input type="text" name="userName" value="${boardDto.userName}" readonly="readonly"/><br>
 					</td>
 				</tr>
 				<tr>
@@ -147,10 +155,14 @@
 		<input type='submit' style="margin-left: 100px;" class="btn-click color1" value='수정' >
 		<input type="button" style="margin-left: 10px;" class="btn-click color2" value="목록" onclick="moveFnc()">
 		<input type="button" style="margin-left: 10px;" class="btn-click color3" value="삭제" onclick="pageMoveDeleteFnc(${boardDto.boardNo});">					
-		<input type="hidden" name="modDate" value="${boardDto.boardModdate}"> <br>
-		<input type="hidden" name="creDate" value="${boardDto.boardCredate}"> <br>
+		<input type="hidden" name="modDate" value="${boardDto.boardModdate}">
+		<input type="hidden" name="creDate" value="${boardDto.boardCredate}">
+<input type="hidden" name="userNo" value="${boardDto.userNo}">
+<input type="hidden" id="boardDetailCurPage" name="curPage" value="${prevMap.curPage}">
+<input type="hidden" name="keyword" value="${prevMap.keyword}">
+<input type="hidden" name="searchOption" value="${prevMap.searchOption}">
 	</form>
-	
+</div></div>
 	<jsp:include page="../Tail.jsp" />
 </body>
 </html>

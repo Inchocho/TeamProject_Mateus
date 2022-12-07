@@ -9,38 +9,28 @@
   <title>게시글 작성</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <style type="text/css">
-  
-	.writing-header{
-  	margin-left: 600px;
-  	}
-   	.container{
-   	margin-left: 250px;
-   	}
+
     .TexaAre {
-    width: 600px;
+    width: 500px;
     padding: 5px;
 	background: #f8f8f8;
     border: 1px solid #e9e8e8;
     resize: none;
     outline-color: #e6e6e6;
     }
-   .frm{
-   margin-left:400px;
-   width: 700px;
-   height: 1000px;
-   }
+
    .BTitle{
-    width: 600px;
+    width: 500px;
   	padding: 5px;
    }
   
+
    .btn-write{
     width: 140px;
     font-size: 16px;
     font-weight: 600;
     color: #fff;
     cursor: pointer;
-    margin: 20px;
     height: 55px;
     text-align:center;
     border: none;
@@ -77,48 +67,98 @@
 .curPageDiv{
 	margin: 0px 0px 0px 30px;
 	text-align: center;
-	min-width: 1000px;
+	min-width: 600px;
 }
 .titleContainer{
 	border-bottom: 2px solid #252525;
 	margin: 0px auto;
-	padding-right: 850px;
 }
 .contContainer{
-	width: 1000px;
-    margin: 40px auto 0px auto;
+	width: 630px;
+    margin: 20px auto 0px auto;
     font-size: 20px;
-}   
+}
+.titleContainer h1{
+	padding-right: 400px;
+}
+.cont_form_cont{
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding-bottom: 20px;
+    border-bottom: 1px dashed #d1d1d1;
+}
+.title_selbox_area{
+	display: flex;
+	margin: 10px 0px;
+	width: 180px;
+}
+.title_con_area{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+    width: 600px;
+}
+.cont_area{
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+    width: 600px;
+    margin-top: 20px;
+}
+#Ti, #Con, .BoH{
+	margin: 0px auto;
+}
+.con_form_btn{
+	display: flex;
+    margin: 30px 0px 5px 70px;
+    justify-content: space-between;
+}
+.frm{
+	display: flex;
+	flex-direction: column;
+	border: 1px solid black;
+    padding: 15px;
+}
   </style>
  
 </head>
 <body>
 	<jsp:include page="../Header.jsp" />
 
-<div class="curPageDiv"></div>
-<div class="container" >
-  <h1 class="writing-header">게시글 작성</h1>
+<div class="curPageDiv">
+<div class="titleContainer">
+  <h1>게시글 작성</h1>
+</div>
+<div class="contContainer">
   <form id="form" class="frm" action="./addCtr.do" method="post">
- 
-	<div>
 	<input type="hidden" name="boardNo" value='00'>
 	<input type="hidden" name='userNo' value='${userDto.userNo}'>
-	<select name="boardHead" id="boardHed">
-  		<option value="notice">공지사항</option>
-  		<option value="Questions">문의사항</option>
-  	</select><br>
-	<label for="boardNo" id="Ti" >제목</label>&nbsp;<br><input type="text" class="BTitle" name='boardTitle' id="boardTitle" style="" value="${boardDto.boardTitle}" /><br>
-    	
-    <label for="boardContent" id="Con">글내용</label>&nbsp;&nbsp;<br>
-   			 			<textarea id="boardContent" name="boardContent" class="TexaAre" rows="40" cols="100" >${boardDto.boardContent}</textarea>
-    <br>
-    </div>
+	<div class="cont_form_cont">
+		<div class="title_selbox_area">
+			<label for="boardHed" class="BoH"> 말머리 </label>
+			<select name="boardHead" id="boardHed" style="font-size: 18px;">
+		  		<option value="notice">공지사항</option>
+		  		<option value="Questions">문의사항</option>
+		  	</select>
+		</div>
+		<div class="title_con_area">
+			<label for="boardNo" id="Ti"> 제목 </label>
+			<input type="text" class="BTitle" name='boardTitle' id="boardTitle" style="" value="${boardDto.boardTitle}" />
+		</div>
+		<div class="cont_area">
+		    <label for="boardContent" id="Con">글내용</label>
+		   	<textarea id="boardContent" name="boardContent" class="TexaAre" rows="40" cols="100" ></textarea>
+		</div>
+	</div>
+	<div class="con_form_btn">
       <button type="submit" id="writeNewBtn" class="btn-write color-1">작성하기</button>&nbsp;
       <button type="button" id="listBtn" class="btn-write color-2">목록으로</button>&nbsp;
       <button type="button" id="cancelBtn" class="btn-write color-3">작성취소</button>
-      
-
+	</div>
   </form>
+
+    </div>
 </div>
 <script>
 
