@@ -8,63 +8,60 @@
 <head>
 <meta charset="UTF-8">
 
-<title>무비요게시판</title>
+<title>게시판리스트</title>
 
 <style type="text/css">
-table, tr, td, th {
-	border: 1px solid black;
-	table-layout: fixed;
+table, tr, td, th{
+	border:1px solid black; 
 }
-#hideTr{
-	width: 200px;	
-}
-table td{
-	width: 200px;	
+td{
 	height: 50px;
 }
 table {
 	border-collapse: collapse;
-	width: 600px;
-    border: 1px solid #e9e8e8;
+}
+.curPageDiv{
+	margin: 0px 0px 0px 30px;
+	text-align: center;
+	min-width: 1000px;
+}
+.titleContainer{
+	border-bottom: 2px solid #252525;
+	margin: 0px auto;
+	padding-right: 850px;
+}
+.contContainer{
+	width: 1000px;
+    margin: 40px auto 0px auto;
+    font-size: 20px;
+}
+.contContainer table{
+	width: 1000px;
+	border: 1px solid #e9e8e8;
     table-layout: fixed;
     padding: 8px;
     outline-color: #e6e6e6;
     text-align: center;
+    margin: 20px 0px;
 }
-.bodyCl{
-	background-color: #ffffff;
+
+.contContainer table th{
+	background-color: 	#F8DFE6;
 }
-.boardCredate{
- border-collapse: col
+
+.bddiv{
+	display: flex;
+	flex-direction: column;
+}
+.btn_area{
+	display: flex;
+	justify-content: flex-end;
 }
 #searchOptionSel{
 	background-color : #00ff7f;
  	text-align:center;
 	width: 200px;
   	padding: 10px;
-}
-.curPageDiv{
-	margin: 0px 0px 0px 200px;
-	text-align: center;
-	min-width: 600px;
-}
-.titleContainer{
-	border-bottom: 2px solid #252525;
-	margin: 3px 3px 3px 0px;
-	padding-right: 250px;
-}
-
-.contContainer{
-    width: 1300px;
-    padding: 10px 0 0 30px;
-    margin: auto;
-}
-.btDiv{
-	margin-left: 210px; 
-}
-
-#tableT{
- background-color: 	#F8DFE6;
 }
 
 .bdSearch{
@@ -110,42 +107,9 @@ table {
 		width: 30px;
 		height: 40px;
 	}
-	#boardM{
-		color: #ff81ab;
-	}
 	#selChk{
 		accent-color:#F1948A;
 	}
-	.boardHead{
-		width: 70px;
-		height: 40px;
-	}
-	.boardNo{
-		width: 40px;
-		height: 40px;
-	}
-	.boardTitle{
-		width: 650px;
-		height: 40px;
-	}
-	.boardWriter{
-		width: 100px;
-		height: 40px;
-	}
-	.boardModdate{
-		width: 100px;
-		height: 40px;
-	}
-	.boardCredate{
-		width: 100px;
-		height: 40px;
-	}
-	.boardCount{
-		width: 100px;
-		height: 40px;
-	}
-	
-	
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
@@ -182,16 +146,6 @@ table {
             }
         });
     });
-// 	$(document).on('click', '#delete', function() {	// 삭제버튼 클릭 시 
-// 		var checkBoxArr = [];
-
-// 		$(".chk:checked").each(function(i,e){
-// 		 var boardNo = $(this).val();
-// 		  	checkBoxArr.push(boardNo);
-			
-// 		});
-// 		location.href="boardList.do?boardNo="+boardNo;
-// 	});
 	function selectDelete(){
 		var checkBoxArr = []; 
 		
@@ -199,7 +153,6 @@ table {
 			checkBoxArr.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
 		});
 		
-// 		alert(checkBoxArr);
 		
 		$.ajax({
 			type  : "post",
@@ -214,44 +167,34 @@ table {
 		});
 		
 	}
-	 
-	
-	
-
-	
-
-
-	
-	
-
 </script>
 </head>
 
-<body class="bodyCl">
+<body>
+<jsp:include page="../Header.jsp" />
 
-	<jsp:include page="../Header.jsp" />
-	<jsp:include page="/WEB-INF/views/UserMyPageSideMenu.jsp"></jsp:include>
-	<div class="curPageDiv">	
-	<div class="titleContainer">
-	<h1 id="boardM">게시판</h1></div>
-	<div class="btDiv" style="text-align: left">
-	<button class="write_btn color2"  id="delete" onclick="selectDelete();" value="${boardDto.BOARD_NO}">선택삭제 </button>
-	<button type="button" class="write_btn color" onclick="location.href='./add.do'">글쓰기</button><br></div>
-	
-	<div class="contContainer">
-	<div class="con_table">
+<div class="curPageDiv">
+<div class="titleContainer">
+	<h1>게시판</h1>
+</div>
+<div class="contContainer">
+<div class="bddiv">
+	<div class="btn_area">
+		<button class="write_btn color2" style="" id="delete" onclick="selectDelete();" value="${boardDto.BOARD_NO}">선택삭제 </button>
+		<button type="button" class="write_btn color" onclick="location.href='./add.do'">글쓰기</button><br>
+	</div>
 	<table>
 		<tr id="tableT">
 			<th id="ckBox">
 			<input type="checkbox" name="checkAll"  id="allCheckBox" />
 			</th>
-			<th class="boardHead">말머리</th>
-			<th class="boardNo">번호</th>
-			<th class="boardTitle">제목</th>
-			<th class="boardWriter">작성자</th>
-			<th class="boardCredate">등록일</th>
-			<th class="boardModdate">수정일</th>
-			<th class="boardCount">조회수</th>
+			<th>말머리</th>
+			<th>번호</th>
+			<th style="width: 400px;">제목</th>
+			<th>작성자</th>
+			<th style="width: 120px;">등록일</th>
+			<th style="width: 120px;">수정일</th>
+			<th>조회수</th>
 			
 		</tr>
 		<c:choose>
@@ -281,12 +224,11 @@ table {
 							</form>
 						</td>
 						
-<%-- 						<td>${boardDto.BOARD_CONTENT}</td> --%>
 						<td class="boardWriter">${boardDto.USER_NAME}</td>
 						<td class="boardCredate"><fmt:formatDate pattern="	yyyy-MM-dd "
 								value="${boardDto.BOARD_CREDATE}" /></td>
-						<td class="boardModdate"><fmt:formatDate pattern="	yyyy-MM-dd "
-								value="${boardDto.BOARD_MODDATE}" /></td>		
+						<td class="boardCredate"><fmt:formatDate pattern="	yyyy-MM-dd "
+								value="${boardDto.BOARD_MODDATE}" /></td>
 						<td class="boardCount">${boardDto.BOARD_COUNT}</td>
 					</tr>
 				</c:forEach>
@@ -295,69 +237,44 @@ table {
 
 	</table>
 	</div>
-	
-	
-	<br>
-		
-			
-		
-		
-		
-	<form action="./boardList.do" method="get" id="searchFrm">
-		
+		<form action="./boardList.do" method="post" id="searchFrm">
+		<div class="searchCl"> 
 		<select id="searchOptionSel" name="searchOption">
 			<c:choose>
 				<c:when test="${searchMap.searchOption == 'all'}">
-					<option value="all" selected="selected">제목 + 말머리</option>
+					<option value="all" selected="selected">글번호+글제목</option>
+					<option value="BOARD_NO">글번호</option>
 					<option value="BOARD_TITLE">제목</option>
-					<option value="BOARD_HEAD">말머리</option>
-					<option value="USER_NAME" >작성자</option>
 				</c:when>
-				<c:when test="${searchMap.searchOption == 'BOARD_TITLE'}">
-					<option value="all">제목 + 말머리</option>
-					<option value="BOARD_TITLE" selected="selected">제목</option>
-					<option value="BOARD_HEAD">말머리</option>
-					<option value="USER_NAME" >작성자</option>
+				<c:when test="${searchMap.searchOption == 'bNo'}">
+					<option value="all">글번호+글제목</option>
+					<option value="BOARD_NO" selected="selected">글번호</option>
+					<option value="BOARD_TITLE">글제목</option>
 				</c:when>
-				<c:when test="${searchMap.searchOption == 'BOARD_HEAD'}">
-					<option value="all">제목 + 말머리</option>
-					<option value="BOARD_TITLE" >제목</option>
-					<option value="BOARD_HEAD" selected="selected">말머리</option>
-					<option value="USER_NAME" >작성자</option>
-				</c:when>
-				<c:when test="${searchMap.searchOption == 'USER_NAME'}">
-					<option value="all">제목 + 말머리</option>
-					<option value="BOARD_TITLE" >제목</option>
-					<option value="BOARD_HEAD" >말머리</option>
-					<option value="USER_NAME" selected="selected">작성자</option>
+				<c:when test="${searchMap.searchOption == 'boTitle'}">
+					<option value="all">글번호+글제목</option>
+					<option value="BOARD_NO" >글번호</option>
+					<option value="BOARD_TITLE" selected="selected">글제목</option>
 				</c:when>
 			</c:choose>
 		</select>
 	
 		<input type="text"  name="keyword" class="bdSearch" value="${searchMap.keyword}" placeholder="검색" >
 		<input type="submit" class="write_btn color3" value="검색">
+		</div>
 	</form>
+	<jsp:include page="/WEB-INF/views/common/CommonPaging.jsp"/>
 	
-		<form action="./boardList.do" id="pagingForm" method="POST">
+</div>
+</div>
+
+	<form action="./boardList.do" id="pagingForm" method="post">
 		<input type="hidden" id="curPage" name="curPage"
 			value="${pagingMap.CommonPaging.curPage}"> 
 			<input type="hidden" name="keyword" value="${searchMap.keyword}"> 
 			<input type="hidden" name="searchOption" value="${searchMap.searchOption}">
-		</form>
-		<jsp:include page="/WEB-INF/views/common/CommonPaging.jsp"/>
-		</div>
-		</div>
-		
-<!-- 			<a href="./add.do" class="" style="margin-left: 10px; text-decoration: none; " >글쓰기</a> -->
-	
-		
+	</form>
 
-
-	<!-- jsp:include는 forward처럼 데이터를 유지시킨다 -->
-
-	
-	
-	
 	<jsp:include page="../Tail.jsp" />
 
 </body>

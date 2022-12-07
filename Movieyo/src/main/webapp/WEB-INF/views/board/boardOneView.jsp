@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>${boardDto.boardTitle}</title>
+<title>게시글 상세내용</title>
 <style type="text/css">
 	textarea {
 		width:700px;
@@ -19,28 +19,38 @@
 		width: 700px;
 		height: 700px;
 	}
-	table, tr, th { 
-	border: 2px solid gray; 
+	table, tr, td, th { 
+	border: 2px solid black; 
 	} 
 	#boardOneT{
 		margin-left: 800px;
-		color: #ff81ab;
-	}
-	#boardOneT:hover{
-		cursor: pointer;
 	}
 	#frm{
 		border-collapse: collapse;
+		border: 1px solid #e9e8e8;;
 		margin-left: 550px;
 	}
 	
+	#num{
+		
+	}
+	#writer{
+		
+	}
+	#title{
+		
+	}
+	#content{
+		
+	}
 	#bdCtt{
 	font-size:20px;
-	color: #ff81ab;
+	padding: 270px;
 	}
 	
 	.boardsize input{
-	width: 654px;
+	width: 400px;
+	border: 1px solid black;
 	}
 	.click-btn{
     width: 150px;
@@ -80,7 +90,6 @@
     }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
 	function deleteFnc(BoardNo){
@@ -93,10 +102,6 @@
 		location.href = url;
 	}
 	
-	function moveBoardFnc(){
-		var url = "./boardList.do?";
-		location.href = url;
-	}
 // 	function moveEditFnc(){
 // 		var url = "./updateBoard.do?boardNo=" + ${boardDto.boardNo}
 // 		+ "&boardTitle=" + ${boardDto.boardTitle} + "&boardContent="
@@ -117,7 +122,7 @@
 <body>
 
 	<jsp:include page="../Header.jsp" />
-	<h1 id="boardOneT" onclick="moveBoardFnc()">무비요 게시판</h1>
+	<h1 id="boardOneT">게시글 상세</h1>
 	
 	
 <form id="frm" action='./updateCtr.do' method='post'>
@@ -131,49 +136,32 @@
 				</tr>
 				<tr>
 					<td id="writer">
-					<label for="boardWriter">작성자</label>&nbsp;<input type="text"  name="boardWriter" value="${boardDto.userName}" readonly="readonly"/><br>
+					<label for="boardWriter">작성자</label>&nbsp;<input type="text"   name="boardWriter" value="${boardDto.userName}" readonly="readonly"/><br>
 					</td>
 				</tr>
 				<tr >
 					<td id="title">
-					<label for="boardTitle">글제목</label>&nbsp;<input type='text' name='boardTitle' value="${boardDto.boardTitle}" readonly="readonly"/><br>
+					<label for="boardTitle">글제목</label>&nbsp;<input type='text'  name='boardTitle' value="${boardDto.boardTitle}" readonly="readonly"/><br>
 					</td>
 				</tr>	
 				<tr>
 					<td id="content">
-   			<label for="boardContent" id="bdCtt"></label>
+   			<label for="boardContent" id="bdCtt">글내용</label><br>
    			 			<textarea name="boardContent" id="bC" rows="50" cols="40" placeholder=" 내용을 입력해 주세요." readonly="readonly">${boardDto.boardContent}</textarea>
    					</td>
 				</tr>
 			</tbody>	
    		</table>
-   		<div class="my-3 p-3 bg-white rounded shadow-sm">
-			<c:choose>
-			<c:when test="${boardDto.next != 9999}">
-			
-<%-- 			<button type="button" class="btn btn-warning mr-3 mb-3" onclick="location.href='/board/one.do?boardNo=${boardDto.next}'"> <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>다음글</button> --%>
-				<a href="/board/one.do?boardNo=${move.next}&userName" style="color: black"> ${boardDto.nexttitle} </a>
-			</c:when>
-			
-			<c:when test="${boardDto.next == 9999}">
-			<button type="button" class="btn btn-warning mr-3 mb-3" disabled>다음글이 없습니다</button>
-			</c:when>
-			</c:choose>
-			<br/>
-			<c:choose>
-			<c:when test="${boardDto.last != 9999}">
-<%-- 			<button type="button" class="btn btn-info mr-3 " onclick="location.href='/board/one.do?boardNo=${boardDto.last}'"> <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>이전글</button> --%>
-			<a href="/board/one.do?boardNo=${boardDto.last}" style="color: black"> ${boardDto.lasttitle} </a>
-			</c:when>
-			
-			<c:when test="${boardDto.last == 9999}">
-			<button type="button" class="btn btn-info mr-3" disabled>이전글이 없습니다</button>
-			</c:when>
-			</c:choose>
-
-		</div>
-   		
+   		<c:choose>
+   		<c:when test="${userDto.userAdmin eq 0}">
+   		<c:if test="${userDto.userNo == boardDto.userNo}">
 		<input type='button' style="margin-left: 170px;" class="click-btn color1" value='게시물수정'  id="edit">
+   		</c:if>
+   		</c:when>
+   		<c:when test="${userDto.userAdmin eq 1}">
+		<input type='button' style="margin-left: 170px;" class="click-btn color1" value='게시물수정'  id="edit">
+   		</c:when>
+   		</c:choose>
 		<input type="button" style="margin-left: 10px;" class="click-btn color2" value="목록으로" onclick="moveFnc()">
 		<input type="hidden" name="modDate" value="${boardDto.boardModdate}"> <br>
 		<input type="hidden" name="creDate" value="${boardDto.boardCredate}"> <br>
