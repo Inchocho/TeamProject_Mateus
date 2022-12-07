@@ -90,7 +90,7 @@
       				) MV
 		WHERE MV.RNUM BETWEEN 1 AND 20
 	</select>		
-<!-- 파일리스트_제목순 fileList_title -->
+<!-- 파일리스트_제목순(20개만) -->
 	<select id="fileList_title" resultType="map">		
         SELECT ROWNUM,PARENT_SEQ, MOVIE_NO, IDX, ORIGINAL_FILE_NAME, STORED_FILE_NAME, MOVIE_TITLE, FILE_SIZE
 		FROM(
