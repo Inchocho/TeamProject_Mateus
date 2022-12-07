@@ -26,6 +26,7 @@ import com.movieyo.movie.dto.MovieDto;
 import com.movieyo.movie.service.MovieService;
 import com.movieyo.user.dto.UserDto;
 import com.movieyo.user.service.UserService;
+import com.movieyo.util.CommonPaging;
 import com.movieyo.util.Paging;
 
 @Controller
@@ -128,10 +129,10 @@ public class UserController {
 		
 		logger.info("totalCount: {}", totalCount);
 		
-		Paging moviePaging = new Paging(totalCount, curPage);
+		CommonPaging commonPaging = new CommonPaging(totalCount, curPage);
 		
-		int start = moviePaging.getPageBegin();
-		int end = moviePaging.getPageEnd();
+		int start = commonPaging.getPageBegin();
+		int end = commonPaging.getPageEnd();
 		
 		List<UserDto> userList =
 				userService.userSelectList(searchOption, keyword, start, end);
@@ -144,7 +145,7 @@ public class UserController {
 		
 		//Map에다가 totalCount, memberPaging을 key로해서 담고
 		pagingMap.put("totalCount", totalCount);
-		pagingMap.put("moviePaging", moviePaging);
+		pagingMap.put("commonPaging", commonPaging);
 		
 		Map<String, Object> searchMap = 
 				new HashMap<String, Object>();
@@ -153,7 +154,7 @@ public class UserController {
 		searchMap.put("keyword", keyword);
 		
 		logger.info("curPage: {}", curPage);
-		logger.info("curBlock: {}", moviePaging.getCurBlock());
+		logger.info("curBlock: {}", commonPaging.getCurBlock());
 		
 		//Map을 pagingMap 키로 model에 담아서
 		//MemberListView에서 ${pagingMap.memberPaging.blockBegin} pagingMap의 인스턴스를 EL태그로 사용한다

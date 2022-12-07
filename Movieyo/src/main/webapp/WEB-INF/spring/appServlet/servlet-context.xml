@@ -43,6 +43,7 @@
 			<exclude-mapping path="/auth/**"/>
 			<exclude-mapping path="/user/add.do"/>
 			<exclude-mapping path="/user/addCtr.do"/>
+			<exclude-mapping path="/user/UserFindpw.do"/>
 			<beans:ref bean="LoginInterceptor"/>
 		</interceptor>
 	</interceptors>

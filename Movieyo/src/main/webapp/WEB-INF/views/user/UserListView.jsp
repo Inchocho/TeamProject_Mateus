@@ -160,11 +160,11 @@ th {
 		</c:if>
 	</table>
 
-	<jsp:include page="/WEB-INF/views/common/Paging.jsp"/>
+	<jsp:include page="/WEB-INF/views/common/CommonPaging.jsp"/>
 	
 	<form action="./list.do" id="pagingForm" method="post">
 		<input type="hidden" id="curPage" name="curPage"
-			value="${pagingMap.memberPaging.curPage}"> <input
+			value="${pagingMap.commonPaging.curPage}"> <input
 			type="hidden" name="keyword" value="${searchMap.keyword}"> <input
 			type="hidden" name="searchOption" value="${searchMap.searchOption}">
 	</form>
@@ -174,18 +174,18 @@ th {
 			<c:choose>
 				<c:when test="${searchMap.searchOption == 'all'}">
 					<option value="all" selected="selected">이름+이메일</option>
-					<option value="name">이름</option>
-					<option value="email">이메일</option>
+					<option value="USER_NAME">이름</option>
+					<option value="USER_EMAIL">이메일</option>
 				</c:when>
-				<c:when test="${searchMap.searchOption == 'name'}">
+				<c:when test="${searchMap.searchOption == 'USER_NAME'}">
 					<option value="all">이름+이메일</option>
-					<option value="name" selected="selected">이름</option>
-					<option value="email">이메일</option>
+					<option value="USER_NAME" selected="selected">이름</option>
+					<option value="USER_EMAIL">이메일</option>
 				</c:when>
-				<c:when test="${searchMap.searchOption == 'email'}">
+				<c:when test="${searchMap.searchOption == 'USER_EMAIL'}">
 					<option value="all">이름+이메일</option>
-					<option value="name">이름</option>
-					<option value="email" selected="selected">이메일</option>
+					<option value="USER_NAME">이름</option>
+					<option value="USER_EMAIL" selected="selected">이메일</option>
 				</c:when>
 			</c:choose>
 		</select> <input type="text" name="keyword" value="${searchMap.keyword}"
