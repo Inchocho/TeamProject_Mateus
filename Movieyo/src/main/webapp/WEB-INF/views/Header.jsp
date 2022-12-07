@@ -101,6 +101,16 @@ body {
 	background-color: rgba(135, 206, 235, 0.3);
 	cursor: pointer;
 }
+
+.body_userDetail_btn_css{
+    height: 35px;
+    width: auto;
+    background: #201919;
+    color: #ff81ab;
+    font-size: 20px;
+    border-radius: 8px;
+    margin: 0;
+}
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">

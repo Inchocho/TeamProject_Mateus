@@ -166,6 +166,7 @@ img {
 	function movieList() {
 		location.href = './list.do';
 	}
+		
 
 </script>
 
@@ -173,10 +174,10 @@ img {
 	
 <body>
 	<jsp:include page="../Header.jsp" />
-<input type="button" class="body_btn_css" id="backBtn" value="←" onclick="movePageMainFnc();">
+<input type="button" class="body_btn_css" id="backBtn" value="←" onclick="movieList();">
 <div class="curPageDiv">
 <div class="titleContainer">
-	<h1>영화상세</h1>
+	<h1>(관리자)영화상세</h1>
 </div>
 		
 <div class="contContainer">
@@ -255,7 +256,7 @@ img {
 </div>
 </div>
 </form>
-<input type="text" name="likeGenre" value="${likeGenre}">
+<input type="hidden" name="likeGenre" value="${likeGenre}">
 
 </div></div>
 	<jsp:include page="/WEB-INF/views/PopUp/BuyMoviePop.jsp"></jsp:include>
