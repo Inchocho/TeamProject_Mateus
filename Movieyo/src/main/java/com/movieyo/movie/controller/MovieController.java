@@ -283,6 +283,124 @@ public class MovieController {
 			return "movie/MovieMain";
 		}
 		
+		@RequestMapping(value = "/movie/AllList.do"
+				, method = {RequestMethod.GET, RequestMethod.POST})
+		public String movieAllList(@RequestParam(defaultValue = "1") int curPage, Model model,
+				@RequestParam(defaultValue = "all")String searchOption
+			  , @RequestParam(defaultValue = "")String keyword)  {
+
+			System.out.println("================영화전체조회=============");
+			int totalCount = movieService.movieSelectTotalCount(searchOption, keyword);
+			
+			List<Integer> movieNoList = movieService.movieNoSelect(searchOption, keyword);
+			//전체 파일 담기
+			List<Map<String,Object>> fileList = new ArrayList<Map<String,Object>>();
+			
+			for (int i = 0; i < movieNoList.size(); i++) {
+				int movieNo = Integer.parseInt(String.valueOf(movieNoList.get(i))); 
+
+				List<Map<String,Object>> map_fileList = (List<Map<String, Object>>) movieService.moviefileOne(movieNo).get("fileList");
+				Map<String, Object> file = map_fileList.get(0);
+				
+				fileList.add(file);
+			}
+			 			
+			model.addAttribute("fileList", fileList);
+			
+			logger.info("totalCount: {}", totalCount);
+//			
+			MovieMainPaging moviePaging = new MovieMainPaging(totalCount, curPage);
+//			
+			int start = moviePaging.getPageBegin();
+			int end = moviePaging.getPageEnd();
+//			
+			List<MovieDto> movieList =
+					movieService.movieSelectList(searchOption, keyword, start, end);
+
+			Map<String, Object> pagingMap = 
+					new HashMap<String, Object>();
+			
+			pagingMap.put("totalCount", totalCount);
+			pagingMap.put("moviePaging", moviePaging);
+			
+			Map<String, Object> searchMap = 
+					new HashMap<String, Object>();
+			
+			searchMap.put("searchOption", searchOption);
+			searchMap.put("keyword", keyword);
+			
+			logger.info("curPage: {}", curPage);
+			
+			//Map을 pagingMap 키로 model에 담아서
+			//MemberListView에서 ${pagingMap.memberPaging.blockBegin} pagingMap의 인스턴스를 EL태그로 사용한다
+			model.addAttribute("movieList", movieList);
+			model.addAttribute("pagingMap", pagingMap);
+			model.addAttribute("searchMap", searchMap);
+			
+			
+			
+			return "movie/MovieAllView";
+		}
+		
+		@RequestMapping(value = "/movie/serch.do"
+				, method = {RequestMethod.GET, RequestMethod.POST})
+		public String movieserch(@RequestParam(defaultValue = "1") int curPage, Model model,
+				@RequestParam(defaultValue = "all")String searchOption
+				, @RequestParam(defaultValue = "")String keyword)  {
+			
+			System.out.println("================영화전체조회=============");
+			int totalCount = movieService.movieSelectTotalCount(searchOption, keyword);
+			
+			List<Integer> movieNoList = movieService.movieNoSelect(searchOption, keyword);
+			//전체 파일 담기
+			List<Map<String,Object>> fileList = new ArrayList<Map<String,Object>>();
+			
+			for (int i = 0; i < movieNoList.size(); i++) {
+				int movieNo = Integer.parseInt(String.valueOf(movieNoList.get(i))); 
+				
+				List<Map<String,Object>> map_fileList = (List<Map<String, Object>>) movieService.moviefileOne(movieNo).get("fileList");
+				Map<String, Object> file = map_fileList.get(0);
+				
+				fileList.add(file);
+			}
+			
+			model.addAttribute("fileList", fileList);
+			
+			logger.info("totalCount: {}", totalCount);
+//			
+			MovieMainPaging moviePaging = new MovieMainPaging(totalCount, curPage);
+//			
+			int start = moviePaging.getPageBegin();
+			int end = moviePaging.getPageEnd();
+//			
+			List<MovieDto> movieList =
+					movieService.movieSelectList(searchOption, keyword, start, end);
+			
+			Map<String, Object> pagingMap = 
+					new HashMap<String, Object>();
+			
+			pagingMap.put("totalCount", totalCount);
+			pagingMap.put("moviePaging", moviePaging);
+			
+			Map<String, Object> searchMap = 
+					new HashMap<String, Object>();
+			
+			searchMap.put("searchOption", searchOption);
+			searchMap.put("keyword", keyword);
+			
+			logger.info("curPage: {}", curPage);
+			
+			//Map을 pagingMap 키로 model에 담아서
+			//MemberListView에서 ${pagingMap.memberPaging.blockBegin} pagingMap의 인스턴스를 EL태그로 사용한다
+			model.addAttribute("movieList", movieList);
+			model.addAttribute("pagingMap", pagingMap);
+			model.addAttribute("searchMap", searchMap);
+			
+			
+			
+			return "movie/MovieSerchView";
+		}
+		
 		//	영화상세보기 (선택시 상세정보를 보여줌 readOnly 페이지)
 		@RequestMapping(value="/movie/detail.do", method = RequestMethod.GET)
 		public String movieDetail(int movieNo, Model model

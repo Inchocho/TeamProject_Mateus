@@ -168,17 +168,17 @@ font-weight: 400;
 <div style="width:100%" class="curPageDiv">
 <div class="movie_list_container">
 	<div class="titleContainer">
-		<h1>무비요영화</h1>
+		<h1>'${searchMap.keyword}' 검색결과</h1>
 	</div>
 	<div class="contContainer">
 		<div class="con_curList">
 			<ul class="con_movieList" id="con_movieList_1">
-			<c:forEach var="row" items="${fileList}" varStatus="status">
+			<c:forEach var="fileList" items="${fileList}" varStatus="status">
 			<c:set var="movieDto" value="${movieList[status.index]}" />
 				<li class="con_movie" onclick="movePageMovieDtail(${movieDto.movieNo});">
 					<div>
 						<img alt="image not found"
-							src="<c:url value='/image/${row.get(0).STORED_FILE_NAME}'/>">
+							src="<c:url value='/image/${fileList.STORED_FILE_NAME}'/>">
 					</div>
 					<div>
 						 <a class="title">${movieDto.movieTitle}</a><br>
@@ -194,38 +194,6 @@ font-weight: 400;
 			</div>
 			<div class="con_btn_area" style="margin-left: 1315px;">
 				<button class="con_btn" id="nextBtn_1" onclick="movieList_nextBtn_fnc(1);">⫸</button>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="movie_list_container">
-	<div class="titleContainer">
-		<h1>영화제목순</h1>
-	</div>
-	<div class="contContainer">
-		<div class="con_curList">
-			<ul class="con_movieList" id="con_movieList_2">
-			<c:forEach var="fileList_title" items="${fileList_title}" varStatus="status">
-			<c:set var="movieDto" value="${movieList_title[status.index]}" />
-				<li class="con_movie" onclick="movePageMovieDtail(${movieDto.movieNo});">
-					<div>
-						<img alt="image not found"
-							src="<c:url value='/image/${fileList_title.STORED_FILE_NAME}'/>">
-					</div>
-					<div>
-						 <a class="title">${movieDto.movieTitle}</a><br>
-						 <a class="info"><fmt:formatDate pattern="yyyy"
-									value="${movieDto.prdtYear}"/> ・ ${movieDto.nation}</a><br>
-						 <a class="info">${movieDto.genreName}</a>
-					</div>
-				</li>
-			</c:forEach>
-			</ul>
-			<div class="con_btn_area">
-				<button class="con_btn_hide" id="prevBtn_2" onclick="movieList_prevBtn_fnc(2);">⫷</button>
-			</div>
-			<div class="con_btn_area" style="margin-left: 1315px;">
-				<button class="con_btn" id="nextBtn_2" onclick="movieList_nextBtn_fnc(2);">⫸</button>
 			</div>
 		</div>
 	</div>
