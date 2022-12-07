@@ -73,8 +73,34 @@
 			           ORDER BY MOVIE_NO ASC) M
       				) MV
 		WHERE MV.RNUM BETWEEN #{start} AND #{end}
+	</select>
+
+<!-- 	영화리스트_제목순(20개만) -->
+	<select id="movieSelectList_title" resultMap="movieResultMap">
+		SELECT MV.MOVIE_NO, MV.GENRE_NO, MV.MOVIE_TITLE, MV.MOVIE_NATION, MV.MOVIE_PRDTYEAR,
+		MV.MOVIE_DIRECTOR, MV.MOVIE_CREDATE, MV.GENRE_NAME, MV.MOVIE_REGISTRANT
+		   FROM (
+		        SELECT ROWNUM RNUM, M.MOVIE_NO, M.GENRE_NO, M.MOVIE_TITLE, M.MOVIE_NATION, M.MOVIE_PRDTYEAR
+		      , M.MOVIE_DIRECTOR, M.MOVIE_CREDATE, M.GENRE_NAME, M.MOVIE_REGISTRANT
+		        FROM (
+	                SELECT MOVIE_NO, GENRE_NO, MOVIE_TITLE, MOVIE_DIRECTOR, MOVIE_CREDATE, MOVIE_NATION, MOVIE_PRDTYEAR,
+	                	GENRE_NAME, MOVIE_REGISTRANT
+	         	   	   FROM MVY_MOVIE
+			           ORDER BY MOVIE_TITLE ASC) M
+      				) MV
+		WHERE MV.RNUM BETWEEN 1 AND 20
 	</select>		
-	
+<!-- 파일리스트_제목순 fileList_title -->
+	<select id="fileList_title" resultType="map">		
+        SELECT ROWNUM,PARENT_SEQ, MOVIE_NO, IDX, ORIGINAL_FILE_NAME, STORED_FILE_NAME, MOVIE_TITLE, FILE_SIZE
+		FROM(
+			SELECT PARENT_SEQ, B.MOVIE_NO, IDX, ORIGINAL_FILE_NAME, STORED_FILE_NAME, B.MOVIE_TITLE, ROUND(FILE_SIZE/1024, 1) AS FILE_SIZE
+			FROM MVY_MOVIE_PHOTO A, MVY_MOVIE B				
+	        WHERE B.MOVIE_NO = A.PARENT_SEQ
+	        ORDER BY B.MOVIE_TITLE ASC
+	        )MV
+        WHERE ROWNUM BETWEEN 1 AND 20	
+	</select>
 <!-- 	영화수 -->
 	<select id="movieSelectTotalCount" resultType="java.lang.Integer" parameterType="map">
 		SELECT COUNT(*)
@@ -89,7 +115,7 @@
 		FROM MVY_MOVIE
 		WHERE MOVIE_NO = #{movieNo}
 		ORDER BY MOVIE_NO ASC
-	</select>	
+	</select>
 	
 	<select id="fileselectList" parameterType="int" resultType="map">		
 		SELECT PARENT_SEQ, B.MOVIE_NO, IDX, ORIGINAL_FILE_NAME, STORED_FILE_NAME, B.MOVIE_TITLE,

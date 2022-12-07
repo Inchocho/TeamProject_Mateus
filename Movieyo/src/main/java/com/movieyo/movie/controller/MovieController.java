@@ -225,8 +225,7 @@ public class MovieController {
 			int totalCount = movieService.movieSelectTotalCount(searchOption, keyword);
 			
 			List<Integer> movieNo = movieService.movieNoSelect(searchOption, keyword);
-			
-			
+			//전체 파일 담기
 			List<List<Map<String,Object>>> fileList = new ArrayList<List<Map<String,Object>>>();
 			
 			for (int i = 0; i < movieNo.size(); i++) {
@@ -239,6 +238,11 @@ public class MovieController {
 			}
 			 			
 			model.addAttribute("fileList", fileList);
+			
+			//제목순 파일
+			List<Map<String, Object>> fileList_title = new ArrayList<Map<String,Object>>();
+			fileList_title = movieService.fileList_title();
+			model.addAttribute("fileList_title", fileList_title);
 			logger.info("totalCount: {}", totalCount);
 //			
 			MovieMainPaging moviePaging = new MovieMainPaging(totalCount, curPage);
@@ -248,6 +252,9 @@ public class MovieController {
 //			
 			List<MovieDto> movieList =
 					movieService.movieSelectList(searchOption, keyword, start, end);
+			
+			List<MovieDto> movieList_title =
+					movieService.movieSelectList_title();
 //			
 			Map<String, Object> pagingMap = 
 					new HashMap<String, Object>();
@@ -267,6 +274,7 @@ public class MovieController {
 			//Map을 pagingMap 키로 model에 담아서
 			//MemberListView에서 ${pagingMap.memberPaging.blockBegin} pagingMap의 인스턴스를 EL태그로 사용한다
 			model.addAttribute("movieList", movieList);
+			model.addAttribute("movieList_title", movieList_title);
 			model.addAttribute("pagingMap", pagingMap);
 			model.addAttribute("searchMap", searchMap);
 			

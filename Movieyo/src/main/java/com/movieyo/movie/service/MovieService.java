@@ -27,4 +27,8 @@ public interface MovieService {
 	
 	public List<Map<String,Object>> genreSelect(int userNo);
 
+	public List<MovieDto> movieSelectList_title();
+
+	public List<Map<String, Object>> fileList_title();
+
 }

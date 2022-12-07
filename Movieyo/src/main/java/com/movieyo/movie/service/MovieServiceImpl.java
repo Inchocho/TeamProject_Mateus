@@ -83,6 +83,18 @@ public class MovieServiceImpl implements MovieService{
 		
 		return movieDao.movieSelectList(searchOption, keyword, start, end);
 	}
+	
+	@Override
+	public List<MovieDto> movieSelectList_title() {
+		// TODO Auto-generated method stub
+		return movieDao.movieSelectList_title();
+	}
+
+	@Override
+	public List<Map<String, Object>> fileList_title() {
+		// TODO Auto-generated method stub
+		return movieDao.fileList_title();
+	}
 
 	@Override
 	public Map<String, Object> movieSelectOne(int movieNo) {
@@ -240,6 +252,7 @@ public class MovieServiceImpl implements MovieService{
 		// TODO Auto-generated method stub
 		return movieDao.genreSelect(userNo);
 	}
+
 
 	
 }

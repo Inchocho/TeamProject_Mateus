@@ -34,5 +34,9 @@ public interface MovieDao {
 	public List<Map<String, Object>> genreSelect(int userNo);
 
 	public Map<String, Object> fileSelectOne(int fileIdx);
+
+	public List<MovieDto> movieSelectList_title();
+
+	public List<Map<String, Object>> fileList_title();
 	
 }
