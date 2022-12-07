@@ -9,7 +9,7 @@
 <title>비밀번호 변경</title>
 <style>
 	
-	.titleContainer{
+.titleContainer{
 	border-bottom: 2px solid #252525;
 	margin: 3px 3px 3px 0px;
 	padding-right: 600px;
