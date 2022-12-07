@@ -45,7 +45,7 @@
 	 		<li><a href="/Movieyo/cart/list.do" class="menulist">장바구니</a></li>
 	 		<li><a href="/Movieyo/buy/list.do?userNo=${userDto.userNo}" class="menulist">구매내역</a></li>
 	 		<li><a href="/Movieyo/refund/list.do?userNo=${userDto.userNo}" class="menulist">환불내역</a></li>
-	 		<li><a href="#" class="menulist">내가평가한 영화</a></li>
+	 		<li><a href="#" class="menulist">내가평가한 영화(미구현)</a></li>
 	 	</ul>
 	   </div>
 	</div>
