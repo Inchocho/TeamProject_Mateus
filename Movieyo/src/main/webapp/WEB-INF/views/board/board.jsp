@@ -88,14 +88,14 @@
 	<div>
 	<input type="hidden" name="boardNo" value='00'>
 	<input type="hidden" name='userNo' value='${userDto.userNo}'>
-	<select name="boardHead" id="head">
-  		<option value="공지사항">공지사항</option>
-  		<option value="문의사항">문의사항</option>
+	<select name="boardHead" id="boardHed">
+  		<option value="notice">공지사항</option>
+  		<option value="Questions">문의사항</option>
   	</select><br>
-	<label for="boardNo" id="Ti" >제목</label>&nbsp;<br><input type="text" class="BTitle" id="boardTitle" style="" value="${boardDto.boardTitle}" /><br>
+	<label for="boardNo" id="Ti" >제목</label>&nbsp;<br><input type="text" class="BTitle" name='boardTitle' id="boardTitle" style="" value="${boardDto.boardTitle}" /><br>
     	
     <label for="boardContent" id="Con">글내용</label>&nbsp;&nbsp;<br>
-   			 			<textarea id="boardContent" class="TexaAre" rows="40" cols="100" >${boardDto.boardContent}</textarea>
+   			 			<textarea id="boardContent" name="boardContent" class="TexaAre" rows="40" cols="100" >${boardDto.boardContent}</textarea>
     <br>
     </div>
       <button type="submit" id="writeNewBtn" class="btn-write color-1">작성하기</button>&nbsp;
@@ -144,8 +144,8 @@
     $(document).ready(function() {
         $('.BTitle').on('keyup', function() {
       
-            if($(this).val().length > 14) {
-                $(this).val($(this).val().substring(0, 14));
+            if($(this).val().length > 40) {
+                $(this).val($(this).val().substring(0, 40));
             
             }
         });

@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>게시판리스트</title>
+<title>무비요게시판</title>
 
 <style type="text/css">
 table, tr, td, th {
@@ -24,9 +24,7 @@ table td{
 }
 table {
 	border-collapse: collapse;
-	width: 90%;
-	height: 100%;
-	margin: auto;
+	width: 600px;
     border: 1px solid #e9e8e8;
     table-layout: fixed;
     padding: 8px;
@@ -42,18 +40,29 @@ table {
 #searchOptionSel{
 	background-color : #00ff7f;
  	text-align:center;
-	margin-left:600px;
 	width: 200px;
   	padding: 10px;
 }
-.bddiv{	
- 
+.curPageDiv{
+	margin: 0px 0px 0px 200px;
+	text-align: center;
+	min-width: 600px;
 }
-#boardM{
-	margin:auto;
-	padding: 20px;
-	
+.titleContainer{
+	border-bottom: 2px solid #252525;
+	margin: 3px 3px 3px 0px;
+	padding-right: 250px;
 }
+
+.contContainer{
+    width: 1300px;
+    padding: 10px 0 0 30px;
+    margin: auto;
+}
+.btDiv{
+	margin-left: 210px; 
+}
+
 #tableT{
  background-color: 	#F8DFE6;
 }
@@ -101,11 +110,14 @@ table {
 		width: 30px;
 		height: 40px;
 	}
+	#boardM{
+		color: #ff81ab;
+	}
 	#selChk{
 		accent-color:#F1948A;
 	}
 	.boardHead{
-		width: 50px;
+		width: 70px;
 		height: 40px;
 	}
 	.boardNo{
@@ -113,23 +125,23 @@ table {
 		height: 40px;
 	}
 	.boardTitle{
-		width: 250px;
-		height: 40px;
-	}
-	.boardWriter{
-		width: 50px;
-		height: 40px;
-	}
-	.boardContent{
 		width: 650px;
 		height: 40px;
 	}
+	.boardWriter{
+		width: 100px;
+		height: 40px;
+	}
+	.boardModdate{
+		width: 100px;
+		height: 40px;
+	}
 	.boardCredate{
-		width: 70px;
+		width: 100px;
 		height: 40px;
 	}
 	.boardCount{
-		width: 50px;
+		width: 100px;
 		height: 40px;
 	}
 	
@@ -218,12 +230,16 @@ table {
 <body class="bodyCl">
 
 	<jsp:include page="../Header.jsp" />
+	<jsp:include page="/WEB-INF/views/UserMyPageSideMenu.jsp"></jsp:include>
+	<div class="curPageDiv">	
+	<div class="titleContainer">
+	<h1 id="boardM">게시판</h1></div>
+	<div class="btDiv" style="text-align: left">
+	<button class="write_btn color2"  id="delete" onclick="selectDelete();" value="${boardDto.BOARD_NO}">선택삭제 </button>
+	<button type="button" class="write_btn color" onclick="location.href='./add.do'">글쓰기</button><br></div>
 	
-	<h1 id="boardM" style="padding-left: 900px;">게시판</h1>
-
-	<div class="bddiv">
-	<button class="write_btn color2" style="margin-left: 1590px;" id="delete" onclick="selectDelete();" value="${boardDto.BOARD_NO}">선택삭제 </button>
-	<button type="button" class="write_btn color" onclick="location.href='./add.do'">글쓰기</button><br>
+	<div class="contContainer">
+	<div class="con_table">
 	<table>
 		<tr id="tableT">
 			<th id="ckBox">
@@ -232,9 +248,9 @@ table {
 			<th class="boardHead">말머리</th>
 			<th class="boardNo">번호</th>
 			<th class="boardTitle">제목</th>
-			<th class="boardContent">게시글내용</th>
 			<th class="boardWriter">작성자</th>
 			<th class="boardCredate">등록일</th>
+			<th class="boardModdate">수정일</th>
 			<th class="boardCount">조회수</th>
 			
 		</tr>
@@ -265,10 +281,12 @@ table {
 							</form>
 						</td>
 						
-						<td>${boardDto.BOARD_CONTENT}</td>
+<%-- 						<td>${boardDto.BOARD_CONTENT}</td> --%>
 						<td class="boardWriter">${boardDto.USER_NAME}</td>
 						<td class="boardCredate"><fmt:formatDate pattern="	yyyy-MM-dd "
 								value="${boardDto.BOARD_CREDATE}" /></td>
+						<td class="boardModdate"><fmt:formatDate pattern="	yyyy-MM-dd "
+								value="${boardDto.BOARD_MODDATE}" /></td>		
 						<td class="boardCount">${boardDto.BOARD_COUNT}</td>
 					</tr>
 				</c:forEach>
@@ -277,53 +295,69 @@ table {
 
 	</table>
 	</div>
+	
+	
 	<br>
 		
 			
 		
 		
 		
-	<form action="./boardList.do" method="post" id="searchFrm">
-		<div class="searchCl"> 
+	<form action="./boardList.do" method="get" id="searchFrm">
+		
 		<select id="searchOptionSel" name="searchOption">
 			<c:choose>
 				<c:when test="${searchMap.searchOption == 'all'}">
-					<option value="all" selected="selected">글번호+글제목</option>
-					<option value="BOARD_NO">글번호</option>
+					<option value="all" selected="selected">제목 + 말머리</option>
 					<option value="BOARD_TITLE">제목</option>
+					<option value="BOARD_HEAD">말머리</option>
+					<option value="USER_NAME" >작성자</option>
 				</c:when>
-				<c:when test="${searchMap.searchOption == 'bNo'}">
-					<option value="all">글번호+글제목</option>
-					<option value="BOARD_NO" selected="selected">글번호</option>
-					<option value="BOARD_TITLE">글제목</option>
+				<c:when test="${searchMap.searchOption == 'BOARD_TITLE'}">
+					<option value="all">제목 + 말머리</option>
+					<option value="BOARD_TITLE" selected="selected">제목</option>
+					<option value="BOARD_HEAD">말머리</option>
+					<option value="USER_NAME" >작성자</option>
 				</c:when>
-				<c:when test="${searchMap.searchOption == 'boTitle'}">
-					<option value="all">글번호+글제목</option>
-					<option value="BOARD_NO" >글번호</option>
-					<option value="BOARD_TITLE" selected="selected">글제목</option>
+				<c:when test="${searchMap.searchOption == 'BOARD_HEAD'}">
+					<option value="all">제목 + 말머리</option>
+					<option value="BOARD_TITLE" >제목</option>
+					<option value="BOARD_HEAD" selected="selected">말머리</option>
+					<option value="USER_NAME" >작성자</option>
+				</c:when>
+				<c:when test="${searchMap.searchOption == 'USER_NAME'}">
+					<option value="all">제목 + 말머리</option>
+					<option value="BOARD_TITLE" >제목</option>
+					<option value="BOARD_HEAD" >말머리</option>
+					<option value="USER_NAME" selected="selected">작성자</option>
 				</c:when>
 			</c:choose>
 		</select>
 	
 		<input type="text"  name="keyword" class="bdSearch" value="${searchMap.keyword}" placeholder="검색" >
 		<input type="submit" class="write_btn color3" value="검색">
-		</div>
 	</form>
-<!-- 			<a href="./add.do" class="" style="margin-left: 10px; text-decoration: none; " >글쓰기</a> -->
-		
-		
-
-
-	<!-- jsp:include는 forward처럼 데이터를 유지시킨다 -->
-	<jsp:include page="/WEB-INF/views/common/CommonPaging.jsp"/>
-
-	<form action="./boardList.do" id="pagingForm" method="post">
+	
+		<form action="./boardList.do" id="pagingForm" method="POST">
 		<input type="hidden" id="curPage" name="curPage"
 			value="${pagingMap.CommonPaging.curPage}"> 
 			<input type="hidden" name="keyword" value="${searchMap.keyword}"> 
 			<input type="hidden" name="searchOption" value="${searchMap.searchOption}">
-	</form>
+		</form>
+		<jsp:include page="/WEB-INF/views/common/CommonPaging.jsp"/>
+		</div>
+		</div>
+		
+<!-- 			<a href="./add.do" class="" style="margin-left: 10px; text-decoration: none; " >글쓰기</a> -->
+	
+		
 
+
+	<!-- jsp:include는 forward처럼 데이터를 유지시킨다 -->
+
+	
+	
+	
 	<jsp:include page="../Tail.jsp" />
 
 </body>

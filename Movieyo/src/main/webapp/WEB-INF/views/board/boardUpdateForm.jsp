@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>게시글 수정</title>
+<title>${boardDto.boardTitle}</title>
 <style type="text/css">
 	textarea {
 		width:700px;
@@ -14,8 +14,8 @@
 		margin-left :10px;
 		resize: none;
 		}
-	table, tr, td, th {
-		border: 2px solid black;
+	table, tr, th {
+		border: 2px solid gray;
 		}
 	#boardTab{
 		width: 700px;
@@ -23,16 +23,15 @@
 		}
 			
 	#boardTwoT{
-		
+		color: #ff81ab;
 		margin-left: 800px;
 		}	
+	
 	#fromT{
-		border-collapse: collapse;
-		border: 1px solid #e9e8e8;
 		margin-left: 550px;
 	}
 	.boardsize2 input{
-		width: 400px;
+		width: 654px;
 	}
 	#num{
 		margin-left: 10px;	
@@ -82,7 +81,7 @@
 }
 		
 </style>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
 	function moveFnc(){
 		var url = "./boardList.do?";
@@ -92,7 +91,15 @@
 	      var url = "./deleteCtr.do?boardNo=" + boardNo;
 	      location.href = url;
 	}
-
+	 $(document).ready(function() {
+	        $('.BuTitle').on('keyup', function() {
+	      
+	            if($(this).val().length > 40) {
+	                $(this).val($(this).val().substring(0, 40));
+	            
+	            }
+	        });
+	    });
 	
 	
 </script>
@@ -106,7 +113,7 @@
 <body>
 
 	<jsp:include page="../Header.jsp" />
-	<h1 id="boardTwoT">게시글 수정</h1>
+	<h1 id="boardTwoT">무비요 게시판</h1>
 	
 	
 	<form id="fromT" action='./updateCtr.do' method='post'>
@@ -125,7 +132,7 @@
 				</tr>
 				<tr>
 					<td>
-					<label for="boardTitle">글제목</label>&nbsp;<input type='text' name='boardTitle' value="${boardDto.boardTitle}"/><br>
+					<label for="boardTitle">글제목</label>&nbsp;<input type='text' class="BuTitle" name='boardTitle' value="${boardDto.boardTitle}"/><br>
 					</td>
 				</tr>	
 				<tr>

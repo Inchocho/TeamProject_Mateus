@@ -1,20 +1,21 @@
 package com.movieyo.board.controller;
 
+
+import java.lang.reflect.Member;
 import java.security.Provider.Service;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import javax.mail.Session;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -101,7 +102,8 @@ public class BoardController {
 
 	// 게시글 화면으로
 	@RequestMapping(value = "/board/one.do", method = RequestMethod.GET)
-	public String boardOne(int boardNo, @RequestParam(defaultValue = "1") int curPage, String searchOption, String keyword, Model model) {
+	public String boardOne(int boardNo, @RequestParam(defaultValue = "1") int curPage, String searchOption, String keyword, Model model
+			, HttpServletRequest request, HttpServletResponse response) {
 //		logger.info("Welcome boardOne! enter - {}" + no);
 //		int boardNo = Integer.parseInt(boardNoS);
 
@@ -110,14 +112,35 @@ public class BoardController {
 		BoardDto boardDto = (BoardDto) map.get("boardDto");
 
 		boardService.boardCountUp(boardNo);
-
+		
 		Map<String, Object> prevMap = new HashMap<>();
 		prevMap.put("curPage", curPage);
 		prevMap.put("searchOption", searchOption);
 		prevMap.put("keyword", keyword);
-
+		
 		model.addAttribute("boardDto", boardDto);
 		model.addAttribute("prevMap", prevMap);
+		//쿠키로 조회수 막는거 미구현
+//		 Cookie[] cookies = request.getCookies();
+//		 if (cookies != null) {
+//	            for (Cookie cookie : cookies) {
+//	               
+//
+//	                if (!cookie.getValue().contains(request.getParameter("boardNo"))) {
+//	                    cookie.setValue(cookie.getValue() + "_" + request.getParameter("boardNo"));
+//	                    cookie.setMaxAge(60 * 60 * 2);  /* 쿠키 시간 */
+//	                    response.addCookie(cookie);
+//	                    boardService.boardCountUp(boardNo);
+//	                    break;
+//	                }
+//	            }
+//	        } else {
+//	            Cookie newCookie = new Cookie("visit_cookie", request.getParameter("boardNo"));
+//	            newCookie.setMaxAge(60 * 60 * 2);
+//	            response.addCookie(newCookie);
+//	            boardService.boardCountUp(boardNo);
+//	        }
+		
 
 		return "board/boardOneView";
 	}
@@ -173,7 +196,6 @@ public class BoardController {
 	@RequestMapping(value = "/board/listDeleteCtr.do", method = RequestMethod.POST)
 	public String selectDelete(@RequestParam(value="checkBoxArr[]") List<Integer> checkBoxArr
 			, HttpSession session) throws Exception{
-		System.out.println("asdf "+checkBoxArr);
 		
 		for (int checkObj : checkBoxArr) {
 			boardService.boardRemoveOne(checkObj);
@@ -182,7 +204,19 @@ public class BoardController {
 		return "redierct:/board/boardList.do";
 	}
 
-
+//	이전글 다음글 미구현
+	@RequestMapping(value="/board/readView.do", method=RequestMethod.GET)
+	public String movePage(int boardNo, @RequestParam(defaultValue = "1") int curPage, BoardDto boardDto, String searchOption, String keyword,
+			HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session) throws Exception{
+		 	
+		BoardDto boarDto = boardService.movePage(boardNo);
+//		int nextpageCheck = boardService.nextpageCheck(boardDto.getNext());
+	//		Map<String, Object> map = boardService.boardSelectOne(boardNo);	
+	//
+//		model.addAttribute("movePage", boardService.movePage(boardDto.getBoardNo()));
+		return "/board/boardOneView";
+	}
+		
 
 
 }

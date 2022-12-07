@@ -17,18 +17,21 @@
 		
 	</resultMap>
 	
-	<sql id="search">
+	<sql id="search">	
 		<choose>
 			<when test="searchOption == 'all'">
-				WHERE BOARD_NO LIKE '%'||#{keyword}||'%'
-				OR BOARD_TITLE LIKE '	%'||#{keyword}||'%'
+				WHERE BOARD_HEAD LIKE '%'||#{keyword}||'%'
+				OR BOARD_TITLE LIKE '%'||#{keyword}||'%'
+			</when>
+			<when test="searchOption == 'USER_NAME'">
+				WHERE MU.USER_NAME LIKE '%'||#{keyword}||'%'
+				OR BOARD_TITLE LIKE '%'||#{keyword}||'%'
 			</when>
 			<otherwise>
 				WHERE ${searchOption} LIKE '%'||#{keyword}||'%'
 			</otherwise>
 		</choose>
 	</sql>
-
 
 
 
@@ -64,7 +67,8 @@
     <!-- 	게시글 총갯수 -->
 	<select id="boardSelectTotalCount" resultType="java.lang.Integer" parameterType="map">
 		SELECT COUNT(*)
-		FROM MVY_BOARD
+		FROM MVY_BOARD MB INNER JOIN MVY_USER MU
+		ON MB.USER_NO = MU.USER_NO
 		<include refid="search"></include>
 	</select>
 	<!-- 	게시글 전체 선택 -->
@@ -108,5 +112,23 @@
 		DELETE FROM MVY_BOARD
 		WHERE BOARD_NO = #{boardNo}
 	</delete>
+<!-- 	게시글 이전글 다음글 -->
+	<select id="movePage" parameterType="int" resultType="BoardDto">
+		select * from(SELECT 
+		BOARD_NO,
+         LEAD(BOARD_NO,1,9999) OVER(ORDER BY BOARD_NO) AS NEXT,
+         LAG(BOARD_NO,1,9999) OVER(ORDER BY BOARD_NO) AS LAST,
+         BOARD_TITLE,
+         LEAD(BOARD_TITLE,1,9999) OVER(ORDER BY BOARD_NO) AS NEXTTITLE,
+         LAG(BOARD_TITLE,1,9999) OVER(ORDER BY BOARD_NO) AS LASTTITLE
+         
+		FROM MVY_BOARD
+		<if test="boardNo !=0">
+        WHERE BOARD_NO = #{boardNo}
+        </if>
+        ORDER BY BOARD_NO DESC) WHERE BOARD_NO =#{boardNo}
+</select>
+
+
 	
 </mapper>

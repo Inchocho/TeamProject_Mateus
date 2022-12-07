@@ -79,15 +79,13 @@ public class BoardDaoImpl implements BoardDao {
 		
 	}
 
+	@Override
+	public BoardDto movePage(int boardNo) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace + "movePage", boardNo);	 
+	
+	}
 
-	
-
-	
-
-	
-
-	
-	
 
 
 }

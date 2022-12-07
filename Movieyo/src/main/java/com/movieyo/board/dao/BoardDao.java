@@ -23,7 +23,7 @@ public interface BoardDao {
 
 	public void boardCountUp(int boardNo);
 
-	
+	public BoardDto movePage(int boardNo) throws Exception;
 
 	
 

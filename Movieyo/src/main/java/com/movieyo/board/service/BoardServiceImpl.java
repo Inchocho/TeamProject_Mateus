@@ -30,6 +30,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		BoardDto boardDto = boardDao.boardSelectOne(boardNo);
 		
+		
 		resultMap.put("boardDto", boardDto);
 
 		
@@ -67,6 +68,18 @@ public class BoardServiceImpl implements BoardService {
 		// TODO Auto-generated method stub
 		boardDao.boardCountUp(boardNo);
 	}
+
+
+	@Override
+	public BoardDto movePage(int boardNo) throws Exception {
+		// TODO Auto-generated method stub
+		return boardDao.movePage(boardNo);
+	}
+
+
+
+
+
 
 
 

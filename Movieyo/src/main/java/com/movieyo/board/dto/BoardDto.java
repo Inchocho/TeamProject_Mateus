@@ -13,13 +13,18 @@ public class BoardDto {
 	private Date boardModdate;
 	private int boardCount;
 	private String userName;
-	
+	private int next;
+	private int last;
+	private String nexttitle;
+	private String lasttitle;
+
 	public BoardDto() {
 		super();
 	}
 
 	public BoardDto(int boardNo, int userNo, String boardHead, String boardTitle, String boardContent,
-			Date boardCredate, Date boardModdate, int boardCount, String userName) {
+			Date boardCredate, Date boardModdate, int boardCount, String userName, int next, int last, String nexttitle,
+			String lasttitle) {
 		super();
 		this.boardNo = boardNo;
 		this.userNo = userNo;
@@ -30,6 +35,10 @@ public class BoardDto {
 		this.boardModdate = boardModdate;
 		this.boardCount = boardCount;
 		this.userName = userName;
+		this.next = next;
+		this.last = last;
+		this.nexttitle = nexttitle;
+		this.lasttitle = lasttitle;
 	}
 
 	public int getBoardNo() {
@@ -104,12 +113,44 @@ public class BoardDto {
 		this.userName = userName;
 	}
 
+	public int getNext() {
+		return next;
+	}
+
+	public void setNext(int next) {
+		this.next = next;
+	}
+
+	public int getLast() {
+		return last;
+	}
+
+	public void setLast(int last) {
+		this.last = last;
+	}
+
+	public String getNexttitle() {
+		return nexttitle;
+	}
+
+	public void setNexttitle(String nexttitle) {
+		this.nexttitle = nexttitle;
+	}
+
+	public String getLasttitle() {
+		return lasttitle;
+	}
+
+	public void setLasttitle(String lasttitle) {
+		this.lasttitle = lasttitle;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardDto [boardNo=" + boardNo + ", userNo=" + userNo + ", boardHead=" + boardHead + ", boardTitle="
 				+ boardTitle + ", boardContent=" + boardContent + ", boardCredate=" + boardCredate + ", boardModdate="
-				+ boardModdate + ", boardCount=" + boardCount + ", userName=" + userName + "]";
+				+ boardModdate + ", boardCount=" + boardCount + ", userName=" + userName + ", next=" + next + ", last="
+				+ last + ", nexttitle=" + nexttitle + ", lasttitle=" + lasttitle + "]";
 	}
-	
-	
-	}
+
+}
