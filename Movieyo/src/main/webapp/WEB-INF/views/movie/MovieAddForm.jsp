@@ -267,7 +267,7 @@ img {
 				<div class="detailFormDiv">
 					<div style="" class="detailForm_top">
 						<div class="file">
-							<img src="" id="preview" /> <label for="file" id="file_label"
+							<img src="/Movieyo/image/사진등록.PNG" id="preview" /> <label for="file" id="file_label"
 								class="body_btn_css">영화사진등록</label> <input type='file'
 								name='file' id="file">
 						</div>
