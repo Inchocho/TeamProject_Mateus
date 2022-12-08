@@ -160,7 +160,7 @@ $(document).ready(function() {
 			</div>
 			<div class="userInfo">
 				<p class="p">선호장르</p>
-				<p class="p" style="width: 300px;">${likeGenre}</p>
+				<p class="p" style="width: 400px;">${likeGenre}</p>
 			</div>
 		</div>
 		</div>
