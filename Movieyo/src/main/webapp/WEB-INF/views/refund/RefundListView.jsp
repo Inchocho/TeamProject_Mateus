@@ -270,19 +270,29 @@ th {
 <script type="text/javascript">
 
 function refundOk(index){
-	let admitIndex = '#admit' + index.value;
-	$(admitIndex).attr('value', 1);	
-	let refundOk = '#refundAdmit' + index.value;
-	$(refundOk).attr('action','/Movieyo/refund/updateRefund.do');
-	$(refundOk).submit();
+	
+	var conF = confirm("환불수락 하시겠습니까");
+	
+	if(conF){
+		let admitIndex = '#admit' + index.value;
+		$(admitIndex).attr('value', 1);	
+		let refundOk = '#refundAdmit' + index.value;
+		$(refundOk).attr('action','/Movieyo/refund/updateRefund.do');
+		$(refundOk).submit();
+	}
 }
 
 function refundDeny(index){
-	let admitIndex = '#admit' + index.value;
-	$(admitIndex).attr('value', 0);
-	let refundDeny = '#refundAdmit' + index.value;
-	$(refundDeny).attr('action','/Movieyo/refund/updateRefund.do');
-	$(refundDeny).submit();
+	
+	var conF = confirm("환불거절 하시겠습니까");
+	
+	if(conF){
+		let admitIndex = '#admit' + index.value;
+		$(admitIndex).attr('value', 0);
+		let refundDeny = '#refundAdmit' + index.value;
+		$(refundDeny).attr('action','/Movieyo/refund/updateRefund.do');
+		$(refundDeny).submit();
+	}
 }
 
 $(function(){

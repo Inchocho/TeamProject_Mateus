@@ -227,7 +227,7 @@ public class BuyController {
 						session.setAttribute("userDto", userDto);
 				}
 				
-				viewUrl =  "redirect:../buy/list.do?userNo=" +  userNo;
+				viewUrl =  "redirect:/movie/detail.do?movieNo=" +  movieNo;
 			}
 			
 		} catch (Exception e) {

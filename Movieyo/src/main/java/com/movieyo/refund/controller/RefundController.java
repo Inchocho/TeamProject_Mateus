@@ -220,4 +220,13 @@ public class RefundController {
 		return "redirect:./list.do";
 	}	
 	
+	//구매내역에서 환불버튼 누르면 해당 번호가 환불내역에 쌓임
+	@RequestMapping(value = "/refund/alert.do", method = RequestMethod.GET)
+	public String alert(Model model, HttpSession session, int buyNo, int userNo) {
+
+		model.addAttribute("buyNo", buyNo);
+		model.addAttribute("userNo", userNo);
+
+		return "alert/RefundAlert";
+	}
 }

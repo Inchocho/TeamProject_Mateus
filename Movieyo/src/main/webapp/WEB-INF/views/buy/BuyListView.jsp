@@ -84,9 +84,19 @@ th {
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
 
+function refundSubmit(index){
+	
+	var conF = confirm("환불요청 하시겠습니까");
+	
+	if(conF){
+		let refundOk = '#refundAddFrom' + index;
+		$(refundOk).submit();
+	}
+}
+
 function movieDetail(index) {
 	
-	location.href = "/Movieyo/movie/detail.do?movieNo=" + index.value;
+	location.href = "/Movieyo/movie/detail.do?movieNo=" + index;
 }
 
 function comma(str) {
@@ -197,7 +207,7 @@ $(document).ready(function() {
 			</c:if>				
 			<c:if test='${userDto.userAdmin != 1}'>
 				<td>
-					<form id="refundAddFrom${varStatus.index}" action="../refund/addRefund.do" method="GET">
+					<form id="refundAddFrom${varStatus.index}" action="/Movieyo/refund/addRefund.do" method="GET">
 							<c:choose>
 								<c:when test="${buyMap.buyStatus eq '환불신청중'}">
 									환불신청중
@@ -205,11 +215,12 @@ $(document).ready(function() {
 								<c:when test="${buyMap.buyStatus eq '환불불가'}">
 									<a href='/Movieyo/board/add.do'>문의하러가기</a>
 								</c:when>								
-								<c:when test="${buyMap.requestDeny != 0}">
-									<input type="submit" name='refundSubmitBtn' id='refundSubmit' value="환불하기" class="buy_btn_css">					
+								<c:when test="${buyMap.requestDeny != 0}">								
+								<input type='button'
+								 onclick="refundSubmit(${varStatus.index});" value='환불하기' class="buy_btn_css">													
 								</c:when>
 								<c:otherwise>
-									<input type="button" onclick='movieDetail(movieNo${varStatus.index});' value='구매하러 가기' class="buy_btn_css">
+									<input type="button" onclick='movieDetail(${buyMap.movieNo});' value='구매하러 가기' class="buy_btn_css">
 								</c:otherwise>
 							</c:choose>
 						<input type="hidden" name="buyCheck" value="${varStatus.index}">		
