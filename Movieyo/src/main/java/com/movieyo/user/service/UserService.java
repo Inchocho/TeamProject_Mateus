@@ -42,6 +42,10 @@ public interface UserService {
 	
 	//유저 현재 캐쉬 조회
 	public int userCurrentCash(int userNo);
+
+	public void userGenreDelete(int userNo);
+
+	public void userRefundDelete(int userNo);
 		
 }
 

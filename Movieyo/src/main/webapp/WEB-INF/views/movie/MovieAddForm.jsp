@@ -207,7 +207,7 @@ img {
 				submit = false;
 			} else if (runtime == 1 || runtime > 3) {
 				$('#runtimeText').css('display', 'block');
-				$('#runtimeText').html('상영시간 2.3자리만 입력해주세요');
+				$('#runtimeText').html('2.3자리만 입력해주세요');
 				submit = false;
 			} else {
 				$('#runtimeText').css('display', 'none');

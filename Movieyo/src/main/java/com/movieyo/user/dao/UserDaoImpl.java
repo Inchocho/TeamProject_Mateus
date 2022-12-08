@@ -141,6 +141,18 @@ public class UserDaoImpl implements UserDao{
 		return sqlSession.selectOne(namespace + "userCurrentCash", userNo);
 	}
 
+	@Override
+	public void userGenreDelete(int userNo) {
+		// TODO Auto-generated method stub
+		sqlSession.delete(namespace + "userGenreDelete", userNo);
+	}
+
+	@Override
+	public void userRefundDelete(int userNo) {
+		// TODO Auto-generated method stub
+		sqlSession.delete(namespace + "userRefundDelete", userNo);
+	}
+
 	
 	
 }

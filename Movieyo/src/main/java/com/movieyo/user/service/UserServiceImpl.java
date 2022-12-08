@@ -200,6 +200,18 @@ public class UserServiceImpl implements UserService{
 			return userDao.userCurrentCash(userNo);
 		}
 
+		@Override
+		public void userGenreDelete(int userNo) {
+			// TODO Auto-generated method stub
+			userDao.userGenreDelete(userNo);
+		}
+
+		@Override
+		public void userRefundDelete(int userNo) {
+			// TODO Auto-generated method stub
+			userDao.userRefundDelete(userNo);
+		}
+
 				
 				
 }

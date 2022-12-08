@@ -33,6 +33,10 @@ public interface UserDao {
 	public int userBuyMovie(int userNo, int moviePrice);
 
 	public int userCurrentCash(int userNo);
+
+	public void userGenreDelete(int userNo);
+
+	public void userRefundDelete(int userNo);
 	
 	
 }

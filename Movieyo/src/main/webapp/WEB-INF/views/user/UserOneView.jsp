@@ -37,6 +37,9 @@ table {
 	display: flex;
 	text-align: left;
 }
+.detailFormDiv {
+	border: 1px solid black;
+}
 
 .contContainer {
 	width: 620px;
@@ -52,9 +55,6 @@ table {
 
 th {
 	background-color: gray;
-}
-.detailFormDiv {
-	border: 1px solid black;
 }
 
 .p {
@@ -72,6 +72,7 @@ th {
 	height: 45px;
 	border-bottom: 1px dashed #d1d1d1;
 	margin: 2px 0px;
+	
 }
 
 .btn_area {
@@ -84,6 +85,17 @@ th {
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
 	
+$(document).ready(function() {
+ 	let message = "${msg}";
+    
+ 	if (message != "") {
+    		alert(message);
+    }
+});	
+ 	
+
+	
+	
 	function pwUpdate() {
 		let likeGenre = $('#likeGenre').val();
 		
@@ -94,7 +106,7 @@ th {
 		let popUrl = "/Movieyo/user/authorPop.do?userNo=" + ${userDto2.userNo};
 		let popOption = "width = 650px, height=550px, top=300px, left=300px, scrollbars=yes";
 		
-		window.open(popUrl, "작가 찾기",popOption);
+		window.open(popUrl,"회원탈퇴",popOption);
 	}
 	
 </script>
@@ -125,7 +137,7 @@ th {
 		<input type="hidden" name="adminCheck" value='${adminCheck}'>
 		<input type="hidden" name='userNo' value='${userDto2.userNo}'>
 		<input type="hidden" id='likeGenre' name='likeGenre' value='${likeGenre}'>
-		<div style="width: 620px; margin-top: 13px;">
+		<div style="width: 600px; margin-top: 13px; padding-left: 10px;">
 			<div class="userInfo">
 				<p class="p">이름</p>
 				<p class="p">${userDto2.userName}</p>
@@ -167,7 +179,7 @@ th {
 					
 	</form>
 	<form name="frmMother" method="POST">
-		<input type="hidden" value="${userDto.password}" id="password">		
+<%-- 		<input type="hidden" value="${userDto.password}" id="password">		 --%>
 		<input type="hidden" name="passwordChk" value="">
 		<input type='hidden' name='userName' id='memberName'value='${userDto2.userName}'><br>
 		<input type="hidden" name='userCreateDate' value='<fmt:formatDate value="${userDto2.userCreateDate}" 

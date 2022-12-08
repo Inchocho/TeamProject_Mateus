@@ -75,7 +75,17 @@
 		DELETE FROM MVY_USER
 		WHERE USER_NO = #{userNo}
 	</delete>
+	
+	<delete id="userGenreDelete" parameterType="int">
+		DELETE FROM GENRE_USER
+		WHERE USER_NO = #{userNo}
+	</delete>
 
+	<delete id="userRefundDelete" parameterType="int">
+		DELETE FROM MVY_REFUND
+		WHERE USER_NO = #{userNo}
+	</delete>
+	
 	<update id="updatePw" parameterType="userDto">
 		UPDATE MVY_USER SET USER_PASSWORD = #{password} WHERE USER_EMAIL = #{email}		
 	</update>

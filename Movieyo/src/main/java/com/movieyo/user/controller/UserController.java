@@ -338,24 +338,35 @@ public class UserController {
 		}
 		
 		@RequestMapping(value="/user/deleteCtr.do", method = RequestMethod.POST)
-		public String userDelete(int userNo, HttpSession session, Model model) {
+		public String userDelete(int userNo, HttpSession session, Model model, String passwordChk) {
 			logger.info("Welcome userController userDeleteCtr! " + userNo);
 			
 		     UserDto userDto =
 		               (UserDto)session.getAttribute("userDto");
 			
-			int sessionUserNo = userDto.getUserNo();
+			userDto.getPassword();
+		     int sessionUserNo = userDto.getUserNo();
+		    
+		     String userPassword = userDto.getPassword();
+//		     System.out.println(userDto.getPassword() + "AAAAAAAAAAAAAAAAAAAAAAA");
+//			System.out.println(passwordChk + "AAAAAAAAAAAAAAAAAAAAAAA");
 			
-			userService.userDeleteOne(userNo);
-			
+		     String viewUrl = "";
+		     
 			if(userNo == sessionUserNo) {
-				session.invalidate();
-			}else {
-				return "redirect:/user/list.do";
+				if (userPassword == passwordChk) {
+					userService.userGenreDelete(userNo);
+					userService.userRefundDelete(userNo);
+					
+					userService.userDeleteOne(userNo);
+					session.invalidate();
+					viewUrl = "auth/login.do";
+				}else {
+					model.addAttribute("msg","비밀번호가 틀립니다.");
+					viewUrl = "redirect:/user/one.do?userNo=" + userNo;
+				}
 			}
-
-			
-			return "redirect:/auth/login.do";
+			return viewUrl;
 		}
 		
 		@GetMapping("/user/authorPop.do")

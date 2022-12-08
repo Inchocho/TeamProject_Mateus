@@ -83,6 +83,7 @@
 <body>
 
 	<jsp:include page="../Header.jsp" />
+	<jsp:include page="../UserMyPageSideMenu.jsp"></jsp:include>
 	<div class="curPageDiv">
 		<div class="titleContainer">
 		<h1>회원정보 수정</h1>
@@ -94,7 +95,7 @@
 				<input type='hidden' name='adminCheck' value='${adminCheck}'>
 				<input type="hidden" name='userNo' value='${userDto2.userNo}'>
 				<input type="hidden" name="likeGenre" value="${likeGenre}">
-				<div style="width: 750px;">
+				<div style="width: 750px; padding-left: 10px;">
 				<div class="userInfo">
 					<p class="p">이름</p>
 					<input type='text' name='userName' readonly="readonly" class="input" value='${userDto2.userName}'><br>
