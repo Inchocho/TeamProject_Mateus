@@ -203,11 +203,20 @@ table {
 		</tr>
 		<c:choose>
 			<c:when test="${empty boardList}">
+			<c:if test="${userDto.userAdmin eq 1}">
 				<tr>
-					<td colspan="7"
+					<td colspan='8'
 						style="height: 400px; font-weight: bold; text-align: center;">
 						게시글이 존재하지 않습니다</td>
 				</tr>
+			</c:if>
+			<c:if test="${userDto.userAdmin eq 0}">
+			<tr>
+					<td colspan='7'
+						style="height: 400px; font-weight: bold; text-align: center;">
+						게시글이 존재하지 않습니다</td>
+				</tr>
+			</c:if>
 			</c:when>
 			<c:otherwise>
 				<c:forEach var="boardDto" items="${boardList}">
