@@ -169,7 +169,16 @@ $(document).ready(function() {
 		<c:forEach var="buyMap" items="${buyListMap}" varStatus="varStatus">
 		<tr>
 			<td>
-				${buyMap.movieTitle}
+				<c:choose>
+					<c:when test='${userDto.userAdmin == 0}'>
+						<a href='#' onclick='movieDetail(movieNo${varStatus.index});'>
+							${buyMap.movieTitle}
+						</a>
+					</c:when>
+					<c:when test='${userDto.userAdmin == 1}'>
+							${buyMap.movieTitle}
+					</c:when>
+				</c:choose>
 			</td>
 			<td>
 				${buyMap.moviePrice}원				
