@@ -182,7 +182,7 @@ img {
 		<div style="width: 620px; margin-top: 13px;">
 			<div class="movieInfo">
 				<p class="p">영화제목</p>
-				<p class="p">${movieDto.movieTitle}</p>
+				<p class="p" style="width: 250px;">${movieDto.movieTitle}</p>
 			</div>
 			<div class="movieInfo">
 				<p class="p">제작연도</p>
