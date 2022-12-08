@@ -132,7 +132,7 @@ font-weight: 400;
 		var inX = parseInt(inXStr.substr(0,5));
 		var prevX = numFiltprev(inX);
 		
-		if (prevX >= -5400) {
+		if (prevX >= -4050) {
 			var nextBtnId = "#nextBtn_" + listIdx;
 			$(nextBtnId).attr("class", "con_btn");
 		}
@@ -154,7 +154,7 @@ font-weight: 400;
 			var prevBtnId = "#prevBtn_" + listIdx;
 			$(prevBtnId).attr("class", "con_btn");
 		}
-		if (nextX <= -5400) {
+		if (nextX <= -4050) {
 			var nextBtnId = "#nextBtn_" + listIdx;
 			$(nextBtnId).attr("class", "con_btn_hide");
 		}
