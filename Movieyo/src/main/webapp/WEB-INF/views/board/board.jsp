@@ -139,7 +139,7 @@
 			<label for="boardHed" class="BoH"> 말머리 </label>
 			<select name="boardHead" id="boardHed" style="font-size: 18px;">
 		  		<option value="notice">공지사항</option>
-		  		<option value="Questions">문의사항</option>
+		  		<option value="Question">문의사항</option>
 		  	</select>
 		</div>
 		<div class="title_con_area">

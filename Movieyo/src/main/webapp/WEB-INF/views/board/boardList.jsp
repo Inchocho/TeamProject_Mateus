@@ -192,7 +192,7 @@ table {
 			<input type="checkbox" name="checkAll"  id="allCheckBox" />
 			</th>
 		</c:if>
-			<th>말머리</th>
+			<th style="width: 100px;">말머리</th>
 			<th>번호</th>
 			<th style="width: 400px;">제목</th>
 			<th>작성자</th>
@@ -242,24 +242,33 @@ table {
 
 	</table>
 	</div>
-		<form action="./boardList.do" method="post" id="searchFrm">
+		<form action="./boardList.do" method="get" id="searchFrm">
 		<div class="searchCl"> 
 		<select id="searchOptionSel" name="searchOption">
 			<c:choose>
 				<c:when test="${searchMap.searchOption == 'all'}">
-					<option value="all" selected="selected">글번호+글제목</option>
-					<option value="BOARD_NO">글번호</option>
+					<option value="all" selected="selected">제목 + 말머리</option>
 					<option value="BOARD_TITLE">제목</option>
+					<option value="USER_NAME" >작성자</option>
+					<option value="BOARD_HEAD">말머리</option>
 				</c:when>
-				<c:when test="${searchMap.searchOption == 'bNo'}">
-					<option value="all">글번호+글제목</option>
-					<option value="BOARD_NO" selected="selected">글번호</option>
-					<option value="BOARD_TITLE">글제목</option>
+				<c:when test="${searchMap.searchOption == 'BOARD_TITLE'}">
+					<option value="all">제목 + 말머리</option>
+					<option value="BOARD_TITLE" selected="selected">제목</option>
+					<option value="USER_NAME" >작성자</option>
+					<option value="BOARD_HEAD">말머리</option>
 				</c:when>
-				<c:when test="${searchMap.searchOption == 'boTitle'}">
-					<option value="all">글번호+글제목</option>
-					<option value="BOARD_NO" >글번호</option>
-					<option value="BOARD_TITLE" selected="selected">글제목</option>
+				<c:when test="${searchMap.searchOption == 'BOARD_HEAD'}">
+					<option value="all">제목 + 말머리</option>
+					<option value="BOARD_TITLE" >제목</option>
+					<option value="USER_NAME" >작성자</option>
+					<option value="BOARD_HEAD" selected="selected">말머리</option>
+				</c:when>   
+				<c:when test="${searchMap.searchOption == 'USER_NAME'}">
+					<option value="all">제목 + 말머리</option>
+					<option value="BOARD_TITLE" >제목</option>
+					<option value="USER_NAME" selected="selected">작성자</option>
+					<option value="BOARD_HEAD" >말머리</option>
 				</c:when>
 			</c:choose>
 		</select>

@@ -20,12 +20,11 @@
 		height: 700px;
 		text-align: left;
 	}
-	table, tr, td, th { 
-	border: 2px solid black; 
+	table, tr, th { 
+	border: 2px solid gray; 
 	} 
 	#frm{
 		border-collapse: collapse;
-		border: 1px solid #e9e8e8;;
 	}
 
 	#bdCtt{
@@ -34,7 +33,7 @@
 	
 	.boardsize input{
 	width: 640px;
-	border: 1px solid black;
+	
 	}
 	.click-btn{
     width: 150px;
@@ -137,7 +136,7 @@
 				</tr>	
 				<tr>
 					<td id="content">
-   			<label for="boardContent" id="bdCtt">글내용</label><br>
+<!--    			<label for="boardContent" id="bdCtt">글내용</label><br> -->
    			 			<textarea name="boardContent" id="bC" rows="50" cols="40" placeholder=" 내용을 입력해 주세요." readonly="readonly">${boardDto.boardContent}</textarea>
    					</td>
 				</tr>
@@ -146,11 +145,11 @@
    		<c:choose>
    		<c:when test="${userDto.userAdmin eq 0}">
    		<c:if test="${userDto.userNo == boardDto.userNo}">
-		<input type='button' style="margin-left: 170px;" class="click-btn color1" value='게시물수정'  id="edit">
+		<input type='button' style="margin-left: 30px;" class="click-btn color1" value='게시물수정'  id="edit">
    		</c:if>
    		</c:when>
    		<c:when test="${userDto.userAdmin eq 1}">
-		<input type='button' style="margin-left: 170px;" class="click-btn color1" value='게시물수정'  id="edit">
+		<input type='button' style="margin-left: 30px;" class="click-btn color1" value='게시물수정'  id="edit">
    		</c:when>
    		</c:choose>
 		<input type="button" style="margin-left: 10px;" class="click-btn color2" value="목록으로" onclick="moveFnc()">

@@ -152,7 +152,7 @@
 			</tbody>	
    		</table>
    		
-		<input type='submit' style="margin-left: 100px;" class="btn-click color1" value='수정' >
+		<input type='submit' style="margin-left: 30px;" class="btn-click color1" value='수정' >
 		<input type="button" style="margin-left: 10px;" class="btn-click color2" value="목록" onclick="moveFnc()">
 		<input type="button" style="margin-left: 10px;" class="btn-click color3" value="삭제" onclick="pageMoveDeleteFnc(${boardDto.boardNo});">					
 		<input type="hidden" name="modDate" value="${boardDto.boardModdate}">
