@@ -13,8 +13,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Component("fileUtils")
 public class FileUtils {
-
-	private static final String filePath = "C:\\upload";
+	
+	private static final String filePath = "D:\\Movieyo/UploadFile";
 	
 	public List<Map<String, Object>> parseInsertFileInfo(int parentSeq
 		, MultipartHttpServletRequest multipart) 

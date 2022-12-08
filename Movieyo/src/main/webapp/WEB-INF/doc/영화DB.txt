@@ -1,6 +1,8 @@
 
--- server.xml에 <host> </host> 안에다가 추가해야 이미지가 보임(첨부한 폴더 이미지는 c:/upload경로에 넣어야함)
--- <Context docBase="C://upload" path="/Movieyo/image" reloadable="true"/>
+-- server.xml에 해당경로로 옮겨줌 (업로드 하는 파일 경로를 변경했음)
+-- FileUtils에 path도 변경함 확인
+-- <Context docBase="D:/Movieyo/UploadFile" path="/Movieyo/image" reloadable="true"/>     
+
 
 --관리자계정
 --영화번호, 사진의 경우 1부터 넣었으므로
