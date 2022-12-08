@@ -137,18 +137,18 @@ font-weight: 400;
 			$(nextBtnId).attr("class", "con_btn");
 		}
 	
-		$(movieListId).css("transform", translateX(prevX));
 		if (prevX >= 0) {
 			var prevBtnId = "#prevBtn_" + listIdx;
 			$(prevBtnId).attr("class", "con_btn_hide");
 		}
+		
+		$(movieListId).css("transform", translateX(prevX));
 	}
 	function movieList_nextBtn_fnc(listIdx) {
 		var movieListId = "#con_movieList_" + listIdx;
 		var inXStr = $(movieListId).css("transform").replace(/[^0-9\-,]/g,'').split(',')[4];
 		var inX = parseInt(inXStr.substr(0,5));
 		var nextX = numFiltnext(inX);
-		$(movieListId).css("transform", translateX(nextX));
 		
 		if (nextX < 0) {
 			var prevBtnId = "#prevBtn_" + listIdx;
@@ -159,6 +159,7 @@ font-weight: 400;
 			$(nextBtnId).attr("class", "con_btn_hide");
 		}
 		
+		$(movieListId).css("transform", translateX(nextX));
 	}
 </script>
 </head>

@@ -98,30 +98,20 @@ font-weight: 400;
 		var rslt = "translateX(" + num + "px)";
 		return rslt;
 	}
-	function numFiltnext(num) {
-		if (num > 0) {
-			num = 0;
-		}else if (num <= -4000) {
-			num = -5400;
-		}else if (num <= -2600) {
-			num = -4050;
-		}else if (num <= -1300) {
-			num = -2700;
-		}else if (num <= 0) {
-			num = -1350;
+	function numFiltnext(num,pageEnd) {
+		pageEnd = pageEnd+100;
+		if (num > pageEnd) {
+			num = num-1350;
+		}else{
+			num = pageEnd-100;
 		}
 		return num;
 	}
-	function numFiltprev(num) {
-		if (num > 0) {
-			num = 0;
-		}else if (num <= -4100) {
-			num = -4050;
-		}else if (num <= -2800) {
-			num = -2700;
-		}else if (num <= -1400) {
-			num = -1350;
-		}else if (num <= 0) {
+	function numFiltprev(num,pageEnd) {
+		pageEnd = pageEnd-100;
+		if (num >= pageEnd) {
+			num = num+1350;
+		}else if(num > -1350){
 			num = 0;
 		}
 		return num;
@@ -129,36 +119,54 @@ font-weight: 400;
 	function movieList_prevBtn_fnc(listIdx) {
 		var movieListId = "#con_movieList_" + listIdx;
 		var inXStr = $(movieListId).css("transform").replace(/[^0-9\-,]/g,'').split(',')[4];
-		var inX = parseInt(inXStr.substr(0,5));
-		var prevX = numFiltprev(inX);
+		var inX = 0;
+		if(inXStr.length > 5){
+		 inX = parseInt(inXStr.substr(0,6));
+		}else {
+		 inX = parseInt(inXStr.substr(0,5));
+		}
+		var listLength = $('.con_movie').length;
+		var moviePage_last = Math.ceil(listLength/5)-1;
+		var pageEnd = moviePage_last * (-1350);
+	
+		var prevX = numFiltprev(inX,pageEnd);
 		
-		if (prevX >= -5400) {
+		if (prevX >= pageEnd) {
 			var nextBtnId = "#nextBtn_" + listIdx;
 			$(nextBtnId).attr("class", "con_btn");
 		}
-	
-		$(movieListId).css("transform", translateX(prevX));
 		if (prevX >= 0) {
 			var prevBtnId = "#prevBtn_" + listIdx;
 			$(prevBtnId).attr("class", "con_btn_hide");
 		}
+	
+		$(movieListId).css("transform", translateX(prevX));
 	}
 	function movieList_nextBtn_fnc(listIdx) {
 		var movieListId = "#con_movieList_" + listIdx;
 		var inXStr = $(movieListId).css("transform").replace(/[^0-9\-,]/g,'').split(',')[4];
-		var inX = parseInt(inXStr.substr(0,5));
-		var nextX = numFiltnext(inX);
-		$(movieListId).css("transform", translateX(nextX));
-		
+		var inX = 0;
+		if(inXStr.length > 5){
+		 inX = parseInt(inXStr.substr(0,6));
+		}else {
+		 inX = parseInt(inXStr.substr(0,5));
+		}
+		var listLength = $('.con_movie').length;
+		var moviePage_last = Math.ceil(listLength/5)-1;
+		var pageEnd = moviePage_last * (-1350);
+// 		alert(pageEnd);
+		var nextX = numFiltnext(inX,pageEnd);
+// 		alert(nextX);
 		if (nextX < 0) {
 			var prevBtnId = "#prevBtn_" + listIdx;
 			$(prevBtnId).attr("class", "con_btn");
 		}
-		if (nextX <= -5400) {
+		if (nextX <= pageEnd) {
 			var nextBtnId = "#nextBtn_" + listIdx;
 			$(nextBtnId).attr("class", "con_btn_hide");
 		}
 		
+		$(movieListId).css("transform", translateX(nextX));
 	}
 </script>
 </head>
