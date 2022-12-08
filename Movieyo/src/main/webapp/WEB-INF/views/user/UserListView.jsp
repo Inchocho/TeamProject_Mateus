@@ -141,10 +141,17 @@ th {
 				${userDto.userCash}
 			</td>
 			<td>
-				<form id='userDetailForm' action="./one.do" method="get">
-					<input type="hidden" name="userNo" value="${userDto.userNo}">
-					<input class='body_userDetail_btn_css' type="submit" value="상세">
-				</form>
+				<c:choose>
+					<c:when test="${userDto.userAdmin == 1}">
+						관리자
+					</c:when>
+					<c:otherwise>
+					<form id='userDetailForm' action="./one.do" method="get">
+						<input type="hidden" name="userNo" value="${userDto.userNo}">
+						<input class='body_userDetail_btn_css' type="submit" value="상세">
+					</form>
+					</c:otherwise>
+				</c:choose>
 			</td>
 		</tr>			
 		</c:forEach>

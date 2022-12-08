@@ -168,7 +168,7 @@ body {
 		</li>
 		<li style="margin-left: 50px; "><input type="button" value="게시판" class="header_btn" onclick="moveBoardFnc();"></li>
 		<li class="searchBox">
-		<form action="/Movieyo/movie/serch.do" method="post">
+		<form action="/Movieyo/movie/search.do" method="post">
 			<input type="submit" value="검색" class="header_btn">
 			<input type="search" name="keyword" value="${searchMap.keyword}" placeholder="영화를 검색해보세요" style="color: black;">
 			<input type="hidden" name="searchOption" value="MOVIE_TITLE">				

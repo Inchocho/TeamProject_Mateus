@@ -342,7 +342,7 @@ public class MovieController {
 			return "movie/MovieAllView";
 		}
 		
-		@RequestMapping(value = "/movie/serch.do"
+		@RequestMapping(value = "/movie/search.do"
 				, method = {RequestMethod.GET, RequestMethod.POST})
 		public String movieserch(@RequestParam(defaultValue = "1") int curPage, Model model,
 				@RequestParam(defaultValue = "all")String searchOption
