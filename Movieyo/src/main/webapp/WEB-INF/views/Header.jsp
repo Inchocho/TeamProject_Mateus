@@ -111,6 +111,10 @@ body {
     border-radius: 8px;
     margin: 0;
 }
+.body_userDetail_btn_css:hover {
+	background-color: rgba(135, 206, 235, 0.3);
+	cursor: pointer;
+}
 </style>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
@@ -132,6 +136,9 @@ body {
 	
 	function userList() {
 		location.href = '/Movieyo/user/list.do';
+	}
+	function buyList() {
+		location.href = '/Movieyo/buy/list.do';
 	}
 	
 	function logout() {
@@ -161,10 +168,10 @@ body {
 			<a id="mainLogo" href="#" onclick="movePageMainFnc();">무비요</a>
 			<input type="button" value="순위" onclick="movePageMainFnc();" class="header_btn">
 			<input type="button" value="작품전체" onclick="movePageAllFnc();" class="header_btn">
-			<!-- 유저로그인시 -->
-			<c:if test="${userDto.userAdmin ne 1}">
-			<input type="button" value="추천작품" onclick="movePageMainFnc();" class="header_btn">
-			</c:if>
+<!-- 			<!-- 유저로그인시 --> -->
+<%-- 			<c:if test="${userDto.userAdmin ne 1}"> --%>
+<!-- 			<input type="button" value="추천작품" onclick="movePageMainFnc();" class="header_btn"> -->
+<%-- 			</c:if> --%>
 		</li>
 		<li style="margin-left: 50px; "><input type="button" value="게시판" class="header_btn" onclick="moveBoardFnc();"></li>
 		<li class="searchBox">
@@ -198,7 +205,7 @@ body {
 			<input type="button" value="환불관리" onclick="refund();" class="header_btn">
 		</li>
 		<li style="padding-right: 20px;">
-			<input type="button" value="게시판관리" class="header_btn">
+			<input type="button" value="매출관리" onclick="buyList();" class="header_btn">
 		</li>
 	</ul>
 </div>
