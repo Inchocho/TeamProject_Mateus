@@ -203,7 +203,7 @@ $(document).ready(function() {
 									환불신청중
 								</c:when>
 								<c:when test="${buyMap.buyStatus eq '환불불가'}">
-									<a href='#'>문의하러가기</a>
+									<a href='/Movieyo/board/add.do'>문의하러가기</a>
 								</c:when>								
 								<c:when test="${buyMap.requestDeny != 0}">
 									<input type="submit" name='refundSubmitBtn' id='refundSubmit' value="환불하기" class="buy_btn_css">					
