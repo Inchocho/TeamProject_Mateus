@@ -28,4 +28,6 @@ public interface BuyService {
 	public int totalMoney();
 
 	public int refundMoney();
+	
+	public int refundCount();
 }

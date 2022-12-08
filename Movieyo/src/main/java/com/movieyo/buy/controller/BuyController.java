@@ -130,10 +130,18 @@ public class BuyController {
 		
 		int totalMoney = 0;
 		int refundMoney = 0;
+		int refundCount = 0;
 		
 		try {
-			refundMoney = buyService.refundMoney();
+			
+			
+			refundCount = buyService.refundCount();
+			if(refundCount != 0) {
+				refundMoney = buyService.refundMoney();
+				System.out.println(refundMoney + "환불금액");	
+			}
 			totalMoney = buyService.totalMoney();
+			System.out.println(totalMoney + "총액");
 		} catch (NullPointerException nullEx) {
 			// TODO: handle exception
 			System.out.println("환불내역없음");

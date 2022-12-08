@@ -143,6 +143,12 @@
 		     MVY_BUY B
 		WHERE B.MOVIE_NO = A.MOVIE_NO		
 		AND B.BUY_STATUS = '환불처리완료'
+	</select>
+	
+	<select id='refundCount' resultType='java.lang.Integer'>
+		SELECT COUNT(BUY_STATUS)
+		FROM MVY_BUY 
+		WHERE BUY_STATUS = '환불처리완료'
 	</select>	
 	
 </mapper>

@@ -120,5 +120,11 @@ public class BuyDaoImpl implements BuyDao{
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(namespace + "refundMoney");
 	}		
+	
+	@Override
+	public int refundCount() {
+		
+		return sqlSession.selectOne(namespace + "refundCount");
+	}
 
 }

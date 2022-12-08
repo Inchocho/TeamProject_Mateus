@@ -88,4 +88,10 @@ public class BuyServiceImpl implements BuyService {
 		return buyDao.refundMoney();
 	}
 	
+	@Override
+	public int refundCount() {
+		
+		return buyDao.refundCount();
+	}
+	
 }

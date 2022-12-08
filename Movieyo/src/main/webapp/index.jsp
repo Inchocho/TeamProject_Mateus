@@ -8,11 +8,10 @@
 
 <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
-	function loginMoveFnc() {
-		var formObj = document.getElementById("simpleForm");
-		
-		formObj.submit();
-	}
+
+	window.onload = function(){
+		location.href = "auth/login.do";
+	};
 </script>
 
 </head>
