@@ -11,6 +11,16 @@
 <title>영화목록관리</title>
 
 <style type="text/css">
+a{
+	color: black;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+a:hover{
+	color: blue;
+	text-decoration: underline;
+}
 table,tr, td, th{
 		border: 1px solid black;
 }

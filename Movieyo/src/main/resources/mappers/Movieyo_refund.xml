@@ -18,7 +18,8 @@
             <when test="searchOption == 'all'">
                 WHERE M.MOVIE_TITLE LIKE '%'||#{keyword}||'%'     
                 OR M.REFUND_STATUS LIKE '%'||#{keyword}||'%'
-                OR M.REFUND_NO LIKE '%'||#{keyword}||'%'           
+                OR M.REFUND_NO LIKE '%'||#{keyword}||'%'   
+                OR M.USER_NAME LIKE '%'||#{keyword}||'%'        
             </when>
             <otherwise>
                 WHERE ${searchOption} LIKE '%'||#{keyword}||'%'
@@ -48,12 +49,15 @@
 <!-- 	영화수 -->
 	<select id="refundSelectTotalCount" resultType="java.lang.Integer" parameterType="map">
 		SELECT COUNT(*) FROM    
-      	  (SELECT A.MOVIE_TITLE, A.MOVIE_PRICE, B.BUY_DATE, C.REFUND_DATE, C.REFUND_STATUS, C.REFUND_NO
+      	  (SELECT A.MOVIE_TITLE, A.MOVIE_PRICE, B.BUY_DATE, C.REFUND_DATE, C.REFUND_STATUS, C.REFUND_NO,
+      	  	D.USER_NAME
             FROM MVY_MOVIE A, 
             MVY_BUY B, 
-            MVY_REFUND C        	                       
+            MVY_REFUND C,
+            MVY_USER D        	                       
             WHERE A.MOVIE_NO = B.MOVIE_NO            
             AND B.BUY_NO = C.BUY_NO
+            AND B.USER_NO = D.USER_NO
             <include refid="refundListSearch"></include>
             ORDER BY C.REFUND_NO ASC) M		
             <include refid="search"></include>

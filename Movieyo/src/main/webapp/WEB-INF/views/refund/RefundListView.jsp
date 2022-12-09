@@ -234,25 +234,36 @@ th {
 					<option value="MOVIE_TITLE">영화제목</option>					
 					<option value="REFUND_STATUS">환불상태</option>
 					<option value="REFUND_NO">환불번호</option>
+					<option value="USER_NAME">회원이름</option>
 				</c:when>
 				<c:when test="${searchMap.searchOption == 'MOVIE_TITLE'}">
 					<option value="all">전체</option>
 					<option value="MOVIE_TITLE"<c:if test="${searchMap.searchOption eq 'MOVIE_TITLE'}">selected</c:if>>제목</option>
 					<option value="REFUND_STATUS">환불상태</option>
 					<option value="REFUND_NO">환불번호</option>
+					<option value="USER_NAME">회원이름</option>
 				</c:when>				
 				<c:when test="${searchMap.searchOption == 'REFUND_STATUS'}">
 					<option value="all">전체</option>
 					<option value="MOVIE_TITLE">제목</option>					
 					<option value="REFUND_STATUS"<c:if test="${searchMap.searchOption eq 'REFUND_STATUS'}">selected</c:if>>환불상태</option>
 					<option value="REFUND_NO">환불번호</option>
+					<option value="USER_NAME">회원이름</option>
 				</c:when>	
 				<c:when test="${searchMap.searchOption == 'REFUND_NO'}">
 					<option value="all">전체</option>
 					<option value="MOVIE_TITLE">제목</option>					
 					<option value="REFUND_STATUS">환불상태</option>
-					<option value="REFUND_NO"<c:if test="${searchMap.searchOption eq 'REFUND_NO'}">selected</c:if>>환불번호</option>				
-				</c:when>			
+					<option value="REFUND_NO"<c:if test="${searchMap.searchOption eq 'REFUND_NO'}">selected</c:if>>환불번호</option>
+					<option value="USER_NAME">회원이름</option>				
+				</c:when>
+				<c:when test="${searchMap.searchOption == 'USER_NAME'}">
+					<option value="all">전체</option>
+					<option value="MOVIE_TITLE">제목</option>					
+					<option value="REFUND_STATUS">환불상태</option>
+					<option value="REFUND_NO">환불번호</option>
+					<option value="USER_NAME"<c:if test="${searchMap.searchOption eq 'USER_NAME'}">selected</c:if>>회원이름</option>				
+				</c:when>								
 			</c:choose>
 		</select>
 		

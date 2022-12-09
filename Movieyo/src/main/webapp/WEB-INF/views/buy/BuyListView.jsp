@@ -11,6 +11,18 @@
 <title>구매내역관리</title>
 
 <style type="text/css">
+
+a{
+	color: black;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+a:hover{
+	color: blue;
+	text-decoration: underline;
+}
+
 table,tr, td, th{
 		border: 1px solid black;
 }
@@ -160,15 +172,14 @@ $(document).ready(function() {
 		<input type="hidden" value="${userDto.userNo}">
 	<table>
 		<tr>
+			<c:if test='${userDto.userAdmin == 1}'>
+				<th>구매번호</th>			
+				<th>구매자</th>
+			</c:if>			
 			<th>영화제목</th>
 			<th>가격</th>
 			<th>구매일</th>
 			<th>상태</th>
-			<c:if test='${userDto.userAdmin == 1}'>
-				<th>구매자</th>
-				<th>회원번호</th>	
-				<th>구매번호</th>			
-			</c:if>			
 			<c:if test='${userDto.userAdmin != 1}'>
 				<th>환불신청</th>
 			</c:if>
@@ -178,6 +189,10 @@ $(document).ready(function() {
 		
 		<c:forEach var="buyMap" items="${buyListMap}" varStatus="varStatus">
 		<tr>
+			<c:if test='${userDto.userAdmin == 1}'>
+				<td>${buyMap.buyNo}</td>
+				<td>${buyMap.userNickName}</td>
+			</c:if>				
 			<td>
 				<c:choose>
 					<c:when test='${userDto.userAdmin == 0}'>
@@ -199,12 +214,7 @@ $(document).ready(function() {
 			</td>			
 			<td>
 				${buyMap.buyStatus}
-			</td>					
-			<c:if test='${userDto.userAdmin == 1}'>
-				<td>${buyMap.userNickName}</td>
-				<td>${buyMap.buyUserNo}</td>
-				<td>${buyMap.buyNo}</td>
-			</c:if>				
+			</td>								
 			<c:if test='${userDto.userAdmin != 1}'>
 				<td>
 					<form id="refundAddFrom${varStatus.index}" action="/Movieyo/refund/addRefund.do" method="GET">
@@ -239,7 +249,7 @@ $(document).ready(function() {
 		</c:if>
 		<c:if test="${empty buyListMap}">
 			<tr>
-				<td colspan="8" id="tdId">구매내역이 없습니다</td>
+				<td colspan="7" id="tdId">구매내역이 없습니다</td>
 			</tr>		
 		</c:if>
 	</table>
